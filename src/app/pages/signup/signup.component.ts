@@ -12,13 +12,9 @@ export class SignupComponent implements OnInit {
   userForm: FormGroup;
   emailSignup: string;
   passwordSignup: string;
-  constructor(
-    private fb: FormBuilder,
-    private auth: AuthService
-  ) {
+  constructor(private fb: FormBuilder, private auth: AuthService) {
     auth.getCurrentLoggedIn();
   }
-  // tslint:disable-next-line: typedef
   ngOnInit() {
     this.buildForm();
   }
@@ -36,6 +32,6 @@ export class SignupComponent implements OnInit {
     });
   }
   signup(): void {
-    this.auth.emailSignUp(this.userForm.value.emailSignup, this.userForm.value.passwordSignup);
+    this.auth.emailSignUp(this.userForm.value.emailSignup, this.userForm.value.passwordSignup)
   }
 }
