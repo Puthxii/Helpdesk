@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-
+import { Component, ElementRef } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +6,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Helpdesk';
+
+  constructor(private elementRef: ElementRef) {
+
+  }
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngAfterViewInit() {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#F2EDF3';
+  }
 }
