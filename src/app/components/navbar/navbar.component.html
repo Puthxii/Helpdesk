@@ -20,7 +20,7 @@
         <a class="nav-link" [routerLink]="['/profile']">โปรไฟล์</a>
       </li>
       <li>
-        <a class="nav-link">ออกจากระบบ</a>
+        <a class="nav-link" (click)="this.auth.signOut()">ออกจากระบบ</a>
       </li>
     </ul>
   </div>

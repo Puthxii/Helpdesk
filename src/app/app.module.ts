@@ -17,6 +17,9 @@ import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
+
 // Routes
 export const router: Routes = [
   { path: '', component: HomeComponent },
@@ -31,17 +34,19 @@ export const router: Routes = [
     LoginComponent,
     NavbarComponent,
     ProfileComponent,
-    SignupComponent
+    SignupComponent,
   ],
   imports: [
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserModule,
+    AppRoutingModule,
     RouterModule.forRoot(router),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
-  providers: [AngularFireDatabase],
+  providers: [AuthService, AngularFireDatabase, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
