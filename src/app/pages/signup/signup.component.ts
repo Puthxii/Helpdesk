@@ -10,6 +10,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 export class SignupComponent implements OnInit {
 
   userForm: FormGroup;
+  emailSignup: string;
+  passwordSignup: string;
   constructor(private fb: FormBuilder, private auth: AuthService) {
     auth.getCurrentLoggedIn();
   }
@@ -23,27 +25,13 @@ export class SignupComponent implements OnInit {
         Validators.email
       ]),
       passwordSignup: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
+        Validators.pattern('^ (?=.* [0–9])(?=.* [a - zA - Z])([a - zA - Z0–9] +)$'),
         Validators.minLength(6),
         Validators.maxLength(25)
       ])
     });
   }
-
-  get emailSignup() {
-    return this.userForm.get('emailSignup');
-  }
-
-  get passwordSignup() {
-    return this.userForm.get('passwordSignup');
-  }
-
   signup(): void {
     this.auth.emailSignUp(this.userForm.value.emailSignup, this.userForm.value.passwordSignup)
-  }
-
-  googleLogin(): void {
-    this.auth.googleLogin();
   }
 }
