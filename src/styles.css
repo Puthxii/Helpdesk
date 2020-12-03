@@ -1,11 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
-
 :root{
     --background-color: #F2EDF3;
     --primary-color: #3399CC;
-}
-
-.googleBtn {
-    background: #eb5e4c;
 }
