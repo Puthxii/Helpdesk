@@ -3,3 +3,17 @@
     --background-color: #F2EDF3;
     --primary-color: #3399CC;
 }
+.logo-img{
+    vertical-align: top;
+    width: 30px;
+}
+.primary-color{
+    color: var(--primary-color);
+}
+.btn-login{
+    background-image: linear-gradient(to right, #3399CC 0%, #533380 50%, #3399CC 100%);
+}
+.logo-img-login{
+    vertical-align: top;
+    width: 50px;
+}

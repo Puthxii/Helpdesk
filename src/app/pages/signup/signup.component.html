@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-header text-left primary-color bg-white">
         <div class="header content">
-          <img class=" img" src="../../../assets/images/logo.png">
+          <img class="logo-img-login" src="../../../assets/images/logo.png">
           <h3>
             Helpdesk
           </h3>
@@ -47,8 +47,7 @@
           </div>
           <div class="row">
             <div class="col-12 align-items-center text-center">
-              <button type="submit" class="col-9 btn btn-3">
-                <i class="fa fa-lock" aria-hidden="true"></i>
+              <button type="submit" class="col-9 btn btn-login">
                 SIGN UP
               </button>
             </div>
@@ -58,8 +57,9 @@
               <div class="my-2 d-flex justify-content-between align-items-center">
                 <div class="form-check">
                   <label class="form-check-label text-muted">
-                    <input type="checkbox" class="form-check-input"> Keep me signed in <i
-                      class="input-helper"></i></label>
+                    <input type="checkbox" class="form-check-input">
+                    Keep me signed in<i class="input-helper"></i>
+                  </label>
                 </div>
                 <a class="text-muted new-member" [routerLink]="['/login']">
                   sign in
