@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { firebase } from '@firebase/app';
@@ -11,6 +11,9 @@ import { AngularFirestore } from 'angularfire2/firestore';
 export class AuthService {
   authState: any = null;
   userRef: AngularFireObject<any>;
+  private signedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
@@ -19,6 +22,9 @@ export class AuthService {
     this.afAuth.authState.subscribe((auth) => {
       this.authState = auth;
     });
+  }
+  get isSignedIn() {
+    return this.signedIn.asObservable();
   }
   get authenticated(): boolean {
     return this.authState !== null;
@@ -106,6 +112,7 @@ export class AuthService {
   async emailLogin(email: string, password: string) {
     try {
       const user = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+      this.signedIn.next(true);
       this.authState = user;
       this.updateUserData();
       this.router.navigate(['/']);
@@ -133,10 +140,11 @@ export class AuthService {
   }
   signOut(): void {
     this.afAuth.auth.signOut();
-    this.router.navigate(['/']);
+    this.signedIn.next(false);
+    this.router.navigate(['/login']);
   }
   private updateUserData(): void {
-    const path = `staff/${this.currentUserId}`; // Endpoint on firebase
+    const path = `staff/${this.currentUserId}`;
     const userRef: AngularFireObject<any> = this.db.object(path);
     const data = {
       email: this.authState.user.email,
