@@ -10,6 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import {AddTicketComponent} from './pages/add-ticket/add-ticket.component';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -25,7 +26,8 @@ export const router: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'add-ticket', component: AddTicketComponent}
 ]
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ export const router: Routes = [
     NavbarComponent,
     ProfileComponent,
     SignupComponent,
+    AddTicketComponent
   ],
   imports: [
     FormsModule,

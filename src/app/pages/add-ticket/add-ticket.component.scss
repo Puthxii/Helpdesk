@@ -1,0 +1,33 @@
+.card-header{
+    border: none;
+}
+.card-body{
+    padding-top: none;
+
+}
+.card{
+    width: 950px;
+   padding-right: initial;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.img{
+    margin-bottom: 10px;
+    width: 50px;
+}
+.header.content > img,
+    .header.content > h3 {
+        display: inline-block;
+    }
+
+h3{
+    padding: 10px 10px 10px 10px;
+}
+
+input {
+    width: 100%;
+  }

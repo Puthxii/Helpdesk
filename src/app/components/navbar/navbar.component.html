@@ -11,6 +11,9 @@
     </ul>
     <ul class="navbar-nav">
       <li>
+        <a class="nav-link" [routerLink]="['/add-ticket']">Ticket</a>
+      </li>
+      <li>
         <a class="nav-link" [routerLink]="['/']">Home</a>
       </li>
       <li *ngIf="!auth.authenticated">
