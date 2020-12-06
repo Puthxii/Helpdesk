@@ -125,7 +125,7 @@ export class AuthService {
       this.router.navigate(['/']);
       this.alertService.success('Login success', this.options)
     } catch (error) {
-      this.alertService.error(error, this.options)
+      this.alertService.error(error.message, this.options)
     }
   }
   // tslint:disable-next-line: typedef
