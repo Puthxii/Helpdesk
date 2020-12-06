@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { AlertModule } from '../app/_alert/alert.module';
 
 // Routes
 export const router: Routes = [
@@ -41,6 +42,7 @@ export const router: Routes = [
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
+    AlertModule,
     RouterModule.forRoot(router),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

@@ -1,15 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
     --background-color: #F2EDF3;
-    --primary-color: #3399CC;
+    --main-color: #3399CC;
+    --purple-color: #533380;
+    --gray-color: #9C9FA6;
+    --primary-color: #3096E7;
+    --primary-fade-color: #8FC9F9;
+    --danger-color: #FE8896;
+    --success-color: #2ED0B9;
+    --success-fade-color: #81D8D1;
+    --warning-color: #FFBE96;
+
 }
 .logo-img{
     vertical-align: top;
     width: 30px;
 }
+.background-color {
+    color: var(--background-color);
+}
+.main-color{
+    color: var(--main-color);
+}
+.purple-color{
+    color: var(--purple-color);
+}
+.gray-color{
+    color: var(--gray-color);
+}
 .primary-color{
     color: var(--primary-color);
 }
+.primary-fade-color{
+    color: var(--primary-fade-color);
+}
+.danger-color{
+    color: var(--danger-color);
+}
+.success-color{
+    color: var(--success-color);
+}
+.success-fade-color{
+    color: var(--success-fade-color);
+}
+.warning-color{
+    color: var(--warning-color);
+}
+
+
 .btn-login{
     background-image: linear-gradient(to right, #3399CC 0%, #533380 50%, #3399CC 100%);
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertService } from '../../_alert/alert.service';
 
 @Component({
   selector: 'app-home',
@@ -6,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  options = {
+    autoClose: false,
+    keepAfterRouteChange: false
+  };
 
-  constructor() { }
+  constructor(protected alertService: AlertService) { }
 
   ngOnInit() {
   }

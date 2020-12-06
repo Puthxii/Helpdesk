@@ -7,14 +7,21 @@ import { firebase } from '@firebase/app';
 import '@firebase/auth';
 import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@firebase/auth-types';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { AlertService } from '../_alert/alert.service';
+
 @Injectable()
 export class AuthService {
+  options = {
+    autoClose: false,
+    keepAfterRouteChange: false
+  };
   authState: any = null;
   userRef: AngularFireObject<any>;
   private signedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
   constructor(
+    protected alertService: AlertService,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private router: Router,
@@ -116,8 +123,9 @@ export class AuthService {
       this.authState = user;
       this.updateUserData();
       this.router.navigate(['/']);
+      this.alertService.success('Login success', this.options.autoClose = true)
     } catch (error) {
-      return console.log(error);
+      this.alertService.error(error, this.options)
     }
   }
   // tslint:disable-next-line: typedef
