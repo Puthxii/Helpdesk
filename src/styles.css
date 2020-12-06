@@ -3,7 +3,7 @@
     --background-color: #F2EDF3;
     --main-color: #3399CC;
     --purple-color: #533380;
-    --gray-color: #9C9FA6;
+    --secondary-color: #9C9FA6;
     --primary-color: #3096E7;
     --primary-fade-color: #8FC9F9;
     --danger-color: #FE8896;
@@ -25,8 +25,8 @@
 .purple-color{
     color: var(--purple-color);
 }
-.gray-color{
-    color: var(--gray-color);
+.secondary-color{
+    color: var(--secondary-color);
 }
 .primary-color{
     color: var(--primary-color);
