@@ -12,7 +12,7 @@ import { AlertService } from '../_alert/alert.service';
 @Injectable()
 export class AuthService {
   options = {
-    autoClose: false,
+    autoClose: true,
     keepAfterRouteChange: false
   };
   authState: any = null;
@@ -123,7 +123,7 @@ export class AuthService {
       this.authState = user;
       this.updateUserData();
       this.router.navigate(['/']);
-      this.alertService.success('Login success', this.options.autoClose = true)
+      this.alertService.success('Login success', this.options)
     } catch (error) {
       this.alertService.error(error, this.options)
     }
