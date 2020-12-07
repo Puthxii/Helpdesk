@@ -1,6 +1,6 @@
 
-<div class="container-fluid">
-  <div class="col-md-6">
+<div class="row">
+  <div class="col">
     <div class="card">
       <div class="card-header text-left primary-color bg-white">
         <div class="header content">
@@ -81,14 +81,19 @@
               <textarea class="form-control" id="resolve" rows="3"></textarea>
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-group col-md-2">
-              <button type="submit" class="btn btn-light">Cancel</button>
+            <div class="form-row"> 
+              <div class="form-group col-md-12"> 
+                <button id="btnGroupDrop1" type="button" class="btn btn-success create dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                  Create
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                  <a class="dropdown-item" href="#">Create and set as panding</a>
+                  <a class="dropdown-item" href="#">Create and set as close</a>
+                  <a class="dropdown-item" href="#">Draft</a>
+                </div>
+                <button type="submit" class="btn btn-light" style="float: right;">Cancel</button>
+              </div>
             </div>
-            <div class="form-group col-md-2">
-              <button type="submit"  class="btn btn-primary">Create</button>
-            </div>
-          </div>
         </form>
       </div>
     </div>
