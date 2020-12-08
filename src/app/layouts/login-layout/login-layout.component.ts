@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   template: `
   <main>
   <div class="container">
+    <app-alert></app-alert>
     <router-outlet></router-outlet>
   </div>
   </main>

@@ -11,13 +11,7 @@ export class AppComponent {
   ngOnInit() {
   }
 
-  toggleOffcanvas() {
-    document.querySelector('.sidebar-offcanvas').classList.toggle('toggled');
-  }
-
-  constructor(private elementRef: ElementRef) {
-
-  }
+  constructor(private elementRef: ElementRef) { }
   // tslint:disable-next-line: use-lifecycle-interface
   ngAfterViewInit() {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#F2EDF3';

@@ -33,7 +33,11 @@ export const router: Routes = [
       {
         path: '',
         component: HomeComponent
-      }
+      },
+      {
+        path: 'signup',
+        component: SignupComponent
+      },
     ]
   },
   {
@@ -43,10 +47,10 @@ export const router: Routes = [
       {
         path: 'login',
         component: LoginComponent
-      }
+      },
+
     ]
   },
-  { path: 'signup', component: SignupComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
 ]
 @NgModule({
