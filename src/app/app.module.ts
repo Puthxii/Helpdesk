@@ -23,6 +23,7 @@ import { AlertModule } from '../app/_alert/alert.module';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { StaffComponent } from './pages/staff/staff.component';
+import { RegisterStaffComponent } from './pages/register-staff/register-staff.component';
 
 // Routes
 export const router: Routes = [
@@ -40,9 +41,9 @@ export const router: Routes = [
         component: StaffComponent
       },
       {
-        path: 'signup',
-        component: SignupComponent
-      },
+        path: 'register-staff',
+        component: RegisterStaffComponent
+      }
     ]
   },
   {
@@ -52,11 +53,18 @@ export const router: Routes = [
       {
         path: 'login',
         component: LoginComponent
-      },
-
+      }
     ]
   },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+  {
+    path: 'signup',
+    component: SignupComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  }
 ]
 @NgModule({
   declarations: [
@@ -67,6 +75,7 @@ export const router: Routes = [
     ProfileComponent,
     SignupComponent,
     StaffComponent,
+    RegisterStaffComponent,
     HomeLayoutComponent,
     LoginLayoutComponent,
   ],

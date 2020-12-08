@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { firebase } from '@firebase/app';
 import '@firebase/auth';
@@ -11,6 +11,7 @@ import { AlertService } from '../_alert/alert.service';
 
 @Injectable()
 export class AuthService {
+  staffsRef: AngularFireList<any>;
   options = {
     autoClose: true,
     keepAfterRouteChange: false
@@ -160,5 +161,10 @@ export class AuthService {
     };
     userRef.update(data)
       .catch(error => console.log(error));
+  }
+
+  GetStaffsList() {
+    this.staffsRef = this.db.list('staff');
+    return this.staffsRef;
   }
 }
