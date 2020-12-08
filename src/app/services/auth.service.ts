@@ -163,7 +163,7 @@ export class AuthService {
       .catch(error => console.log(error));
   }
 
-  GetStaffsList() {
+  getStaffsList() {
     this.staffsRef = this.db.list('staff');
     return this.staffsRef;
   }

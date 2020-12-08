@@ -8,11 +8,11 @@ import { Staff } from '../../services/staff';   // Student interface class for D
   styleUrls: ['./staff.component.scss']
 })
 export class StaffComponent implements OnInit {
-  p: number = 1;
+  p = 1;
   Staff: Staff[];
-  hideWhenNoStaff: boolean = false;
-  noData: boolean = false;
-  preLoader: boolean = true;
+  hideWhenNoStaff = false;
+  noData = false;
+  preLoader = true;
 
   constructor(
     private auth: AuthService
@@ -20,19 +20,19 @@ export class StaffComponent implements OnInit {
 
   ngOnInit() {
     this.dataState();
-    let s = this.auth.GetStaffsList();
+    const s = this.auth.getStaffsList();
     s.snapshotChanges().subscribe(data => {
       this.Staff = [];
       data.forEach(item => {
-        let a = item.payload.toJSON();
+        const a = item.payload.toJSON();
         a['$key'] = item.key;
         this.Staff.push(a as Staff);
-      })
-    })
+      });
+    });
   }
 
   dataState() {
-    this.auth.GetStaffsList().valueChanges().subscribe(data => {
+    this.auth.getStaffsList().valueChanges().subscribe(data => {
       this.preLoader = false;
       if (data.length <= 0) {
         this.hideWhenNoStaff = false;
@@ -41,7 +41,7 @@ export class StaffComponent implements OnInit {
         this.hideWhenNoStaff = true;
         this.noData = false;
       }
-    })
+    });
   }
 
 }
