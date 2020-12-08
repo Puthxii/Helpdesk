@@ -22,6 +22,7 @@
     "angularfire2": "^5.4.2",
     "bootstrap": "^4.0.0-beta.2",
     "firebase": "^7.24.0",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "rxjs": "~6.4.0",

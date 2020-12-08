@@ -7,6 +7,14 @@ import { Component, ElementRef } from '@angular/core';
 export class AppComponent {
   title = 'Helpdesk';
 
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngOnInit() {
+  }
+
+  toggleOffcanvas() {
+    document.querySelector('.sidebar-offcanvas').classList.toggle('toggled');
+  }
+
   constructor(private elementRef: ElementRef) {
 
   }
