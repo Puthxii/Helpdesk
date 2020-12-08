@@ -22,6 +22,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { AlertModule } from '../app/_alert/alert.module';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { StaffComponent } from './pages/staff/staff.component';
 
 // Routes
 export const router: Routes = [
@@ -33,6 +34,10 @@ export const router: Routes = [
       {
         path: '',
         component: HomeComponent
+      },
+      {
+        path: 'staff',
+        component: StaffComponent
       },
       {
         path: 'signup',
@@ -61,6 +66,7 @@ export const router: Routes = [
     NavbarComponent,
     ProfileComponent,
     SignupComponent,
+    StaffComponent,
     HomeLayoutComponent,
     LoginLayoutComponent,
   ],

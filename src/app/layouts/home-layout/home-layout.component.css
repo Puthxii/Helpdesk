@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
 
 main {
-    padding-top: 67px;
+    padding-top: 30px;
 }
 * {
     font-family: 'Nunito', sans-serif;
@@ -11,6 +11,9 @@ main {
   padding-top: 5px;
 }
 
+.mg-l{
+  margin-left: 10px;
+}
 .header.content > img,
     .header.content > h3 {
         display: inline-block;
