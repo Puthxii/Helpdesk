@@ -9,14 +9,10 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
-  isSignedIn$: Observable<boolean>;
-
   constructor(
     private router: Router,
     private auth: AuthService
   ) { }
   ngOnInit() {
-    this.isSignedIn$ = this.auth.isSignedIn;
   }
 }

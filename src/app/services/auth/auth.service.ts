@@ -15,9 +15,6 @@ export class AuthService {
   options: Options[];
   authState: any = null;
   userRef: AngularFireObject<any>;
-  private signedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
   constructor(
     protected alertService: AlertService,
     private afAuth: AngularFireAuth,
@@ -27,9 +24,6 @@ export class AuthService {
     this.afAuth.authState.subscribe((auth) => {
       this.authState = auth;
     });
-  }
-  get isSignedIn() {
-    return this.signedIn.asObservable();
   }
   get authenticated(): boolean {
     return this.authState !== null;
@@ -55,31 +49,25 @@ export class AuthService {
       return this.authState.displayName || 'User without a Name';
     }
   }
-  // tslint:disable-next-line: typedef
   addUserData() {
     this.afs.collection('staff').add({ email: this.authState.user.email });
   }
-  // tslint:disable-next-line: typedef
   githubLogin() {
     const provider = new firebase.auth.GithubAuthProvider();
     return this.socialSignIn(provider);
   }
-  // tslint:disable-next-line: typedef
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.socialSignIn(provider);
   }
-  // tslint:disable-next-line: typedef
   facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
     return this.socialSignIn(provider);
   }
-  // tslint:disable-next-line: typedef
   twitterLogin() {
     const provider = new firebase.auth.TwitterAuthProvider();
     return this.socialSignIn(provider);
   }
-  // tslint:disable-next-line: typedef
   private async socialSignIn(provider: GithubAuthProvider | GoogleAuthProvider | FacebookAuthProvider | TwitterAuthProvider) {
     try {
       const credential = await this.afAuth.auth.signInWithPopup(provider);
@@ -91,7 +79,6 @@ export class AuthService {
       return console.log(error);
     }
   }
-  // tslint:disable-next-line: typedef
   async anonymousLogin() {
     try {
       const user = await this.afAuth.auth.signInAnonymously();
@@ -101,7 +88,6 @@ export class AuthService {
       return console.log(error);
     }
   }
-  // tslint:disable-next-line: typedef
   async emailSignUp(email: string, password: string) {
     try {
       const user = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
@@ -113,11 +99,9 @@ export class AuthService {
       return console.log(error);
     }
   }
-  // tslint:disable-next-line: typedef
   async emailLogin(email: string, password: string) {
     try {
       const user = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-      this.signedIn.next(true);
       this.authState = user;
       this.updateUserData();
       this.router.navigate(['/']);
@@ -126,7 +110,6 @@ export class AuthService {
       this.alertService.error(error.message, this.options)
     }
   }
-  // tslint:disable-next-line: typedef
   async resetPassword(email: string) {
     const fbAuth = firebase.auth();
     try {
@@ -136,7 +119,6 @@ export class AuthService {
       return console.log(error);
     }
   }
-  // tslint:disable-next-line: typedef
   getCurrentLoggedIn() {
     this.afAuth.authState.subscribe(auth => {
       if (auth) {
@@ -146,7 +128,6 @@ export class AuthService {
   }
   signOut(): void {
     this.afAuth.auth.signOut();
-    this.signedIn.next(false);
     this.router.navigate(['/login']);
   }
   private updateUserData(): void {
