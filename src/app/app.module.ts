@@ -1,16 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './pages/login/login.component'
-import { from } from 'rxjs';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
@@ -25,7 +22,6 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 import { StaffComponent } from './pages/staff/staff.component';
 import { RegisterStaffComponent } from './pages/register-staff/register-staff.component';
 
-// Routes
 export const router: Routes = [
   {
     path: '',
