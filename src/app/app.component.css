@@ -3,9 +3,7 @@
 main {
     padding-top: 67px;
 }
-* {
-    font-family: 'Nunito', sans-serif;
-}
+
 .list-group-item{
   border: none;
   padding-top: 5px;
