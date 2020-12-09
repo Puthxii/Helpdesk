@@ -12,7 +12,7 @@ import { Options } from '../../_alert/alert.model';
 
 @Injectable()
 export class AuthService {
-  options: Options[];
+  options: Options;
   authState: any = null;
   userRef: AngularFireObject<any>;
   constructor(
@@ -105,9 +105,15 @@ export class AuthService {
       this.authState = user;
       this.updateUserData();
       this.router.navigate(['/']);
-      this.alertService.success('Login success', this.options)
+      this.alertService.success('Login success', this.options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+      });
     } catch (error) {
-      this.alertService.error(error.message, this.options)
+      this.alertService.error(error.message, this.options = {
+        autoClose: true,
+        keepAfterRouteChange: false
+      });
     }
   }
   async resetPassword(email: string) {
