@@ -17,7 +17,7 @@ import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AlertModule } from '../app/_alert/alert.module';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';

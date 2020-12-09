@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { Staff } from '../../services/staff';   // Student interface class for Data types.
+import { StaffService } from 'src/app/services/staff/staff.service';
+import { Staff } from '../../services/staff/staff.model';
 
 @Component({
   selector: 'app-staff',
@@ -15,12 +15,12 @@ export class StaffComponent implements OnInit {
   preLoader = true;
 
   constructor(
-    private auth: AuthService
+    private staff: StaffService
   ) { }
 
   ngOnInit() {
     this.dataState();
-    const s = this.auth.getStaffsList();
+    const s = this.staff.getStaffsList();
     s.snapshotChanges().subscribe(data => {
       this.Staff = [];
       data.forEach(item => {
@@ -32,7 +32,7 @@ export class StaffComponent implements OnInit {
   }
 
   dataState() {
-    this.auth.getStaffsList().valueChanges().subscribe(data => {
+    this.staff.getStaffsList().valueChanges().subscribe(data => {
       this.preLoader = false;
       if (data.length <= 0) {
         this.hideWhenNoStaff = false;

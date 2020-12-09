@@ -7,15 +7,12 @@ import { firebase } from '@firebase/app';
 import '@firebase/auth';
 import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@firebase/auth-types';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { AlertService } from '../_alert/alert.service';
+import { AlertService } from '../../_alert/alert.service';
+import { Options } from '../../_alert/alert.model';
 
 @Injectable()
 export class AuthService {
-  staffsRef: AngularFireList<any>;
-  options = {
-    autoClose: true,
-    keepAfterRouteChange: false
-  };
+  options: Options[];
   authState: any = null;
   userRef: AngularFireObject<any>;
   private signedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
@@ -163,8 +160,4 @@ export class AuthService {
       .catch(error => console.log(error));
   }
 
-  getStaffsList() {
-    this.staffsRef = this.db.list('staff');
-    return this.staffsRef;
-  }
 }
