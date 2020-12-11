@@ -19,6 +19,24 @@ export class AddTicketComponent implements OnInit {
     this.buildForm()
   }
 
+  sources = [
+    { name: 'email' },
+    { name: 'call', }
+  ];
+
+  types = [
+    { name: 'info' },
+    { name: 'consult' },
+    { name: 'problem' },
+    { name: 'add-ons' }
+  ]
+
+  prioritys = [
+    { name: 'low' },
+    { name: 'medium' },
+    { name: 'high' }
+  ]
+
   buildForm() {
     this.addTicketForm = this.fb.group({
       date: [''],

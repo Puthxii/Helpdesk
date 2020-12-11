@@ -11,6 +11,7 @@ export class TicketService {
   constructor() { }
 
   addTicket(ticket: Ticket) {
+    console.log(ticket)
     this.ticketRef.push({
       date: ticket.date,
       source: ticket.source,
