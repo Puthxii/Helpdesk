@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-header text-left primary-color bg-white">
         <div class="header content">
-          <img class=" img" src="../../../assets/images/logo.png">
+          <img class="logo-img-login" src="../../../assets/images/logo.png">
           <h3>
             Helpdesk
           </h3>
@@ -13,19 +13,40 @@
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="form-group row">
             <div class="col-sm-9 col-centered">
-              <input type="email" formControlName="email" class="form-control">
+              <input type="email" formControlName="email" class="form-control" placeholder="Email">
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="col-sm-9 danger-color">
+                <div *ngIf="email.errors.required">
+                  Email is required.
+                </div>
+                <div *ngIf="email.errors.email">
+                  Email doesn't look quite right
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-sm-9 col-centered">
-              <input type="password" formControlName="password" class="form-control">
+              <input type="password" formControlName="password" class="form-control" placeholder="Password">
+              <div *ngIf="password.invalid && (password.dirty || password.touched)" class="col-sm-9 danger-color">
+                <div *ngIf="password.errors.required">
+                  Password is required.
+                </div>
+                <div *ngIf="password.errors.pattern">
+                  Password must have at least one charactor and one number
+                </div>
+                <div *ngIf="password.errors.minlength">
+                  Password must be more than 6 characters
+                </div>
+                <div *ngIf="password.errors.maxlength">
+                  Password is less than 25 characters
+                </div>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="col-12 align-items-center text-center">
-              <button type="submit" class="col-9 btn btn-3">
-                <i class="fa fa-lock" aria-hidden="true"></i>
-                SING IN
+              <button type="submit" class="col-9 btn btn-login" [disabled]="loginForm.invalid">
+                SIGN IN
               </button>
             </div>
           </div>
@@ -34,16 +55,16 @@
               <div class="my-2 d-flex justify-content-between align-items-center">
                 <div class="form-check">
                   <label class="form-check-label text-muted">
-                    <input type="checkbox" class="form-check-input"> Keep me signed in <i
-                      class="input-helper"></i></label>
+                    <input type="checkbox" class="form-check-input">
+                    Keep me signed in <i class="input-helper"></i>
+                  </label>
                 </div>
-                <a class="text-muted" [routerLink]="['/signup']">
+                <a class="text-muted new-member" [routerLink]="['/signup']">
                   new member ?
                 </a>
               </div>
             </div>
           </div>
-
         </form>
       </div>
     </div>

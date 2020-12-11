@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <p>Staff</p>
+  <a [routerLink]="['/register-staff']" class=" btn btn-success" *ngIf="hideWhenNoStaff">
+    <i class="fas fa-plus custom-fa-plus"></i>
+    Add Staff
+  </a>
+</div>
+<div class="pricing-header mx-auto">
+  <div class="no-data text-center" *ngIf="noData">
+    <p class="nodata-msg">No staff added yet!</p>
+    <a [routerLink]="['/register-staff']" class=" btn btn-success">
+      <i class="fas fa-plus custom-fa-plus"></i>
+      Add staff
+    </a>
+  </div>
+  <div class="table-responsive" *ngIf="hideWhenNoStaff">
+    <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Student name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Mobile number</th>
+          <th class="text-center" scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let staff of Staff ; let i = index;">
+          <td>{{i+1}}</td>
+          <td>{{staff.firstName}} {{staff.lastName}}</td>
+          <td>{{staff.email}}</td>
+          <td>{{staff.mobileNumber}}</td>
+          <td class="text-center action-block">
+            <i class="far fa-edit" routerLink="/edit-student/{{staff.$key}}"></i>
+            <i class="far fa-trash-alt" (click)="deleteStudent(staff)"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
