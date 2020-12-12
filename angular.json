@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "Helpdesk"
+  "defaultProject": "Helpdesk",
+  "cli": {
+    "analytics": "79236571-9bef-41d6-87a0-e19493f838bf"
+  }
 }

@@ -1,0 +1,110 @@
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content">
+          <h5>
+            <i class="fas fa-ticket-alt"></i>
+            New ticket
+          </h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="date">Date</label>
+              <input type="date" formControlName="date" class="form-control" id="date" placeholder="date">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="source">Source</label>
+              <select name="source" formControlName="source" class="form-control" id="source">
+                <option *ngFor="let source of sources" [ngValue]="source.name">
+                  {{ source.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="siteName">Site Name</label>
+              <input type=text formControlName="siteName" class="form-control" id="siteName" placeholder="Site Name">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="maintenancePackage">Maintenance Package</label>
+              <input type=text formControlName="maintenancePackage" class="form-control" id="maintenancePackage"
+                placeholder="Maintenance Package">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="product">Product</label>
+              <input type=text formControlName="product" class="form-control" id="product" placeholder="Product">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="module">Module</label>
+              <input type=text formControlName="module" class="form-control" id="module" placeholder="Module">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="creater">Creater</label>
+              <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="Type">Type</label>
+              <select name="Type" formControlName="type" class="form-control" id="type">
+                <option *ngFor="let type of types" [ngValue]="type.name">
+                  {{ type.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="subject">Subject</label>
+              <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="priority">Priority</label>
+              <select name="priority" formControlName="priority" class="form-control" id="priority">
+                <option *ngFor="let priority of prioritys" [ngValue]="priority.name">
+                  {{ priority.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="description">Description</label>
+              <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="resolve">Resolve Description</label>
+              <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription"
+                rows="3"></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <!-- <button id="btnGroupDrop1" type="submit" class="btn btn-success create dropdown-toggle"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Create
+              </button> -->
+              <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" style="float: right">
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Create and set as panding</a>
+                <a class="dropdown-item" href="#">Create and set as close</a>
+                <a class="dropdown-item" href="#">Draft</a>
+              </div>
+              <button type="submit" class="btn btn-success btn-save">Save</button>
+              <button type="submit" class="btn btn-light" style="float: right;">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

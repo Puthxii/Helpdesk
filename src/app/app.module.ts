@@ -21,6 +21,7 @@ import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { StaffComponent } from './pages/staff/staff.component';
 import { RegisterStaffComponent } from './pages/register-staff/register-staff.component';
+import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
 
 export const router: Routes = [
   {
@@ -39,6 +40,15 @@ export const router: Routes = [
       {
         path: 'register-staff',
         component: RegisterStaffComponent
+      },
+      {
+        path: 'add-ticket',
+        component: AddTicketComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [AuthGuard]
       }
     ]
   },
@@ -49,17 +59,12 @@ export const router: Routes = [
       {
         path: 'login',
         component: LoginComponent
-      }
+      },
+      {
+        path: 'signup',
+        component: SignupComponent
+      },
     ]
-  },
-  {
-    path: 'signup',
-    component: SignupComponent
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [AuthGuard]
   }
 ]
 @NgModule({
@@ -74,6 +79,7 @@ export const router: Routes = [
     RegisterStaffComponent,
     HomeLayoutComponent,
     LoginLayoutComponent,
+    AddTicketComponent
   ],
   imports: [
     FormsModule,
