@@ -11,11 +11,12 @@ export class AddTicketComponent implements OnInit {
   public addTicketForm: FormGroup;
 
   constructor(
-    public tick: TicketService,
+    public ticketService: TicketService,
     public fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.ticketService.getTicketsList();
     this.buildForm()
   }
 
@@ -103,7 +104,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   addTicketData() {
-    this.tick.addTicket(this.addTicketForm.value);
+    this.ticketService.addTicket(this.addTicketForm.value);
   }
 }
 

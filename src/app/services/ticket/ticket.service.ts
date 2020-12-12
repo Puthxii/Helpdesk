@@ -1,18 +1,19 @@
 import { Ticket } from './ticket.model';
 import { Injectable } from '@angular/core';
-import { AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketService {
-  ticketRef: AngularFireList<any>
+  ticketsRef: AngularFireList<any>
+  ticketRef: AngularFireObject<any>
 
-  constructor() { }
+  constructor(private db: AngularFireDatabase) { }
 
   addTicket(ticket: Ticket) {
     console.log(ticket)
-    this.ticketRef.push({
+    this.ticketsRef.push({
       date: ticket.date,
       source: ticket.source,
       siteName: ticket.siteName,
@@ -26,6 +27,11 @@ export class TicketService {
       description: ticket.description,
       resolveDescription: ticket.resolveDescription
     })
+  }
+
+  getTicketsList() {
+    this.ticketsRef = this.db.list('ticket');
+    return this.ticketsRef;
   }
 
 }

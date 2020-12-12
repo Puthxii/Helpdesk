@@ -19,7 +19,7 @@
             <div class="form-group col-md-6">
               <label for="source">Source</label>
               <select name="source" formControlName="source" class="form-control" id="source">
-                <option *ngFor="let source of sources" [ngValue]="source">
+                <option *ngFor="let source of sources" [ngValue]="source.name">
                   {{ source.name }}
                 </option>
               </select>
@@ -54,7 +54,7 @@
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
               <select name="Type" formControlName="type" class="form-control" id="type">
-                <option *ngFor="let type of types" [ngValue]="type">
+                <option *ngFor="let type of types" [ngValue]="type.name">
                   {{ type.name }}
                 </option>
               </select>
@@ -68,7 +68,7 @@
             <div class="form-group col-md-6">
               <label for="priority">Priority</label>
               <select name="priority" formControlName="priority" class="form-control" id="priority">
-                <option *ngFor="let priority of prioritys" [ngValue]="priority">
+                <option *ngFor="let priority of prioritys" [ngValue]="priority.name">
                   {{ priority.name }}
                 </option>
               </select>
