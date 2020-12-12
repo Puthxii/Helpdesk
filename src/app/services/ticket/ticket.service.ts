@@ -11,6 +11,11 @@ export class TicketService {
 
   constructor(private db: AngularFireDatabase) { }
 
+  getTicketsList() {
+    this.ticketsRef = this.db.list('ticket');
+    return this.ticketsRef;
+  }
+
   addTicket(ticket: Ticket) {
     console.log(ticket)
     this.ticketsRef.push({
@@ -27,11 +32,6 @@ export class TicketService {
       description: ticket.description,
       resolveDescription: ticket.resolveDescription
     })
-  }
-
-  getTicketsList() {
-    this.ticketsRef = this.db.list('ticket');
-    return this.ticketsRef;
   }
 
 }
