@@ -25,7 +25,7 @@ export class AddTicketComponent implements OnInit {
     { name: 'Facebook' },
     { name: 'Line' },
     { name: 'Email' },
-    { name: 'Telephone', },
+    { name: 'Telephone' },
     { name: 'Onsite' }
   ]
 
