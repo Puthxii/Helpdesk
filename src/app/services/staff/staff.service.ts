@@ -12,7 +12,7 @@ export class StaffService {
 
 
   getStaffsList() {
-    this.staffsRef = this.db.list('staff');
+    this.staffsRef = this.db.list('users'); //TODO users who roles are Staff
     return this.staffsRef;
   }
 

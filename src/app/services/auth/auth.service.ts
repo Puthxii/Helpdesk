@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { firebase } from '@firebase/app';
@@ -9,12 +9,14 @@ import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAu
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AlertService } from '../../_alert/alert.service';
 import { Options } from '../../_alert/alert.model';
-
+import { switchMap } from 'rxjs/operators'
+import { User } from '../user.model';
 @Injectable()
 export class AuthService {
   options: Options;
   authState: any = null;
   userRef: AngularFireObject<any>;
+  user$: Observable<User>;
   constructor(
     protected alertService: AlertService,
     private afAuth: AngularFireAuth,
@@ -24,6 +26,14 @@ export class AuthService {
     this.afAuth.authState.subscribe((auth) => {
       this.authState = auth;
     });
+
+    this.user$ = this.afAuth.authState.pipe(switchMap(user => {
+      if (user) {
+        return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+      } else {
+        return of(null)
+      }
+    }))
   }
   get authenticated(): boolean {
     return this.authState !== null;
@@ -49,9 +59,6 @@ export class AuthService {
       return this.authState.displayName || 'User without a Name';
     }
   }
-  addUserData() {
-    this.afs.collection('staff').add({ email: this.authState.user.email });
-  }
   githubLogin() {
     const provider = new firebase.auth.GithubAuthProvider();
     return this.socialSignIn(provider);
@@ -73,7 +80,7 @@ export class AuthService {
       const credential = await this.afAuth.auth.signInWithPopup(provider);
       console.log(credential.user);
       this.authState = credential.user;
-      this.updateUserData();
+      this.updateUserDataToDatabase();
       this.router.navigate(['/']);
     } catch (error) {
       return console.log(error);
@@ -92,8 +99,8 @@ export class AuthService {
     try {
       const user = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
       this.authState = user;
-      this.addUserData();
-      this.updateUserData();
+      this.updateUserDataToFirestore();
+      this.updateUserDataToDatabase();
       this.router.navigate(['/']);
     } catch (error) {
       return console.log(error);
@@ -103,7 +110,6 @@ export class AuthService {
     try {
       const user = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
       this.authState = user;
-      this.updateUserData();
       this.router.navigate(['/']);
       this.alertService.success('Login success', this.options = {
         autoClose: true,
@@ -136,15 +142,26 @@ export class AuthService {
     this.afAuth.auth.signOut();
     this.router.navigate(['/login']);
   }
-  private updateUserData(): void {
-    const path = `staff/${this.currentUserId}`;
+  private updateUserDataToDatabase(): void {
+    const path = `users/${this.currentUserId}`;
     const userRef: AngularFireObject<any> = this.db.object(path);
     const data = {
       email: this.authState.user.email,
-      name: this.authState.user.displayName
+      name: this.authState.user.displayName,
+      roles: {
+        customer: true
+      }
     };
     userRef.update(data)
       .catch(error => console.log(error));
   }
 
+  updateUserDataToFirestore() {
+    this.afs.collection('users').add({
+      email: this.authState.user.email,
+      roles: {
+        customer: true
+      }
+    });
+  }
 }
