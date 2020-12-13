@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: 'AIzaSyDnb1FtyyRijHUZf_C5DJpb7VLan_A__BY',
-    authDomain: 'testaddticket.firebaseapp.com',
-    databaseURL: 'https://testaddticket-default-rtdb.firebaseio.com',
-    projectId: 'testaddticket',
-    storageBucket: 'testaddticket.appspot.com',
-    messagingSenderId: '865788205715',
-    appId: '1:865788205715:web:171d4ba6a4caa1e1c28b66',
-    measurementId: 'G-HMF7WSW13K'
+    apiKey: 'AIzaSyBPSRTUiPSD9zQVytbrc2zJAT2f1g_RDAE',
+    authDomain: 'walaihelpdesk-25638.firebaseapp.com',
+    databaseURL: 'https://walaihelpdesk-25638.firebaseio.com',
+    projectId: 'walaihelpdesk-25638',
+    storageBucket: 'walaihelpdesk-25638.appspot.com',
+    messagingSenderId: '378895395486',
+    appId: '1:378895395486:web:a777745ce6138b35f5298f',
+    measurementId: 'G-E04WHMWHC0'
   }
 };
 

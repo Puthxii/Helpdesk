@@ -21,8 +21,12 @@ export class AddTicketComponent implements OnInit {
   }
 
   sources = [
-    { name: 'email' },
-    { name: 'call', }
+    { name: 'website'},
+    { name: 'Facebook'},
+    { name: 'Line'},
+    { name: 'Email' },
+    { name: 'Telephone', },
+    { name: 'Onsite'}
   ];
 
   types = [
