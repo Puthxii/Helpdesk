@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StaffService } from 'src/app/services/staff/staff.service';
-import { Staff } from '../../services/staff/staff.model';
+import { User } from '../../services/user.model';
 
 @Component({
   selector: 'app-staff',
@@ -9,7 +9,7 @@ import { Staff } from '../../services/staff/staff.model';
 })
 export class StaffComponent implements OnInit {
   p = 1;
-  Staff: Staff[];
+  Staff: User[];
   hideWhenNoStaff = false;
   noData = false;
   preLoader = true;
@@ -25,8 +25,8 @@ export class StaffComponent implements OnInit {
       this.Staff = [];
       data.forEach(item => {
         const a = item.payload.toJSON();
-        a['$key'] = item.key;
-        this.Staff.push(a as Staff);
+        a['$uid'] = item.key;
+        this.Staff.push(a as User);
       });
     });
   }

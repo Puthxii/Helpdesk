@@ -1,0 +1,15 @@
+export interface Roles {
+    customer?: boolean;
+    supporter?: boolean;
+    maintenance?: boolean;
+    supervisor?: boolean;
+}
+
+export interface User {
+    uid: string;
+    emaill: string;
+    firsName: string;
+    lastName: string;
+    mobileNumber: string;
+    roles: Roles;
+}

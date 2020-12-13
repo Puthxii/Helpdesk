@@ -21,13 +21,13 @@ export class AddTicketComponent implements OnInit {
   }
 
   sources = [
-    { name: 'website'},
-    { name: 'Facebook'},
-    { name: 'Line'},
+    { name: 'website' },
+    { name: 'Facebook' },
+    { name: 'Line' },
     { name: 'Email' },
     { name: 'Telephone', },
-    { name: 'Onsite'}
-  ];
+    { name: 'Onsite' }
+  ]
 
   types = [
     { name: 'info' },
