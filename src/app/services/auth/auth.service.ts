@@ -1,25 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { firebase } from '@firebase/app';
 import '@firebase/auth';
 import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@firebase/auth-types';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { AlertService } from '../_alert/alert.service';
+import { AlertService } from '../../_alert/alert.service';
+import { Options } from '../../_alert/alert.model';
 
 @Injectable()
 export class AuthService {
-  options = {
-    autoClose: true,
-    keepAfterRouteChange: false
-  };
+  options: Options;
   authState: any = null;
   userRef: AngularFireObject<any>;
-  private signedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
   constructor(
     protected alertService: AlertService,
     private afAuth: AngularFireAuth,
@@ -29,9 +24,6 @@ export class AuthService {
     this.afAuth.authState.subscribe((auth) => {
       this.authState = auth;
     });
-  }
-  get isSignedIn() {
-    return this.signedIn.asObservable();
   }
   get authenticated(): boolean {
     return this.authState !== null;
@@ -57,31 +49,25 @@ export class AuthService {
       return this.authState.displayName || 'User without a Name';
     }
   }
-  // tslint:disable-next-line: typedef
   addUserData() {
     this.afs.collection('staff').add({ email: this.authState.user.email });
   }
-  // tslint:disable-next-line: typedef
   githubLogin() {
     const provider = new firebase.auth.GithubAuthProvider();
     return this.socialSignIn(provider);
   }
-  // tslint:disable-next-line: typedef
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.socialSignIn(provider);
   }
-  // tslint:disable-next-line: typedef
   facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
     return this.socialSignIn(provider);
   }
-  // tslint:disable-next-line: typedef
   twitterLogin() {
     const provider = new firebase.auth.TwitterAuthProvider();
     return this.socialSignIn(provider);
   }
-  // tslint:disable-next-line: typedef
   private async socialSignIn(provider: GithubAuthProvider | GoogleAuthProvider | FacebookAuthProvider | TwitterAuthProvider) {
     try {
       const credential = await this.afAuth.auth.signInWithPopup(provider);
@@ -93,7 +79,6 @@ export class AuthService {
       return console.log(error);
     }
   }
-  // tslint:disable-next-line: typedef
   async anonymousLogin() {
     try {
       const user = await this.afAuth.auth.signInAnonymously();
@@ -103,7 +88,6 @@ export class AuthService {
       return console.log(error);
     }
   }
-  // tslint:disable-next-line: typedef
   async emailSignUp(email: string, password: string) {
     try {
       const user = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
@@ -115,20 +99,23 @@ export class AuthService {
       return console.log(error);
     }
   }
-  // tslint:disable-next-line: typedef
   async emailLogin(email: string, password: string) {
     try {
       const user = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-      this.signedIn.next(true);
       this.authState = user;
       this.updateUserData();
       this.router.navigate(['/']);
-      this.alertService.success('Login success', this.options)
+      this.alertService.success('Login success', this.options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+      });
     } catch (error) {
-      this.alertService.error(error.message, this.options)
+      this.alertService.error(error.message, this.options = {
+        autoClose: true,
+        keepAfterRouteChange: false
+      });
     }
   }
-  // tslint:disable-next-line: typedef
   async resetPassword(email: string) {
     const fbAuth = firebase.auth();
     try {
@@ -138,7 +125,6 @@ export class AuthService {
       return console.log(error);
     }
   }
-  // tslint:disable-next-line: typedef
   getCurrentLoggedIn() {
     this.afAuth.authState.subscribe(auth => {
       if (auth) {
@@ -148,7 +134,6 @@ export class AuthService {
   }
   signOut(): void {
     this.afAuth.auth.signOut();
-    this.signedIn.next(false);
     this.router.navigate(['/login']);
   }
   private updateUserData(): void {
@@ -161,4 +146,5 @@ export class AuthService {
     userRef.update(data)
       .catch(error => console.log(error));
   }
+
 }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top" *ngIf="isSignedIn$ | async as isSignedIn">
+<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
   <a class="navbar-brand" [routerLink]="['/']">
     <img class="logo-img" src="../../../assets/images/logo.png">
     <h3 class="primary-color">
@@ -23,7 +23,7 @@
         <a class="nav-link" [routerLink]="['/profile']">Profile</a>
       </li>
       <li *ngIf="auth.authenticated">
-        <a class="nav-link" (click)="this.auth.signOut()" *ngIf="isSignedIn">Logout</a>
+        <a class="nav-link" (click)="this.auth.signOut()">Logout</a>
       </li>
     </ul>
   </div>

@@ -1,4 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
+
 :root{
     --background-color: #F2EDF3;
     --main-color: #3399CC;
@@ -12,41 +13,55 @@
     --warning-color: #FFBE96;
 
 }
+
+* {
+    font-family: 'Nunito', sans-serif;
+}
+
 .logo-img{
     vertical-align: top;
     width: 30px;
 }
+
 .background-color {
     color: var(--background-color);
 }
+
 .main-color{
     color: var(--main-color);
 }
+
 .purple-color{
     color: var(--purple-color);
 }
+
 .secondary-color{
     color: var(--secondary-color);
 }
+
 .primary-color{
     color: var(--primary-color);
 }
+
 .primary-fade-color{
     color: var(--primary-fade-color);
 }
+
 .danger-color{
     color: var(--danger-color);
 }
+
 .success-color{
     color: var(--success-color);
 }
+
 .success-fade-color{
     color: var(--success-fade-color);
 }
+
 .warning-color{
     color: var(--warning-color);
 }
-
 
 .btn-login{
     background-image: linear-gradient(to right, #3399CC 0%, #533380 50%, #3399CC 100%);

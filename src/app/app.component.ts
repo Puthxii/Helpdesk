@@ -7,10 +7,11 @@ import { Component, ElementRef } from '@angular/core';
 export class AppComponent {
   title = 'Helpdesk';
 
-  constructor(private elementRef: ElementRef) {
-
+  ngOnInit() {
   }
-  // tslint:disable-next-line: use-lifecycle-interface
+
+  constructor(private elementRef: ElementRef) { }
+
   ngAfterViewInit() {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#F2EDF3';
   }

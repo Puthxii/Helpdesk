@@ -17,3 +17,8 @@ export enum AlertType {
     Info,
     Warning
 }
+
+export interface Options {
+    autoClose: boolean;
+    keepAfterRouteChange: boolean;
+}
