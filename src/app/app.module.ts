@@ -20,12 +20,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
-import { from } from 'rxjs';
-import { Component } from '@angular/core';
+import { AlertModule } from '../app/_alert/alert.module';
 
 // Routes
 export const router: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
@@ -47,6 +46,7 @@ export const router: Routes = [
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
+    AlertModule,
     RouterModule.forRoot(router),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

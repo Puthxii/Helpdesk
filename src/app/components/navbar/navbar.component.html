@@ -1,6 +1,9 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
-  <a class="navbar-brand text-dark" [routerLink]="['/']">
-    Helpdesk
+<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top" *ngIf="isSignedIn$ | async as isSignedIn">
+  <a class="navbar-brand" [routerLink]="['/']">
+    <img class="logo-img" src="../../../assets/images/logo.png">
+    <h3 class="primary-color">
+      Helpdesk
+    </h3>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,10 +13,7 @@
     <ul class="navbar-nav mr-auto">
     </ul>
     <ul class="navbar-nav">
-      <li>
-        <a class="nav-link" [routerLink]="['/add-ticket']">Ticket</a>
-      </li>
-      <li>
+      <li *ngIf="auth.authenticated">
         <a class="nav-link" [routerLink]="['/']">Home</a>
       </li>
       <li *ngIf="!auth.authenticated">
@@ -23,7 +23,7 @@
         <a class="nav-link" [routerLink]="['/profile']">Profile</a>
       </li>
       <li *ngIf="auth.authenticated">
-        <a class="nav-link" (click)="this.auth.signOut()">Logout</a>
+        <a class="nav-link" (click)="this.auth.signOut()" *ngIf="isSignedIn">Logout</a>
       </li>
     </ul>
   </div>
