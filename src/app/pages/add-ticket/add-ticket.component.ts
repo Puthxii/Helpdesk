@@ -23,7 +23,7 @@ export class AddTicketComponent implements OnInit {
   sources = [
     { name: 'email' },
     { name: 'call', }
-  ];
+  ]
 
   types = [
     { name: 'info' },
