@@ -1,16 +1,16 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { LoginComponent } from './pages/login/login.component'
-import { from } from 'rxjs';
+import { LoginComponent } from './pages/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import {AddTicketComponent} from './pages/add-ticket/add-ticket.component';
+import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -20,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { from } from 'rxjs';
+import { Component } from '@angular/core';
 
 // Routes
 export const router: Routes = [
@@ -28,7 +30,7 @@ export const router: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'add-ticket', component: AddTicketComponent}
-]
+];
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +39,8 @@ export const router: Routes = [
     NavbarComponent,
     ProfileComponent,
     SignupComponent,
-    AddTicketComponent
+    AddTicketComponent,
+    // AppRoutingModule,
   ],
   imports: [
     FormsModule,
@@ -47,9 +50,11 @@ export const router: Routes = [
     RouterModule.forRoot(router),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+
   ],
   providers: [AuthService, AngularFireDatabase, AuthGuard],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

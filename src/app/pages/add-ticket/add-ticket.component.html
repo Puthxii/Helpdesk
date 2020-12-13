@@ -1,6 +1,5 @@
-
-<div class="row">
-  <div class="col">
+<div class="row justify-content-center">
+  <div class="col-md-7">
     <div class="card">
       <div class="card-header text-left primary-color bg-white">
         <div class="header content">
@@ -10,8 +9,8 @@
           </h3>
         </div>
       </div>
-      <div class="card-body" >
-        <form>
+      <div class="card-body">
+        <form  ngSubmit="submitTicketData()" >
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="date">Date</label>
@@ -21,7 +20,11 @@
               <label for="source">Source</label>
               <select name="source" class="form-control" id="source">
                 <option selected>Choose...</option>
-                <option>...</option>
+                <option value="">Website</option>
+                <option value="">Facebook</option>
+                <option value="">Line</option>
+                <option value="">Telephone</option>
+                <option value="">Onsite</option>
               </select>
             </div>
           </div>
@@ -41,8 +44,11 @@
               <input type=text class="form-control" id="product" placeholder="Product">
             </div>
             <div class="form-group col-md-6">
-              <label for="module">Module</label>
-              <input type=text class="form-control" id="module" placeholder="Module" >
+              <div class="input-group mb-3">
+                <label for="module">Module</label>
+                <input type=text class="form-control" id="module" placeholder="Module">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+              </div>
             </div>
           </div>
           <div class="form-row">
@@ -54,7 +60,11 @@
               <label for="source">Type</label>
               <select name="source" class="form-control" id="source">
                 <option selected>Choose...</option>
-                <option>...</option>
+                <option value="">Problem</option>
+                <option value="">Add-ons</option>
+                <option value="">Information</option>
+                <option value="">Consult</option>
+                <option value="">Other</option>
               </select>
             </div>
           </div>
@@ -67,7 +77,9 @@
               <label for="priority">Priority</label>
               <select name="priority" class="form-control" id="priority">
                 <option selected>Choose...</option>
-                <option>...</option>
+                <option value="">High</option>
+                <option value="">Medium</option>
+                <option value="">Low</option>
               </select>
             </div>
           </div>
@@ -86,12 +98,12 @@
                 <button id="btnGroupDrop1" type="button" class="btn btn-success create dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                   Create
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <!-- <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                   <a class="dropdown-item" href="#">Create and set as panding</a>
                   <a class="dropdown-item" href="#">Create and set as close</a>
                   <a class="dropdown-item" href="#">Draft</a>
-                </div>
-                <button type="submit" class="btn btn-light" style="float: right;">Cancel</button>
+                </div> -->
+                <button type="submit" class="btn btn-light" style="float: right;" (click)="ResetForm()">Cancel</button>
               </div>
             </div>
         </form>
