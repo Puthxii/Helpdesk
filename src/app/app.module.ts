@@ -1,4 +1,3 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { SupportGuard } from './guards/support.guard';
 import { AlertModule } from '../app/_alert/alert.module';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
@@ -36,7 +36,8 @@ export const router: Routes = [
       },
       {
         path: 'staff',
-        component: StaffComponent
+        component: StaffComponent,
+        canActivate: [SupportGuard]
       },
       {
         path: 'register-staff',

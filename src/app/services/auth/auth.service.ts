@@ -6,7 +6,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { firebase } from '@firebase/app';
 import '@firebase/auth';
 import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@firebase/auth-types';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AlertService } from '../../_alert/alert.service';
 import { Options } from '../../_alert/alert.model';
 import { switchMap } from 'rxjs/operators'
@@ -145,23 +145,27 @@ export class AuthService {
   private updateUserDataToDatabase(): void {
     const path = `users/${this.currentUserId}`;
     const userRef: AngularFireObject<any> = this.db.object(path);
-    const data = {
+    const data: User = {
+      uid: this.authState.user.uid,
       email: this.authState.user.email,
-      name: this.authState.user.displayName,
       roles: {
         customer: true
       }
-    };
+    }
     userRef.update(data)
       .catch(error => console.log(error));
   }
 
-  updateUserDataToFirestore() {
-    this.afs.collection('users').add({
+  private updateUserDataToFirestore() {
+    const path = `users/${this.currentUserId}`;
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(path);
+    const data: User = {
+      uid: this.authState.user.uid,
       email: this.authState.user.email,
       roles: {
         customer: true
       }
-    });
+    }
+    return userRef.set(data, { merge: true })
   }
 }

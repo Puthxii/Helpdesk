@@ -46,12 +46,12 @@ export class StaffComponent implements OnInit {
   }
 
   getRoles(roles: Roles): string {
-    if (roles.customer === true) {
-      return 'customer';
-    } else if (roles.supporter === true) {
+    if (roles.supporter === true) {
       return 'supporter';
+    } else if (roles.customer === true) {
+      return 'customer';
     } else {
-      return 'user';
+      return 'customer';
     }
   }
 }
