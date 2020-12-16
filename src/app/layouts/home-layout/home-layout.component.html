@@ -1,11 +1,11 @@
 <div class="d-flex sidebar-offcanvas" id="wrapper">
     <div class="bg-white border-right" id="sidebar-wrapper">
-        <div class="header content">
+        <a class="header content" routerLink="/">
             <img class="logo-img-navbar" src="../../../assets/images/logo.png">
             <h3 class="bg-white primary-color">
                 Helpdesk
             </h3>
-        </div>
+        </a>
         <div class="list-group list-group-flush">
             <a [routerLink]="['/']" class=" list-group-item list-group-item-action bg-white">Dashboard</a>
             <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white">Ticket</a>
@@ -25,10 +25,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['/add-ticket']">Add</a>
+                        <a class="nav-link" [routerLink]="['/add-ticket']">
+                            <i class="fas fa-notes-medical"></i>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Notify</a>
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-bell"></i>
+                        </a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
