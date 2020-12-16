@@ -1,6 +1,7 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-add-ticket',
@@ -19,6 +20,15 @@ export class AddTicketComponent implements OnInit {
     this.ticketService.getTicketsList();
     this.buildForm()
   }
+
+  successNotification(){
+    Swal.fire({
+      text: 'Your ticket has been saved',
+      icon: 'success',
+    }).then((result) => {
+      window.location.href = "./../ticket";
+    })
+  } 
 
   sources = [
     { name: 'website' },
