@@ -1,9 +1,7 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './pages/login/login.component'
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
@@ -17,12 +15,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { SupportGuard } from './guards/support.guard';
 import { AlertModule } from '../app/_alert/alert.module';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { StaffComponent } from './pages/staff/staff.component';
 import { RegisterStaffComponent } from './pages/register-staff/register-staff.component';
 import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
+import { TicketComponent } from './pages/ticket/ticket.component';
 
 export const router: Routes = [
   {
@@ -36,7 +36,8 @@ export const router: Routes = [
       },
       {
         path: 'staff',
-        component: StaffComponent
+        component: StaffComponent,
+        canActivate: [SupportGuard]
       },
       {
         path: 'register-staff',
@@ -47,10 +48,14 @@ export const router: Routes = [
         component: AddTicketComponent
       },
       {
+        path: 'ticket',
+        component: TicketComponent
+      },
+      {
         path: 'profile',
         component: ProfileComponent,
         canActivate: [AuthGuard]
-      }
+      },
     ]
   },
   {
@@ -73,14 +78,14 @@ export const router: Routes = [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    NavbarComponent,
     ProfileComponent,
     SignupComponent,
     StaffComponent,
     RegisterStaffComponent,
     HomeLayoutComponent,
     LoginLayoutComponent,
-    AddTicketComponent
+    AddTicketComponent,
+    TicketComponent
   ],
   imports: [
     FormsModule,

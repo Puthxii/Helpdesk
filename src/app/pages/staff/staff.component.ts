@@ -1,3 +1,4 @@
+import { Roles } from './../../services/user.model';
 import { Component, OnInit } from '@angular/core';
 import { StaffService } from 'src/app/services/staff/staff.service';
 import { User } from '../../services/user.model';
@@ -44,4 +45,13 @@ export class StaffComponent implements OnInit {
     });
   }
 
+  getRoles(roles: Roles): string {
+    if (roles.supporter === true) {
+      return 'supporter';
+    } else if (roles.customer === true) {
+      return 'customer';
+    } else {
+      return 'customer';
+    }
+  }
 }

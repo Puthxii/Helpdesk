@@ -7,9 +7,9 @@ export interface Roles {
 
 export interface User {
     uid: string;
-    emaill: string;
-    firsName: string;
-    lastName: string;
-    mobileNumber: string;
+    email: string;
+    firsName?: string;
+    lastName?: string;
+    mobileNumber?: string;
     roles: Roles;
 }

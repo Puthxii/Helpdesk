@@ -6,10 +6,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { firebase } from '@firebase/app';
 import '@firebase/auth';
 import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@firebase/auth-types';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AlertService } from '../../_alert/alert.service';
 import { Options } from '../../_alert/alert.model';
-import { switchMap } from 'rxjs/operators'
+import { switchMap } from 'rxjs/operators';
 import { User } from '../user.model';
 @Injectable()
 export class AuthService {
@@ -29,11 +29,11 @@ export class AuthService {
 
     this.user$ = this.afAuth.authState.pipe(switchMap(user => {
       if (user) {
-        return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+        return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
       } else {
-        return of(null)
+        return of(null);
       }
-    }))
+    }));
   }
   get authenticated(): boolean {
     return this.authState !== null;
@@ -113,7 +113,7 @@ export class AuthService {
       this.router.navigate(['/']);
       this.alertService.success('Login success', this.options = {
         autoClose: true,
-        keepAfterRouteChange: true
+        keepAfterRouteChange: false
       });
     } catch (error) {
       this.alertService.error(error.message, this.options = {
@@ -145,9 +145,9 @@ export class AuthService {
   private updateUserDataToDatabase(): void {
     const path = `users/${this.currentUserId}`;
     const userRef: AngularFireObject<any> = this.db.object(path);
-    const data = {
+    const data: User = {
+      uid: this.authState.user.uid,
       email: this.authState.user.email,
-      name: this.authState.user.displayName,
       roles: {
         customer: true
       }
@@ -156,12 +156,33 @@ export class AuthService {
       .catch(error => console.log(error));
   }
 
-  updateUserDataToFirestore() {
-    this.afs.collection('users').add({
+  private updateUserDataToFirestore() {
+    const path = `users/${this.currentUserId}`;
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(path);
+    const data: User = {
+      uid: this.authState.user.uid,
       email: this.authState.user.email,
       roles: {
         customer: true
       }
-    });
+    };
+    return userRef.set(data, { merge: true });
+  }
+
+  isSupporter(user: User): boolean {
+    const allowed = ['supporter'];
+    return this.checkAuthorization(user, allowed);
+  }
+
+  private checkAuthorization(user: User, allowedRoles: string[]): boolean {
+    if (!user) {
+      return false;
+    }
+    for (const role of allowedRoles) {
+      if (user.roles[role]) {
+        return true;
+      }
+    }
+    return false;
   }
 }
