@@ -1,4 +1,4 @@
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 
@@ -46,13 +46,13 @@ export class AddTicketComponent implements OnInit {
     this.addTicketForm = this.fb.group({
       date: [''],
       source: [''],
-      siteName: [''],
-      maintenancePackage: [''],
-      product: [''],
+      siteName: ['', [Validators.required]],
+      maintenancePackage: ['', [Validators.required]],
+      product: ['', [Validators.required]],
       module: [''],
-      creater: [''],
+      creater: ['', [Validators.required]],
       type: [''],
-      subject: [''],
+      subject: ['', [Validators.required]],
       priority: [''],
       description: [''],
       resolveDescription: [''],
