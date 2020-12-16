@@ -2,11 +2,11 @@
 
 :root{
     --background-color: #F2EDF3;
-    --main-color: #3399CC;
+    --primary-color: #3399CC;
     --purple-color: #533380;
     --secondary-color: #9C9FA6;
-    --primary-color: #3096E7;
-    --primary-fade-color: #8FC9F9;
+    --info-color: #3096E7;
+    --info-fade-color: #8FC9F9;
     --danger-color: #FE8896;
     --success-color: #2ED0B9;
     --success-fade-color: #81D8D1;
@@ -27,8 +27,8 @@
     color: var(--background-color);
 }
 
-.main-color{
-    color: var(--main-color);
+.primary-color{
+    color: var(--primary-color);
 }
 
 .purple-color{
@@ -39,11 +39,11 @@
     color: var(--secondary-color);
 }
 
-.primary-color{
-    color: var(--primary-color);
+.info-color{
+    color: var(--info-color);
 }
 
-.primary-fade-color{
+.info-fade-color{
     color: var(--primary-fade-color);
 }
 
