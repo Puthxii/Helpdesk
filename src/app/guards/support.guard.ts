@@ -8,8 +8,7 @@ import { AuthService } from '../services/auth/auth.service';
 })
 
 export class SupportGuard implements CanActivate {
-    constructor(private auth: AuthService) { }
-
+    constructor(private auth: AuthService, private router: Router) { }
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> {
@@ -18,7 +17,7 @@ export class SupportGuard implements CanActivate {
             map(user => user && user.roles.supporter ? true : false),
             tap(isSupporter => {
                 if (!isSupporter) {
-                    console.error('Access denied - Staff only')
+                    this.router.navigate(['/error-pages/404']);
                 }
             })
         );

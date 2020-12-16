@@ -15,7 +15,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './guards/auth.guard';
-import { SupportGuard } from './guards/support.guard';
 import { AlertModule } from '../app/_alert/alert.module';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
@@ -24,60 +23,6 @@ import { RegisterStaffComponent } from './pages/register-staff/register-staff.co
 import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
 
-export const router: Routes = [
-  {
-    path: '',
-    component: HomeLayoutComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        component: HomeComponent
-      },
-      {
-        path: 'staff',
-        component: StaffComponent,
-        canActivate: [SupportGuard]
-      },
-      {
-        path: 'register-staff',
-        component: RegisterStaffComponent
-      },
-      {
-        path: 'add-ticket',
-        component: AddTicketComponent
-      },
-      {
-        path: 'ticket',
-        component: TicketComponent
-      },
-      {
-        path: 'profile',
-        component: ProfileComponent,
-        canActivate: [AuthGuard]
-      },
-    ]
-  },
-  {
-    path: '',
-    component: LoginLayoutComponent,
-    children: [
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'signup',
-        component: SignupComponent
-      },
-    ]
-  },
-  {
-    path: 'error-pages',
-    loadChildren: () => import('./error-pages/error-pages.module').then(m => m.ErrorPagesModule)
-  }
-
-]
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,7 +43,6 @@ export const router: Routes = [
     BrowserModule,
     AppRoutingModule,
     AlertModule,
-    RouterModule.forRoot(router),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
