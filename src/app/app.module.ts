@@ -23,7 +23,6 @@ import { StaffComponent } from './pages/staff/staff.component';
 import { RegisterStaffComponent } from './pages/register-staff/register-staff.component';
 import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
-import { Error404Component } from './error-pages/error404/error404.component';
 
 export const router: Routes = [
   {
@@ -76,11 +75,7 @@ export const router: Routes = [
   {
     path: 'error-pages',
     loadChildren: () => import('./error-pages/error-pages.module').then(m => m.ErrorPagesModule)
-  },
-  {
-    path: '**',
-    component: Error404Component
-  },
+  }
 
 ]
 @NgModule({
@@ -95,8 +90,7 @@ export const router: Routes = [
     HomeLayoutComponent,
     LoginLayoutComponent,
     AddTicketComponent,
-    TicketComponent,
-    Error404Component
+    TicketComponent
   ],
   imports: [
     FormsModule,
