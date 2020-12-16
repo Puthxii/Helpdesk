@@ -168,4 +168,21 @@ export class AuthService {
     }
     return userRef.set(data, { merge: true })
   }
+
+  isSupporter(user: User): boolean {
+    const allowed = ['supporter']
+    return this.checkAuthorization(user, allowed)
+  }
+
+  private checkAuthorization(user: User, allowedRoles: string[]): boolean {
+    if (!user) {
+      return false
+    }
+    for (const role of allowedRoles) {
+      if (user.roles[role]) {
+        return true
+      }
+    }
+    return false
+  }
 }

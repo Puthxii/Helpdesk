@@ -13,7 +13,6 @@ export class SupportGuard implements CanActivate {
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> {
-
         return this.auth.user$.pipe(
             take(1),
             map(user => user && user.roles.supporter ? true : false),

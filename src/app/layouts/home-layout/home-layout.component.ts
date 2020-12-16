@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./home-layout.component.css']
 })
 export class HomeLayoutComponent implements OnInit {
+  user;
 
   constructor(
     private router: Router,
@@ -15,6 +16,7 @@ export class HomeLayoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.auth.user$.subscribe(user => this.user = user)
   }
 
   toggleOffcanvas() {
