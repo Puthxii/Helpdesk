@@ -9,7 +9,7 @@ import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAu
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AlertService } from '../../_alert/alert.service';
 import { Options } from '../../_alert/alert.model';
-import { switchMap } from 'rxjs/operators'
+import { switchMap } from 'rxjs/operators';
 import { User } from '../user.model';
 @Injectable()
 export class AuthService {
@@ -29,11 +29,11 @@ export class AuthService {
 
     this.user$ = this.afAuth.authState.pipe(switchMap(user => {
       if (user) {
-        return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+        return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
       } else {
-        return of(null)
+        return of(null);
       }
-    }))
+    }));
   }
   get authenticated(): boolean {
     return this.authState !== null;
@@ -113,7 +113,7 @@ export class AuthService {
       this.router.navigate(['/']);
       this.alertService.success('Login success', this.options = {
         autoClose: true,
-        keepAfterRouteChange: true
+        keepAfterRouteChange: false
       });
     } catch (error) {
       this.alertService.error(error.message, this.options = {
@@ -151,7 +151,7 @@ export class AuthService {
       roles: {
         customer: true
       }
-    }
+    };
     userRef.update(data)
       .catch(error => console.log(error));
   }
@@ -165,24 +165,24 @@ export class AuthService {
       roles: {
         customer: true
       }
-    }
-    return userRef.set(data, { merge: true })
+    };
+    return userRef.set(data, { merge: true });
   }
 
   isSupporter(user: User): boolean {
-    const allowed = ['supporter']
-    return this.checkAuthorization(user, allowed)
+    const allowed = ['supporter'];
+    return this.checkAuthorization(user, allowed);
   }
 
   private checkAuthorization(user: User, allowedRoles: string[]): boolean {
     if (!user) {
-      return false
+      return false;
     }
     for (const role of allowedRoles) {
       if (user.roles[role]) {
-        return true
+        return true;
       }
     }
-    return false
+    return false;
   }
 }

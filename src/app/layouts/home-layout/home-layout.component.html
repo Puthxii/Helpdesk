@@ -8,7 +8,7 @@
         </div>
         <div class="list-group list-group-flush">
             <a [routerLink]="['/']" class=" list-group-item list-group-item-action bg-white">Dashboard</a>
-            <a [routerLink]="['/']" class=" list-group-item list-group-item-action bg-white">Ticket</a>
+            <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white">Ticket</a>
             <a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white"
                 *ngIf="auth.isSupporter(user)">Staff</a>
         </div>

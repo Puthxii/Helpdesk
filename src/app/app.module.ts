@@ -22,6 +22,7 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 import { StaffComponent } from './pages/staff/staff.component';
 import { RegisterStaffComponent } from './pages/register-staff/register-staff.component';
 import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
+import { TicketComponent } from './pages/ticket/ticket.component';
 
 export const router: Routes = [
   {
@@ -47,10 +48,14 @@ export const router: Routes = [
         component: AddTicketComponent
       },
       {
+        path: 'ticket',
+        component: TicketComponent
+      },
+      {
         path: 'profile',
         component: ProfileComponent,
         canActivate: [AuthGuard]
-      }
+      },
     ]
   },
   {
@@ -79,7 +84,8 @@ export const router: Routes = [
     RegisterStaffComponent,
     HomeLayoutComponent,
     LoginLayoutComponent,
-    AddTicketComponent
+    AddTicketComponent,
+    TicketComponent
   ],
   imports: [
     FormsModule,
