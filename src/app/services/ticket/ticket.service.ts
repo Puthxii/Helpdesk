@@ -1,3 +1,4 @@
+import { AngularFirestore } from 'angularfire2/firestore';
 import { Ticket } from './ticket.model';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
@@ -6,18 +7,17 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angular
   providedIn: 'root'
 })
 export class TicketService {
-  ticketsRef: AngularFireList<any>
-  ticketRef: AngularFireObject<any>
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(
+    private afs: AngularFirestore
+  ) { }
 
   getTicketsList() {
-    this.ticketsRef = this.db.list('ticket');
-    return this.ticketsRef;
+    return this.afs.collection('ticket').snapshotChanges();
   }
 
   addTicket(ticket: Ticket) {
-    this.ticketsRef.push({
+    this.afs.collection('ticket').add({
       date: ticket.date,
       source: ticket.source,
       siteName: ticket.siteName,
@@ -33,4 +33,9 @@ export class TicketService {
     })
   }
 
+  //TODO : Get by ID
+
+  //TODO : UPDATE
+
+  //TODO : DELETE 
 }

@@ -16,7 +16,6 @@ export class AddTicketComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.ticketService.getTicketsList();
     this.buildForm()
   }
 
