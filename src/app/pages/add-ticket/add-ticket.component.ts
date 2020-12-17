@@ -2,6 +2,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-ticket',
@@ -10,7 +11,10 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class AddTicketComponent implements OnInit {
   public addTicketForm: FormGroup;
-
+  
+  maxDate = moment(new Date()).format('DD/MM/YYYY');
+  minDate = moment().subtract(1, 'months').format('DD/MM/YYYY');
+  
   constructor(
     public ticketService: TicketService,
     public fb: FormBuilder
@@ -18,7 +22,7 @@ export class AddTicketComponent implements OnInit {
 
   ngOnInit() {
     this.ticketService.getTicketsList();
-    this.buildForm()
+    this.buildForm();
   }
 
   successNotification(){
@@ -120,5 +124,6 @@ export class AddTicketComponent implements OnInit {
   addTicketData() {
     this.ticketService.addTicket(this.addTicketForm.value);
   }
+
 }
 
