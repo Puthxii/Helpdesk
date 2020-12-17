@@ -19,21 +19,20 @@ export class StaffComponent implements OnInit {
     private staff: StaffService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.dataState();
-    const s = this.staff.getStaffsList();
-    s.snapshotChanges().subscribe(data => {
+    this.staff.getStaffsList().snapshotChanges().subscribe(data => {
       this.Staff = [];
-      data.forEach(item => {
-        const a = item.payload.toJSON();
-        a['$uid'] = item.key;
-        this.Staff.push(a as User);
-      });
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['$uid'] = items.payload.doc.id;
+        this.Staff.push(item as User)
+      })
     });
   }
 
   dataState() {
-    this.staff.getStaffsList().valueChanges().subscribe(data => {
+    this.staff.getStaffsList().snapshotChanges().subscribe(data => {
       this.preLoader = false;
       if (data.length <= 0) {
         this.hideWhenNoStaff = false;
