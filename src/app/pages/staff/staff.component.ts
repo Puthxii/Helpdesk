@@ -19,7 +19,7 @@ export class StaffComponent implements OnInit {
     private staff: StaffService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.dataState();
     this.staff.getStaffsList().snapshotChanges().subscribe(data => {
       this.Staff = [];
@@ -47,10 +47,8 @@ export class StaffComponent implements OnInit {
   getRoles(roles: Roles): string {
     if (roles.supporter === true) {
       return 'supporter';
-    } else if (roles.customer === true) {
-      return 'customer';
     } else {
-      return 'customer';
+      return '-';
     }
   }
 }
