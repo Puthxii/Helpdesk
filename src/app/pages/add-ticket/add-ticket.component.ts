@@ -1,6 +1,8 @@
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-ticket',
@@ -9,7 +11,10 @@ import { TicketService } from 'src/app/services/ticket/ticket.service';
 })
 export class AddTicketComponent implements OnInit {
   public addTicketForm: FormGroup;
-
+  
+  maxDate = moment(new Date()).format('DD-MM-YYYY');
+  minDate = moment().subtract(1, 'months').format('DD-MM-YYYY');
+  
   constructor(
     public ticketService: TicketService,
     public fb: FormBuilder
@@ -18,6 +23,15 @@ export class AddTicketComponent implements OnInit {
   ngOnInit() {
     this.buildForm()
   }
+
+  successNotification(){
+    Swal.fire({
+      text: 'Your ticket has been saved',
+      icon: 'success',
+    }).then((result) => {
+      window.location.href = "./../ticket";
+    })
+  } 
 
   sources = [
     { name: 'website' },
@@ -45,13 +59,13 @@ export class AddTicketComponent implements OnInit {
     this.addTicketForm = this.fb.group({
       date: [''],
       source: [''],
-      siteName: [''],
-      maintenancePackage: [''],
-      product: [''],
+      siteName: ['', [Validators.required]],
+      maintenancePackage: ['', [Validators.required]],
+      product: ['', [Validators.required]],
       module: [''],
-      creater: [''],
+      creater: ['', [Validators.required]],
       type: [''],
-      subject: [''],
+      subject: ['', [Validators.required]],
       priority: [''],
       description: [''],
       resolveDescription: [''],
@@ -109,5 +123,6 @@ export class AddTicketComponent implements OnInit {
   addTicketData() {
     this.ticketService.addTicket(this.addTicketForm.value);
   }
+
 }
 

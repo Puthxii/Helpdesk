@@ -14,7 +14,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="date">Date</label>
-              <input type="date" formControlName="date" class="form-control" id="date" placeholder="date">
+              <input type="date" formControlName="date"  [min]='minDate' [max]='maxDate' class="form-control" id="date" placeholder="date">
             </div>
             <div class="form-group col-md-6">
               <label for="source">Source</label>
@@ -28,24 +28,23 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="siteName">Site Name</label>
-              <input type=text formControlName="siteName" class="form-control" id="siteName" placeholder="Site Name">
+              <input type=text formControlName="siteName" class="form-control" id="siteName" placeholder="Site Name" required>
             </div>
             <div class="form-group col-md-6">
               <label for="maintenancePackage">Maintenance Package</label>
               <input type=text formControlName="maintenancePackage" class="form-control" id="maintenancePackage"
-                placeholder="Maintenance Package">
+                placeholder="Maintenance Package" required>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="product">Product</label>
-              <input type=text formControlName="product" class="form-control" id="product" placeholder="Product">
+              <input type=text formControlName="product" class="form-control" id="product" placeholder="Product" required>
             </div>
             <div class="form-group col-md-6">
               <label for="module">Module</label>
               <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="Recipient's username"
-                  aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="text" formControlName="module" class="form-control" placeholder="Module" aria-label="Module" aria-describedby="button-addon2">
                 <a class=" btn btn-primary" href="">
                   <i class="fas fa-plus custom-fa-plus"></i>
                 </a>
@@ -55,7 +54,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="creater">Creater</label>
-              <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater">
+              <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater" required>
             </div>
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
@@ -69,7 +68,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="subject">Subject</label>
-              <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject">
+              <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject" required>
             </div>
             <div class="form-group col-md-6">
               <label for="priority">Priority</label>
@@ -105,7 +104,7 @@
                 <a class="dropdown-item" href="#">Create and set as close</a>
                 <a class="dropdown-item" href="#">Draft</a>
               </div>
-              <button type="submit" class="btn btn-success btn-save">Save</button>
+              <button type="submit" class="btn btn-success btn-save" [disabled]="!addTicketForm.valid" (click)="successNotification()">Save</button>
               <button type="submit" class="btn btn-light" style="float: right;">Cancel</button>
             </div>
           </div>
