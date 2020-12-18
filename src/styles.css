@@ -1,4 +1,5 @@
 @import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 :root{
     --background-color: #F2EDF3;
@@ -75,3 +76,6 @@
     width: 50px;
     padding: 3px;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
