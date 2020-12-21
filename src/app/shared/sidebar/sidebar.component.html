@@ -1,0 +1,17 @@
+<div class="bg-white border-right" id="sidebar-wrapper">
+  <a class="header content" routerLink="/">
+    <img class="logo-img-navbar" src="../../../assets/images/logo.png">
+    <h3 class="bg-white primary-color">
+      Helpdesk
+    </h3>
+  </a>
+  <div class="list-group list-group-flush">
+    <a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white">
+      <span class="menu-title">Dashboard</span>
+      <!-- <i class="fas fa-chart-pie"></i> -->
+    </a>
+    <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white">Ticket</a>
+    <a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white"
+      *ngIf="auth.isSupporter(user)">Staff</a>
+  </div>
+</div>

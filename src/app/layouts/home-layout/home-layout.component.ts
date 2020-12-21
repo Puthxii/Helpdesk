@@ -18,8 +18,4 @@ export class HomeLayoutComponent implements OnInit {
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user)
   }
-
-  toggleOffcanvas() {
-    document.querySelector('.sidebar-offcanvas').classList.toggle('toggled');
-  }
 }
