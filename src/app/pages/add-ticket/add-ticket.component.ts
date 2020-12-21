@@ -57,18 +57,18 @@ export class AddTicketComponent implements OnInit {
 
   buildForm() {
     this.addTicketForm = this.fb.group({
-      date: [''],
-      source: [''],
+      date: ['', [Validators.required]],
+      source: ['', [Validators.required]],
       siteName: ['', [Validators.required]],
       maintenancePackage: ['', [Validators.required]],
       product: ['', [Validators.required]],
-      module: [''],
+      module: ['', [Validators.required]],
       creater: ['', [Validators.required]],
-      type: [''],
+      type: ['', [Validators.required]],
       subject: ['', [Validators.required]],
-      priority: [''],
-      description: [''],
-      resolveDescription: [''],
+      priority: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      resolveDescription: ['', [Validators.required]],
     })
   }
 
