@@ -11,7 +11,9 @@ import * as moment from 'moment';
 })
 export class AddTicketComponent implements OnInit {
   public addTicketForm: FormGroup;
-  
+  hideResolve = false;
+
+
   maxDate = moment(new Date()).format('DD-MM-YYYY');
   minDate = moment().subtract(1, 'months').format('DD-MM-YYYY');
   
@@ -68,8 +70,16 @@ export class AddTicketComponent implements OnInit {
       subject: ['', [Validators.required]],
       priority: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      resolveDescription: ['', [Validators.required]],
+      resolveDescription: [''],
     })
+  }
+
+  hideTextArea(type: any) {
+    if (type === 'info' || type === 'consult'){
+      this.hideResolve = true
+    } else {
+      this.hideResolve = false
+    }
   }
 
   get date() {

@@ -93,8 +93,8 @@
             </div>
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
-              <select name="Type" formControlName="type" class="form-control" id="type">
-                <option *ngFor="let type of types" [ngValue]="type.name">
+              <select name="Type" formControlName="type" class="form-control" id="type" (ngModelChange)="hideTextArea($event)">
+                <option *ngFor="let type of types" [ngValue]="type.name" >
                   {{ type.name }}
                 </option>
               </select>
@@ -139,15 +139,11 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-6">
+            
+            <div class="form-group col-md-6" *ngIf="hideResolve">
               <label for="resolve">Resolve Description</label>
               <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription"
                 rows="3"></textarea>
-                <div *ngIf="resolveDescription.invalid && (resolveDescription.dirty || resolveDescription.touched)" class="danger-color">
-                  <div *ngIf="resolveDescription.errors.required">
-                    Resolve description is required.
-                  </div>
-                </div>
             </div>
           </div>
           <div class="form-row">
