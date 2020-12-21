@@ -22,8 +22,6 @@ import { StaffComponent } from './pages/staff/staff.component';
 import { RegisterStaffComponent } from './pages/register-staff/register-staff.component';
 import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -37,9 +35,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     HomeLayoutComponent,
     LoginLayoutComponent,
     AddTicketComponent,
-    TicketComponent,
-    NavbarComponent,
-    SidebarComponent
+    TicketComponent
   ],
   imports: [
     FormsModule,

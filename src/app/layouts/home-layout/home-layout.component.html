@@ -1,7 +1,55 @@
 <div class="d-flex sidebar-offcanvas" id="wrapper">
-    <app-sidebar></app-sidebar>
+    <div class="bg-white border-right" id="sidebar-wrapper">
+        <a class="header content" routerLink="/">
+            <img class="logo-img-navbar" src="../../../assets/images/logo.png">
+            <h3 class="bg-white primary-color">
+                Helpdesk
+            </h3>
+        </a>
+        <div class="list-group list-group-flush">
+            <a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white">
+                <span class="menu-title">Dashboard</span>
+                <!-- <i class="fas fa-chart-pie"></i> -->
+            </a>
+            <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white">Ticket</a>
+            <a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white"
+                *ngIf="auth.isSupporter(user)">Staff</a>
+        </div>
+    </div>
     <div id="page-content-wrapper">
-        <app-navbar></app-navbar>
+        <nav class="navbar navbar-expand    -lg navbar-light bg-white border-bottom">
+            <button class="btn btn-light" id="menu-toggle" (click)="toggleOffcanvas()">
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/add-ticket']">
+                            <i class="fas fa-notes-medical fa-lg"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-bell fa-lg"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Profile
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" [routerLink]="['/profile']">Edit</a>
+                            <a class=" dropdown-item" (click)="this.auth.signOut()">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <main>
             <div class="container-fluid">
                 <app-alert></app-alert>
