@@ -11,4 +11,5 @@ export interface Ticket {
     priority: string;
     description: string;
     resolveDescription: string;
+    status: string;
 }

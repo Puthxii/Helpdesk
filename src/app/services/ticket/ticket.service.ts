@@ -29,7 +29,8 @@ export class TicketService {
       subject: ticket.subject,
       priority: ticket.priority,
       description: ticket.description,
-      resolveDescription: ticket.resolveDescription
+      resolveDescription: ticket.resolveDescription,
+      status: ticket.status
     })
   }
 

@@ -20,7 +20,7 @@
             <div class="form-group col-md-6">
               <label for="source">Source</label>
               <select name="source" formControlName="source" class="form-control" id="source">
-                <option *ngFor="let source of sources" [ngValue]="source.name">
+                <option *ngFor="let source of Sources" [ngValue]="source.name">
                   {{ source.name }}
                 </option>
               </select>
@@ -64,7 +64,7 @@
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
               <select name="Type" formControlName="type" class="form-control" id="type">
-                <option *ngFor="let type of types" [ngValue]="type.name">
+                <option *ngFor="let type of Types" [ngValue]="type.name">
                   {{ type.name }}
                 </option>
               </select>
@@ -79,7 +79,7 @@
             <div class="form-group col-md-6">
               <label for="priority">Priority</label>
               <select name="priority" formControlName="priority" class="form-control" id="priority">
-                <option *ngFor="let priority of prioritys" [ngValue]="priority.name">
+                <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
                   {{ priority.name }}
                 </option>
               </select>
@@ -98,45 +98,17 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <!-- <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false" style="float: right">
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                [disabled]="!addTicketForm.valid" aria-expanded=" false" style="float: right">
               </button>
-              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <input hidden type="button" name="seclected" formControlName="seclected" class="form-control"
-                  id="seclected">
-                <option class="dropdown-item" *ngFor="let status of Status" [ngValue]="status.name">
-                  {{ status.name }}
-                </option>
-              </div> -->
-
-              <!-- <select name="seclected" formControlName="seclected" class="form-control dropdown-toggle">
-                <option class="dropdown-item" *ngFor="let status of Status" [ngValue]="status.name">
-                  {{ status.name }}
-                </option>
-              </select> -->
-
-              <!-- <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" style="float: right">
-              </button>
-              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <div *ngFor="let status of Status" type="submit" class="dropdown-item">
+              <div class="dropdown-menu">
+                <button *ngFor="let status of Status" type="button" class="dropdown-item"
+                  (click)="onSelectedStatus(status.value)">
                   {{status.name}}
-                </div>
-              </div> -->
-
-
-              <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" style="float: right">
-              </button>
-              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <button class="dropdown-item" type="submit" (click)="onSaveStatus()">Create and set as pending</button>
+                </button>
               </div>
-
-
-
-              <button type="submit" class="btn btn-success btn-save" [disabled]="!addTicketForm.valid"
-                (click)="successNotification()">Save
-                <!-- {{ display() }} -->
+              <button type="submit" class="btn btn-success btn-save" [disabled]="!addTicketForm.valid">Save
+                {{ displaySelectedStatus() }}
               </button>
               <button type="button" class="btn btn-light btn-cancel">Cancel</button>
             </div>

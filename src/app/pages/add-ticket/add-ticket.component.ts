@@ -10,7 +10,6 @@ import * as moment from 'moment';
   styleUrls: ['./add-ticket.component.scss']
 })
 export class AddTicketComponent implements OnInit {
-
   constructor(
     public ticketService: TicketService,
     public fb: FormBuilder
@@ -64,11 +63,10 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('resolveDescription');
   }
 
-  // get seclected() {
-  //   return this.addTicketForm.get('seclected');
-  // }
+  get status() {
+    return this.addTicketForm.get('status');
+  }
   public addTicketForm: FormGroup;
-  // seclected: string;
   maxDate = moment(new Date()).format('DD-MM-YYYY');
   minDate = moment().subtract(1, 'months').format('DD-MM-YYYY');
 
@@ -95,9 +93,9 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Status = [
-    { name: 'draft' },
-    { name: 'pending' },
-    { name: 'close' }
+    { name: 'Save as draft', value: 'draft' },
+    { name: 'Save as pending', value: 'pending' },
+    { name: 'Save as close', value: 'close' }
   ];
 
   ngOnInit() {
@@ -127,22 +125,21 @@ export class AddTicketComponent implements OnInit {
       priority: [''],
       description: [''],
       resolveDescription: [''],
-      seclected: ['']
+      status: ['']
     });
   }
 
   addTicketData() {
-    console.log(this.addTicketForm.value);
-    // this.ticketService.addTicket(this.addTicketForm.value);
+    this.ticketService.addTicket(this.addTicketForm.value);
   }
 
-  // display(): string {
-  //   return (this.seclected.value) ? 'as ' + this.seclected.value : ''
-  // }
+  displaySelectedStatus(): string {
+    return (this.status.value) ? 'as ' + this.status.value : ''
+  }
 
-  onSaveStatus() {
+  onSelectedStatus(status: string) {
     this.addTicketForm.patchValue({
-      seclected: 'pending'
+      status
     });
   }
 }
