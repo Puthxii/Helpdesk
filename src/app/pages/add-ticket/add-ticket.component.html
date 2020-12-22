@@ -67,18 +67,28 @@
               </div>
             </div>
             <div class="form-group col-md-6">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12">
               <label for="module">Module</label>
-              <div class="input-group mb-2">
-                <input type="text" formControlName="module" class="form-control" placeholder="Module" aria-label="Module" aria-describedby="button-addon2">
-                <a class=" btn btn-primary" href="">
-                  <i class="fas fa-plus custom-fa-plus"></i>
-                </a>
+           
+              <!-- <input type="text" formControlName="module" class="form-control" placeholder="Module" aria-label="Module" aria-describedby="button-addon2"> -->
+              <ng-multiselect-dropdown
+                [placeholder]="'custom placeholder'"
+                [data]="dropdownList"
+                [(ngModel)]="selectedItems"
+                [settings]="dropdownSettings">
+              </ng-multiselect-dropdown>
+              <!-- <a class=" btn btn-primary" href="">
+                <i class="fas fa-plus custom-fa-plus"></i>
+              </a> -->
+            
+            <div *ngIf="module.invalid && (module.dirty || module.touched)" class="danger-color">
+              <div *ngIf="module.errors.required">
+                Module is required.
               </div>
-              <div *ngIf="module.invalid && (module.dirty || module.touched)" class="danger-color">
-                <div *ngIf="module.errors.required">
-                  Module is required.
-                </div>
-              </div>
+            </div>
             </div>
           </div>
           <div class="form-row">
