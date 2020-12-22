@@ -14,7 +14,8 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="date">Date</label>
-              <input type="date" formControlName="date"  [min]='minDate' [max]='maxDate' class="form-control" id="date" placeholder="date">
+              <input type="date" formControlName="date" [min]='minDate' [max]='maxDate' class="form-control" id="date"
+                placeholder="date">
             </div>
             <div class="form-group col-md-6">
               <label for="source">Source</label>
@@ -28,7 +29,8 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="siteName">Site Name</label>
-              <input type=text formControlName="siteName" class="form-control" id="siteName" placeholder="Site Name" required>
+              <input type=text formControlName="siteName" class="form-control" id="siteName" placeholder="Site Name"
+                required>
             </div>
             <div class="form-group col-md-6">
               <label for="maintenancePackage">Maintenance Package</label>
@@ -39,12 +41,14 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="product">Product</label>
-              <input type=text formControlName="product" class="form-control" id="product" placeholder="Product" required>
+              <input type=text formControlName="product" class="form-control" id="product" placeholder="Product"
+                required>
             </div>
             <div class="form-group col-md-6">
               <label for="module">Module</label>
               <div class="input-group mb-2">
-                <input type="text" formControlName="module" class="form-control" placeholder="Module" aria-label="Module" aria-describedby="button-addon2">
+                <input type="text" formControlName="module" class="form-control" placeholder="Module"
+                  aria-label="Module" aria-describedby="button-addon2">
                 <a class=" btn btn-primary" href="">
                   <i class="fas fa-plus custom-fa-plus"></i>
                 </a>
@@ -54,7 +58,8 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="creater">Creater</label>
-              <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater" required>
+              <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater"
+                required>
             </div>
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
@@ -68,7 +73,8 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="subject">Subject</label>
-              <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject" required>
+              <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject"
+                required>
             </div>
             <div class="form-group col-md-6">
               <label for="priority">Priority</label>
@@ -92,20 +98,47 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <!-- <button id="btnGroupDrop1" type="submit" class="btn btn-success create dropdown-toggle"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Create
-                </button> -->
+              <!-- <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" style="float: right">
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <input hidden type="button" name="seclected" formControlName="seclected" class="form-control"
+                  id="seclected">
+                <option class="dropdown-item" *ngFor="let status of Status" [ngValue]="status.name">
+                  {{ status.name }}
+                </option>
+              </div> -->
+
+              <!-- <select name="seclected" formControlName="seclected" class="form-control dropdown-toggle">
+                <option class="dropdown-item" *ngFor="let status of Status" [ngValue]="status.name">
+                  {{ status.name }}
+                </option>
+              </select> -->
+
+              <!-- <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" style="float: right">
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <div *ngFor="let status of Status" type="submit" class="dropdown-item">
+                  {{status.name}}
+                </div>
+              </div> -->
+
+
               <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" style="float: right">
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#">Create and set as panding</a>
-                <a class="dropdown-item" href="#">Create and set as close</a>
-                <a class="dropdown-item" href="#">Draft</a>
+                <button class="dropdown-item" type="submit" (click)="onSaveStatus()">Create and set as pending</button>
               </div>
-              <button type="submit" class="btn btn-success btn-save" [disabled]="!addTicketForm.valid" (click)="successNotification()">Save</button>
-              <button type="submit" class="btn btn-light" style="float: right;">Cancel</button>
+
+
+
+              <button type="submit" class="btn btn-success btn-save" [disabled]="!addTicketForm.valid"
+                (click)="successNotification()">Save
+                <!-- {{ display() }} -->
+              </button>
+              <button type="button" class="btn btn-light btn-cancel">Cancel</button>
             </div>
           </div>
         </form>

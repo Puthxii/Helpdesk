@@ -10,67 +10,11 @@ import * as moment from 'moment';
   styleUrls: ['./add-ticket.component.scss']
 })
 export class AddTicketComponent implements OnInit {
-  public addTicketForm: FormGroup;
-  
-  maxDate = moment(new Date()).format('DD-MM-YYYY');
-  minDate = moment().subtract(1, 'months').format('DD-MM-YYYY');
-  
+
   constructor(
     public ticketService: TicketService,
     public fb: FormBuilder
   ) { }
-
-  ngOnInit() {
-    this.buildForm()
-  }
-
-  successNotification(){
-    Swal.fire({
-      text: 'Your ticket has been saved',
-      icon: 'success',
-    }).then((result) => {
-      window.location.href = "./../ticket";
-    })
-  } 
-
-  sources = [
-    { name: 'website' },
-    { name: 'Facebook' },
-    { name: 'Line' },
-    { name: 'Email' },
-    { name: 'Telephone' },
-    { name: 'Onsite' }
-  ]
-
-  types = [
-    { name: 'info' },
-    { name: 'consult' },
-    { name: 'problem' },
-    { name: 'add-ons' }
-  ]
-
-  prioritys = [
-    { name: 'low' },
-    { name: 'medium' },
-    { name: 'high' }
-  ]
-
-  buildForm() {
-    this.addTicketForm = this.fb.group({
-      date: [''],
-      source: [''],
-      siteName: ['', [Validators.required]],
-      maintenancePackage: ['', [Validators.required]],
-      product: ['', [Validators.required]],
-      module: [''],
-      creater: ['', [Validators.required]],
-      type: [''],
-      subject: ['', [Validators.required]],
-      priority: [''],
-      description: [''],
-      resolveDescription: [''],
-    })
-  }
 
   get date() {
     return this.addTicketForm.get('date');
@@ -120,9 +64,86 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('resolveDescription');
   }
 
-  addTicketData() {
-    this.ticketService.addTicket(this.addTicketForm.value);
+  // get seclected() {
+  //   return this.addTicketForm.get('seclected');
+  // }
+  public addTicketForm: FormGroup;
+  // seclected: string;
+  maxDate = moment(new Date()).format('DD-MM-YYYY');
+  minDate = moment().subtract(1, 'months').format('DD-MM-YYYY');
+
+  Sources = [
+    { name: 'website' },
+    { name: 'Facebook' },
+    { name: 'Line' },
+    { name: 'Email' },
+    { name: 'Telephone' },
+    { name: 'Onsite' }
+  ];
+
+  Types = [
+    { name: 'info' },
+    { name: 'consult' },
+    { name: 'problem' },
+    { name: 'add-ons' }
+  ];
+
+  Prioritys = [
+    { name: 'low' },
+    { name: 'medium' },
+    { name: 'high' }
+  ];
+
+  Status = [
+    { name: 'draft' },
+    { name: 'pending' },
+    { name: 'close' }
+  ];
+
+  ngOnInit() {
+    this.buildForm();
   }
 
+  successNotification() {
+    Swal.fire({
+      text: 'Your ticket has been saved',
+      icon: 'success',
+    }).then((result) => {
+      window.location.href = './../ticket';
+    });
+  }
+
+  buildForm() {
+    this.addTicketForm = this.fb.group({
+      date: [''],
+      source: [''],
+      siteName: ['', [Validators.required]],
+      maintenancePackage: ['', [Validators.required]],
+      product: ['', [Validators.required]],
+      module: [''],
+      creater: ['', [Validators.required]],
+      type: [''],
+      subject: ['', [Validators.required]],
+      priority: [''],
+      description: [''],
+      resolveDescription: [''],
+      seclected: ['']
+    });
+  }
+
+  addTicketData() {
+    console.log(this.addTicketForm.value);
+    // this.ticketService.addTicket(this.addTicketForm.value);
+  }
+
+  // display(): string {
+  //   return (this.seclected.value) ? 'as ' + this.seclected.value : ''
+  // }
+
+  onSaveStatus() {
+    this.addTicketForm.patchValue({
+      seclected: 'pending'
+    });
+  }
 }
 
