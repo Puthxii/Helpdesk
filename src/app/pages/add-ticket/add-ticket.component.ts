@@ -125,7 +125,7 @@ export class AddTicketComponent implements OnInit {
       subject: ['', [Validators.required]],
       priority: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      resolveDescription: ['', [Validators.required]],
+      resolveDescription: [''],
       status: ['']
     });
   }

@@ -164,7 +164,7 @@
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [disabled]="!addTicketForm.valid">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
-                <div class="dropdown-menu">
+                <div class="dropdown-menu dropdown-menu-right">
                   <button *ngFor="let status of Status" type="button" class="dropdown-item"
                     (click)="onSelectedStatus(status.value)">
                     {{status.name}}
