@@ -33,7 +33,6 @@ export class TicketService {
         description: ticket.description,
         resolveDescription: ticket.resolveDescription,
         status: ticket.status
-
       })
       console.log('succes');
     } catch (error) {
