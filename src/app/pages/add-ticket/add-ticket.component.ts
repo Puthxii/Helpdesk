@@ -67,6 +67,7 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('status');
   }
   public addTicketForm: FormGroup;
+  hideResolve = false;
   maxDate = moment(new Date()).format('DD-MM-YYYY');
   minDate = moment().subtract(1, 'months').format('DD-MM-YYYY');
 
@@ -127,6 +128,14 @@ export class AddTicketComponent implements OnInit {
       resolveDescription: [''],
       status: ['']
     });
+  }
+
+  hideTextArea(type: any) {
+    if (type === 'info' || type === 'consult'){
+      this.hideResolve = true
+    } else {
+      this.hideResolve = false
+    }
   }
 
   addTicketData() {
