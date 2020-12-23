@@ -17,45 +17,28 @@ export class TicketService {
     return this.afs.collection('ticket').snapshotChanges();
   }
 
-<<<<<<< HEAD
   async addTicket(ticket: Ticket) {
-      try {
-        this.afs.collection('ticket').add({
-          date: ticket.date,
-          source: ticket.source,
-          siteName: ticket.siteName,
-          maintenancePackage: ticket.maintenancePackage,
-          product: ticket.product,
-          module: ticket.module,
-          creater: ticket.creater,
-          type: ticket.type,
-          subject: ticket.subject,
-          priority: ticket.priority,
-          description: ticket.description,
-          resolveDescription: ticket.resolveDescription,
-        })
-        console.log('succes');
-      } catch (error){
-        console.log(error);
-      }
-=======
-  addTicket(ticket: Ticket) {
-    this.afs.collection('ticket').add({
-      date: ticket.date,
-      source: ticket.source,
-      siteName: ticket.siteName,
-      maintenancePackage: ticket.maintenancePackage,
-      product: ticket.product,
-      module: ticket.module,
-      creater: ticket.creater,
-      type: ticket.type,
-      subject: ticket.subject,
-      priority: ticket.priority,
-      description: ticket.description,
-      resolveDescription: ticket.resolveDescription,
-      status: ticket.status
-    })
->>>>>>> 970f8db039d83b9f0f3f3e16a228d91216900d21
+    try {
+      this.afs.collection('ticket').add({
+        date: ticket.date,
+        source: ticket.source,
+        siteName: ticket.siteName,
+        maintenancePackage: ticket.maintenancePackage,
+        product: ticket.product,
+        module: ticket.module,
+        creater: ticket.creater,
+        type: ticket.type,
+        subject: ticket.subject,
+        priority: ticket.priority,
+        description: ticket.description,
+        resolveDescription: ticket.resolveDescription,
+        status: ticket.status
+
+      })
+      console.log('succes');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   //TODO : Get by ID
