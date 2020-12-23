@@ -16,6 +16,11 @@
               <label for="date">Date</label>
               <input type="date" formControlName="date" [min]='minDate' [max]='maxDate' class="form-control" id="date"
                 placeholder="date">
+              <div *ngIf="date.invalid && (date.dirty || date.touched)" class="danger-color">
+                <div *ngIf="date.errors.required">
+                  Date is required.
+                </div>
+              </div>
             </div>
             <div class="form-group col-md-6">
               <label for="source">Source</label>
@@ -36,6 +41,11 @@
               <label for="siteName">Site Name</label>
               <input type=text formControlName="siteName" class="form-control" id="siteName" placeholder="Site Name"
                 required>
+              <div *ngIf="siteName.invalid && (siteName.dirty || siteName.touched)" class="danger-color">
+                <div *ngIf="siteName.errors.required">
+                  Site name is required.
+                </div>
+              </div>
             </div>
             <div class="form-group col-md-6">
               <label for="maintenancePackage">Maintenance Package</label>
@@ -54,6 +64,11 @@
               <label for="product">Product</label>
               <input type=text formControlName="product" class="form-control" id="product" placeholder="Product"
                 required>
+              <div *ngIf="product.invalid && (product.dirty || product.touched)" class="danger-color">
+                <div *ngIf="product.errors.required">
+                  Product is required.
+                </div>
+              </div>
             </div>
             <div class="form-group col-md-6">
               <label for="module">Module</label>
@@ -76,6 +91,11 @@
               <label for="creater">Creater</label>
               <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater"
                 required>
+              <div *ngIf="creater.invalid && (creater.dirty || creater.touched)" class="danger-color">
+                <div *ngIf="creater.errors.required">
+                  Creater is required.
+                </div>
+              </div>
             </div>
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
@@ -97,6 +117,11 @@
               <label for="subject">Subject</label>
               <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject"
                 required>
+              <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
+                <div *ngIf="subject.errors.required">
+                  Subject is required.
+                </div>
+              </div>
             </div>
             <div class="form-group col-md-6">
               <label for="priority">Priority</label>
@@ -131,19 +156,22 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                [disabled]="!addTicketForm.valid" aria-expanded=" false" style="float: right">
-              </button>
-              <div class="dropdown-menu">
-                <button *ngFor="let status of Status" type="button" class="dropdown-item"
-                  (click)="onSelectedStatus(status.value)">
-                  {{status.name}}
+              <div class="btn-group btn-save" style="float: right;">
+                <button type="submit" class="btn btn-success" [disabled]="!addTicketForm.valid">
+                  Save {{ displaySelectedStatus() }}
                 </button>
+                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [disabled]="!addTicketForm.valid">
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                  <button *ngFor="let status of Status" type="button" class="dropdown-item"
+                    (click)="onSelectedStatus(status.value)">
+                    {{status.name}}
+                  </button>
+                </div>
               </div>
-              <button type="submit" class="btn btn-success btn-save" [disabled]="!addTicketForm.valid">Save
-                {{ displaySelectedStatus() }}
-              </button>
-              <button type="button" class="btn btn-light btn-cancel">Cancel</button>
+              <button type="button" class="btn btn-light btn-cancel" [routerLink]="['/']">Cancel</button>
             </div>
           </div>
         </form>
