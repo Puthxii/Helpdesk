@@ -25,7 +25,7 @@
             <div class="form-group col-md-6">
               <label for="source">Source</label>
               <select name="source" formControlName="source" class="form-control" id="source">
-                <option value="">choose source...<option>
+                <option value="">choose source...</option>
                 <option *ngFor="let source of Sources" [ngValue]="source.name">
                   {{ source.name }}
                 </option>
