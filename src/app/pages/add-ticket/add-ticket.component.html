@@ -25,6 +25,7 @@
             <div class="form-group col-md-6">
               <label for="source">Source</label>
               <select name="source" formControlName="source" class="form-control" id="source">
+                <option value="">choose source...<option>
                 <option *ngFor="let source of Sources" [ngValue]="source.name">
                   {{ source.name }}
                 </option>
@@ -48,6 +49,18 @@
               </div>
             </div>
             <div class="form-group col-md-6">
+              <label for="creater">Creater</label>
+              <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater"
+                required>
+              <div *ngIf="creater.invalid && (creater.dirty || creater.touched)" class="danger-color">
+                <div *ngIf="creater.errors.required">
+                  Creater is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
               <label for="maintenancePackage">Maintenance Package</label>
               <input type=text formControlName="maintenancePackage" class="form-control" id="maintenancePackage"
                 placeholder="Maintenance Package" required>
@@ -58,8 +71,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="product">Product</label>
               <input type=text formControlName="product" class="form-control" id="product" placeholder="Product"
@@ -70,7 +81,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
               <label for="module">Module</label>
               <div class="input-group mb-2">
                 <input type="text" formControlName="module" class="form-control" placeholder="Module"
@@ -88,19 +99,10 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="creater">Creater</label>
-              <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater"
-                required>
-              <div *ngIf="creater.invalid && (creater.dirty || creater.touched)" class="danger-color">
-                <div *ngIf="creater.errors.required">
-                  Creater is required.
-                </div>
-              </div>
-            </div>
-            <div class="form-group col-md-6">
               <label for="Type">Type</label>
               <select name="Type" formControlName="type" class="form-control" id="type"
                 (ngModelChange)="hideTextArea($event)">
+                <option value="">choose type...</option>
                 <option *ngFor="let type of Types" [ngValue]="type.name">
                   {{ type.name }}
                 </option>
@@ -111,21 +113,10 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="subject">Subject</label>
-              <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject"
-                required>
-              <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
-                <div *ngIf="subject.errors.required">
-                  Subject is required.
-                </div>
-              </div>
-            </div>
             <div class="form-group col-md-6">
               <label for="priority">Priority</label>
               <select name="priority" formControlName="priority" class="form-control" id="priority">
+                <option value="">choose priority...</option>
                 <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
                   {{ priority.name }}
                 </option>
@@ -138,7 +129,19 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
+              <label for="subject">Subject</label>
+              <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject"
+                required>
+              <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
+                <div *ngIf="subject.errors.required">
+                  Subject is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
               <label for="description">Description</label>
               <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
               <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
@@ -147,8 +150,9 @@
                 </div>
               </div>
             </div>
-
-            <div class="form-group col-md-6" *ngIf="hideResolve">
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12" *ngIf="hideResolve">
               <label for="resolve">Resolve Description</label>
               <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription"
                 rows="3"></textarea>
