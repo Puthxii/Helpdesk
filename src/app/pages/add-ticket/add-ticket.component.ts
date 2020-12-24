@@ -36,7 +36,8 @@ export class AddTicketComponent implements OnInit {
     this.selectedItems = [
       { item_id: 3, item_text: 'Pune' },
       { item_id: 4, item_text: 'Navsari' }
-    ];
+    ];      
+    console.log(this.selectedItems)
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
