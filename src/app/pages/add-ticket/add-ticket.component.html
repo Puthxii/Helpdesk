@@ -40,8 +40,12 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="siteName">Site Name</label>
-              <input type=text formControlName="siteName" class="form-control" id="siteName" placeholder="Site Name"
-                required>
+              <select name="siteName" formControlName="siteName" class="form-control" id="siteName">
+                <option value="">choose site...</option>
+                <option *ngFor="let site of Site" [ngValue]="site.initials">
+                  {{ site.initials }}
+                </option>
+              </select>
               <div *ngIf="siteName.invalid && (siteName.dirty || siteName.touched)" class="danger-color">
                 <div *ngIf="siteName.errors.required">
                   Site name is required.

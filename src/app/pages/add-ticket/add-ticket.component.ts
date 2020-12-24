@@ -1,8 +1,10 @@
+import { SiteService } from './../../services/site/site.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import * as moment from 'moment';
+import { Site } from 'src/app/services/site/site.model';
 
 @Component({
   selector: 'app-add-ticket',
@@ -12,6 +14,7 @@ import * as moment from 'moment';
 export class AddTicketComponent implements OnInit {
   constructor(
     public ticketService: TicketService,
+    public siteService: SiteService,
     public fb: FormBuilder
   ) { }
 
@@ -70,7 +73,7 @@ export class AddTicketComponent implements OnInit {
   hideResolve = false;
   maxDate = moment(new Date()).format('DD-MM-YYYY');
   minDate = moment().subtract(1, 'months').format('DD-MM-YYYY');
-
+  Site: Site[];
   Sources = [
     { name: 'website' },
     { name: 'Facebook' },
@@ -100,7 +103,19 @@ export class AddTicketComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.dataState();
     this.buildForm();
+  }
+
+  dataState() {
+    this.siteService.getSitesList().snapshotChanges().subscribe(data => {
+      this.Site = [];
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['$key'] = items.payload.doc.id;
+        this.Site.push(item as Site)
+      })
+    })
   }
 
   successNotification() {
