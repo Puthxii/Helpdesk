@@ -1,3 +1,5 @@
+import { Product } from './../../services/product/product.model';
+import { ProductService } from './../../services/product/product.service';
 import { SiteService } from './../../services/site/site.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -12,9 +14,11 @@ import { Site } from 'src/app/services/site/site.model';
   styleUrls: ['./add-ticket.component.scss']
 })
 export class AddTicketComponent implements OnInit {
+  Product: Product;
   constructor(
     public ticketService: TicketService,
     public siteService: SiteService,
+    public productService: ProductService,
     public fb: FormBuilder
   ) { }
 
@@ -116,6 +120,10 @@ export class AddTicketComponent implements OnInit {
         this.Site.push(item as Site)
       })
     })
+  }
+
+  setProductId(productId: any) {
+    this.productService.getProductById(productId)
   }
 
   successNotification() {

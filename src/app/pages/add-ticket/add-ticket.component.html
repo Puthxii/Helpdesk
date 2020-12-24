@@ -40,10 +40,11 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="siteName">Site Name</label>
-              <select name="siteName" formControlName="siteName" class="form-control" id="siteName">
+              <select name="siteName" formControlName="siteName" class="form-control" id="siteName"
+                (ngModelChange)="setProductId($event)">
                 <option value="">choose site...</option>
-                <option *ngFor="let site of Site" [ngValue]="site.initials">
-                  {{ site.initials }}
+                <option *ngFor=" let site of Site" [ngValue]="site.productId" (ngModelChange)="setProductId($event)">
+                  {{ site.nameTH }}
                 </option>
               </select>
               <div *ngIf="siteName.invalid && (siteName.dirty || siteName.touched)" class="danger-color">
