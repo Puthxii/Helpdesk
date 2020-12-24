@@ -4,10 +4,11 @@ import { TicketService } from 'src/app/services/ticket/ticket.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import * as moment from 'moment';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+
 @Component({
   selector: 'app-add-ticket',
   templateUrl: './add-ticket.component.html',
-  styleUrls: ['./add-ticket.component.scss']
+  styleUrls: ['./add-ticket.component.scss'],
 })
 export class AddTicketComponent implements OnInit {
   public addTicketForm: FormGroup;
