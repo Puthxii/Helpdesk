@@ -112,18 +112,22 @@ export class AddTicketComponent implements OnInit {
   }
 
   dataState() {
-    this.siteService.getSitesList().snapshotChanges().subscribe(data => {
-      this.Site = [];
-      data.map(items => {
-        const item = items.payload.doc.data();
-        item['$key'] = items.payload.doc.id;
-        this.Site.push(item as Site)
-      })
+    // this.siteService.getSitesList().snapshotChanges().subscribe(data => {
+    //   this.Site = [];
+    //   data.map(items => {
+    //     const item = items.payload.doc.data();
+    //     item['$key'] = items.payload.doc.id;
+    //     this.Site.push(item as Site)
+    //   })
+    // })
+    this.Site = [];
+    this.siteService.getSitesList().forEach(data => {
+      console.log(data);
     })
   }
 
   setProductId(productId: any) {
-    this.productService.getProductById(productId)
+    // this.productService.getProductById(productId)
   }
 
   successNotification() {
