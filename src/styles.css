@@ -83,5 +83,7 @@
 }
 
 .container .multiselect-dropdown .dropdown-btn {
-    margin-bottom: -1.5rem !important;
+    margin-top: initial !important;
+    /* margin-bottom:  !important; */
+    
 }
