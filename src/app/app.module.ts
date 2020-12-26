@@ -24,6 +24,7 @@ import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     AddTicketComponent,
     TicketComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    FooterComponent
   ],
   imports: [
     FormsModule,
