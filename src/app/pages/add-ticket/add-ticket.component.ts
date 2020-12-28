@@ -40,10 +40,6 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('maintenancePackage');
   }
 
-  get product() {
-    return this.addTicketForm.get('product');
-  }
-
   get module() {
     return this.addTicketForm.get('module');
   }
@@ -128,7 +124,6 @@ export class AddTicketComponent implements OnInit {
       source: ['', [Validators.required]],
       siteName: ['', [Validators.required]],
       maintenancePackage: ['', [Validators.required]],
-      product: [''],
       module: ['', [Validators.required]],
       creater: ['', [Validators.required]],
       type: ['', [Validators.required]],

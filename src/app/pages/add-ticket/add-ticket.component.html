@@ -41,9 +41,10 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="siteName">Site Name</label>
-              <select name="siteName" formControlName="siteName" class="form-control" id="siteName">
-                <option value="">choose site...</option>
-                <option *ngFor=" let site of Product" [ngValue]="site.initials">
+              <select name="siteName" [(ngModel)]="selectedSite" formControlName="siteName" class="form-control"
+                id="siteName">
+                <option [ngValue]="site">choose site...</option>
+                <option *ngFor=" let site of Product" [ngValue]="site">
                   {{ site.nameEN? site.nameEN : '-' }}
                 </option>
               </select>
@@ -76,15 +77,15 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6" *ngIf="selectedSite">
               <label for="product">Product</label>
-              <input type=text formControlName="product" class="form-control" id="product" placeholder="Product"
-                required>
-              <!-- <div *ngIf="product.invalid && (product.dirty || product.touched)" class="danger-color">
-                <div *ngIf="product.errors.required">
-                  Product is required.
-                </div>
-              </div> -->
+              <input type=text class="form-control" id="product" placeholder="Product"
+                value="{{selectedSite?.product?.name}}" readonly>
+              <!-- <div *ngIf=" product.invalid && (product.dirty || product.touched)" class="danger-color">
+              <div *ngIf="product.errors.required">
+                Product is required.
+              </div>
+            </div> -->
             </div>
             <div class="form-group col-md-12">
               <label for="module">Module</label>

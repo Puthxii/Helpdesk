@@ -1,9 +1,9 @@
+import { Site } from './../site/site.model';
 export interface Ticket {
     date: string;
     source: string;
-    siteName: string;
+    siteName: Site;
     maintenancePackage: string;
-    product: string;
     module: string;
     creater: string;
     type: string;

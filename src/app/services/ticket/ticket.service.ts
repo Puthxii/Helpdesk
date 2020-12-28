@@ -24,7 +24,6 @@ export class TicketService {
         source: ticket.source,
         siteName: ticket.siteName,
         maintenancePackage: ticket.maintenancePackage,
-        product: ticket.product,
         module: ticket.module,
         creater: ticket.creater,
         type: ticket.type,
