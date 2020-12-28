@@ -23,7 +23,6 @@ export class TicketService {
         date: ticket.date,
         source: ticket.source,
         siteName: ticket.siteName,
-        maintenancePackage: ticket.maintenancePackage,
         module: ticket.module,
         creater: ticket.creater,
         type: ticket.type,

@@ -107,6 +107,9 @@ export class AddTicketComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.site$ = this.siteService.getSitesList();
+    this.site$.forEach(value => {
+      console.log(value)
+    })
   }
 
   successNotification() {
@@ -123,7 +126,6 @@ export class AddTicketComponent implements OnInit {
       date: ['', [Validators.required]],
       source: ['', [Validators.required]],
       siteName: ['', [Validators.required]],
-      maintenancePackage: ['', [Validators.required]],
       module: ['', [Validators.required]],
       creater: ['', [Validators.required]],
       type: ['', [Validators.required]],

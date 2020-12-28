@@ -4,4 +4,10 @@ export interface Site {
     nameEN: string;
     nameTH: string;
     productId: string;
+    maLevelId: string;
+}
+
+export interface MaLevel {
+    id: string;
+    name: string;
 }
