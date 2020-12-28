@@ -7,6 +7,7 @@ import { TicketService } from 'src/app/services/ticket/ticket.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import * as moment from 'moment';
 import { Site } from 'src/app/services/site/site.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-ticket',
@@ -15,6 +16,7 @@ import { Site } from 'src/app/services/site/site.model';
 })
 export class AddTicketComponent implements OnInit {
   Product: Product;
+  product$: Observable<any>;
   constructor(
     public ticketService: TicketService,
     public siteService: SiteService,
@@ -107,27 +109,8 @@ export class AddTicketComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.dataState();
     this.buildForm();
-  }
-
-  dataState() {
-    // this.siteService.getSitesList().snapshotChanges().subscribe(data => {
-    //   this.Site = [];
-    //   data.map(items => {
-    //     const item = items.payload.doc.data();
-    //     item['$key'] = items.payload.doc.id;
-    //     this.Site.push(item as Site)
-    //   })
-    // })
-    this.Site = [];
-    this.siteService.getSitesList().forEach(data => {
-      console.log(data);
-    })
-  }
-
-  setProductId(productId: any) {
-    // this.productService.getProductById(productId)
+    this.product$ = this.siteService.getSitesList();
   }
 
   successNotification() {
@@ -145,7 +128,7 @@ export class AddTicketComponent implements OnInit {
       source: ['', [Validators.required]],
       siteName: ['', [Validators.required]],
       maintenancePackage: ['', [Validators.required]],
-      product: ['', [Validators.required]],
+      product: [''],
       module: ['', [Validators.required]],
       creater: ['', [Validators.required]],
       type: ['', [Validators.required]],
