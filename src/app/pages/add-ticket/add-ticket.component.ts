@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 })
 export class AddTicketComponent implements OnInit {
   Product: Product;
-  product$: Observable<any>;
+  site$: Observable<any>;
   constructor(
     public ticketService: TicketService,
     public siteService: SiteService,
@@ -106,7 +106,7 @@ export class AddTicketComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.product$ = this.siteService.getSitesList();
+    this.site$ = this.siteService.getSitesList();
   }
 
   successNotification() {

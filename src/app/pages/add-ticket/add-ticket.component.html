@@ -10,8 +10,7 @@
         </div>
       </div>
       <div class="card-body">
-        <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()"
-          *ngIf="product$ | async; else loading; let Product">
+        <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()" *ngIf="site$ | async; else loading; let Site">
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="date">Date</label>
@@ -44,7 +43,7 @@
               <select name="siteName" [(ngModel)]="selectedSite" formControlName="siteName" class="form-control"
                 id="siteName">
                 <option [ngValue]="site">choose site...</option>
-                <option *ngFor=" let site of Product" [ngValue]="site">
+                <option *ngFor=" let site of Site" [ngValue]="site">
                   {{ site.nameEN? site.nameEN : '-' }}
                 </option>
               </select>
