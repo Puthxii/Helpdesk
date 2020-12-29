@@ -107,9 +107,6 @@ export class AddTicketComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.site$ = this.siteService.getSitesList();
-    this.site$.forEach(value => {
-      console.log(value)
-    })
   }
 
   successNotification() {
@@ -158,5 +155,20 @@ export class AddTicketComponent implements OnInit {
       status
     });
   }
+
+  isSelectedSite() {
+    return this.addTicketForm.controls['site'].value
+  }
+
+  getMaLevelName() {
+    return this.addTicketForm.controls['site'].value.maLevelId
+  }
+
+  getProductName() {
+    return this.addTicketForm.controls['site'].value.product.name
+  }
+
 }
+
+
 
