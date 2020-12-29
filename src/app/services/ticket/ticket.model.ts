@@ -2,7 +2,7 @@ import { Site, MaLevel } from './../site/site.model';
 export interface Ticket {
     date: string;
     source: string;
-    siteName: Site;
+    site: Site;
     maLevel: MaLevel;
     module: string;
     creater: string;

@@ -32,8 +32,8 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('source');
   }
 
-  get siteName() {
-    return this.addTicketForm.get('siteName');
+  get site() {
+    return this.addTicketForm.get('site');
   }
 
   get maintenancePackage() {
@@ -125,7 +125,7 @@ export class AddTicketComponent implements OnInit {
     this.addTicketForm = this.fb.group({
       date: ['', [Validators.required]],
       source: ['', [Validators.required]],
-      siteName: ['', [Validators.required]],
+      site: ['', [Validators.required]],
       module: ['', [Validators.required]],
       creater: ['', [Validators.required]],
       type: ['', [Validators.required]],

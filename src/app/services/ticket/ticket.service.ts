@@ -22,7 +22,7 @@ export class TicketService {
       this.afs.collection('ticket').add({
         date: ticket.date,
         source: ticket.source,
-        siteName: ticket.siteName,
+        site: ticket.site,
         module: ticket.module,
         creater: ticket.creater,
         type: ticket.type,

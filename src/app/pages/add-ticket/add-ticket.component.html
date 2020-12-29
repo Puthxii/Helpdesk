@@ -39,16 +39,15 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="siteName">Site Name</label>
-              <select name="siteName" [(ngModel)]="selectedSite" formControlName="siteName" class="form-control"
-                id="siteName">
-                <option [ngValue]="site">choose site...</option>
+              <label for="site">Site Name</label>
+              <select name="site" formControlName="site" class="form-control" id="site">
+                <option value="">choose site...</option>
                 <option *ngFor=" let site of Site" [ngValue]="site">
                   {{ site.nameEN? site.nameEN : '-' }}
                 </option>
               </select>
-              <div *ngIf="siteName.invalid && (siteName.dirty || siteName.touched)" class="danger-color">
-                <div *ngIf="siteName.errors.required">
+              <div *ngIf="site.invalid && (site.dirty || site.touched)" class="danger-color">
+                <div *ngIf="site.errors.required">
                   Site name is required.
                 </div>
               </div>
@@ -64,16 +63,16 @@
               </div>
             </div>
           </div>
-          <div class="form-row" *ngIf="selectedSite">
+          <div class="form-row" *ngIf="addTicketForm.controls['site'].value">
             <div class="form-group col-md-6">
               <label for="maintenancePackage">Maintenance Package</label>
-              <input type=text class="form-control" id="maintenancePackage" placeholder="Maintenance Package"
-                value="{{selectedSite?.maLevelId}}" readonly>
+              <input type=text class="form-control" id="maintenancePackage" placeholder="Maintenance Package" value=""
+                readonly>
             </div>
             <div class="form-group col-md-6">
               <label for="product">Product</label>
               <input type=text class="form-control" id="product" placeholder="Product"
-                value="{{selectedSite?.product?.name}}" readonly>
+                value="{{addTicketForm.controls['site']?.value.product?.name}}" readonly>
             </div>
             <div class="form-group col-md-12">
               <label for="module">Module</label>
