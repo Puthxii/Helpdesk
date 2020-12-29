@@ -136,9 +136,9 @@ export class AddTicketComponent implements OnInit {
 
   hideTextArea(type: any) {
     if (type === 'info' || type === 'consult') {
-      this.hideResolve = true
+      this.hideResolve = true;
     } else {
-      this.hideResolve = false
+      this.hideResolve = false;
     }
   }
 
@@ -147,7 +147,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   displaySelectedStatus(): string {
-    return (this.status.value) ? 'as ' + this.status.value : ''
+    return (this.status.value) ? 'as ' + this.status.value : '';
   }
 
   onSelectedStatus(status: string) {
@@ -157,15 +157,15 @@ export class AddTicketComponent implements OnInit {
   }
 
   isSelectedSite() {
-    return this.addTicketForm.controls['site'].value
+    return this.addTicketForm.controls.site.value;
   }
 
   getMaLevelName() {
-    return this.addTicketForm.controls['site'].value.maLevelId
+    return this.addTicketForm.controls.site.value.maLevelId;
   }
 
   getProductName() {
-    return this.addTicketForm.controls['site'].value.product.name
+    return this.addTicketForm.controls.site.value.product.name;
   }
 
 }
