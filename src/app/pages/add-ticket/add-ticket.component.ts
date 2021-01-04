@@ -129,6 +129,7 @@ export class AddTicketComponent implements OnInit {
       enableCheckAll: false
     };
     this.site$ = this.siteService.getSitesList();
+    this.getetDataSate();
   }
 
   successNotification() {
@@ -195,6 +196,17 @@ export class AddTicketComponent implements OnInit {
   getModule() {
     return this.addTicketForm.controls.site.value.module;
   }
+
+  getCreate() {
+    return this.addTicketForm.controls.site.value.userId;
+  }
+
+  getetDataSate() {
+    this.site$.forEach(data => {
+      console.log(data);
+    });
+  }
+
 }
 
 
