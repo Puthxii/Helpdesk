@@ -22,7 +22,7 @@ export class TicketService {
       text: 'Your ticket has been saved',
       icon: 'success',
     }).then((result) => {
-      window.location.href = "./../ticket";
+      window.location.href = './../ticket';
     });
   }
 
@@ -32,30 +32,30 @@ export class TicketService {
       title: 'error',
       text: 'Your ticket has not been saved',
     }).then((result) => {
-      window.location.href = "./../ticket";
+      window.location.href = './../ticket';
     });
   }
 
   async addTicket(ticket: Ticket) {
-      try {
-        this.afs.collection('ticket').add({
-          date: ticket.date,
-          source: ticket.source,
-          siteName: ticket.siteName,
-          maintenancePackage: ticket.maintenancePackage,
-          product: ticket.product,
-          module: ticket.module,
-          creater: ticket.creater,
-          type: ticket.type,
-          subject: ticket.subject,
-          priority: ticket.priority,
-          description: ticket.description,
-          resolveDescription: ticket.resolveDescription,
-        });
-        this.successNotification();
-      } catch (error) {
-        this.errorNotification();
-      }
+    try {
+      this.afs.collection('ticket').add({
+        date: ticket.date,
+        source: ticket.source,
+        siteName: ticket.siteName,
+        maintenancePackage: ticket.maintenancePackage,
+        product: ticket.product,
+        module: ticket.module,
+        creater: ticket.creater,
+        type: ticket.type,
+        subject: ticket.subject,
+        priority: ticket.priority,
+        description: ticket.description,
+        resolveDescription: ticket.resolveDescription,
+      });
+      this.successNotification();
+    } catch (error) {
+      this.errorNotification();
+    }
   }
 
   //TODO : Get by ID
