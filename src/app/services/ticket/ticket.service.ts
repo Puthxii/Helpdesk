@@ -2,7 +2,7 @@ import { AngularFirestore, fromDocRef } from 'angularfire2/firestore';
 import { Ticket } from './ticket.model';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
-
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,25 @@ export class TicketService {
 
   getTicketsList() {
     return this.afs.collection('ticket').snapshotChanges();
+  }
+
+  successNotification() {
+    Swal.fire({
+      text: 'Your ticket has been saved',
+      icon: 'success',
+    }).then((result) => {
+      window.location.href = "./../ticket";
+    });
+  }
+
+  errorNotification() {
+    Swal.fire({
+      icon: 'error',
+      title: 'error',
+      text: 'Your ticket has not been saved',
+    }).then((result) => {
+      window.location.href = "./../ticket";
+    });
   }
 
   async addTicket(ticket: Ticket) {
@@ -32,10 +51,10 @@ export class TicketService {
           priority: ticket.priority,
           description: ticket.description,
           resolveDescription: ticket.resolveDescription,
-        })
-        console.log('succes');
-      } catch (error){
-        console.log(error);
+        });
+        this.successNotification();
+      } catch (error) {
+        this.errorNotification();
       }
   }
 
