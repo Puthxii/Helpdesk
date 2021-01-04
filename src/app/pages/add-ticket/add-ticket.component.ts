@@ -77,8 +77,8 @@ export class AddTicketComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings;
-  maxDate = moment(new Date()).format('DD-MM-YYYY');
-  minDate = moment().subtract(1, 'months').format('DD-MM-YYYY');
+  maxDate = moment(new Date()).format('YYYY-MM-DD');
+  minDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
   Site: Site[];
   Sources = [
     { name: 'website' },
@@ -117,10 +117,6 @@ export class AddTicketComponent implements OnInit {
         { item_id: 4, item_text: 'Navsari' },
         { item_id: 5, item_text: 'New Delhi' }
       ];
-    this.selectedItems = [
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' }
-    ];
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -148,7 +144,7 @@ export class AddTicketComponent implements OnInit {
       date: ['', [Validators.required]],
       source: ['', [Validators.required]],
       site: ['', [Validators.required]],
-      module: ['', [Validators.required]],
+      module: [''],
       creater: ['', [Validators.required]],
       type: ['', [Validators.required]],
       subject: ['', [Validators.required]],
@@ -186,13 +182,18 @@ export class AddTicketComponent implements OnInit {
   }
 
   getMaLevelName() {
-    return this.addTicketForm.controls.site.value.maLevelId;
+    const maStartDate = moment(this.addTicketForm.controls.site.value.maStartDate).format('DD/MM/YYYY');
+    const maEndDate = moment(this.addTicketForm.controls.site.value.maEndDate).format('DD/MM/YYYY');
+    return maStartDate + ' - ' + maEndDate;
   }
 
   getProductName() {
     return this.addTicketForm.controls.site.value.product.name;
   }
 
+  getModule() {
+    return this.addTicketForm.controls.site.value.module;
+  }
 }
 
 
