@@ -22,6 +22,7 @@ import { StaffComponent } from './pages/staff/staff.component';
 import { RegisterStaffComponent } from './pages/register-staff/register-staff.component';
 import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { TicketComponent } from './pages/ticket/ticket.component';
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    NgMultiSelectDropDownModule.forRoot()
 
   ],
   providers: [AuthService, AngularFireDatabase, AuthGuard],

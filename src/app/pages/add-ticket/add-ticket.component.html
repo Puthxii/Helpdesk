@@ -74,23 +74,16 @@
               <input type=text class="form-control" id="product" placeholder="Product" value="{{ getProductName() }}"
                 readonly>
             </div>
-            <div class="form-group col-md-12">
-              <label for="module">Module</label>
-              <div class="input-group mb-2">
-                <input type="text" formControlName="module" class="form-control" placeholder="Module"
-                  aria-label="Module" aria-describedby="button-addon2">
-                <a class=" btn btn-primary" href="">
-                  <i class="fas fa-plus custom-fa-plus"></i>
-                </a>
-              </div>
-              <div *ngIf="module.invalid && (module.dirty || module.touched)" class="danger-color">
-                <div *ngIf="module.errors.required">
-                  Module is required.
-                </div>
-              </div>
-            </div>
           </div>
           <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="module">Module</label>
+              <ng-multiselect-dropdown class="container" [placeholder]="'custom placeholder'" [data]="dropdownList"
+                [(ngModel)]="selectedItems" [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <div class="form-row dropdownModule">
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
               <select name="Type" formControlName="type" class="form-control" id="type"

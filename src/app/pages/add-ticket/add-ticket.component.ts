@@ -8,15 +8,17 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import * as moment from 'moment';
 import { Site } from 'src/app/services/site/site.model';
 import { Observable } from 'rxjs';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-add-ticket',
   templateUrl: './add-ticket.component.html',
-  styleUrls: ['./add-ticket.component.scss']
+  styleUrls: ['./add-ticket.component.scss'],
 })
 export class AddTicketComponent implements OnInit {
   Product: Product;
   site$: Observable<any>;
+
   constructor(
     public ticketService: TicketService,
     public siteService: SiteService,
@@ -73,6 +75,9 @@ export class AddTicketComponent implements OnInit {
   }
   public addTicketForm: FormGroup;
   hideResolve = false;
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings: IDropdownSettings;
   maxDate = moment(new Date()).format('DD-MM-YYYY');
   minDate = moment().subtract(1, 'months').format('DD-MM-YYYY');
   Site: Site[];
@@ -105,7 +110,28 @@ export class AddTicketComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.buildForm();
+    this.buildForm(),
+      this.dropdownList = [
+        { item_id: 1, item_text: 'Mumbai' },
+        { item_id: 2, item_text: 'Bangaluru' },
+        { item_id: 3, item_text: 'Pune' },
+        { item_id: 4, item_text: 'Navsari' },
+        { item_id: 5, item_text: 'New Delhi' }
+      ];
+    this.selectedItems = [
+      { item_id: 3, item_text: 'Pune' },
+      { item_id: 4, item_text: 'Navsari' }
+    ];
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: false,
+      enableCheckAll: false
+    };
     this.site$ = this.siteService.getSitesList();
   }
 

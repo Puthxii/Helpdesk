@@ -75,3 +75,15 @@
     width: 50px;
     padding: 3px;
 }
+
+.container .multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret:before {
+    display: inline-block !important;
+    border-style: none !important;
+   
+}
+
+.container .multiselect-dropdown .dropdown-btn {
+    margin-top: initial !important;
+    /* margin-bottom:  !important; */
+    
+}
