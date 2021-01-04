@@ -4,6 +4,10 @@ main {
     padding-top: 30px;
 }
 
+.profile{
+  padding-left: 8px;
+}
+
 .list-group-item{
   border: none;
   padding-top: 5px;

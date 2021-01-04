@@ -1,9 +1,9 @@
+import { Site, MaLevel } from './../site/site.model';
 export interface Ticket {
     date: string;
     source: string;
-    siteName: string;
-    maintenancePackage: string;
-    product: string;
+    site: Site;
+    maLevel: MaLevel;
     module: string;
     creater: string;
     type: string;
@@ -11,4 +11,5 @@ export interface Ticket {
     priority: string;
     description: string;
     resolveDescription: string;
+    status: string;
 }

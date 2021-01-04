@@ -18,25 +18,24 @@ export class TicketService {
   }
 
   async addTicket(ticket: Ticket) {
-      try {
-        this.afs.collection('ticket').add({
-          date: ticket.date,
-          source: ticket.source,
-          siteName: ticket.siteName,
-          maintenancePackage: ticket.maintenancePackage,
-          product: ticket.product,
-          module: ticket.module,
-          creater: ticket.creater,
-          type: ticket.type,
-          subject: ticket.subject,
-          priority: ticket.priority,
-          description: ticket.description,
-          resolveDescription: ticket.resolveDescription,
-        })
-        console.log('succes');
-      } catch (error){
-        console.log(error);
-      }
+    try {
+      this.afs.collection('ticket').add({
+        date: ticket.date,
+        source: ticket.source,
+        site: ticket.site,
+        module: ticket.module,
+        creater: ticket.creater,
+        type: ticket.type,
+        subject: ticket.subject,
+        priority: ticket.priority,
+        description: ticket.description,
+        resolveDescription: ticket.resolveDescription,
+        status: ticket.status
+      })
+      console.log('succes');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   //TODO : Get by ID
