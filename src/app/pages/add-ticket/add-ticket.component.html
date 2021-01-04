@@ -14,7 +14,8 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="date">Date</label>
-              <input type="date" formControlName="date"  [min]='minDate' [max]='maxDate' class="form-control" id="date" placeholder="date">
+              <input type="date" formControlName="date" [min]='minDate' [max]='maxDate' class="form-control" id="date"
+                placeholder="date">
               <div *ngIf="date.invalid && (date.dirty || date.touched)" class="danger-color">
                 <div *ngIf="date.errors.required">
                   Date is required.
@@ -24,7 +25,7 @@
             <div class="form-group col-md-6">
               <label for="source">Source</label>
               <select name="source" formControlName="source" class="form-control" id="source">
-                <option *ngFor="let source of sources" [ngValue]="source.name">
+                <option *ngFor="let source of Sources" [ngValue]="source.name">
                   {{ source.name }}
                 </option>
               </select>
@@ -38,7 +39,8 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="siteName">Site Name</label>
-              <input type=text formControlName="siteName" class="form-control" id="siteName" placeholder="Site Name" required>
+              <input type=text formControlName="siteName" class="form-control" id="siteName" placeholder="Site Name"
+                required>
               <div *ngIf="siteName.invalid && (siteName.dirty || siteName.touched)" class="danger-color">
                 <div *ngIf="siteName.errors.required">
                   Site name is required.
@@ -49,17 +51,19 @@
               <label for="maintenancePackage">Maintenance Package</label>
               <input type=text formControlName="maintenancePackage" class="form-control" id="maintenancePackage"
                 placeholder="Maintenance Package" required>
-                <div *ngIf="maintenancePackage.invalid && (maintenancePackage.dirty || maintenancePackage.touched)" class="danger-color">
-                  <div *ngIf="maintenancePackage.errors.required">
-                    Maintenance package is required.
-                  </div>
+              <div *ngIf="maintenancePackage.invalid && (maintenancePackage.dirty || maintenancePackage.touched)"
+                class="danger-color">
+                <div *ngIf="maintenancePackage.errors.required">
+                  Maintenance package is required.
                 </div>
+              </div>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="product">Product</label>
-              <input type=text formControlName="product" class="form-control" id="product" placeholder="Product" required>
+              <input type=text formControlName="product" class="form-control" id="product" placeholder="Product"
+                required>
               <div *ngIf="product.invalid && (product.dirty || product.touched)" class="danger-color">
                 <div *ngIf="product.errors.required">
                   Product is required.
@@ -69,7 +73,8 @@
             <div class="form-group col-md-6">
               <label for="module">Module</label>
               <div class="input-group mb-2">
-                <input type="text" formControlName="module" class="form-control" placeholder="Module" aria-label="Module" aria-describedby="button-addon2">
+                <input type="text" formControlName="module" class="form-control" placeholder="Module"
+                  aria-label="Module" aria-describedby="button-addon2">
                 <a class=" btn btn-primary" href="">
                   <i class="fas fa-plus custom-fa-plus"></i>
                 </a>
@@ -84,7 +89,8 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="creater">Creater</label>
-              <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater" required>
+              <input type="text" formControlName="creater" class="form-control" id="creater" placeholder="Creater"
+                required>
               <div *ngIf="creater.invalid && (creater.dirty || creater.touched)" class="danger-color">
                 <div *ngIf="creater.errors.required">
                   Creater is required.
@@ -93,8 +99,9 @@
             </div>
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
-              <select name="Type" formControlName="type" class="form-control" id="type" (ngModelChange)="hideTextArea($event)">
-                <option *ngFor="let type of types" [ngValue]="type.name" >
+              <select name="Type" formControlName="type" class="form-control" id="type"
+                (ngModelChange)="hideTextArea($event)">
+                <option *ngFor="let type of Types" [ngValue]="type.name">
                   {{ type.name }}
                 </option>
               </select>
@@ -108,7 +115,8 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="subject">Subject</label>
-              <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject" required>
+              <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject"
+                required>
               <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
                 <div *ngIf="subject.errors.required">
                   Subject is required.
@@ -118,7 +126,7 @@
             <div class="form-group col-md-6">
               <label for="priority">Priority</label>
               <select name="priority" formControlName="priority" class="form-control" id="priority">
-                <option *ngFor="let priority of prioritys" [ngValue]="priority.name">
+                <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
                   {{ priority.name }}
                 </option>
               </select>
@@ -139,7 +147,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="form-group col-md-6" *ngIf="hideResolve">
               <label for="resolve">Resolve Description</label>
               <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription"
@@ -148,20 +156,22 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <!-- <button id="btnGroupDrop1" type="submit" class="btn btn-success create dropdown-toggle"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Create
-                </button> -->
-              <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" style="float: right">
-              </button>
-              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#">Create and set as panding</a>
-                <a class="dropdown-item" href="#">Create and set as close</a>
-                <a class="dropdown-item" href="#">Draft</a>
+              <div class="btn-group btn-save" style="float: right;">
+                <button type="submit" class="btn btn-success" [disabled]="!addTicketForm.valid">
+                  Save {{ displaySelectedStatus() }}
+                </button>
+                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [disabled]="!addTicketForm.valid">
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                  <button *ngFor="let status of Status" type="button" class="dropdown-item"
+                    (click)="onSelectedStatus(status.value)">
+                    {{status.name}}
+                  </button>
+                </div>
               </div>
-              <button type="submit" class="btn btn-success btn-save" [disabled]="!addTicketForm.valid">Save</button>
-              <button type="button" class="btn btn-light" style="float: right;">Cancel</button>
+              <button type="button" class="btn btn-light btn-cancel" [routerLink]="['/']">Cancel</button>
             </div>
           </div>
         </form>
