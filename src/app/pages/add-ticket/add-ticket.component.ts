@@ -198,6 +198,9 @@ export class AddTicketComponent implements OnInit {
   }
 
   getCreate() {
+    console.log(this.addTicketForm.controls.site.value.userId);
+    const value = this.siteService.getUserbyId(this.addTicketForm.controls.site.value.userId);
+    console.log(value);
     return this.addTicketForm.controls.site.value.userId;
   }
 
