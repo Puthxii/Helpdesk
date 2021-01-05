@@ -30,8 +30,4 @@ export class SiteService {
                 });
             }))
     }
-
-    getUserbyId(id: any) {
-        console.log(id);
-    }
 }
