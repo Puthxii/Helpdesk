@@ -178,10 +178,14 @@ export class AddTicketComponent implements OnInit {
   }
 
   isSelectedSite() {
-    return this.addTicketForm.controls.site.value;
+    if (this.addTicketForm.controls.site.value) {
+      this.getCreate();
+      return true;
+    }
+    return false;
   }
 
-  getMaLevelName() {
+  getMaPackage() {
     const maStartDate = moment(this.addTicketForm.controls.site.value.maStartDate).format('DD/MM/YYYY');
     const maEndDate = moment(this.addTicketForm.controls.site.value.maEndDate).format('DD/MM/YYYY');
     return maStartDate + ' - ' + maEndDate;
@@ -193,6 +197,10 @@ export class AddTicketComponent implements OnInit {
 
   getModule() {
     return this.addTicketForm.controls.site.value.module;
+  }
+
+  getCreate() {
+    return this.addTicketForm.controls.site.value.users;
   }
 }
 
