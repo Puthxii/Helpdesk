@@ -79,7 +79,7 @@
             <div class="form-group col-md-12">
               <label for="module">Module</label>
               <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" [data]="getModule()"
-                [(ngModel)]="data" [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings">
+               id="module" formControlName="module" [(ngModel)]="data" [settings]="dropdownSettings">
               </ng-multiselect-dropdown>
             </div>
           </div>
