@@ -1,3 +1,4 @@
+import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TicketComponent implements OnInit {
 
-  constructor() { }
+  constructor(public ticketService: TicketService) { }
 
   ngOnInit() {
+    this.ticketService.getByKeyWord('WU')
   }
 
 }

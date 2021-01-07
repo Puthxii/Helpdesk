@@ -56,7 +56,16 @@ export class TicketService {
     }
   }
 
-  //TODO : Get by ID
+  //TODO : Get by Site.initials
+  getByKeyWord(value: any) {
+    this.afs.collection('ticket', (ref) => ref.where('site.initials', '==', value)).snapshotChanges().subscribe(data => {
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['$uid'] = items.payload.doc.id;
+        console.log(item);
+      })
+    });
+  }
 
   //TODO : UPDATE
 
