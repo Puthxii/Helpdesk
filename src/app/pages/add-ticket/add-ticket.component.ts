@@ -80,6 +80,7 @@ export class AddTicketComponent implements OnInit {
   maxDate = moment(new Date()).format('YYYY-MM-DD');
   minDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
   Site: Site[];
+  moduleList: any[];
   Sources = [
     { name: 'Website' },
     { name: 'Facebook' },
@@ -99,7 +100,8 @@ export class AddTicketComponent implements OnInit {
   Prioritys = [
     { name: 'Low' },
     { name: 'Medium' },
-    { name: 'High' }
+    { name: 'High' },
+    { name: 'Critical' }
   ];
 
   Status = [
@@ -110,23 +112,15 @@ export class AddTicketComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm(),
-      this.dropdownList = [
-        { item_id: 1, item_text: 'Mumbai' },
-        { item_id: 2, item_text: 'Bangaluru' },
-        { item_id: 3, item_text: 'Pune' },
-        { item_id: 4, item_text: 'Navsari' },
-        { item_id: 5, item_text: 'New Delhi' }
-      ];
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: false,
-      enableCheckAll: false
-    };
+      this.dropdownSettings = {
+        singleSelection: false,
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        noDataAvailablePlaceholderText: 'Please choose site or site does not have module',
+        itemsShowLimit: 3,
+        allowSearchFilter: true,
+        enableCheckAll: false
+      };
     this.site$ = this.siteService.getSitesList();
     this.setStatus();
   }
@@ -186,6 +180,7 @@ export class AddTicketComponent implements OnInit {
 
   isSelectedSite() {
     if (this.addTicketForm.controls.site.value) {
+      this.getModule();
       this.getCreate();
       return true;
     }
@@ -203,13 +198,13 @@ export class AddTicketComponent implements OnInit {
   }
 
   getModule() {
-    return this.addTicketForm.controls.site.value.module;
+    this.moduleList = this.addTicketForm.controls.site.value.module;
+    this.moduleList.sort((a, b) => a.localeCompare(b));
+    return this.moduleList;
   }
 
   getCreate() {
     return this.addTicketForm.controls.site.value.users;
   }
+
 }
-
-
-

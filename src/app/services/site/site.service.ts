@@ -10,7 +10,6 @@ import { of } from 'rxjs';
     providedIn: 'root'
 })
 export class SiteService {
-
     constructor(private afs: AngularFirestore) { }
 
     getSitesList() {
