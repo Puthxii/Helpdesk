@@ -49,6 +49,7 @@ export class TicketService {
         priority: ticket.priority,
         description: ticket.description,
         resolveDescription: ticket.resolveDescription,
+        status: ticket.status
       });
       this.successNotification();
     } catch (error) {

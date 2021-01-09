@@ -81,7 +81,7 @@ export class AddTicketComponent implements OnInit {
   minDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
   Site: Site[];
   Sources = [
-    { name: 'website' },
+    { name: 'Website' },
     { name: 'Facebook' },
     { name: 'Line' },
     { name: 'Email' },
@@ -90,16 +90,16 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Types = [
-    { name: 'info' },
-    { name: 'consult' },
-    { name: 'problem' },
-    { name: 'add-ons' }
+    { name: 'Info' },
+    { name: 'Consult' },
+    { name: 'Problem' },
+    { name: 'Add-ons' }
   ];
 
   Prioritys = [
-    { name: 'low' },
-    { name: 'medium' },
-    { name: 'high' }
+    { name: 'Low' },
+    { name: 'Medium' },
+    { name: 'High' }
   ];
 
   Status = [
@@ -128,6 +128,13 @@ export class AddTicketComponent implements OnInit {
       enableCheckAll: false
     };
     this.site$ = this.siteService.getSitesList();
+    this.setStatus();
+  }
+
+  setStatus() {
+    this.addTicketForm.patchValue({
+      status: 'draft'
+    });
   }
 
   successNotification() {
@@ -167,13 +174,13 @@ export class AddTicketComponent implements OnInit {
     this.ticketService.addTicket(this.addTicketForm.value);
   }
 
-  displaySelectedStatus(): string {
-    return (this.status.value) ? 'as ' + this.status.value : '';
+  displaySelectedStatus(): any {
+    return (this.status.value) ? 'Save as ' + this.status.value : 'Save as draft';
   }
 
-  onSelectedStatus(status: string) {
+  onSelectedStatus(value: any) {
     this.addTicketForm.patchValue({
-      status
+      status: value
     });
   }
 
