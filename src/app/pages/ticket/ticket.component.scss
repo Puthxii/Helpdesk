@@ -29,29 +29,21 @@ p{
 
 
 .sent {
-    width: 18rem;
-    height: 9rem;
     background-image: linear-gradient(to right, #FFBE96 20%, #3096E7 100%);
     border: none;
 }
 
 .accept {
-    width: 18rem;
-    height: 9rem;
-    background-image: linear-gradient(to right, #3096E7 20%, #2ED0B9 100%);
+    background-image: linear-gradient(to right, #3096E7 5%, #2ED0B9 100%);
     border: none;
 }
 
 .done {
-    width: 18rem;
-    height: 9rem;
     background-color: #2ED0B9;
     border: none;
 }
 
 .reject {
-    width: 18rem;
-    height: 9rem;
     background-color: #FE8896;
     border: none;
 }
@@ -59,3 +51,14 @@ p{
     color: white;
     font-size: 2rem;
 }
+
+// .icon-background {
+//     background: #ffc0c0;
+//     width: 100px;
+//     height: 100px;
+//     border-radius: 50%;
+//     text-align: center;
+//     line-height: 100px;
+//     vertical-align: middle;
+//     padding: 30px;
+// }
