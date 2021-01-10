@@ -1,6 +1,6 @@
 import { Roles } from './../../services/user.model';
 import { Component, OnInit } from '@angular/core';
-import { StaffService } from 'src/app/services/staff/staff.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { User } from '../../services/user.model';
 
 @Component({
@@ -16,12 +16,12 @@ export class StaffComponent implements OnInit {
   preLoader = true;
 
   constructor(
-    private staff: StaffService
+    private user: UserService
   ) { }
 
   ngOnInit() {
     this.dataState();
-    this.staff.getStaffsList().snapshotChanges().subscribe(data => {
+    this.user.getStaffsList().snapshotChanges().subscribe(data => {
       this.Staff = [];
       data.map(items => {
         const item = items.payload.doc.data();
@@ -32,7 +32,7 @@ export class StaffComponent implements OnInit {
   }
 
   dataState() {
-    this.staff.getStaffsList().snapshotChanges().subscribe(data => {
+    this.user.getStaffsList().snapshotChanges().subscribe(data => {
       this.preLoader = false;
       if (data.length <= 0) {
         this.hideWhenNoStaff = false;
