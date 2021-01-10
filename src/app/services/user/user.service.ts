@@ -4,10 +4,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
+
   constructor(private afs: AngularFirestore) { }
 
   getStaffsList() {
     return this.afs.collection('users', ref => ref.where('roles.supporter', '==', true));
   }
 
+  getUserbyId(uid: string) {
+    return this.afs.collection('users').doc(uid);
+  }
 }

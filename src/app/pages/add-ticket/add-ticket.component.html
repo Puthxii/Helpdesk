@@ -9,6 +9,24 @@
           </h5>
         </div>
       </div>
+      <!-- <div class="row" *ngIf="auth.authState as user">
+        <div class="col-md-12">
+          <div class="media">
+            <img class="align-self-start mr-5 img-thumbnail rounded-circle"
+              src="{{(user.photoURL) ? user.photoURL : ''}}" alt="{{user.displayName}}">
+            <div class="media-body">
+              <h1>Hello: <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong></h1>
+              <p>User ID: <strong>{{user.uid}}</strong></p>
+              <p>Email: <strong>{{user.email}}</strong></p>
+              <p>Name: <strong>{{user.firstName}}</strong></p>
+              <p>Email Verified: <strong>{{user.emailVerified}}</strong></p>
+              <p>Supporter: <strong>{{(user.roles?.supporter === true)? 'true' : '-'}}</strong>
+              </p>
+              <p>Customer: <strong>{{(user.roles?.customer)? user.roles.customer : '-'}}</strong></p>
+            </div>
+          </div>
+        </div>
+      </div> -->
       <div class="card-body">
         <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()" *ngIf="site$ | async; else loading; let Site">
           <div class="form-row" *ngIf="auth.isSupporter(user)">

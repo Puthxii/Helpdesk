@@ -1,3 +1,5 @@
+import { async } from '@angular/core/testing';
+import { UserService } from 'src/app/services/user/user.service';
 import { Product } from './../../services/product/product.model';
 import { ProductService } from './../../services/product/product.service';
 import { SiteService } from './../../services/site/site.service';
@@ -6,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import * as moment from 'moment';
 import { Site } from 'src/app/services/site/site.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { User } from 'src/app/services/user.model';
 
 @Component({
   selector: 'app-add-ticket',
@@ -19,12 +22,14 @@ export class AddTicketComponent implements OnInit {
   user;
   Product: Product;
   site$: Observable<any>;
+  user$: any;
   constructor(
     private auth: AuthService,
     public ticketService: TicketService,
     public siteService: SiteService,
     public productService: ProductService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public userService: UserService
   ) { }
 
   get date() {
@@ -82,6 +87,7 @@ export class AddTicketComponent implements OnInit {
   dropdownSettings: IDropdownSettings;
   maxDate = moment(new Date()).format('YYYY-MM-DD');
   minDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+  User: User;
   Site: Site[];
   moduleList: any[];
   Sources = [
@@ -114,11 +120,9 @@ export class AddTicketComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => this.user = user)
-    if (this.auth.isCustomer(this.user) === true) {
-      // this.getModule();
-      console.log();
-    }
+    this.auth.user$.subscribe(user => this.user = user);
+    this.User = this.auth.authState;
+    this.getUserValue();
     this.buildForm(),
       this.dropdownSettings = {
         singleSelection: false,
@@ -129,9 +133,20 @@ export class AddTicketComponent implements OnInit {
         allowSearchFilter: true,
         enableCheckAll: false
       };
-    this.site$ = this.siteService.getSitesList();
+
     this.setDate();
     this.setStatus();
+  }
+  getUserValue() {
+    this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
+      this.user$ = data.payload.data() as User;
+      console.log(this.user$);
+      if (this.user$.roles.customer === true) {
+        this.site$ = this.siteService.getSiteByName(this.user$.site);
+      } else {
+        this.site$ = this.siteService.getSitesList();
+      }
+    });
   }
 
   setDate() {
@@ -211,7 +226,7 @@ export class AddTicketComponent implements OnInit {
       this.moduleList = this.addTicketForm.controls.site.value.module;
       this.moduleList.sort((a, b) => a.localeCompare(b));
     } else {
-      this.moduleList = []
+      this.moduleList = [];
     }
     return this.moduleList;
   }
