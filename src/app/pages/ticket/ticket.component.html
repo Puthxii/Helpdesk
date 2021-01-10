@@ -118,26 +118,26 @@
   <div class="col-lg-12 col-md-12 col-sm-12">
     <div class="card mt-3">
       <div class="card-header text-left">
-        <div class="card">
+        <div class="card" *ngFor="let ticket of Ticket">
           <div class="card-header" style="background-color: #F2EDF3;">
             <div class="row"> 
               <div class="col-3">
                 <div class="col">
-                  <span for="">TSU515 - WalaiReport: รายการหนังสือซ่อม</span>
+                  <span>{{ticket.subject}}</span>
                 </div>
                 <div class="col">
-                  <i class="fas fa-globe-americas" style="color: gray;"></i><span class="mx-1" style="color: black;">สุริยา -TSU</span>                
+                  <i class="fas fa-globe-americas" style="color: gray;"></i><span class="mx-1" style="color: black;">{{ticket.creater}} -{{ticket.site.initials}}</span>                
                 </div>
                 <div class="col">
-                  <span for="">WALAI Report Genarator</span>
+                  <span for="">{{ticket.site.product.name}}</span>
                 </div>
                 <div class="col">
-                  <span style="color: gray;">Created 1 Jan,2021</span>
+                  <span style="color: gray;">Create {{ticket.date}}</span>
                 </div>
               </div>
               <div class="col-3 center">
                 <div class="form-group">
-                  <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3" readonly></textarea>
+                  <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3" readonly>{{ticket.description}}</textarea>
                 </div>
               </div>
               <div class="col-2 center paperclass">

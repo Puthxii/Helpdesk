@@ -4,7 +4,7 @@ export interface Ticket {
     source: string;
     site: Site;
     maLevel: MaLevel;
-    module: string;
+    module: any;
     creater: string;
     type: string;
     subject: string;
