@@ -122,7 +122,15 @@ export class AddTicketComponent implements OnInit {
         enableCheckAll: false
       };
     this.site$ = this.siteService.getSitesList();
+    this.setDate();
     this.setStatus();
+
+  }
+
+  setDate() {
+    this.addTicketForm.patchValue({
+      date: this.maxDate
+    });
   }
 
   setStatus() {
@@ -179,7 +187,10 @@ export class AddTicketComponent implements OnInit {
   }
 
   isSelectedSite() {
-    if (this.addTicketForm.controls.site.value) {
+    if (this.addTicketForm.controls.site.value && this.addTicketForm.controls.module) {
+      this.addTicketForm.controls.module.reset('', {
+        emitModelToViewChange: false
+      });
       this.getModule();
       this.getCreate();
       return true;
@@ -198,8 +209,12 @@ export class AddTicketComponent implements OnInit {
   }
 
   getModule() {
-    this.moduleList = this.addTicketForm.controls.site.value.module;
-    this.moduleList.sort((a, b) => a.localeCompare(b));
+    if (this.addTicketForm.controls.site.value.module) {
+      this.moduleList = this.addTicketForm.controls.site.value.module;
+      this.moduleList.sort((a, b) => a.localeCompare(b));
+    } else {
+      this.moduleList = []
+    }
     return this.moduleList;
   }
 
