@@ -13,10 +13,6 @@ export class TicketService {
     private afs: AngularFirestore
   ) { }
 
-  getTicketsList() {
-    return this.afs.collection('ticket').snapshotChanges();
-  }
-
   successNotification() {
     Swal.fire({
       text: 'Your ticket has been saved',
@@ -34,6 +30,10 @@ export class TicketService {
     }).then((result) => {
       window.location.href = './../ticket';
     });
+  }
+
+  getTicketsList() {
+    return this.afs.collection('ticket').snapshotChanges();
   }
 
   async addTicket(ticket: Ticket) {

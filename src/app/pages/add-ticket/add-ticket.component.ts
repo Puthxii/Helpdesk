@@ -4,11 +4,11 @@ import { SiteService } from './../../services/site/site.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
 import * as moment from 'moment';
 import { Site } from 'src/app/services/site/site.model';
 import { Observable } from 'rxjs';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-add-ticket',
@@ -16,9 +16,11 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   styleUrls: ['./add-ticket.component.scss'],
 })
 export class AddTicketComponent implements OnInit {
+  user;
   Product: Product;
   site$: Observable<any>;
   constructor(
+    private auth: AuthService,
     public ticketService: TicketService,
     public siteService: SiteService,
     public productService: ProductService,
@@ -72,6 +74,7 @@ export class AddTicketComponent implements OnInit {
   get status() {
     return this.addTicketForm.get('status');
   }
+
   public addTicketForm: FormGroup;
   hideResolve = false;
   dropdownList = [];
@@ -111,6 +114,11 @@ export class AddTicketComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.auth.user$.subscribe(user => this.user = user)
+    if (this.auth.isCustomer(this.user) === true) {
+      // this.getModule();
+      console.log();
+    }
     this.buildForm(),
       this.dropdownSettings = {
         singleSelection: false,
@@ -124,7 +132,6 @@ export class AddTicketComponent implements OnInit {
     this.site$ = this.siteService.getSitesList();
     this.setDate();
     this.setStatus();
-
   }
 
   setDate() {
@@ -136,15 +143,6 @@ export class AddTicketComponent implements OnInit {
   setStatus() {
     this.addTicketForm.patchValue({
       status: 'draft'
-    });
-  }
-
-  successNotification() {
-    Swal.fire({
-      text: 'Your ticket has been saved',
-      icon: 'success',
-    }).then((result) => {
-      window.location.href = './../ticket';
     });
   }
 

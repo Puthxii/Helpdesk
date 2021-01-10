@@ -11,7 +11,7 @@
       </div>
       <div class="card-body">
         <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()" *ngIf="site$ | async; else loading; let Site">
-          <div class="form-row">
+          <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
               <label for="date">Date</label>
               <input type="date" formControlName="date" [min]='minDate' [max]='maxDate' class="form-control" id="date"
@@ -37,7 +37,7 @@
               </div>
             </div>
           </div>
-          <div class="form-row">
+          <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
               <label for="site">Site Name</label>
               <select name="site" formControlName="site" class="form-control" id="site">
@@ -67,7 +67,7 @@
               </div>
             </div>
           </div>
-          <div class="form-row" *ngIf="isSelectedSite()">
+          <div class="form-row" *ngIf="isSelectedSite()&&auth.isSupporter(user)">
             <div class="form-group col-md-6">
               <label for="maintenancePackage">Maintenance Package</label>
               <input type=text class="form-control" id="maintenancePackage" placeholder="Maintenance Package"
@@ -87,7 +87,7 @@
               </ng-multiselect-dropdown>
             </div>
           </div>
-          <div class="form-row dropdownModule">
+          <div class="form-row dropdownModule" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
               <select name="Type" formControlName="type" class="form-control" id="type"
