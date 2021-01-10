@@ -174,6 +174,11 @@ export class AuthService {
     return this.checkAuthorization(user, allowed);
   }
 
+  isCustomer(user: User): boolean {
+    const allowed = ['customer'];
+    return this.checkAuthorization(user, allowed);
+  }
+
   private checkAuthorization(user: User, allowedRoles: string[]): boolean {
     if (!user) {
       return false;
