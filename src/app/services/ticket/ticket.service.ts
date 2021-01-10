@@ -57,45 +57,13 @@ export class TicketService {
 
   //TODO : Get by Value
   getByKeyWord(value: any) {
-    this.afs.collection('ticket', (ref) => ref
+    return this.afs.collection('ticket', (ref) => ref
       .where('site.initials', '==', value)
-      .where('site.nameEN', '==', value)
+      // .where('site.nameEN', '==', value)
       // .where('nameTH', '==', value)
       // .where('subject', '==', value)
     )
-      .snapshotChanges().subscribe(data => {
-        data.map(items => {
-          const item = items.payload.doc.data();
-          item['$uid'] = items.payload.doc.id;
-          console.log(item);
-        })
-      });
   }
-
-
-  //We define an async function
-  // async getIsCapitalOrCountryIsItaly() {
-  //   const isInitials = this.afs.collection('ticket', (ref) => ref.where('site.initials', '==', 'value')).get();
-  //   const isNameEN = this.afs.collection('ticket', (ref) => ref.where('site.nameEN', '==', 'value')).get();
-
-  //   const [initialslQuerySnapshot, nameENQuerySnapshot] = await Promise.all([
-  //     isInitials,
-  //     isNameEN
-  //   ]);
-
-  //   const initialsArray = initialslQuerySnapshot.docs;
-  //   const nameENArray = nameENQuerySnapshot.docs
-
-  //   const ticketsArray = initialsArray.concat(nameENArray);
-  //   return ticketsArray;
-  // }
-
-  //We call the asychronous function
-  // getIsCapitalOrCountryIsItaly().then(result => {
-  //   result.forEach(docSnapshot => {
-  //     console.log(docSnapshot.data());
-  //   });
-  // });
 
   //TODO : UPDATE
 
