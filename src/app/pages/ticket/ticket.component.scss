@@ -1,64 +1,43 @@
-p{
-    padding: 10px 10px 10px 10px;
-    color: #9c9fa6;
-    font-size: 1.5rem;
-}
-
-.search {
-    width: 170px;
-    height: 30px;
-}
-
-.has-search .form-control {
-    padding-left: 3rem;
-    width: 80%;
-    border-radius: 0.3rem;
-}
-
-.has-search .form-control-feedback {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    width: 50px;
-    height: 100px;
-    line-height: 2.375rem;
-    text-align: center;
-    pointer-events: none;
-    color: #aaa;
-}
 
 
-.sent {
-    background-image: linear-gradient(to right, #FFBE96 20%, #3096E7 100%);
+.draft {
+    background-image: linear-gradient(to right, #FFBE96 20%, #FE8896 100%);
     border: none;
-}
-
-.accept {
-    background-image: linear-gradient(to right, #3096E7 5%, #2ED0B9 100%);
-    border: none;
-}
-
-.done {
-    background-color: #2ED0B9;
-    border: none;
-}
-
-.reject {
-    background-color: #FE8896;
-    border: none;
-}
-.icon {
+    border-radius: 5px;
     color: white;
-    font-size: 2rem;
 }
 
-// .icon-background {
-//     background: #ffc0c0;
-//     width: 100px;
-//     height: 100px;
-//     border-radius: 50%;
-//     text-align: center;
-//     line-height: 100px;
-//     vertical-align: middle;
-//     padding: 30px;
-// }
+.moreinfo {
+    background:#FE8896;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.pending {
+    background-image: linear-gradient(to right, #FE8896 20%, #3096E7 100%);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.resolved {
+    background:#3096E7;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.closed {
+    background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.all {
+    background-image: linear-gradient(to right, #2ED0B9 30%, #3096E7 70%);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
