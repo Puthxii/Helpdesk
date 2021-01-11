@@ -12,4 +12,5 @@ export interface Ticket {
     description: string;
     resolveDescription: string;
     status: string;
+    staff?: string;
 }

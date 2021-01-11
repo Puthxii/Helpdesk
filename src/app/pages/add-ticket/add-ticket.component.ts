@@ -1,4 +1,3 @@
-import { async } from '@angular/core/testing';
 import { UserService } from 'src/app/services/user/user.service';
 import { Product } from './../../services/product/product.model';
 import { ProductService } from './../../services/product/product.service';
@@ -142,18 +141,28 @@ export class AddTicketComponent implements OnInit {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
       if (this.user$.roles.customer === true) {
-        console.log(this.user$.roles);
+        this.setCreater();
         this.site$ = this.siteService.getSiteByName(this.user$.site);
         this.site$.subscribe((siteData: Site[]) => {
           this.Site = siteData;
-          console.log('this.tables: ', this.Site);
           this.setSite();
-          this.getModule();
         });
       } else {
-        console.log(this.user$.roles);
+        this.setStaff();
         this.site$ = this.siteService.getSitesList();
       }
+    });
+  }
+
+  setStaff() {
+    this.addTicketForm.patchValue({
+      staff: this.user$.firstName + ' ' + this.user$.lastName
+    });
+  }
+
+  setCreater() {
+    this.addTicketForm.patchValue({
+      creater: this.user$.firstName + ' ' + this.user$.lastName
     });
   }
 
@@ -187,7 +196,8 @@ export class AddTicketComponent implements OnInit {
       priority: ['', [Validators.required]],
       description: ['', [Validators.required]],
       resolveDescription: [''],
-      status: ['']
+      status: [''],
+      staff: ['']
     });
   }
 

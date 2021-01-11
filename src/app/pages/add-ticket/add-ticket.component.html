@@ -97,15 +97,7 @@
                 readonly>
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="module">Module</label>
-              <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" [data]="moduleList"
-                id=" module" formControlName="module" [settings]="dropdownSettings">
-              </ng-multiselect-dropdown>
-            </div>
-          </div>
-          <div class="form-row dropdownModule" *ngIf="auth.isSupporter(user)">
+          <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
               <label for="Type">Type</label>
               <select name="Type" formControlName="type" class="form-control" id="type"
@@ -137,6 +129,14 @@
             </div>
           </div>
           <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="module">Module</label>
+              <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" [data]="moduleList"
+                id=" module" formControlName="module" [settings]="dropdownSettings">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <div class="form-row dropdownModule">
             <div class="form-group col-md-12">
               <label for="subject">Subject</label>
               <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject"

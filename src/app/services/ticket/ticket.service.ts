@@ -49,7 +49,8 @@ export class TicketService {
         priority: ticket.priority,
         description: ticket.description,
         resolveDescription: ticket.resolveDescription,
-        status: ticket.status
+        status: ticket.status,
+        staff: ticket.staff
       });
       this.successNotification();
     } catch (error) {
