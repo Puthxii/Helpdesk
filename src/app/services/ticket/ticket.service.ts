@@ -1,7 +1,6 @@
 import { AngularFirestore, fromDocRef } from 'angularfire2/firestore';
 import { Ticket } from './ticket.model';
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Injectable({
@@ -57,17 +56,9 @@ export class TicketService {
     }
   }
 
-  //TODO : Get by Value
   getByKeyWord(value: any) {
     return this.afs.collection('ticket', (ref) => ref
       .where('site.initials', '==', value)
-      // .where('site.nameEN', '==', value)
-      // .where('nameTH', '==', value)
-      // .where('subject', '==', value)
     )
   }
-
-  //TODO : UPDATE
-
-  //TODO : DELETE 
 }
