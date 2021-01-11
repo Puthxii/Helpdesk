@@ -20,11 +20,26 @@ export class TicketComponent implements OnInit {
 
   constructor(
     private ticketService: TicketService,
-  ) { 
+  ) {
   }
 
   ngOnInit() {
-    this.ticket$ =  this.ticketService.getTicketsList()
+    this.getAll();
+  }
+
+  getAll() {
+    this.ticket$ = this.ticketService.getTicketsList()
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySearch(value) {
+    this.ticket$ = this.ticketService.getByKeyWord(value)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -36,13 +51,7 @@ export class TicketComponent implements OnInit {
 
   search() {
     const value = this.searchValue;
-    this.ticketService.getByKeyWord(value).snapshotChanges().subscribe(data => {
-      data.map(items => {
-        const item = items.payload.doc.data();
-        item['$id'] = items.payload.doc.id;
-        console.log(item);
-      });
-    });
+    value ? this.getBySearch(value) : this.getAll()
   }
 
 }

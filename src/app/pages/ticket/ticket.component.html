@@ -22,7 +22,7 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-pen float-left"></i> 
+                  <i class="fas fa-pen float-left"></i>
                 </div>
                 <div class="media-body text-right">
                   <span>Draft</span>
@@ -121,16 +121,17 @@
 <div class="row">
   <div class="col-lg-12 col-md-12 col-sm-12">
     <div class="card mt-3">
-      <div class="card-header text-left">
+      <div class="card-header text-left" *ngIf="ticket$">
         <div class="card" *ngFor="let ticket of ticket$ | async; index as i">
           <div class="card-header" style="background-color: #F2EDF3;">
-            <div class="row"> 
+            <div class="row">
               <div class="col-3">
                 <div class="col">
                   <span>{{ticket.subject}}</span>
                 </div>
                 <div class="col">
-                  <i class="fas fa-globe-americas" style="color: gray;"></i><span class="mx-1" style="color: black;">{{ticket.creater}} -{{ticket.site.initials}}</span>                
+                  <i class="fas fa-globe-americas" style="color: gray;"></i><span class="mx-1"
+                    style="color: black;">{{ticket.creater}} -{{ticket.site.initials}}</span>
                 </div>
                 <div class="col">
                   <span for="">{{ticket.site.product.name}}</span>
@@ -141,68 +142,72 @@
               </div>
               <div class="col-3 center">
                 <div class="form-group">
-                  <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3" readonly>{{ticket.description}}</textarea>
+                  <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3"
+                    readonly>{{ticket.description}}</textarea>
                 </div>
               </div>
               <div class="col-2 center paperclass">
                 <i class="fas fa-paperclip secondary-color paperclip"></i>
               </div>
               <div class="col-1">
-                <div class="col">              
+                <div class="col">
                   <div class="row">
-                    <div class="col-md-4 text-lg-left">                            
+                    <div class="col-md-4 text-lg-left">
                       <div class="dropdown dd">
-                        <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-circle mx-2 text-left"></i>Low 
+                        <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-circle mx-2 text-left"></i>Low
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> Medium </a>  
-                          <a class="dropdown-item" href="#"> <i class="fas fa-star mx-2"></i> High </a>  
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  </div>
-                  <div class="col">
-                    <div class="row">
-                      <div class="col-md-4 text-lg-left">                            
-                        <div class="dropdown dd">
-                          <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-info-circle mx-2 text-left"></i>Problem
-                          </button>
-                          <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#"> <i class="fas fa-plus-circle mx-2"></i> Add-ons </a>  
-                            <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Info </a> 
-                            <a class="dropdown-item" href="#"> <i class="fas fa-question-circle mx-2"></i> Consult </a> 
-                            <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Other </a> 
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="row">
-                      <div class="col-md-3 text-lg-left">                            
-                        <div class="dropdown dd">
-                          <button class="btn dropdown-toggle status" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-pen mx-2 text-left"></i>Draft
-                          </button>
-                          <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Pending </a>  
-                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Assign </a>  
-                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Resoled </a>  
-                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Reject </a>  
-                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Revert </a>  
-                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>  
-                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> More Info </a>    
-                          </div>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> Medium </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-star mx-2"></i> High </a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-1 ">
+                <div class="col">
+                  <div class="row">
+                    <div class="col-md-4 text-lg-left">
+                      <div class="dropdown dd">
+                        <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-info-circle mx-2 text-left"></i>Problem
+                        </button>
+                        <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"> <i class="fas fa-plus-circle mx-2"></i> Add-ons </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Info </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-question-circle mx-2"></i> Consult </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Other </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col-md-3 text-lg-left">
+                      <div class="dropdown dd">
+                        <button class="btn dropdown-toggle status" type="button" id="dropdownMenuButton"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-pen mx-2 text-left"></i>Draft
+                        </button>
+                        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Pending </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Assign </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Resoled </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Reject </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Revert </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> More Info </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-1 ">
+              </div>
               <div class="col-2 center action">
                 <i class="fas fa-trash mx-1 secondary-color icon"></i>
                 <i class="fas fa-pen mx-1 secondary-color icon"></i>
@@ -215,5 +220,5 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </div>

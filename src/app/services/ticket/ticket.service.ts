@@ -61,8 +61,8 @@ export class TicketService {
       .where('site.initials', '==', value)
     )
   }
-  
+
   getTicketByid(id: any) {
-    return  this.afs.doc<Ticket>(`ticket/` + id).valueChanges();
+    return this.afs.doc<Ticket>(`ticket/` + id).valueChanges();
   }
 }
