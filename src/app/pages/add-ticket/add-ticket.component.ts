@@ -90,7 +90,6 @@ export class AddTicketComponent implements OnInit {
   Site: Site[];
   moduleList: any[];
   Sources = [
-    { name: 'Website' },
     { name: 'Facebook' },
     { name: 'Line' },
     { name: 'Email' },
