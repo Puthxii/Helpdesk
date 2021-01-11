@@ -137,16 +137,29 @@ export class AddTicketComponent implements OnInit {
     this.setDate();
     this.setStatus();
   }
+
   getUserValue() {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
-      console.log(this.user$);
       if (this.user$.roles.customer === true) {
+        console.log(this.user$.roles);
         this.site$ = this.siteService.getSiteByName(this.user$.site);
-        this.getModule();
+        this.site$.subscribe((siteData: Site[]) => {
+          this.Site = siteData;
+          console.log('this.tables: ', this.Site);
+          this.setSite();
+          this.getModule();
+        });
       } else {
+        console.log(this.user$.roles);
         this.site$ = this.siteService.getSitesList();
       }
+    });
+  }
+
+  setSite() {
+    this.addTicketForm.patchValue({
+      site: this.Site[0]
     });
   }
 
