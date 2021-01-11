@@ -214,13 +214,12 @@ export class AddTicketComponent implements OnInit {
   }
 
   isSelectedSite() {
-    if (this.addTicketForm.controls.site.value && this.addTicketForm.controls.module) {
-      this.addTicketForm.controls.module.reset('', {
-        emitModelToViewChange: false
-      });
+    if (this.addTicketForm.controls.site.value) {
       this.getModule();
       this.getCreate();
       return true;
+    } else {
+      this.getModule();
     }
     return false;
   }
