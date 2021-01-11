@@ -8,12 +8,18 @@
         </a>
         <div class="list-group list-group-flush">
             <a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white">
-                <span class="menu-title">Dashboard</span>
-                <!-- <i class="fas fa-chart-pie"></i> -->
+                <i class="fas fa-chart-pie"></i>
+                <span class="menu-title"> Dashboard</span>
             </a>
-            <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white">Ticket</a>
+            <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white">
+                <i class="fas fa-ticket-alt"></i>
+                <span class="menu-title"> Ticket</span>
+            </a>
             <a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white"
-                *ngIf="auth.isSupporter(user)">Staff</a>
+                *ngIf="auth.isSupporter(user)">
+                <i class="fas fa-user-tie"></i>
+                <span class="menu-title"> Staff</span>
+            </a>
         </div>
     </div>
     <div id="page-content-wrapper">
