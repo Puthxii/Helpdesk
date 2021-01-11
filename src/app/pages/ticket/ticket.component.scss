@@ -62,3 +62,10 @@ p{
 //     vertical-align: middle;
 //     padding: 30px;
 // }
+
+.searchbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
