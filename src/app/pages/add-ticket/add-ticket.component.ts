@@ -132,7 +132,6 @@ export class AddTicketComponent implements OnInit {
         allowSearchFilter: true,
         enableCheckAll: false
       };
-
     this.setDate();
     this.setStatus();
   }
@@ -142,11 +141,18 @@ export class AddTicketComponent implements OnInit {
       this.user$ = data.payload.data() as User;
       if (this.user$.roles.customer === true) {
         this.setCreater();
+        this.setSource();
         this.getSiteCustomer();
       } else {
         this.setStaff();
         this.site$ = this.siteService.getSitesList();
       }
+    });
+  }
+
+  setSource() {
+    this.addTicketForm.patchValue({
+      source: 'Website'
     });
   }
 
@@ -195,9 +201,9 @@ export class AddTicketComponent implements OnInit {
       site: ['', [Validators.required]],
       module: [''],
       creater: ['', [Validators.required]],
-      type: ['', [Validators.required]],
+      type: [''],
       subject: ['', [Validators.required]],
-      priority: ['', [Validators.required]],
+      priority: [''],
       description: ['', [Validators.required]],
       resolveDescription: [''],
       status: [''],
