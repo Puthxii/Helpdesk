@@ -143,6 +143,7 @@ export class AddTicketComponent implements OnInit {
       console.log(this.user$);
       if (this.user$.roles.customer === true) {
         this.site$ = this.siteService.getSiteByName(this.user$.site);
+        this.getModule();
       } else {
         this.site$ = this.siteService.getSitesList();
       }
