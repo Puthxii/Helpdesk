@@ -1,5 +1,6 @@
 import { Site, MaLevel } from './../site/site.model';
 export interface Ticket {
+    id: any;
     date: string;
     source: string;
     site: Site;

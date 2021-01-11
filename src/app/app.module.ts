@@ -23,6 +23,7 @@ import { RegisterStaffComponent } from './pages/register-staff/register-staff.co
 import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { DetailComponent } from './pages/detail/detail.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     HomeLayoutComponent,
     LoginLayoutComponent,
     AddTicketComponent,
-    TicketComponent
+    TicketComponent,
+    DetailComponent
   ],
   imports: [
     FormsModule,

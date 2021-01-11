@@ -1,3 +1,4 @@
+import { DetailComponent } from './pages/detail/detail.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
@@ -44,6 +45,14 @@ const router: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'detail',
+        component: DetailComponent
+      },
+      {
+        path: 'detail/:id',
+        component: DetailComponent
       },
     ]
   },

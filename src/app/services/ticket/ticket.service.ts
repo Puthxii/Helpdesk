@@ -14,7 +14,7 @@ export class TicketService {
   ) { }
 
   getTicketsList() {
-    return this.afs.collection('ticket').snapshotChanges();
+    return this.afs.collection('ticket');
   }
 
   successNotification() {
@@ -56,6 +56,9 @@ export class TicketService {
     }
   }
 
+  getTicketByid(id: any) {
+    return  this.afs.doc<Ticket>(`ticket/` + id).valueChanges();
+  }
   //TODO : Get by ID
 
   //TODO : UPDATE
