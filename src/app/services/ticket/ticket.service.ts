@@ -31,7 +31,7 @@ export class TicketService {
   }
 
   getTicketsList() {
-    return this.afs.collection('ticket');
+    return this.afs.collection('ticket', ref => ref.orderBy('date', 'desc'));
   }
 
   async addTicket(ticket: Ticket) {
@@ -58,8 +58,9 @@ export class TicketService {
 
   getByKeyWord(value: any) {
     return this.afs.collection('ticket', (ref) => ref
-      .where('site.initials', '==', value)
-    )
+      .orderBy('site.initials')
+      .startAt(value)
+      .endAt(value + '\uf8ff'))
   }
 
   getTicketByid(id: any) {
