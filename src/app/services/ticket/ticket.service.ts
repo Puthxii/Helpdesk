@@ -8,7 +8,6 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   providedIn: 'root'
 })
 export class TicketService {
-
   constructor(
     private afs: AngularFirestore
   ) { }
@@ -58,7 +57,15 @@ export class TicketService {
     }
   }
 
-  //TODO : Get by ID
+  //TODO : Get by Value
+  getByKeyWord(value: any) {
+    return this.afs.collection('ticket', (ref) => ref
+      .where('site.initials', '==', value)
+      // .where('site.nameEN', '==', value)
+      // .where('nameTH', '==', value)
+      // .where('subject', '==', value)
+    )
+  }
 
   //TODO : UPDATE
 

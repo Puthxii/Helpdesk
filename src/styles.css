@@ -11,7 +11,7 @@
     --success-color: #2ED0B9;
     --success-fade-color: #81D8D1;
     --warning-color: #FFBE96;
-
+    --label-color: #000000;
 }
 
 * {
@@ -63,6 +63,9 @@
     color: var(--warning-color);
 }
 
+.label-info-color{
+    color: var(--label-color);
+}
 .btn-login{
     background-image: linear-gradient(to right, #3399CC 0%, #533380 50%, #3399CC 100%);
 }

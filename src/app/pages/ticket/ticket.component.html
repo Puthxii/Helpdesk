@@ -1,3 +1,128 @@
-<p>
-  ticket works!
-</p>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header text-left primary-color">
+        <div class="header content">
+          <h5>
+            <i class="fas fa-ticket-alt"></i>
+            New ticket
+          </h5>
+        </div>
+        <div class="form-row">
+          <form class="form-inline">
+            <div class="form-group mx-sm-3 mb-2 col-md-9">
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">My Tickets</label>
+              </div>
+            </div>
+          </form>
+          <div class="form-control-sm">
+            <div class="form-group has-search mb-2">
+              <span class="fa fa-search form-control-feedback"></span>
+              <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
+                (keyup)="search()" placeholder="Search Tickets">
+            </div>
+          </div>
+          <div class="row col-12 mx-3">
+            <div class="form-group col-md-3">
+              <div class="card sent">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-9">
+                      <p style="color:white">Sent</p>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <i class="fas fa-pen icon"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <div class="card accept">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-9">
+                      <p style="color:white">Accept</p>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <i class="fas fa-clock icon"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <div class="card done">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-9">
+                      <p style="color:white">Done</p>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <i class="fas fa-check-circle icon"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <div class="card reject">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-9">
+                      <p style="color:white">Reject</p>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <i class="fas fa-clock icon"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end card status -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header text-left label-info-color">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-header" style="background-color: #F2EDF3;">
+                        <div class="col">
+                          <label for="">IICE1340: ไม่สามารถค้นหาหนังสือได้</label>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <i class="fas fa-globe-americas" st1yle="color: gray;"><label class="mx-1"
+                                style="color: black;">Awatif Yusoh -IICE</label></i>
+                          </div>
+                          <div class="col-md-4 text-lg-left">
+                            <button type="button" class="btn btn-primary reject"><i
+                                class="fas fa-pen mx-2"></i>Draft</button>
+                            <i class="fas fa-trash mx-3 secondary-color"></i>
+                            <i class="fas fa-pen mx-3 secondary-color"></i>
+                            <i class="fas fa-eye mx-3 secondary-color"></i>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <label for="">Walai AutoLib Ultimate</label>
+                        </div>
+                        <div class="col">
+                          <label style="color: gray;">Created 1 Jan,2021</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
