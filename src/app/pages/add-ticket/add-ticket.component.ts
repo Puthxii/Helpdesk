@@ -142,15 +142,19 @@ export class AddTicketComponent implements OnInit {
       this.user$ = data.payload.data() as User;
       if (this.user$.roles.customer === true) {
         this.setCreater();
-        this.site$ = this.siteService.getSiteByName(this.user$.site);
-        this.site$.subscribe((siteData: Site[]) => {
-          this.Site = siteData;
-          this.setSite();
-        });
+        this.getSiteCustomer();
       } else {
         this.setStaff();
         this.site$ = this.siteService.getSitesList();
       }
+    });
+  }
+
+  getSiteCustomer() {
+    this.site$ = this.siteService.getSiteByName(this.user$.site);
+    this.site$.subscribe((siteData: Site[]) => {
+      this.Site = siteData;
+      this.setSite();
     });
   }
 
