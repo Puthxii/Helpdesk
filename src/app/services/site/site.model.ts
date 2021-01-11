@@ -1,3 +1,4 @@
+import { Product } from './../product/product.model';
 export interface Site {
     $key: string;
     initials: string;
@@ -5,6 +6,7 @@ export interface Site {
     nameTH: string;
     productId: string;
     maLevelId: string;
+    product: Product;
 }
 
 export interface MaLevel {

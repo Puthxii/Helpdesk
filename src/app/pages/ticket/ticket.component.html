@@ -1,122 +1,114 @@
-<div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12">
-    <div class="card">
-      <div class="card-header text-left primary-color">
-        <div class="header content searchbar">
-          <h5>
-            <i class="fas fa-ticket-alt"></i>
-            New ticket
-          </h5>
-          <form class="form-inline">
-            <div class="form-group mx-sm-3 mb-2 col-md-9">
-              <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">My Tickets</label>
-              </div>
-            </div>
-          </form>
-          <div class="form-control-sm">
-            <div class="form-group has-search mb-2">
-              <span class="fa fa-search form-control-feedback"></span>
-              <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
-                (keyup)="search()" placeholder="Search Tickets">
-            </div>
+<div class="grey-bg container-fluid">
+  <section id="minimal-statistics">
+    <div class="row">
+      <div class="col-12 mt-3 mb-1 searchbar">
+        <h5>
+          <i class="fas fa-ticket-alt"></i>
+          Tickets
+        </h5>
+        <div class="form-control-sm">
+          <div class="form-group has-search mb-2">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
+              (keyup)="search()" placeholder="Search Tickets">
           </div>
         </div>
-        <div class="form-row">
-          <div class="row col-12 mx-3">
-            <div class="form-group col-md-3">
-              <div class="card sent">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="form-group col-md-9">
-                      <p style="color:white">Sent</p>
-                    </div>
-                    <div class="form-group col-md-3">
-                      <i class="fas fa-pen icon"></i>
-                    </div>
-                  </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card draft mt-2">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-pen float-left"></i> 
                 </div>
-              </div>
-            </div>
-            <div class="form-group col-md-3">
-              <div class="card accept">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="form-group col-md-9">
-                      <p style="color:white">Accept</p>
-                    </div>
-                    <div class="form-group col-md-3">
-                      <i class="fas fa-clock icon"></i>
-                    </div>
-                  </div>
+                <div class="media-body text-right">
+                  <span>Draft</span>
                 </div>
-              </div>
-            </div>
-            <div class="form-group col-md-3">
-              <div class="card done">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="form-group col-md-9">
-                      <p style="color:white">Done</p>
-                    </div>
-                    <div class="form-group col-md-3">
-                      <i class="fas fa-check-circle icon"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group col-md-3">
-              <div class="card reject">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="form-group col-md-9">
-                      <p style="color:white">Reject</p>
-                    </div>
-                    <div class="form-group col-md-3">
-                      <i class="fas fa-clock icon"></i>
-                    </div>
-                  </div>
+                <div class="media-body text-right">
+                  <span>5</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- end card status -->
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header text-left label-info-color">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="card">
-                      <div class="card-header" style="background-color: #F2EDF3;">
-                        <div class="col">
-                          <label for="">IICE1340: ไม่สามารถค้นหาหนังสือได้</label>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <i class="fas fa-globe-americas" st1yle="color: gray;"><label class="mx-1"
-                                style="color: black;">Awatif Yusoh -IICE</label></i>
-                          </div>
-                          <div class="col-md-4 text-lg-left">
-                            <button type="button" class="btn btn-primary reject"><i
-                                class="fas fa-pen mx-2"></i>Draft</button>
-                            <i class="fas fa-trash mx-3 secondary-color"></i>
-                            <i class="fas fa-pen mx-3 secondary-color"></i>
-                            <i class="fas fa-eye mx-3 secondary-color"></i>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <label for="">Walai AutoLib Ultimate</label>
-                        </div>
-                        <div class="col">
-                          <label style="color: gray;">Created 1 Jan,2021</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card moreinfo mt-2">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-clock float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <span>More Info</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card pending mt-2">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-clock float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <span>Pending</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card resolved mt-2">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-check float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <span>Resolved</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card closed mt-2">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-check-circle float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <span>Closed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card all mt-2">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-clone float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <span>All</span>
                 </div>
               </div>
             </div>
@@ -124,5 +116,104 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
+</div>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card mt-3">
+      <div class="card-header text-left">
+        <div class="card" *ngFor="let ticket of ticket$ | async; index as i">
+          <div class="card-header" style="background-color: #F2EDF3;">
+            <div class="row"> 
+              <div class="col-3">
+                <div class="col">
+                  <span>{{ticket.subject}}</span>
+                </div>
+                <div class="col">
+                  <i class="fas fa-globe-americas" style="color: gray;"></i><span class="mx-1" style="color: black;">{{ticket.creater}} -{{ticket.site.initials}}</span>                
+                </div>
+                <div class="col">
+                  <span for="">{{ticket.site.product.name}}</span>
+                </div>
+                <div class="col">
+                  <span style="color: gray;">Create {{ticket.date}}</span>
+                </div>
+              </div>
+              <div class="col-3 center">
+                <div class="form-group">
+                  <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3" readonly>{{ticket.description}}</textarea>
+                </div>
+              </div>
+              <div class="col-2 center paperclass">
+                <i class="fas fa-paperclip secondary-color paperclip"></i>
+              </div>
+              <div class="col-1">
+                <div class="col">              
+                  <div class="row">
+                    <div class="col-md-4 text-lg-left">                            
+                      <div class="dropdown dd">
+                        <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-circle mx-2 text-left"></i>Low 
+                        </button>
+                        <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> Medium </a>  
+                          <a class="dropdown-item" href="#"> <i class="fas fa-star mx-2"></i> High </a>  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="col">
+                    <div class="row">
+                      <div class="col-md-4 text-lg-left">                            
+                        <div class="dropdown dd">
+                          <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-info-circle mx-2 text-left"></i>Problem
+                          </button>
+                          <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#"> <i class="fas fa-plus-circle mx-2"></i> Add-ons </a>  
+                            <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Info </a> 
+                            <a class="dropdown-item" href="#"> <i class="fas fa-question-circle mx-2"></i> Consult </a> 
+                            <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Other </a> 
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="row">
+                      <div class="col-md-3 text-lg-left">                            
+                        <div class="dropdown dd">
+                          <button class="btn dropdown-toggle status" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-pen mx-2 text-left"></i>Draft
+                          </button>
+                          <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Pending </a>  
+                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Assign </a>  
+                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Resoled </a>  
+                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Reject </a>  
+                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Revert </a>  
+                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>  
+                            <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> More Info </a>    
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-1 ">
+                </div>
+              <div class="col-2 center action">
+                <i class="fas fa-trash mx-1 secondary-color icon"></i>
+                <i class="fas fa-pen mx-1 secondary-color icon"></i>
+                <a [routerLink]="['/detail', ticket.id]">
+                  <i class="fas fa-eye  mx-1 secondary-color icon"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
 </div>

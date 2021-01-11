@@ -1,5 +1,8 @@
-import { TicketService } from 'src/app/services/ticket/ticket.service';
+import { Ticket } from './../../services/ticket/ticket.model';
+import { TicketService } from './../../services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ticket',
@@ -8,9 +11,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TicketComponent implements OnInit {
   searchValue = '';
-  constructor(public ticketService: TicketService) { }
+  Ticket: Ticket[];
+  ticket$: Observable<Ticket[]>;
+
+  ticket: any;
+  id: string;
+
+
+  constructor(
+    private ticketService: TicketService,
+  ) { 
+  }
 
   ngOnInit() {
+    this.ticket$ =  this.ticketService.getTicketsList()
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
   }
 
   search() {

@@ -1,55 +1,117 @@
-p{
-    padding: 10px 10px 10px 10px;
-    color: #9c9fa6;
-    font-size: 1.5rem;
+
+
+.draft {
+    background-image: linear-gradient(to right, #FFBE96 20%, #FE8896 100%);
+    border: none;
+    border-radius: 5px;
+    color: white;
 }
 
-.search {
-    width: 170px;
-    height: 30px;
+.moreinfo {
+    background:#FE8896;
+    border: none;
+    border-radius: 5px;
+    color: white;
 }
+
+.pending {
+    background-image: linear-gradient(to right, #FE8896 20%, #3096E7 100%);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.resolved {
+    background:#3096E7;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.closed {
+    background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.all {
+    background-image: linear-gradient(to right, #2ED0B9 40%, #3096E7 70%);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.dd {
+    margin-bottom: 5px;
+}
+
+.priority {
+    width: 128px;
+    background-color: #2ED0B9;
+    color: white;
+    height: 30px;
+    padding: 3px;
+}
+
+.type {
+    width: 128px;
+    background-color: #FE8896;
+    color: white;
+    height: 30px;
+    padding: 3px;
+}
+.status {
+    width: 128px;
+    background-color: #FFBE96;
+    color: white;
+    height: 30px;
+    padding: 3px;
+}
+.action{
+    padding-top: 35px;
+}
+.icon {
+    display: inline-block;
+    border-radius: 60px;
+    box-shadow: 0px 0px 2px white;
+    padding: 0.5em 0.6em;
+    background-color: white;
+}
+.paperclip{
+    display: inline-block;
+    border-radius: 60px;
+    box-shadow: 0px 0px 2px white;
+    padding: 0.5em 0.6em;
+    background-color: white;
+}
+.paperclass{
+    padding-top: 35px;
+    padding-left: 100px;
+}
+.detail{
+    width: 300px;
+    height: 120px;
+}
+/* Styles for wrapping the search box */
+
+
+/* Bootstrap 4 text input with search icon */
 
 .has-search .form-control {
-    padding-left: 3rem;
-    width: 80%;
-    border-radius: 0.3rem;
+    padding-left: 2.375rem;
 }
 
 .has-search .form-control-feedback {
     position: absolute;
     z-index: 2;
     display: block;
-    width: 50px;
-    height: 100px;
+    width: 2.375rem;
+    height: 2.375rem;
     line-height: 2.375rem;
     text-align: center;
     pointer-events: none;
     color: #aaa;
-}
-
-
-.sent {
-    background-image: linear-gradient(to right, #FFBE96 20%, #3096E7 100%);
-    border: none;
-}
-
-.accept {
-    background-image: linear-gradient(to right, #3096E7 5%, #2ED0B9 100%);
-    border: none;
-}
-
-.done {
-    background-color: #2ED0B9;
-    border: none;
-}
-
-.reject {
-    background-color: #FE8896;
-    border: none;
-}
-.icon {
-    color: white;
-    font-size: 2rem;
 }
 
 // .icon-background {
@@ -68,4 +130,4 @@ p{
     justify-content: space-between;
     align-items: center;
     position: relative;
-  }
+}

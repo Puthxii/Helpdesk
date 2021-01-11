@@ -31,7 +31,7 @@ export class TicketService {
   }
 
   getTicketsList() {
-    return this.afs.collection('ticket').snapshotChanges();
+    return this.afs.collection('ticket');
   }
 
   async addTicket(ticket: Ticket) {
@@ -60,5 +60,9 @@ export class TicketService {
     return this.afs.collection('ticket', (ref) => ref
       .where('site.initials', '==', value)
     )
+  }
+  
+  getTicketByid(id: any) {
+    return  this.afs.doc<Ticket>(`ticket/` + id).valueChanges();
   }
 }
