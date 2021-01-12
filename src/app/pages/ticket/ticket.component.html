@@ -147,8 +147,8 @@
 <div class="container-fluid">
   <div>
     <div class="card mt-3">
-      <div class="card-header text-left" *ngIf="ticket$">
-        <div class="card mt-3" *ngFor="let ticket of ticket$ | async; index as i">
+      <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; index as i">
+        <div class="card mt-3" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
           <div class="card-header" style="background-color: #F2EDF3;">
             <div class="row">
               <div class="col-3">
@@ -247,6 +247,19 @@
           </div>
         </div>
       </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+          <li class="page-item">
+            <a class="page-link" href="" tabindex="-1">Previous</a>
+          </li>
+            <li *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index" class="page-item">
+              <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
+            </li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>
