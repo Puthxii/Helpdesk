@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-ticket',
   templateUrl: './ticket.component.html',
@@ -16,13 +17,14 @@ export class TicketComponent implements OnInit {
 
   ticket: any;
   id: string;
-
+  
+  startIndex = 0;
+  endIndex = 7;
 
   constructor(
     private ticketService: TicketService,
   ) {
   }
-
   ngOnInit() {
     this.getAll();
   }
@@ -35,7 +37,7 @@ export class TicketComponent implements OnInit {
           const id = a.payload.doc.id;
           return { id, ...data };
         }))
-      );
+      );          
   }
 
   getBySearch(value) {
@@ -54,4 +56,13 @@ export class TicketComponent implements OnInit {
     value ? this.getBySearch(value) : this.getAll()
   }
 
+  getArrayFromNumber(length){
+    return new Array(Math.ceil(length/7))
+
+  }
+
+  updateIndex(pageIndex){
+    this.startIndex = pageIndex * 7;
+    this.endIndex = this.startIndex + 7;
+  } 
 }
