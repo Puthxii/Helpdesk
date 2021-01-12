@@ -30,7 +30,7 @@ export class TicketService {
     });
   }
 
-  getTicketsList(status: string) {
+  getTicketsListByStatus(status: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
       .orderBy('date', 'desc'));
@@ -84,7 +84,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref.where('status', '==', status)).valueChanges();
   }
 
-  getCountAllTicket() {
-    return this.afs.collection('ticket').valueChanges();
+  getTicketsList() {
+    return this.afs.collection('ticket');
   }
 }

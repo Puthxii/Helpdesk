@@ -11,48 +11,52 @@ import * as moment from 'moment';
   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
-  ticket$: Observable<Ticket>; 
-  id: string;  
+  ticket$: Observable<Ticket>;
+  id: string;
   addTicketForm: any;
   constructor(
     private ticketService: TicketService,
     private route: ActivatedRoute,
-  ) { 
-    this.route.params.subscribe(params => this.id = params.id)
+  ) {
+    this.route.params.subscribe(params => this.id = params.id);
   }
 
   ngOnInit() {
     this.ticket$ = this.ticketService.getTicketByid(this.id);
   }
 
-  getDate(ticket){
-    return ticket.date ? ticket.date : '-'
+  getDate(ticket) {
+    return ticket.date ? ticket.date : '-';
   }
 
-  getSource(ticket){
-    return ticket.source ? ticket.source : '-'
+  getSource(ticket) {
+    return ticket.source ? ticket.source : '-';
   }
 
-  getSitename(ticket){
-    return ticket.site.nameEN ? ticket.site.nameEN: '-'
+  getSitename(ticket) {
+    return ticket.site.nameEN ? ticket.site.nameEN : '-';
   }
 
-  getModule(ticket){
-    return ticket.module ? ticket.module : '-'
+  getModule(ticket) {
+    return ticket.module ? ticket.module : '-';
   }
-  getProduct(ticket){
-    return ticket.site.product.name? ticket.site.product.name : '-'
+
+  getProduct(ticket) {
+    return ticket.site.product.name ? ticket.site.product.name : '-';
   }
+
   getMaPackage(ticket) {
     const maStartDate = moment(ticket.site.maStartDate).format('DD/MM/YYYY');
     const maEndDate = moment(ticket.site.maEndDate).format('DD/MM/YYYY');
     return maStartDate + ' - ' + maEndDate;
   }
-  getSubject(ticket){
-    return ticket.subject ? ticket.subject : '-'
+
+  getSubject(ticket) {
+    return ticket.subject ? ticket.subject : '-';
   }
-  getdescription(ticket){
-    return ticket.description ? ticket.description : '-'
+
+  getdescription(ticket) {
+    return ticket.description ? ticket.description : '-';
   }
 }
 
