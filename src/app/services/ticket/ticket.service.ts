@@ -34,6 +34,17 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref.orderBy('date', 'desc'));
   }
 
+  async changeStatusTicket(id) {
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        status: 'close'
+      });
+      this.successNotification();
+    } catch (error) {
+      this.errorNotification();
+    }
+  }
+
   async addTicket(ticket: Ticket) {
     try {
       this.afs.collection('ticket').add({

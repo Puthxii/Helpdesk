@@ -17,6 +17,25 @@ export class TicketComponent implements OnInit {
   ticket: any;
   id: string;
 
+  Types = [
+    { name: 'Info' },
+    { name: 'Consult' },
+    { name: 'Problem' },
+    { name: 'Add-ons' }
+  ];
+
+  Prioritys = [
+    { name: 'Low' },
+    { name: 'Medium' },
+    { name: 'High' },
+    { name: 'Critical' }
+  ];
+
+  Status = [
+    { name: 'Save as draft', value: 'draft' },
+    { name: 'Save as pending', value: 'pending' },
+    { name: 'Save as close', value: 'close' }
+  ];
 
   constructor(
     private ticketService: TicketService,
@@ -38,6 +57,10 @@ export class TicketComponent implements OnInit {
       );
   }
 
+  onSelectedDelete(id) {
+    this.ticketService.changeStatusTicket(id)
+  }
+
   getBySearch(value) {
     this.ticket$ = this.ticketService.getByKeyWord(value)
       .snapshotChanges().pipe(
@@ -53,5 +76,10 @@ export class TicketComponent implements OnInit {
     const value = this.searchValue;
     value ? this.getBySearch(value) : this.getAll()
   }
+
+  isDraft(ticket) {
+    return ticket.status == 'draft'
+  }
+
 
 }
