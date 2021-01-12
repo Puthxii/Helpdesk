@@ -127,6 +127,9 @@
                 <div *ngIf="subject.errors.required">
                   Subject is required.
                 </div>
+                <div *ngIf="subject.errors.maxlength">
+                  Subject is less than 50 characters
+                </div>
               </div>
             </div>
           </div>
@@ -137,6 +140,9 @@
               <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
                 <div *ngIf="description.errors.required">
                   Description is required.
+                </div>
+                <div *ngIf="description.errors.maxlength">
+                  Description is less than 250 characters
                 </div>
               </div>
             </div>

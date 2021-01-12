@@ -182,7 +182,7 @@
                       <div class="dropdown dd">
                         <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-circle mx-2 text-left"></i>Low
+                          <i class="fas fa-circle mx-2 text-left"></i>{{ticket.priority}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> Medium </a>
@@ -201,8 +201,7 @@
                           <i class="fas fa-info-circle mx-2 text-left"></i>{{ticket.type}}
                         </button>
                         <div *ngFor="let type of Type" class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"> <i class="fas fa-plus-circle mx-2"></i>
-                            {{Type.name}}</a>
+                          <a class="dropdown-item" href="#"> <i class="fas fa-plus-circle mx-2"></i> ...</a>
                           <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Info </a>
                           <a class="dropdown-item" href="#"> <i class="fas fa-question-circle mx-2"></i> Consult </a>
                           <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Other </a>
@@ -217,7 +216,7 @@
                       <div class="dropdown dd">
                         <button class="btn dropdown-toggle status" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-pen mx-2 text-left"></i>Draft
+                          <i class="fas fa-pen mx-2 text-left"></i>{{ticket.status}}
                         </button>
                         <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Pending </a>

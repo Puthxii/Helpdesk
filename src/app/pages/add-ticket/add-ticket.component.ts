@@ -201,9 +201,15 @@ export class AddTicketComponent implements OnInit {
       module: [''],
       creater: ['', [Validators.required]],
       type: [''],
-      subject: ['', [Validators.required]],
+      subject: ['', [
+        Validators.required,
+        Validators.maxLength(50)]
+      ],
       priority: [''],
-      description: ['', [Validators.required]],
+      description: ['', [
+        Validators.required,
+        Validators.maxLength(250)]
+      ],
       resolveDescription: [''],
       status: [''],
       staff: ['']
