@@ -211,7 +211,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   hideTextArea(type: any) {
-    if (type === 'info' || type === 'consult') {
+    if (type === 'Info' || type === 'Consult') {
       this.hideResolve = true;
     } else {
       this.hideResolve = false;
