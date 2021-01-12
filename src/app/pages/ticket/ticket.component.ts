@@ -3,6 +3,7 @@ import { TicketService } from './../../services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
+import { Stats } from 'fs';
 
 @Component({
   selector: 'app-ticket',
@@ -13,22 +14,46 @@ export class TicketComponent implements OnInit {
   searchValue = '';
   Ticket: Ticket[];
   ticket$: Observable<Ticket[]>;
-
   ticket: any;
   id: string;
-
+  status: string;
+  countAll: number;
+  Status = [
+    { value: 'draft' },
+    { value: 'more_info' },
+    { value: 'pending' },
+    { value: 'resolved' },
+    { value: 'close' }
+  ]
+  CountStatus = []
 
   constructor(
     private ticketService: TicketService,
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
-    this.getAll();
+    this.getCountByStatus();
+    this.getCountAll();
+    this.status = 'draft';
+    this.getByStatus(this.status);
   }
 
-  getAll() {
-    this.ticket$ = this.ticketService.getTicketsList()
+  getCountByStatus() {
+    for (let i = 0; this.Status.length > i; i++) {
+      this.ticketService.getCountByStatus(this.Status[i].value).subscribe(result => {
+        this.CountStatus[i] = result.length;
+      });
+    }
+  }
+
+  getCountAll() {
+    this.ticketService.getCountAllTicket().subscribe(result => {
+      this.countAll = result.length;
+    });
+  }
+
+  getByStatus(status: string) {
+    this.ticket$ = this.ticketService.getTicketsList(status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -51,7 +76,7 @@ export class TicketComponent implements OnInit {
 
   search() {
     const value = this.searchValue;
-    value ? this.getBySearch(value) : this.getAll()
+    value ? this.getBySearch(value) : this.getByStatus('draft')
   }
 
 }

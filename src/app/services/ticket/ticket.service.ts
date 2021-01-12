@@ -30,8 +30,10 @@ export class TicketService {
     });
   }
 
-  getTicketsList() {
-    return this.afs.collection('ticket', ref => ref.orderBy('date', 'desc'));
+  getTicketsList(status: string) {
+    return this.afs.collection('ticket', ref => ref
+      .where('status', '==', status)
+      .orderBy('date', 'desc'));
   }
 
   async addTicket(ticket: Ticket) {
@@ -58,12 +60,20 @@ export class TicketService {
 
   getByKeyWord(value: any) {
     return this.afs.collection('ticket', (ref) => ref
-      .orderBy('site.initials')
+      .orderBy('subject')
       .startAt(value)
       .endAt(value + '\uf8ff'))
   }
 
   getTicketByid(id: any) {
     return this.afs.doc<Ticket>(`ticket/` + id).valueChanges();
+  }
+
+  getCountByStatus(status: string) {
+    return this.afs.collection('ticket', ref => ref.where('status', '==', status)).valueChanges();
+  }
+
+  getCountAllTicket() {
+    return this.afs.collection('ticket').valueChanges();
   }
 }
