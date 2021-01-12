@@ -83,7 +83,7 @@ export class TicketComponent implements OnInit {
   }
 
   onSelectedDelete(id) {
-    this.ticketService.changeStatusTicket(id)
+    this.ticketService.updateStatusById(id)
   }
 
   getBySearch(value) {

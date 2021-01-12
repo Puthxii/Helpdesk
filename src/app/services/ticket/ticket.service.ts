@@ -36,7 +36,7 @@ export class TicketService {
       .orderBy('date', 'desc'));
   }
 
-  async changeStatusTicket(id) {
+  async updateStatusById(id) {
     try {
       this.afs.collection('ticket').doc(id).update({
         status: 'close'
