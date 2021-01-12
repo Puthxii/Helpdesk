@@ -24,6 +24,7 @@ import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { DetailComponent } from './pages/detail/detail.component';
+import { Error404Component } from './error-pages/error404/error404.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DetailComponent } from './pages/detail/detail.component';
     LoginLayoutComponent,
     AddTicketComponent,
     TicketComponent,
-    DetailComponent
+    DetailComponent,
+    Error404Component
   ],
   imports: [
     FormsModule,
