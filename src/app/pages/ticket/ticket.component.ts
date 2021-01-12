@@ -26,6 +26,20 @@ export class TicketComponent implements OnInit {
   ]
   CountStatus = []
 
+  Types = [
+    { name: 'Info' },
+    { name: 'Consult' },
+    { name: 'Problem' },
+    { name: 'Add-ons' }
+  ];
+
+  Prioritys = [
+    { name: 'Low' },
+    { name: 'Medium' },
+    { name: 'High' },
+    { name: 'Critical' }
+  ];
+
   constructor(
     private ticketService: TicketService,
   ) { }
@@ -62,6 +76,10 @@ export class TicketComponent implements OnInit {
       );
   }
 
+  onSelectedDelete(id) {
+    this.ticketService.changeStatusTicket(id)
+  }
+
   getBySearch(value) {
     this.ticket$ = this.ticketService.getByKeyWord(value)
       .snapshotChanges().pipe(
@@ -77,5 +95,10 @@ export class TicketComponent implements OnInit {
     const value = this.searchValue;
     value ? this.getBySearch(value) : this.getByStatus('draft')
   }
+
+  isDraft(ticket) {
+    return ticket.status == 'draft'
+  }
+
 
 }
