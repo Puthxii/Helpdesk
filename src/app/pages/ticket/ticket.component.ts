@@ -3,7 +3,6 @@ import { TicketService } from './../../services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
-import { Stats } from 'fs';
 
 @Component({
   selector: 'app-ticket',

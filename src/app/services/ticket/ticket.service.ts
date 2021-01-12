@@ -62,7 +62,7 @@ export class TicketService {
     return this.afs.collection('ticket', (ref) => ref
       .orderBy('subject')
       .startAt(value)
-      .endAt(value + '\uf8ff'))
+      .endAt(value + '\uf8ff'));
   }
 
   getTicketByid(id: any) {
