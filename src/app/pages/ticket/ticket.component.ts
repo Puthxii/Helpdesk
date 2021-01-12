@@ -25,6 +25,7 @@ export class TicketComponent implements OnInit {
     { value: 'resolved' },
     { value: 'close' }
   ]
+
   CountStatus = []
 
   Types = [
@@ -41,7 +42,7 @@ export class TicketComponent implements OnInit {
     { name: 'Critical' }
   ];
 
- 
+
   startIndex = 0;
   endIndex = 7;
 
@@ -78,7 +79,7 @@ export class TicketComponent implements OnInit {
           const id = a.payload.doc.id;
           return { id, ...data };
         }))
-      );          
+      );
   }
 
   onSelectedDelete(id) {
@@ -102,11 +103,11 @@ export class TicketComponent implements OnInit {
   }
 
   isDraft(ticket) {
-    return ticket.status == 'draft'
+    return ticket.status === 'draft';
   }
 
   setStatus(status: string) {
-    this.getByStatus(status)
+    this.getByStatus(status);
   }
 
   getAllTicket() {
@@ -119,13 +120,12 @@ export class TicketComponent implements OnInit {
     );
   }
 
-  getArrayFromNumber(length){
-    return new Array(Math.ceil(length/7))
-
+  getArrayFromNumber(length) {
+    return new Array(Math.ceil(length / 7));
   }
 
-  updateIndex(pageIndex){
+  updateIndex(pageIndex) {
     this.startIndex = pageIndex * 7;
     this.endIndex = this.startIndex + 7;
-  } 
+  }
 }

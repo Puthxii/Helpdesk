@@ -85,6 +85,6 @@ export class TicketService {
   }
 
   getTicketsList() {
-    return this.afs.collection('ticket');
+    return this.afs.collection('ticket', ref => ref.orderBy('date', 'desc'));
   }
 }
