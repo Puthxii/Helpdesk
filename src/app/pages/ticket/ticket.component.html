@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-2 col-sm-6 col-12">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('draft')">
         <div class="card draft mt-2">
           <div class="card-content">
             <div class="card-body">
@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('more_info')">
         <div class="card moreinfo mt-2">
           <div class="card-content">
             <div class="card-body">
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('pending')">
         <div class="card pending mt-2">
           <div class="card-content">
             <div class="card-body">
@@ -84,7 +84,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('resolved')">
         <div class="card resolved mt-2">
           <div class="card-content">
             <div class="card-body">
@@ -103,7 +103,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('close')">
         <div class="card closed mt-2">
           <div class="card-content">
             <div class="card-body">
@@ -122,7 +122,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket()">
         <div class="card all mt-2">
           <div class="card-content">
             <div class="card-body">

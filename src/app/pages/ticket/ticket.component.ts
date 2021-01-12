@@ -60,13 +60,13 @@ export class TicketComponent implements OnInit {
   }
 
   getCountAll() {
-    this.ticketService.getCountAllTicket().subscribe(result => {
+    this.ticketService.getTicketsList().valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
 
   getByStatus(status: string) {
-    this.ticket$ = this.ticketService.getTicketsList(status)
+    this.ticket$ = this.ticketService.getTicketsListByStatus(status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -100,5 +100,18 @@ export class TicketComponent implements OnInit {
     return ticket.status == 'draft'
   }
 
+  setStatus(status: string) {
+    this.getByStatus(status)
+  }
+
+  getAllTicket() {
+    this.ticket$ = this.ticketService.getTicketsList().snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Ticket;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
 
 }
