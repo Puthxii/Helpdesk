@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
@@ -17,7 +17,7 @@ export class EditTicketComponent implements OnInit {
   ticket$: Observable<Ticket>;
   public editTicket: FormGroup;
   moduleList: any[];
-  
+
   constructor(
     private ticketService: TicketService,
     private route: ActivatedRoute,
