@@ -42,6 +42,14 @@ export class TicketComponent implements OnInit {
     { name: 'Critical' }
   ];
 
+  Sources = [
+    { icon: 'fas fa-globe-americas', name: 'Website' },
+    { icon: 'fab fa-line', name: 'Line'},
+    { icon: 'fas fa-envelope', name: 'Email'},
+    { icon: 'fas fa-phone', name: 'Telephone' },
+    { icon: 'fas fa-user-friends', name: 'Onsite'},
+    { icon: 'fab fa-facebook-square', name: 'Facebook'}
+  ];
 
   startIndex = 0;
   endIndex = 7;
@@ -131,5 +139,13 @@ export class TicketComponent implements OnInit {
   updateIndex(pageIndex) {
     this.startIndex = pageIndex * 7;
     this.endIndex = this.startIndex + 7;
+  }
+
+  getIcon(sources: any) {
+    for (let i = 0; this.Sources.length > i; i++){
+      if ( this.Sources[i].name === sources){
+        return this.Sources[i].icon
+      }
+    }
   }
 }

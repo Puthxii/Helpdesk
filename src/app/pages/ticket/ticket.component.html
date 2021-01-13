@@ -156,8 +156,8 @@
                   <span>{{ticket.subject}}</span>
                 </div>
                 <div class="col">
-                  <i class="fas fa-globe-americas" style="color: gray;"></i><span class="mx-1"
-                    style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
+                  <i class="{{ getIcon(ticket.source) }}" style="color: gray;"></i><span class="mx-1"
+                    style="color: black;">{{ticket.creater}} - {{ticket.site.initials}} - {{ticket.source}}</span>
                 </div>
                 <div class="col">
                   <span for="">{{ticket.site.product.name}}</span>
