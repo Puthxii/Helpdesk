@@ -7,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import * as moment from 'moment';
 import { Site } from 'src/app/services/site/site.model';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/services/user.model';
+import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 
 @Component({
   selector: 'app-add-ticket',
@@ -18,10 +19,6 @@ import { User } from 'src/app/services/user.model';
   styleUrls: ['./add-ticket.component.scss'],
 })
 export class AddTicketComponent implements OnInit {
-  user;
-  Product: Product;
-  site$: Observable<any>;
-  user$: any;
   constructor(
     private auth: AuthService,
     public ticketService: TicketService,
@@ -78,6 +75,10 @@ export class AddTicketComponent implements OnInit {
   get status() {
     return this.addTicketForm.get('status');
   }
+  user;
+  Product: Product;
+  site$: Observable<any>;
+  user$: any;
 
   public addTicketForm: FormGroup;
   hideResolve = false;
@@ -116,6 +117,11 @@ export class AddTicketComponent implements OnInit {
     { name: 'Save as pending', value: 'pending' },
     { name: 'Save as close', value: 'close' }
   ];
+
+  myOptions: IAngularMyDpOptions = {
+    dateRange: false,
+    dateFormat: 'dd/mm/yyyy'
+  };
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
@@ -194,8 +200,9 @@ export class AddTicketComponent implements OnInit {
   }
 
   buildForm() {
+    const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.addTicketForm = this.fb.group({
-      date: ['', [Validators.required]],
+      date: [model, [Validators.required]],
       source: ['', [Validators.required]],
       site: ['', [Validators.required]],
       module: [''],

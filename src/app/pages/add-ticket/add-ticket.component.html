@@ -14,8 +14,20 @@
           <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
               <label for="date">Date</label>
-              <input type="date" formControlName="date" [min]='minDate' [max]='maxDate' class="form-control" id="date"
-                placeholder="date">
+              <div class="input-group">
+                <input class="form-control" placeholder="Select a date" angular-mydatepicker name="myDate"
+                  formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                    <i class="fas fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
+
+
+
+              <!-- <input type="date" formControlName="date" [min]='minDate' [max]='maxDate' class="form-control" id="date"
+                placeholder="date"> -->
               <div *ngIf="date.invalid && (date.dirty || date.touched)" class="danger-color">
                 <div *ngIf="date.errors.required">
                   Date is required.

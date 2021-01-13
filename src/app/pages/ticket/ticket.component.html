@@ -164,7 +164,9 @@
                   <span for="">{{ticket.site.product.name}}</span>
                 </div>
                 <div class="col">
-                  <span style="color: gray;">Create {{ticket.date}}</span>
+                  <span style="color: gray;">Create {{ ticket.date.singleDate?.formatted?
+                    ticket.date.singleDate.formatted
+                    : ''}}</span>
                 </div>
               </div>
               <div class="col-3 center">
