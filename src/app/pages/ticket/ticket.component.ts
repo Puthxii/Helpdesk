@@ -3,6 +3,9 @@ import { TicketService } from './../../services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { User } from 'src/app/services/user.model';
+import { UserService } from 'src/app/services/user/user.service';
 
 
 @Component({
@@ -42,19 +45,42 @@ export class TicketComponent implements OnInit {
     { name: 'High' },
     { name: 'Critical' }
   ];
-  startIndex = 0;
-  endIndex = 7;
+  startIndex = 0
+  endIndex = 7
+  user: any
+  User: User
+  user$: any
+  isChecked = false
+  currentName: any
 
   constructor(
+    private auth: AuthService,
     private ticketService: TicketService,
+    public userService: UserService
   ) {
   }
 
   ngOnInit() {
+    this.auth.user$.subscribe(user => this.user = user);
+    this.User = this.auth.authState;
+    this.getCurrentUserByRoles()
     this.getCountByStatus();
     this.getCountAll();
     this.status = 'draft';
-    this.getByStatus(this.status);
+  }
+
+  getCurrentUserByRoles() {
+    this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
+      this.user$ = data.payload.data() as User;
+      if (this.user$.roles.supporter === true) {
+        this.isChecked = true
+        this.currentName = this.user$.firstName + ' ' + this.user$.lastName
+        this.getByStatus(this.status, this.currentName)
+      } else {
+        console.log('other');
+
+      }
+    });
   }
 
   getCountByStatus() {
@@ -71,8 +97,8 @@ export class TicketComponent implements OnInit {
     });
   }
 
-  getByStatus(status: string) {
-    this.ticket$ = this.ticketService.getTicketsListByStatus(status)
+  getByStatus(status: string, creater: string) {
+    this.ticket$ = this.ticketService.getTicketsListByFilter(status, creater)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -99,7 +125,7 @@ export class TicketComponent implements OnInit {
 
   search() {
     const value = this.searchValue;
-    value ? this.getBySearch(value) : this.getByStatus('draft')
+    // value ? this.getBySearch(value) : this.getByStatus('draft')
   }
 
   isDraft(ticket) {
@@ -108,7 +134,7 @@ export class TicketComponent implements OnInit {
 
   setStatus(status: string) {
     this.setStatusState(status)
-    this.getByStatus(status);
+    // this.getByStatus(status);
   }
 
   getAllTicket(status: string) {

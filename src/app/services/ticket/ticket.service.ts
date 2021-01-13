@@ -30,10 +30,14 @@ export class TicketService {
     });
   }
 
-  getTicketsListByStatus(status: string) {
+  getTicketsListByFilter(status: string, creater: string) {
+    console.log(status)
+    console.log(creater)
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
-      .orderBy('date', 'desc'));
+      .where('staff', '==', creater)
+      .orderBy('date', 'desc')
+    )
   }
 
   async updateStatusById(id) {
