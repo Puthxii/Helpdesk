@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { AngularFirestore, fromDocRef } from 'angularfire2/firestore';
 import { Ticket } from './ticket.model';
 import { Injectable } from '@angular/core';
@@ -29,7 +30,6 @@ export class TicketService {
       window.location.href = './../ticket';
     });
   }
-
   getTicketsListByStatus(status: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
@@ -41,6 +41,17 @@ export class TicketService {
       this.afs.collection('ticket').doc(id).update({
         status: 'close'
       });
+      this.successNotification();
+    } catch (error) {
+      this.errorNotification();
+    }
+  }
+
+  async changeStatusById(id){
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        status: 'pending'
+      })
       this.successNotification();
     } catch (error) {
       this.errorNotification();

@@ -200,7 +200,7 @@
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-info-circle mx-2 text-left"></i>{{ticket.type}}
                         </button>
-                        <div *ngFor="let type of Type" class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#"> <i class="fas fa-plus-circle mx-2"></i> ...</a>
                           <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Info </a>
                           <a class="dropdown-item" href="#"> <i class="fas fa-question-circle mx-2"></i> Consult </a>
@@ -218,14 +218,9 @@
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-pen mx-2 text-left"></i>{{ticket.status}}
                         </button>
-                        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Pending </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Assign </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Resoled </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Reject </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Revert </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> More Info </a>
+                        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton" > 
+                          <a class="dropdown-item" (click)="onChangeStatus(ticket.id)" > <i class="fas fa-pen mx-2 text-left"></i> Pending </a>
+                          <a class="dropdown-item"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>                          
                         </div>
                       </div>
                     </div>

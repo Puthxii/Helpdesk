@@ -86,6 +86,10 @@ export class TicketComponent implements OnInit {
     this.ticketService.updateStatusById(id)
   }
 
+  onChangeStatus(id){
+    this.ticketService.changeStatusById(id)
+  }
+
   getBySearch(value) {
     this.ticket$ = this.ticketService.getByKeyWord(value)
       .snapshotChanges().pipe(
