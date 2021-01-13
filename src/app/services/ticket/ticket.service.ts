@@ -39,7 +39,7 @@ export class TicketService {
   async updateStatusById(id) {
     try {
       this.afs.collection('ticket').doc(id).update({
-        status: 'close'
+        status: 'cancel'
       });
       this.successNotification();
     } catch (error) {

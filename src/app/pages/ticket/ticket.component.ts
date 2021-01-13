@@ -142,7 +142,7 @@ export class TicketComponent implements OnInit {
   }
 
   getIcon(sources: any) {
-    for (let i = 0; this.Sources.length > i; i++){
+    for (let i = 0; this.Sources.length ; i++){
       if ( this.Sources[i].name === sources){
         return this.Sources[i].icon
       }
