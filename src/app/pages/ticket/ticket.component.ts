@@ -11,13 +11,14 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./ticket.component.scss']
 })
 export class TicketComponent implements OnInit {
-  searchValue = '';
-  Ticket: Ticket[];
-  ticket$: Observable<Ticket[]>;
-  ticket: any;
-  id: string;
-  status: string;
-  countAll: number;
+  searchValue = ''
+  Ticket: Ticket[]
+  ticket$: Observable<Ticket[]>
+  ticket: any
+  id: string
+  status: string
+  countAll: number
+  activeState = 'draft'
   Status = [
     { value: 'draft' },
     { value: 'more_info' },
@@ -41,8 +42,6 @@ export class TicketComponent implements OnInit {
     { name: 'High' },
     { name: 'Critical' }
   ];
-
-
   startIndex = 0;
   endIndex = 7;
 
@@ -50,6 +49,7 @@ export class TicketComponent implements OnInit {
     private ticketService: TicketService,
   ) {
   }
+
   ngOnInit() {
     this.getCountByStatus();
     this.getCountAll();
@@ -107,10 +107,12 @@ export class TicketComponent implements OnInit {
   }
 
   setStatus(status: string) {
+    this.setStatusState(status)
     this.getByStatus(status);
   }
 
-  getAllTicket() {
+  getAllTicket(status: string) {
+    this.setStatusState(status)
     this.ticket$ = this.ticketService.getTicketsList().snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Ticket;
@@ -118,6 +120,10 @@ export class TicketComponent implements OnInit {
         return { id, ...data };
       }))
     );
+  }
+
+  setStatusState(status: string) {
+    this.activeState = status;
   }
 
   getArrayFromNumber(length) {
