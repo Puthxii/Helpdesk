@@ -17,7 +17,7 @@
           <div class="form-group has-search mb-2">
             <span class="fa fa-search form-control-feedback"></span>
             <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
-              (keyup)="search()" placeholder="Search Tickets">
+              (keyup)="search()" placeholder="Search Subject">
           </div>
         </div>
         <form [formGroup]="filterTicketForm">

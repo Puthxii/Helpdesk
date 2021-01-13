@@ -57,6 +57,7 @@ export class TicketComponent implements OnInit {
     { name: 'High' },
     { name: 'Critical' }
   ];
+
   startIndex = 0
   endIndex = 7
   user: any
@@ -81,7 +82,7 @@ export class TicketComponent implements OnInit {
   }
 
   buildForm() {
-    const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
+    const model: IMyDateModel = { isRange: true, singleDate: { jsDate: new Date() }, dateRange: null };
     this.filterTicketForm = this.fb.group({
       date: [model, [Validators.required]]
     })
@@ -142,7 +143,7 @@ export class TicketComponent implements OnInit {
 
   search() {
     const value = this.searchValue;
-    // value ? this.getBySearch(value) : this.getByStatus('draft')
+    value ? this.getBySearch(value) : this.getByFilter('draft', this.currentName)
   }
 
   isDraft(ticket) {
@@ -151,7 +152,7 @@ export class TicketComponent implements OnInit {
 
   setStatus(status: string) {
     this.setStatusState(status)
-    // this.getByStatus(status);
+    this.getByFilter(status, this.currentName);
   }
 
   getAllTicket(status: string) {
