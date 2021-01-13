@@ -44,7 +44,7 @@ export class TicketService {
   async cancelTicket(id) {
     try {
       this.afs.collection('ticket').doc(id).update({
-        status: 'cancel'
+        status: 'Cancel'
       });
       this.successNotification();
     } catch (error) {
@@ -52,18 +52,23 @@ export class TicketService {
     }
   }
 
-  async changeStatusById(id){
+  async changeStatusPendingById(id){
     try {
-      if( this.afs.collection('ticket').doc(id).update({status: 'close'})) 
+      this.afs.collection('ticket').doc(id).update({
+        status: 'Pending'
+      })
       this.successNotification();
-      else {
-        this.afs.collection('ticket').doc(id).update({status: 'pending'})
+    } catch (error) {
+      this.errorNotification();
+    }
+  }
+
+  async changeStatusCloseById(id){
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        status: 'Close'
+      })
       this.successNotification();
-      }
-      // this.afs.collection('ticket').doc(id).update({
-      //   status: 'pending'
-      // })
-      // this.successNotification();
     } catch (error) {
       this.errorNotification();
     }
@@ -125,7 +130,7 @@ export class TicketService {
 
   getTicketsList() {
     return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', ['draft', 'more_info', 'pending', 'resolved', 'close'])
+      .where('status', 'in', ['Draft', 'MOre Info', 'Pending', 'Resolved', 'Close'])
       .orderBy('date', 'desc')
     );
   }

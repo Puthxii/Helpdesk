@@ -17,27 +17,19 @@
           <div class="form-group has-search mb-2">
             <span class="fa fa-search form-control-feedback"></span>
             <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
-              (keyup)="search()" placeholder="Search Subject">
+              (keyup)="search()" placeholder="Search Tickets">
           </div>
         </div>
-        <form [formGroup]="filterTicketForm">
-          <div class="form-control-sm">
-            <div class="input-group mb-2">
-              <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
-                formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
-                  <i class="fas fa-calendar"></i>
-                </button>
-              </div>
-            </div>
+        <div class="form-control-sm">
+          <div class="form-group has-search mb-2">
+            <input type="date" class="form-control" placeholder="date">
           </div>
-        </form>
+        </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('draft')">
-        <div class="card draft mt-2" [class.active]="'draft' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Draft')">
+        <div class="card draft mt-2" [class.active]="'Draft' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -55,8 +47,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('more_info')">
-        <div class="card moreinfo mt-2" [class.active]="'more_info' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('More Info')">
+        <div class="card moreinfo mt-2" [class.active]="'More Info' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -74,8 +66,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('pending')">
-        <div class="card pending mt-2" [class.active]="'pending' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Pending')">
+        <div class="card pending mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -93,8 +85,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('resolved')">
-        <div class="card resolved mt-2" [class.active]="'resolved' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Resolved')">
+        <div class="card resolved mt-2" [class.active]="'Resolved' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -112,8 +104,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('close')">
-        <div class="card closed mt-2" [class.active]="'close' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Close')">
+        <div class="card closed mt-2" [class.active]="'Close' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -131,8 +123,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket('all')">
-        <div class="card all mt-2" [class.active]="'all' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket('All')">
+        <div class="card all mt-2" [class.active]="'All' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -226,8 +218,8 @@
                           <i class="fas fa-pen mx-2 text-left"></i>{{ticket.status}}
                         </button>
                         <div class="dropdown-menu " aria-labelledby="dropdownMenuButton" > 
-                          <a class="dropdown-item" (click)="onChangeStatus(ticket.id)" > <i class="fas fa-pen mx-2 text-left"></i> Pending </a>
-                          <a class="dropdown-item" (click)="onChangeStatus(ticket.id)"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>                          
+                          <a class="dropdown-item" (click)="onChangeStatusPending(ticket.id)" > <i class="fas fa-pen mx-2 text-left"></i> Pending </a>
+                          <a class="dropdown-item" (click)="changeStatusCloseById(ticket.id)"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>                          
                         </div>
                       </div>
                     </div>

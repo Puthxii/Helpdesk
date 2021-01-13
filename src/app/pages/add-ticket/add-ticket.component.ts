@@ -113,9 +113,9 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Status = [
-    { name: 'Save as draft', value: 'draft' },
-    { name: 'Save as pending', value: 'pending' },
-    { name: 'Save as close', value: 'close' }
+    { name: 'Save as draft', value: 'Draft' },
+    { name: 'Save as pending', value: 'Pending' },
+    { name: 'Save as close', value: 'Close' }
   ];
 
   myOptions: IAngularMyDpOptions = {

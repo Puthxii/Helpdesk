@@ -35,11 +35,11 @@ export class TicketComponent implements OnInit {
   countAll: number
   activeState = 'draft'
   Status = [
-    { value: 'draft' },
-    { value: 'more_info' },
-    { value: 'pending' },
-    { value: 'resolved' },
-    { value: 'close' }
+    { value: 'Draft' },
+    { value: 'More Info' },
+    { value: 'Pending' },
+    { value: 'Resolved' },
+    { value: 'Close' }
   ]
 
   CountStatus = []
@@ -87,7 +87,7 @@ export class TicketComponent implements OnInit {
     this.getCurrentUserByRoles()
     this.getCountByStatus();
     this.getCountAll();
-    this.status = 'draft';
+    this.status = 'Draft';
   }
 
   buildForm() {
@@ -139,8 +139,12 @@ export class TicketComponent implements OnInit {
     this.ticketService.cancelTicket(id)
   }
 
-  onChangeStatus(id){
-    this.ticketService.changeStatusById(id)
+  onChangeStatusPending(id){
+    this.ticketService.changeStatusPendingById(id)
+  }
+
+  changeStatusCloseById(id){
+    this.ticketService.changeStatusPendingById(id)
   }
 
   getBySearch(value) {
