@@ -1,10 +1,15 @@
 
 
-.draft {
+.draft{
     background-image: linear-gradient(to right, #FFBE96 20%, #FE8896 100%);
     border: none;
     border-radius: 5px;
     color: white;
+}
+
+.draft.active {
+    background: #a0a0a2 !important;
+    color: #ffff;
 }
 
 .moreinfo {
@@ -14,11 +19,21 @@
     color: white;
 }
 
+.moreinfo.active {
+    background: #a0a0a2 !important;
+    color: #ffff;
+}
+
 .pending {
     background-image: linear-gradient(to right, #FE8896 20%, #3096E7 100%);
     border: none;
     border-radius: 5px;
     color: white;
+}
+
+.pending.active {
+    background: #a0a0a2 !important;
+    color: #ffff;
 }
 
 .resolved {
@@ -28,6 +43,11 @@
     color: white;
 }
 
+.resolved.active {
+    background: #a0a0a2 !important;
+    color: #ffff;
+}
+
 .closed {
     background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
     border: none;
@@ -35,11 +55,21 @@
     color: white;
 }
 
+.closed.active {
+    background: #a0a0a2 !important;
+    color: #ffff;
+}
+
 .all {
     background-image: linear-gradient(to right, #2ED0B9 40%, #3096E7 70%);
     border: none;
     border-radius: 5px;
     color: white;
+}
+
+.all.active {
+    background: #a0a0a2 !important;
+    color: #ffff;
 }
 
 .dd {

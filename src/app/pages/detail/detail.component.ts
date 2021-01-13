@@ -26,7 +26,7 @@ export class DetailComponent implements OnInit {
   }
 
   getDate(ticket) {
-    return ticket.date ? ticket.date : '-';
+    return ticket.date.singleDate.formatted ? ticket.date.singleDate.formatted : '-';
   }
 
   getSource(ticket) {

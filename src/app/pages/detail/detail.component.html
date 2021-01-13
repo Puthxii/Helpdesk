@@ -11,51 +11,59 @@
       </div>
       <div class="card-body">
         <form *ngIf="ticket$ | async as ticket">
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <h5>Date</h5>
-              <p>{{ getDate(ticket) }}</p>
+          <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <h5>Date</h5>
+                  <p>{{ getDate(ticket) }}</p>
+                </div>
+                <div class="form-group col-md-6">
+                  <h5>Source</h5>
+                  <p>{{ getSource(ticket) }}</p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col">
+                  <h5 for="site">Site Name</h5>
+                  <p>{{ getSitename(ticket) }}</p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col">
+                  <h5 for="module">Module</h5>
+                  <p>{{ getModule(ticket) }}</p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col">
+                  <h5 for="product">Product</h5>
+                  <p>{{ getProduct(ticket) }}</p>
+                </div>
+                <div class="form-group col">
+                  <h5 for="maintenancePackage">Maintenance Package</h5>
+                  <p>{{ getMaPackage(ticket) }}</p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col">
+                  <h5 for="subject">Subject</h5>
+                  <p>{{ getSubject(ticket) }}</p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <h5 for="description">Description</h5>
+                  <p>{{ getdescription(ticket) }}</p>
+                </div>
+              </div>
             </div>
-            <div class="form-group col-md-4">
-              <h5>Source</h5>
-              <p>{{ getSource(ticket) }}</p>
-            </div>
-            <div class="form-group col-md-4">
-              <h5 for="source">Track</h5>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col">
-              <h5 for="site">Site Name</h5>
-              <p>{{ getSitename(ticket) }}</p>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col">
-              <h5 for="module">Module</h5>
-              <p>{{ getModule(ticket) }}</p>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col">
-              <h5 for="product">Product</h5>
-              <p>{{ getProduct(ticket) }}</p>
-            </div>
-            <div class="form-group col">
-              <h5 for="maintenancePackage">Maintenance Package</h5>
-              <p>{{ getMaPackage(ticket) }}</p>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col">
-              <h5 for="subject">Subject</h5>
-              <p>{{ getSubject(ticket) }}</p>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <h5 for="description">Description</h5>
-              <p>{{ getdescription(ticket) }}</p>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <h5 for="source">Track</h5>
+                </div>
+              </div>
             </div>
           </div>
           

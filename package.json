@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~8.2.9",
     "@angular/router": "~8.2.9",
     "@syncfusion/ej2-angular-dropdowns": "^18.4.30",
+    "angular-mydatepicker": "^0.10.3",
     "angularfire2": "^5.4.2",
     "bootstrap": "^4.0.0-beta.2",
     "firebase": "^7.24.0",

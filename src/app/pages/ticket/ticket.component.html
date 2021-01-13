@@ -8,8 +8,9 @@
         </h5>
         <div class="form-check">
           <label class="form-check-label">
-            <input type="checkbox" class="form-check-input">
-            My Tickets <i class="input-helper"></i>
+            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
+              (change)="checkValue(isChecked?'ture':'false')">
+            My Tickets {{ isChecked }}<i class="input-helper"></i>
           </label>
         </div>
         <div class="form-control-sm">
@@ -28,7 +29,7 @@
     </div>
     <div class="row">
       <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('draft')">
-        <div class="card draft mt-2">
+        <div class="card draft mt-2" [class.active]="'draft' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -47,7 +48,7 @@
         </div>
       </div>
       <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('more_info')">
-        <div class="card moreinfo mt-2">
+        <div class="card moreinfo mt-2" [class.active]="'more_info' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -66,7 +67,7 @@
         </div>
       </div>
       <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('pending')">
-        <div class="card pending mt-2">
+        <div class="card pending mt-2" [class.active]="'pending' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -85,7 +86,7 @@
         </div>
       </div>
       <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('resolved')">
-        <div class="card resolved mt-2">
+        <div class="card resolved mt-2" [class.active]="'resolved' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -104,7 +105,7 @@
         </div>
       </div>
       <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('close')">
-        <div class="card closed mt-2">
+        <div class="card closed mt-2" [class.active]="'close' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -122,8 +123,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket()">
-        <div class="card all mt-2">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket('all')">
+        <div class="card all mt-2" [class.active]="'all' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -163,7 +164,9 @@
                   <span for="">{{ticket.site.product.name}}</span>
                 </div>
                 <div class="col">
-                  <span style="color: gray;">Create {{ticket.date}}</span>
+                  <span style="color: gray;">Create {{ ticket.date.singleDate?.formatted?
+                    ticket.date.singleDate.formatted
+                    : ''}}</span>
                 </div>
               </div>
               <div class="col-3 center">
@@ -248,9 +251,9 @@
           <li class="page-item">
             <a class="page-link" href="" tabindex="-1">Previous</a>
           </li>
-            <li *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index" class="page-item">
-              <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
-            </li>
+          <li *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index" class="page-item">
+            <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
+          </li>
           <li class="page-item">
             <a class="page-link" href="#">Next</a>
           </li>
