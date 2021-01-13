@@ -124,6 +124,9 @@ export class TicketService {
   }
 
   getTicketsList() {
-    return this.afs.collection('ticket', ref => ref.orderBy('date', 'desc'));
+    return this.afs.collection('ticket', ref => ref
+      .where('status', 'in', ['draft', 'more_info', 'pending', 'resolved', 'close'])
+      .orderBy('date', 'desc')
+    );
   }
 }
