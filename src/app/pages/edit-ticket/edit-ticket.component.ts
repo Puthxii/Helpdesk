@@ -21,16 +21,16 @@ export class EditTicketComponent implements OnInit {
     private ticketService: TicketService,
     private route: ActivatedRoute,
     public fb: FormBuilder,
-    private actRoute: ActivatedRoute,  
+    private actRoute: ActivatedRoute,
   ) {
     this.route.params.subscribe(params => this.id = params.id)
-   }
+  }
 
   ngOnInit() {
-    this.upadateForm()
-    // this.ticketService.getTicketByid(this.id).subscribe(data => {
-    //   this.editTicket.setValue(data)  
-    // })
+    this.upadateTicketForm()
+    this.ticketService.getTicketByid(this.id).subscribe(data => {
+      this.editTicket.setValue(data)
+    })
   }
 
   // get date(){
@@ -81,23 +81,26 @@ export class EditTicketComponent implements OnInit {
   //   return this.editTicket.get('status');
   // }
 
-  upadateTicketForm(){
+  upadateTicketForm() {
     this.editTicket = this.fb.group({
       date: [''],
       source: [''],
       site: [''],
       module: [''],
       creater: [''],
-      maintenancePackage: [''],
-      product: [''],
+      // maintenancePackage: [''],
+      // product: [''],
       type: [''],
       subject: [''],
       priority: [''],
       description: [''],
+      resolveDescription: [''],
+      status: [''],
+      staff: [''],
     });
   }
-  
-  upadateForm(){
-    // this.ticketService.editTicket(this.editTicket.value);         
+
+  upadateForm() {
+    // this.ticketService.editTicket(this.editTicket.value);
   }
 }

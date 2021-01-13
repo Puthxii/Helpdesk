@@ -85,7 +85,7 @@ export class TicketService {
   //     staff: ticket.staff
   //   })
   // }
-  
+
   getByKeyWord(value: any) {
     return this.afs.collection('ticket', (ref) => ref
       .orderBy('subject')

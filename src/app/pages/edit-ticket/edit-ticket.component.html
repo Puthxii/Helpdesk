@@ -13,7 +13,7 @@
         <form [formGroup]="editTicket" (ngSubmit)="upadateForm()">
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="date" >Date</label>
+              <label for="date">Date</label>
               <input type="date" formControlName="date" class="form-control" id="date" validate>
             </div>
             <div class="form-group col-md-6">
@@ -61,13 +61,15 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <!-- <div class="form-group col-md-6">
               <label for="maintenancePackage">Maintenance Package</label>
-              <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage" placeholder="Maintenance Package">          </div>
-            <div class="form-group col-md-6">
+              <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
+                placeholder="Maintenance Package">
+            </div> -->
+            <!-- <div class="form-group col-md-6">
               <label for="product">Product</label>
               <input type=text class="form-control" formControlName="product" placeholder="Product">
-            </div>
+            </div> -->
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -101,11 +103,10 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label  for="module">Module</label>
+              <label for="module">Module</label>
               <!-- <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" id="module"  [settings]="dropdownSettings">
               </ng-multiselect-dropdown> -->
-              <input formControlName="module" type="text" class="form-control" 
-              required>
+              <input formControlName="module" type="text" class="form-control" required>
             </div>
           </div>
           <div class="form-row dropdownModule">
