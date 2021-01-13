@@ -118,7 +118,7 @@ export class TicketComponent implements OnInit {
   }
 
   onSelectedDelete(id) {
-    this.ticketService.updateStatusById(id)
+    this.ticketService.cancelTicket(id)
   }
 
   onChangeStatus(id){

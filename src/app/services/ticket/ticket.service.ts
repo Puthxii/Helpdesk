@@ -41,7 +41,7 @@ export class TicketService {
     )
   }
 
-  async updateStatusById(id) {
+  async cancelTicket(id) {
     try {
       this.afs.collection('ticket').doc(id).update({
         status: 'cancel'
@@ -54,10 +54,16 @@ export class TicketService {
 
   async changeStatusById(id){
     try {
-      this.afs.collection('ticket').doc(id).update({
-        status: 'pending'
-      })
+      if( this.afs.collection('ticket').doc(id).update({status: 'close'})) 
       this.successNotification();
+      else {
+        this.afs.collection('ticket').doc(id).update({status: 'pending'})
+      this.successNotification();
+      }
+      // this.afs.collection('ticket').doc(id).update({
+      //   status: 'pending'
+      // })
+      // this.successNotification();
     } catch (error) {
       this.errorNotification();
     }

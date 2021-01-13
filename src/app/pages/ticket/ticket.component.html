@@ -158,7 +158,7 @@
                 </div>
                 <div class="col">
                   <i class="{{ getIcon(ticket.source) }}" style="color: gray;"></i><span class="mx-1"
-                    style="color: black;">{{ticket.creater}} - {{ticket.site.initials}} - {{ticket.source}}</span>
+                    style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
                 </div>
                 <div class="col">
                   <span for="">{{ticket.site.product.name}}</span>
@@ -178,20 +178,19 @@
               <div class="col-2 center paperclass">
                 <i class="fas fa-paperclip secondary-color paperclip"></i>
               </div>
-              <div class="col-1">
+              <div class="col-2">
                 <div class="col">
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
-                      <div class="dropdown dd">
+                      <div class="dropdown dd" >
                         <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-circle mx-2 text-left"></i>{{ticket.priority}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> Medium </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-star mx-2"></i> High </a>
+                          <a *ngFor="let priority of Prioritys" class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> {{priority.name}} </a>
                         </div>
-                      </div>
+                      </div>             
                     </div>
                   </div>
                 </div>
@@ -204,10 +203,7 @@
                           <i class="fas fa-info-circle mx-2 text-left"></i>{{ticket.type}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"> <i class="fas fa-plus-circle mx-2"></i> ...</a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Info </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-question-circle mx-2"></i> Consult </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Other </a>
+                          <a *ngFor="let type of Types" class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> {{type.name}} </a>
                         </div>
                       </div>
                     </div>
@@ -223,14 +219,12 @@
                         </button>
                         <div class="dropdown-menu " aria-labelledby="dropdownMenuButton" > 
                           <a class="dropdown-item" (click)="onChangeStatus(ticket.id)" > <i class="fas fa-pen mx-2 text-left"></i> Pending </a>
-                          <a class="dropdown-item"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>                          
+                          <a class="dropdown-item" (click)="onChangeStatus(ticket.id)"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>                          
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-1 ">
               </div>
               <div class="col-2 center action">
                 <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
