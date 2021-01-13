@@ -1,5 +1,6 @@
+import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
 import { DetailComponent } from './pages/detail/detail.component';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { SupportGuard } from './guards/support.guard';
@@ -54,6 +55,14 @@ const router: Routes = [
       {
         path: 'detail/:id',
         component: DetailComponent
+      },
+      {
+        path: 'edit-ticket',
+        component: EditTicketComponent
+      },
+      {
+        path: 'edit-ticket/:id',
+        component: EditTicketComponent
       },
     ]
   },

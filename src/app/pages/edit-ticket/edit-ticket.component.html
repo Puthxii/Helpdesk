@@ -1,0 +1,166 @@
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content">
+          <h5>
+            <i class="fas fa-edit"></i>
+            Edit ticket
+          </h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="date">Date</label>
+              <input type="date" class="form-control" id="date"
+                placeholder="date">
+              <!-- <div  class="danger-color">
+                <div *ngIf="date.errors.required">
+                  Date is required.
+                </div>
+              </div> -->
+            </div>
+            <div class="form-group col-md-6">
+              <label for="source">Source</label>
+              <select name="source" class="form-control" id="source">
+                <option value="">choose source...</option>
+                <option>
+                </option>
+              </select>
+              <!-- <div>
+                <div *ngIf="source.errors.required">
+                  Source is required.
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="site">Site Name</label>
+              <select name="site" class="form-control" id="site">
+                <option value="">choose site...</option>
+                <option>
+                 
+                </option>
+              </select>
+              <!-- <div class="danger-color">
+                <div *ngIf="site.errors.required">
+                  Site name is required.
+                </div>
+              </div> -->
+            </div>
+            <div class="form-group col-md-6">
+              <label for=" creater">Creater</label>
+              <select name="creater"  class="form-control" id="creater">
+                <option value="">choose creater...</option>
+                <option>
+                  
+                </option>
+              </select>
+              <!-- <div class="danger-color">
+                <div *ngIf="creater.errors.required">
+                  Creater is required.
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="maintenancePackage">Maintenance Package</label>
+              <input type=text class="form-control" id="maintenancePackage" placeholder="Maintenance Package">          </div>
+            <div class="form-group col-md-6">
+              <label for="product">Product</label>
+              <input type=text class="form-control" id="product" placeholder="Product">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="Type">Type</label>
+              <select name="Type" class="form-control" id="type">
+                <option value="">choose type...</option>
+                <option>
+    
+                </option>
+              </select>
+              <!-- <div class="danger-color">
+                <div>
+                  Type is required.
+                </div>
+              </div> -->
+            </div>
+            <div class="form-group col-md-6">
+              <label for="priority">Priority</label>
+              <select name="priority" class="form-control" id="priority">
+                <option value="">choose priority...</option>
+                <option>
+
+                </option>
+              </select>
+              <!-- <div class="danger-color">
+                <div *ngIf="priority.errors.required">
+                  Priority is required.
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="module">Module</label>
+              <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" [data]="moduleList"
+                id="module"  [settings]="dropdownSettings">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <div class="form-row dropdownModule">
+            <div class="form-group col-md-12">
+              <label for="subject">Subject</label>
+              <input type="text" class="form-control" id="subject" placeholder="Subject"
+                required>
+              <!-- <div class="danger-color">
+                <div *ngIf="subject.errors.required">
+                  Subject is required.
+                </div>
+                <div *ngIf="subject.errors.maxlength">
+                  Subject is less than 50 characters
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="description">Description</label>
+              <textarea class="form-control" id="description" rows="3"></textarea>
+              <!-- <div class="danger-color">
+                <div *ngIf="description.errors.required">
+                  Description is required.
+                </div>
+                <div *ngIf="description.errors.maxlength">
+                  Description is less than 250 characters
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label for="resolve">Resolve Description</label>
+              <textarea class="form-control" id="resolveDescription"
+                rows="3"></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <div class="btn-group btn-save">
+                <button type="submit" class="btn btn-success" >
+                  Save
+                </button>
+              </div>
+              <a [routerLink]="['/ticket']"><button class="btn btn-light btn-cancel" type="button">Cancel</button></a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
