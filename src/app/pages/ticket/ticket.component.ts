@@ -75,10 +75,9 @@ export class TicketComponent implements OnInit {
       if (this.user$.roles.supporter === true) {
         this.isChecked = true
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
-        this.getByStatus(this.status, this.currentName)
+        this.getByFilter(this.status, this.currentName)
       } else {
         console.log('other');
-
       }
     });
   }
@@ -97,7 +96,7 @@ export class TicketComponent implements OnInit {
     });
   }
 
-  getByStatus(status: string, creater: string) {
+  getByFilter(status: string, creater: string) {
     this.ticket$ = this.ticketService.getTicketsListByFilter(status, creater)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -159,5 +158,9 @@ export class TicketComponent implements OnInit {
   updateIndex(pageIndex) {
     this.startIndex = pageIndex * 7;
     this.endIndex = this.startIndex + 7;
+  }
+
+  checkValue(event: any) {
+    console.log(event);
   }
 }
