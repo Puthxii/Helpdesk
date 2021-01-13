@@ -69,6 +69,23 @@ export class TicketService {
     }
   }
 
+  // editTicket(ticket: Ticket) {
+  //   this.afs.collection('ticket').doc('ticket').update({
+  //     date: ticket.date,
+  //     source: ticket.source,
+  //     site: ticket.site,
+  //     module: ticket.module,
+  //     creater: ticket.creater,
+  //     type: ticket.type,
+  //     subject: ticket.subject,
+  //     priority: ticket.priority,
+  //     description: ticket.description,
+  //     resolveDescription: ticket.resolveDescription,
+  //     status: ticket.status,
+  //     staff: ticket.staff
+  //   })
+  // }
+  
   getByKeyWord(value: any) {
     return this.afs.collection('ticket', (ref) => ref
       .orderBy('subject')
