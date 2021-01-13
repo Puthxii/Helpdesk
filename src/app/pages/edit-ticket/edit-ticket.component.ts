@@ -16,7 +16,8 @@ export class EditTicketComponent implements OnInit {
   id: string;
   ticket$: Observable<Ticket>;
   public editTicket: FormGroup;
-
+  moduleList: any[];
+  
   constructor(
     private ticketService: TicketService,
     private route: ActivatedRoute,

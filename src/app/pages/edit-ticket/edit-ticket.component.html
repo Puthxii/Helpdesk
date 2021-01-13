@@ -104,9 +104,9 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="module">Module</label>
-              <!-- <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" id="module"  [settings]="dropdownSettings">
-              </ng-multiselect-dropdown> -->
-              <input formControlName="module" type="text" class="form-control" required>
+              <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" [data]="moduleList"
+                id=" module" formControlName="module" [settings]="dropdownSettings">
+              </ng-multiselect-dropdown>
             </div>
           </div>
           <div class="form-row dropdownModule">
