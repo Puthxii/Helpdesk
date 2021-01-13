@@ -6,7 +6,10 @@ import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/services/user.model';
 import { UserService } from 'src/app/services/user/user.service';
-
+import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
+import { FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ticket',
@@ -14,6 +17,15 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./ticket.component.scss']
 })
 export class TicketComponent implements OnInit {
+  constructor(
+    private auth: AuthService,
+    private ticketService: TicketService,
+    public userService: UserService,
+    public fb: FormBuilder,
+
+  ) { }
+
+  public filterTicketForm: FormGroup;
   searchValue = ''
   Ticket: Ticket[]
   ticket$: Observable<Ticket[]>
@@ -53,20 +65,26 @@ export class TicketComponent implements OnInit {
   isChecked = false
   currentName: any
 
-  constructor(
-    private auth: AuthService,
-    private ticketService: TicketService,
-    public userService: UserService
-  ) {
+  myOptions: IAngularMyDpOptions = {
+    dateRange: true,
+    dateFormat: 'dd/mm/yyyy'
   }
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
+    this.buildForm()
     this.getCurrentUserByRoles()
     this.getCountByStatus();
     this.getCountAll();
     this.status = 'draft';
+  }
+
+  buildForm() {
+    const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
+    this.filterTicketForm = this.fb.group({
+      date: [model, [Validators.required]]
+    })
   }
 
   getCurrentUserByRoles() {
