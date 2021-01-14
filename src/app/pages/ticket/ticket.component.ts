@@ -160,11 +160,11 @@ export class TicketComponent implements OnInit {
 
   search() {
     const value = this.searchValue;
-    value ? this.getBySearch(value) : this.getByFilter('draft', this.currentName)
+    value ? this.getBySearch(value) : this.getByFilter('Draft', this.currentName)
   }
 
   isDraft(ticket) {
-    return ticket.status === 'draft';
+    return ticket.status === 'Draft';
   }
 
   setStatus(status: string) {
