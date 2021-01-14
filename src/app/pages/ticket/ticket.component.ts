@@ -33,7 +33,7 @@ export class TicketComponent implements OnInit {
   id: string
   status: string
   countAll: number
-  activeState = 'draft'
+  activeState = 'Draft'
   Status = [
     { value: 'Draft' },
     { value: 'More Info' },
@@ -60,11 +60,11 @@ export class TicketComponent implements OnInit {
 
   Sources = [
     { icon: 'fas fa-globe-americas', name: 'Website' },
-    { icon: 'fab fa-line', name: 'Line'},
-    { icon: 'fas fa-envelope', name: 'Email'},
+    { icon: 'fab fa-line', name: 'Line' },
+    { icon: 'fas fa-envelope', name: 'Email' },
     { icon: 'fas fa-phone', name: 'Telephone' },
-    { icon: 'fas fa-user-friends', name: 'Onsite'},
-    { icon: 'fab fa-facebook-square', name: 'Facebook'}
+    { icon: 'fas fa-user-friends', name: 'Onsite' },
+    { icon: 'fab fa-facebook-square', name: 'Facebook' }
   ];
 
   startIndex = 0;
@@ -139,11 +139,11 @@ export class TicketComponent implements OnInit {
     this.ticketService.cancelTicket(id)
   }
 
-  onChangeStatusPending(id){
+  onChangeStatusPending(id) {
     this.ticketService.changeStatusPendingById(id)
   }
 
-  changeStatusCloseById(id){
+  changeStatusCloseById(id) {
     this.ticketService.changeStatusPendingById(id)
   }
 
@@ -197,8 +197,8 @@ export class TicketComponent implements OnInit {
   }
 
   getIcon(sources: any) {
-    for (let i = 0; this.Sources.length ; i++){
-      if ( this.Sources[i].name === sources){
+    for (let i = 0; this.Sources.length; i++) {
+      if (this.Sources[i].name === sources) {
         return this.Sources[i].icon
       }
     }
