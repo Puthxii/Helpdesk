@@ -8,6 +8,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   providedIn: 'root'
 })
 export class TicketService {
+
   constructor(
     private afs: AngularFirestore
   ) { }
@@ -31,6 +32,13 @@ export class TicketService {
     });
   }
 
+  getTicketsListByStatusFilter(status: string) {
+    return this.afs.collection('ticket', ref => ref
+      .where('status', '==', status)
+      .orderBy('date', 'desc')
+    )
+  }
+
   getTicketsListByFilter(status: string, creater: string) {
     console.log(status)
     console.log(creater)
@@ -52,7 +60,7 @@ export class TicketService {
     }
   }
 
-  async changeStatusPendingById(id){
+  async changeStatusPendingById(id) {
     try {
       this.afs.collection('ticket').doc(id).update({
         status: 'Pending'
@@ -63,7 +71,7 @@ export class TicketService {
     }
   }
 
-  async changeStatusCloseById(id){
+  async changeStatusCloseById(id) {
     try {
       this.afs.collection('ticket').doc(id).update({
         status: 'Close'

@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { Ticket } from './../../services/ticket/ticket.model';
 import { TicketService } from './../../services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
@@ -31,7 +32,6 @@ export class TicketComponent implements OnInit {
   ticket$: Observable<Ticket[]>
   ticket: any
   id: string
-  status: string
   countAll: number
   activeState = 'Draft'
   Status = [
@@ -72,8 +72,9 @@ export class TicketComponent implements OnInit {
   user: any
   User: User
   user$: any
-  isChecked = false
-  currentName: any
+  isChecked = true
+  status = 'Draft'
+  currentName: string
 
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
@@ -84,10 +85,24 @@ export class TicketComponent implements OnInit {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
     this.buildForm()
-    this.getCurrentUserByRoles()
+    this.isFilter()
     this.getCountByStatus();
     this.getCountAll();
-    this.status = 'Draft';
+  }
+
+  async isFilter() {
+    try {
+      console.log(await this.getCurrentUserByRoles())
+      if (this.currentName != null && this.status != null) {
+        alert('current + status')
+        this.getByFilter(this.status, this.currentName)
+      } else if (this.status != null) {
+        alert('status')
+        this.getByStatusFilter(this.status)
+      }
+    } catch (error) {
+      return console.log(error);
+    }
   }
 
   buildForm() {
@@ -99,14 +114,15 @@ export class TicketComponent implements OnInit {
 
   getCurrentUserByRoles() {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
-      this.user$ = data.payload.data() as User;
-      if (this.user$.roles.supporter === true) {
-        this.isChecked = true
-        this.currentName = this.user$.firstName + ' ' + this.user$.lastName
-        this.getByFilter(this.status, this.currentName)
-      } else {
-        console.log('other');
-      }
+      this.user$ = data.payload.data() as User
+      // if (this.user$.roles.supporter === true) {
+      //   console.log(this.user$.roles.supporter)
+      //   this.currentName = this.user$.firstName + ' ' + this.user$.lastName
+      //   //  this.currentName
+      //   // this.isFilter()
+      // } else {
+      //   console.log('other');
+      // }
     });
   }
 
@@ -122,6 +138,17 @@ export class TicketComponent implements OnInit {
     this.ticketService.getTicketsList().valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
+  }
+
+  getByStatusFilter(status: string) {
+    this.ticket$ = this.ticketService.getTicketsListByStatusFilter(status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
   }
 
   getByFilter(status: string, creater: string) {
