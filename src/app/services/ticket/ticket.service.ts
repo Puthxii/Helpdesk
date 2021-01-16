@@ -1,5 +1,4 @@
-import { async } from '@angular/core/testing';
-import { AngularFirestore, fromDocRef } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { Ticket } from './ticket.model';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -118,36 +117,36 @@ export class TicketService {
   //   })
   // }
 
-  getByKeyWord(value: any) {
+  getByKeyWord(keword: any) {
     return this.afs.collection('ticket', (ref) => ref
       .orderBy('subject')
-      .startAt(value)
-      .endAt(value + '\uf8ff'));
+      .startAt(keword)
+      .endAt(keword + '\uf8ff'));
   }
 
-  getByStatus(value: string, status: string) {
+  getByStatus(keword: string, status: string) {
     return this.afs.collection('ticket', (ref) => ref
       .where('status', '==', status)
       .orderBy('subject')
-      .startAt(value)
-      .endAt(value + '\uf8ff'));
+      .startAt(keword)
+      .endAt(keword + '\uf8ff'));
   }
 
-  getByCurrentnameStatus(value: string, currentName: string, status: string) {
+  getByCurrentnameStatus(keword: string, currentName: string, status: string) {
     return this.afs.collection('ticket', (ref) => ref
       .where('status', '==', status)
       .where('staff', '==', currentName)
       .orderBy('subject')
-      .startAt(value)
-      .endAt(value + '\uf8ff'));
+      .startAt(keword)
+      .endAt(keword + '\uf8ff'));
   }
 
-  getByCurrentname(value: string, currentName: string) {
+  getByCurrentname(keword: string, currentName: string) {
     return this.afs.collection('ticket', (ref) => ref
       .where('staff', '==', currentName)
       .orderBy('subject')
-      .startAt(value)
-      .endAt(value + '\uf8ff'));
+      .startAt(keword)
+      .endAt(keword + '\uf8ff'));
   }
 
   getTicketByid(id: any) {
@@ -179,4 +178,73 @@ export class TicketService {
       .orderBy('date', 'desc')
     );
   }
+
+  getByDaterange(startDate, endDate) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>', startDate)
+      .where('date.singleDate.jsDate', '<', endDate)
+    );
+  }
+
+  getByCurrentnameStatusKewordDateRange(keword: any, creater: string, status: string, startDate: Date, endDate: Date) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>', startDate)
+      .where('date.singleDate.jsDate', '<', endDate)
+      .where('staff', '==', creater)
+      .where('status', '==', status)
+      .where('subject', '==', keword)
+    );
+  }
+
+  getByCurrentnameStatusDateRange(creater: string, status: string, startDate: Date, endDate: Date) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>', startDate)
+      .where('date.singleDate.jsDate', '<', endDate)
+      .where('staff', '==', creater)
+      .where('status', '==', status)
+    );
+  }
+
+  getByStatusKewordDateRange(keword: any, status: string, startDate: Date, endDate: Date) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>', startDate)
+      .where('date.singleDate.jsDate', '<', endDate)
+      .where('status', '==', status)
+      .where('subject', '==', keword)
+    );
+  }
+
+  getByCurrentnameKewordDateRange(keword: any, creater: string, startDate: Date, endDate: Date) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>', startDate)
+      .where('date.singleDate.jsDate', '<', endDate)
+      .where('staff', '==', creater)
+      .where('subject', '==', keword)
+    );
+  }
+
+  getByCurrentnameDateRange(creater: string, startDate: Date, endDate: Date) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>', startDate)
+      .where('date.singleDate.jsDate', '<', endDate)
+      .where('staff', '==', creater)
+    );
+  }
+
+  getByKewordDaterange(keword: any, startDate: Date, endDate: Date) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>', startDate)
+      .where('date.singleDate.jsDate', '<', endDate)
+      .where('subject', '==', keword)
+    );
+  }
+
+  getByStatusDateRange(status: string, startDate: Date, endDate: Date) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>', startDate)
+      .where('date.singleDate.jsDate', '<', endDate)
+      .where('status', '==', status)
+    );
+  }
+
 }

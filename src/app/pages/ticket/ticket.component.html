@@ -29,8 +29,14 @@
           <div class="form-control-sm">
             <div class="input-group mb-2">
               <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="date"
-                formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
+                formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
+                (dateChanged)="onDateChanged($event)">
               <div class="input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="dp.clearDate()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class=" input-group-append">
                 <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
                   <i class="fas fa-calendar"></i>
                 </button>
@@ -162,7 +168,7 @@
   <div>
     <div class="card mt-3">
       <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; index as i">
-        <div class="card mt-3" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
+        <div class="card mb-3" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
           <div class="card-header" style="background-color: #F2EDF3;">
             <div class="row">
               <div class="col-3">
@@ -257,17 +263,17 @@
           </div>
         </div>
       </div>
-        <ul class="pagination justify-content-end">
-          <li class="page-item">
-            <a class="page-link" (click)="previousIndex()">Previous</a>
-          </li>
-          <li *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index" class="page-item">
-            <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" (click)="nextIndex()">Next</a>
-          </li>
-        </ul>
+      <ul class="pagination justify-content-end">
+        <li class="page-item">
+          <a class="page-link" (click)="previousIndex()">Previous</a>
+        </li>
+        <li *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index" class="page-item">
+          <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" (click)="nextIndex()">Next</a>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
