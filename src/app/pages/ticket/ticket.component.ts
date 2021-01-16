@@ -86,22 +86,16 @@ export class TicketComponent implements OnInit {
     this.User = this.auth.authState;
     this.buildForm()
     this.isFilter()
-    this.getCountByStatus();
-    this.getCountAll();
   }
 
-  async isFilter() {
-    try {
-      console.log(await this.getCurrentUserByRoles())
-      if (this.currentName != null && this.status != null) {
-        alert('current + status')
-        this.getByFilter(this.status, this.currentName)
-      } else if (this.status != null) {
-        alert('status')
-        this.getByStatusFilter(this.status)
-      }
-    } catch (error) {
-      return console.log(error);
+  isFilter() {
+    if (this.isChecked === true) {
+      this.getCurrentUserByRoles()
+    } else {
+      alert(this.status)
+      this.getByStatusFilter(this.status)
+      this.getCountByStatus()
+      this.getCountToltal()
     }
   }
 
@@ -115,14 +109,21 @@ export class TicketComponent implements OnInit {
   getCurrentUserByRoles() {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User
-      // if (this.user$.roles.supporter === true) {
-      //   console.log(this.user$.roles.supporter)
-      //   this.currentName = this.user$.firstName + ' ' + this.user$.lastName
-      //   //  this.currentName
-      //   // this.isFilter()
-      // } else {
-      //   console.log('other');
-      // }
+      if (this.user$.roles.supporter === true) {
+        console.log(this.user$.roles.supporter)
+        this.currentName = this.user$.firstName + ' ' + this.user$.lastName
+        if (this.currentName != null && this.status != null) {
+          alert('current + status')
+          this.getCountByStatusCurrentname()
+          this.getCountToltalCurrentname()
+          this.getByStatusCurentnameFilter(this.status, this.currentName)
+        } else if (this.status != null) {
+          alert('status')
+          this.getByStatusFilter(this.status)
+        }
+      } else {
+        console.log('other');
+      }
     });
   }
 
@@ -134,8 +135,23 @@ export class TicketComponent implements OnInit {
     }
   }
 
-  getCountAll() {
+  getCountByStatusCurrentname() {
+    for (let i = 0; this.Status.length > i; i++) {
+      this.ticketService.getCountByStatusCurrentname(this.Status[i].value, this.currentName).subscribe(result => {
+        this.CountStatus[i] = result.length;
+      });
+    }
+  }
+
+
+  getCountToltal() {
     this.ticketService.getTicketsList().valueChanges().subscribe(result => {
+      this.countAll = result.length;
+    });
+  }
+
+  getCountToltalCurrentname() {
+    this.ticketService.getTicketsListCurrentname(this.currentName).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
@@ -151,7 +167,7 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  getByFilter(status: string, creater: string) {
+  getByStatusCurentnameFilter(status: string, creater: string) {
     this.ticket$ = this.ticketService.getTicketsListByFilter(status, creater)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -187,7 +203,7 @@ export class TicketComponent implements OnInit {
 
   search() {
     const value = this.searchValue;
-    value ? this.getBySearch(value) : this.getByFilter('Draft', this.currentName)
+    value ? this.getBySearch(value) : this.getByStatusCurentnameFilter('Draft', this.currentName)
   }
 
   isDraft(ticket) {
@@ -196,7 +212,8 @@ export class TicketComponent implements OnInit {
 
   setStatus(status: string) {
     this.setStatusState(status)
-    this.getByFilter(status, this.currentName);
+    this.status = status
+    this.isFilter()
   }
 
   getAllTicket(status: string) {
@@ -232,6 +249,7 @@ export class TicketComponent implements OnInit {
   }
 
   checkValue(event: any) {
-    console.log(event);
+    this.isChecked
+    this.isFilter()
   }
 }

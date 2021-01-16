@@ -136,9 +136,24 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref.where('status', '==', status)).valueChanges();
   }
 
+  getCountByStatusCurrentname(status: string, creater: string) {
+    return this.afs.collection('ticket', ref => ref
+      .where('status', '==', status)
+      .where('staff', '==', creater)
+    ).valueChanges();
+  }
+
   getTicketsList() {
     return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', ['Draft', 'MOre Info', 'Pending', 'Resolved', 'Close'])
+      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
+      .orderBy('date', 'desc')
+    );
+  }
+
+  getTicketsListCurrentname(creater: string) {
+    return this.afs.collection('ticket', ref => ref
+      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
+      .where('staff', '==', creater)
       .orderBy('date', 'desc')
     );
   }
