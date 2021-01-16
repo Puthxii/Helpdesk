@@ -25,6 +25,7 @@ export class TicketComponent implements OnInit {
   id: string;
   countAll: number;
   max: number;
+  keword = null
   constructor(
     private auth: AuthService,
     private ticketService: TicketService,
@@ -53,10 +54,10 @@ export class TicketComponent implements OnInit {
   ];
 
   Prioritys = [
-    { name: 'Low' , icon: 'fas fa-square mx-2' },
+    { name: 'Low', icon: 'fas fa-square mx-2' },
     { name: 'Medium', icon: 'fas fa-circle mx-2' },
-    { name: 'High',  icon: 'fas fa-star mx-2' },
-    { name: 'Critical',  icon: 'fas fa-fire mx-2' }
+    { name: 'High', icon: 'fas fa-star mx-2' },
+    { name: 'Critical', icon: 'fas fa-fire mx-2' }
   ];
 
   Sources = [
@@ -95,10 +96,10 @@ export class TicketComponent implements OnInit {
     if (this.isChecked === true) {
       this.getCurrentUserByRoles()
     } else {
-      alert(this.status)
       this.status === 'All' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
       this.getCountByStatus()
       this.getCountToltal()
+      this.search()
     }
   }
 
@@ -113,14 +114,11 @@ export class TicketComponent implements OnInit {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.supporter === true) {
-        console.log(this.user$.roles.supporter)
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
         this.getCountByStatusCurrentname()
         this.getCountToltalCurrentname()
-        this.getByStatusCurentnameFilter(this.status, this.currentName)
-      } else {
-        console.log('other');
-      }
+        this.status === 'All' ? this.getAllTicket(this.status) : this.getByStatusCurentnameFilter(this.status, this.currentName)
+      } else { }
     });
   }
 
@@ -194,7 +192,7 @@ export class TicketComponent implements OnInit {
     this.ticketService.changeType(id, type)
   }
 
-  getBySearch(value) {
+  getByKeyWord(value: string) {
     this.ticket$ = this.ticketService.getByKeyWord(value)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -205,9 +203,52 @@ export class TicketComponent implements OnInit {
       );
   }
 
+
+  getByCurrentnameStatus(value, currentname, status) {
+    this.ticket$ = this.ticketService.getByCurrentnameStatus(value, currentname, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getByStatus(value, status) {
+    this.ticket$ = this.ticketService.getByStatus(value, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getByCurrentname(value: string, currentName: string) {
+    this.ticket$ = this.ticketService.getByCurrentname(value, currentName)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
   search() {
-    const value = this.searchValue;
-    value ? this.getBySearch(value) : this.getByStatusCurentnameFilter('Draft', this.currentName)
+    this.keword = this.searchValue
+    this.updateIndex(0)
+    if (this.isChecked === true && this.status != null && this.status != 'All') {
+      this.getByCurrentnameStatus(this.keword, this.currentName, this.status)
+    } else if (this.isChecked === false && this.status != null && this.status != 'All') {
+      this.getByStatus(this.keword, this.status)
+    } else if (this.isChecked === true && this.status === 'All') {
+      this.getByCurrentname(this.keword, this.currentName)
+    } else if (this.isChecked === false && this.status === 'All') {
+      this.getByKeyWord(this.keword)
+    }
   }
 
   isDraft(ticket) {
@@ -215,6 +256,7 @@ export class TicketComponent implements OnInit {
   }
 
   setStatus(status: string) {
+    this.updateIndex(0)
     this.setStatusState(status)
     this.status = status
     this.isFilter()
@@ -299,5 +341,118 @@ export class TicketComponent implements OnInit {
 
   checkValue(event: any) {
     this.isFilter()
+  }
+
+  onDateChanged(event: IMyDateModel): void {
+    const startDate = event.dateRange.beginJsDate
+    const endDate = event.dateRange.endJsDate
+    alert(this.isChecked + ' ' + this.status + ' ' + this.keword + ' ' + this.currentName + ' ' + startDate)
+    this.updateIndex(0)
+    if (startDate != null && endDate != null) {
+      if (this.isChecked === true && this.status != null && this.status !== 'All' && this.keword != null) {
+        this.getByCurrentnameStatusKewordDateRange(this.keword, this.currentName, this.status, startDate, endDate)
+      } else if (this.isChecked === true && this.status != null && this.status !== 'All' && this.keword == null) {
+        this.getByCurrentnameStatusDateRange(this.currentName, this.status, startDate, endDate)
+      } else if (this.isChecked === false && this.status != null && this.status !== 'All' && this.keword != null) {
+        this.getByStatusKewordDateRange(this.keword, this.status, startDate, endDate)
+      } else if (this.isChecked === false && this.status != null && this.status !== 'All' && this.keword == null) {
+        this.getByStatusDateRange(this.status, startDate, endDate)
+      } else if (this.isChecked === true && this.status === 'All' && this.keword != null) {
+        this.getByCurrentnameKewordDateRange(this.keword, this.currentName, startDate, endDate)
+      } else if (this.isChecked === true && this.status === 'All' && this.keword == null) {
+        this.getByCurrentnameDateRange(this.currentName, startDate, endDate)
+      } else if (this.isChecked === false && this.status === 'All' && this.keword != null) {
+        this.getByKewordDaterange(this.keword, startDate, endDate)
+      } else if (this.isChecked === false && this.status === 'All' && this.keword == null) {
+        this.getByDaterange(startDate, endDate)
+      }
+    }
+  }
+
+  getByCurrentnameStatusKewordDateRange(keword: any, currentName: string, status: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCurrentnameStatusKewordDateRange(keword, currentName, status, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+
+  getByCurrentnameStatusDateRange(currentName: string, status: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCurrentnameStatusDateRange(currentName, status, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+
+  getByStatusKewordDateRange(keword: any, status: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByStatusKewordDateRange(keword, status, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+
+  getByStatusDateRange(status: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByStatusDateRange(status, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+
+  getByCurrentnameKewordDateRange(keword: any, currentName: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCurrentnameKewordDateRange(keword, currentName, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+
+  getByCurrentnameDateRange(currentName: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCurrentnameDateRange(currentName, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+
+  getByKewordDaterange(keword: any, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByKewordDaterange(keword, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+
+  getByDaterange(startDate: any, endDate: any) {
+    this.ticket$ = this.ticketService.getByDaterange(startDate, endDate).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Ticket;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    )
   }
 }
