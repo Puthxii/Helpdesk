@@ -147,6 +147,7 @@ export class AddTicketComponent implements OnInit {
       if (this.user$.roles.customer === true) {
         this.setCreater();
         this.setSource();
+        this.setType();
         this.getSiteCustomer();
       } else {
         this.setStaff();
@@ -158,6 +159,12 @@ export class AddTicketComponent implements OnInit {
   setSource() {
     this.addTicketForm.patchValue({
       source: 'Website'
+    });
+  }
+
+  setType() {
+    this.addTicketForm.patchValue({
+      type: 'Info'
     });
   }
 
