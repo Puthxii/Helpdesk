@@ -13,7 +13,7 @@
         <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()" *ngIf="site$ | async; else loading; let Site">
           <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
-              <label for="date">Date</label>
+              <label class="control-label" for="date">Date</label>
               <div class="input-group">
                 <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
                   formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
@@ -32,7 +32,7 @@
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label for="source">Source</label>
+              <label class="control-label" for="source">Source</label>
               <select name="source" formControlName="source" class="form-control" id="source">
                 <option value="">choose source...</option>
                 <option *ngFor="let source of Sources" [ngValue]="source.name">
@@ -48,7 +48,7 @@
           </div>
           <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
-              <label for="site">Site Name</label>
+              <label class="control-label" for="site">Site Name</label>
               <select name="site" formControlName="site" class="form-control" id="site">
                 <option value="">choose site...</option>
                 <option *ngFor=" let site of Site" [ngValue]="site">
@@ -62,7 +62,7 @@
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label for=" creater">Creater</label>
+              <label class="control-label" for=" creater">Creater</label>
               <select name="creater" formControlName="creater" class="form-control" id="creater">
                 <option value="">choose creater...</option>
                 <option *ngFor="let user of getCreate()" [ngValue]="user">
@@ -78,19 +78,19 @@
           </div>
           <div class="form-row" *ngIf="isSelectedSite()&&auth.isSupporter(user)">
             <div class="form-group col-md-6">
-              <label for="maintenancePackage">Maintenance Package</label>
+              <label class="control-label" for="maintenancePackage">Maintenance Package</label>
               <input type=text class="form-control" id="maintenancePackage" placeholder="Maintenance Package"
                 value="{{ getMaPackage() }}" readonly>
             </div>
             <div class="form-group col-md-6">
-              <label for="product">Product</label>
+              <label class="control-label" for="product">Product</label>
               <input type=text class="form-control" id="product" placeholder="Product" value="{{ getProductName() }}"
                 readonly>
             </div>
           </div>
           <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
-              <label for="Type">Type</label>
+              <label class="control-label" for="Type">Type</label>
               <select name="Type" formControlName="type" class="form-control" id="type"
                 (ngModelChange)="hideTextArea($event)">
                 <option value="">choose type...</option>
@@ -105,7 +105,7 @@
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label for="priority">Priority</label>
+              <label class="control-label" for="priority">Priority</label>
               <select name="priority" formControlName="priority" class="form-control" id="priority">
                 <option value="">choose priority...</option>
                 <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
@@ -121,7 +121,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label for="module">Module</label>
+              <label class="control-label" for="module">Module</label>
               <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" [data]="moduleList"
                 id=" module" formControlName="module" [settings]="dropdownSettings">
               </ng-multiselect-dropdown>
@@ -129,7 +129,7 @@
           </div>
           <div class="form-row dropdownModule">
             <div class="form-group col-md-12">
-              <label for="subject">Subject</label>
+              <label class="control-label" for="subject">Subject</label>
               <input type="text" formControlName="subject" class="form-control" id="subject" placeholder="Subject"
                 required>
               <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
@@ -144,7 +144,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label for="description">Description</label>
+              <label class="control-label" for="description">Description</label>
               <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
               <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
                 <div *ngIf="description.errors.required">
@@ -158,7 +158,7 @@
           </div>
           <div class="row">
             <div class="form-group col-md-12" *ngIf="hideResolve">
-              <label for="resolve">Resolve Description</label>
+              <label class="control-label" for="resolve">Resolve Description</label>
               <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription"
                 rows="3"></textarea>
             </div>
