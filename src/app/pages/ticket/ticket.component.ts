@@ -93,7 +93,7 @@ export class TicketComponent implements OnInit {
       this.getCurrentUserByRoles()
     } else {
       alert(this.status)
-      this.getByStatusFilter(this.status)
+      this.status === 'All' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
       this.getCountByStatus()
       this.getCountToltal()
     }
@@ -112,15 +112,9 @@ export class TicketComponent implements OnInit {
       if (this.user$.roles.supporter === true) {
         console.log(this.user$.roles.supporter)
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
-        if (this.currentName != null && this.status != null) {
-          alert('current + status')
-          this.getCountByStatusCurrentname()
-          this.getCountToltalCurrentname()
-          this.getByStatusCurentnameFilter(this.status, this.currentName)
-        } else if (this.status != null) {
-          alert('status')
-          this.getByStatusFilter(this.status)
-        }
+        this.getCountByStatusCurrentname()
+        this.getCountToltalCurrentname()
+        this.getByStatusCurentnameFilter(this.status, this.currentName)
       } else {
         console.log('other');
       }
@@ -142,7 +136,6 @@ export class TicketComponent implements OnInit {
       });
     }
   }
-
 
   getCountToltal() {
     this.ticketService.getTicketsList().valueChanges().subscribe(result => {
@@ -218,13 +211,24 @@ export class TicketComponent implements OnInit {
 
   getAllTicket(status: string) {
     this.setStatusState(status)
-    this.ticket$ = this.ticketService.getTicketsList().snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Ticket;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
+    this.status = status
+    if (this.isChecked === true) {
+      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+    } else {
+      this.ticket$ = this.ticketService.getTicketsList().snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+    }
   }
 
   setStatusState(status: string) {
@@ -249,7 +253,6 @@ export class TicketComponent implements OnInit {
   }
 
   checkValue(event: any) {
-    this.isChecked
     this.isFilter()
   }
 }
