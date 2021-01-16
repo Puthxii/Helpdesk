@@ -182,15 +182,16 @@
                 <div class="col">
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
-                      <div class="dropdown dd" >
+                      <div class="dropdown dd">
                         <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-circle mx-2 text-left"></i>{{ticket.priority}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a *ngFor="let priority of Prioritys" class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> {{priority.name}} </a>
+                          <a *ngFor="let priority of Prioritys" class="dropdown-item" href="#"> <i
+                              class="fas fa-circle mx-2"></i> {{priority.name}} </a>
                         </div>
-                      </div>             
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -203,7 +204,8 @@
                           <i class="fas fa-info-circle mx-2 text-left"></i>{{ticket.type}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a *ngFor="let type of Types" class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> {{type.name}} </a>
+                          <a *ngFor="let type of Types" class="dropdown-item" href="#"> <i
+                              class="fas fa-circle mx-2"></i> {{type.name}} </a>
                         </div>
                       </div>
                     </div>
@@ -217,9 +219,11 @@
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-pen mx-2 text-left"></i>{{ticket.status}}
                         </button>
-                        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton" > 
-                          <a class="dropdown-item" (click)="onChangeStatusPending(ticket.id)" > <i class="fas fa-pen mx-2 text-left"></i> Pending </a>
-                          <a class="dropdown-item" (click)="changeStatusCloseById(ticket.id)"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>                          
+                        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" (click)="onChangeStatusPending(ticket.id)"> <i
+                              class="fas fa-pen mx-2 text-left"></i> Pending </a>
+                          <a class="dropdown-item" (click)="changeStatusCloseById(ticket.id)"> <i
+                              class="fas fa-pen mx-2 text-left"></i> Close </a>
                         </div>
                       </div>
                     </div>
@@ -248,12 +252,6 @@
           <li *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index" class="page-item">
             <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
           </li>
-<<<<<<< HEAD
-=======
-          <li *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index" class="page-item">
-            <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
-          </li>
->>>>>>> 4dcb5117e4bc1612ca3c725d3cb816056f448559
           <li class="page-item">
             <a class="page-link" (click)="nextIndex()">Next</a>
           </li>
