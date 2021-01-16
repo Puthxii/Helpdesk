@@ -10,7 +10,7 @@
           <label class="form-check-label">
             <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
               (change)="checkValue(isChecked?'ture':'false')">
-            My Tickets {{ isChecked }}<i class="input-helper"></i>
+            My Tickets<i class="input-helper"></i>
           </label>
         </div>
         <div class="form-control-sm">
@@ -20,11 +20,24 @@
               (keyup)="search()" placeholder="Search Tickets">
           </div>
         </div>
-        <div class="form-control-sm">
+        <!-- <div class="form-control-sm">
           <div class="form-group has-search mb-2">
             <input type="date" class="form-control" placeholder="date">
           </div>
-        </div>
+        </div> -->
+        <form [formGroup]="filterTicketForm">
+          <div class="form-control-sm">
+            <div class="input-group mb-2">
+              <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="date"
+                formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                  <i class="fas fa-calendar"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <div class="row">
