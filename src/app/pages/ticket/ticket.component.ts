@@ -17,7 +17,6 @@ import { Validators } from '@angular/forms';
   styleUrls: ['./ticket.component.scss']
 })
 export class TicketComponent implements OnInit {
-<<<<<<< HEAD
   searchValue = '';
   Ticket: Ticket[];
   ticket$: Observable<Ticket[]>;
@@ -26,7 +25,6 @@ export class TicketComponent implements OnInit {
   status: string;
   countAll: number;
   max: number;
-=======
   constructor(
     private auth: AuthService,
     private ticketService: TicketService,
@@ -36,15 +34,7 @@ export class TicketComponent implements OnInit {
   ) { }
 
   public filterTicketForm: FormGroup;
-  searchValue = ''
-  Ticket: Ticket[]
-  ticket$: Observable<Ticket[]>
-  ticket: any
-  id: string
-  status: string
-  countAll: number
   activeState = 'draft'
->>>>>>> 4dcb5117e4bc1612ca3c725d3cb816056f448559
   Status = [
     { value: 'Draft' },
     { value: 'More Info' },
@@ -71,22 +61,17 @@ export class TicketComponent implements OnInit {
 
   Sources = [
     { icon: 'fas fa-globe-americas', name: 'Website' },
-    { icon: 'fab fa-line', name: 'Line'},
-    { icon: 'fas fa-envelope', name: 'Email'},
+    { icon: 'fab fa-line', name: 'Line' },
+    { icon: 'fas fa-envelope', name: 'Email' },
     { icon: 'fas fa-phone', name: 'Telephone' },
-    { icon: 'fas fa-user-friends', name: 'Onsite'},
-    { icon: 'fab fa-facebook-square', name: 'Facebook'}
+    { icon: 'fas fa-user-friends', name: 'Onsite' },
+    { icon: 'fab fa-facebook-square', name: 'Facebook' }
   ];
 
   startIndex = 0;
   endIndex = 7;
-<<<<<<< HEAD
   tabindex = 0;
 
-  constructor(
-    private ticketService: TicketService,
-  ) {
-=======
   user: any
   User: User
   user$: any
@@ -96,7 +81,6 @@ export class TicketComponent implements OnInit {
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
->>>>>>> 4dcb5117e4bc1612ca3c725d3cb816056f448559
   }
 
   ngOnInit() {
@@ -158,11 +142,11 @@ export class TicketComponent implements OnInit {
     this.ticketService.cancelTicket(id)
   }
 
-  onChangeStatusPending(id){
+  onChangeStatusPending(id) {
     this.ticketService.changeStatusPendingById(id)
   }
 
-  changeStatusCloseById(id){
+  changeStatusCloseById(id) {
     this.ticketService.changeStatusPendingById(id)
   }
 
@@ -216,7 +200,6 @@ export class TicketComponent implements OnInit {
     this.endIndex = this.startIndex + 7;
   }
 
-<<<<<<< HEAD
   previousIndex() {
     if (this.tabindex > 0) {
       this.tabindex -= 1
@@ -234,12 +217,9 @@ export class TicketComponent implements OnInit {
 
   }
 
-
-
-=======
   getIcon(sources: any) {
-    for (let i = 0; this.Sources.length ; i++){
-      if ( this.Sources[i].name === sources){
+    for (let i = 0; this.Sources.length; i++) {
+      if (this.Sources[i].name === sources) {
         return this.Sources[i].icon
       }
     }
@@ -248,5 +228,4 @@ export class TicketComponent implements OnInit {
   checkValue(event: any) {
     console.log(event);
   }
->>>>>>> 4dcb5117e4bc1612ca3c725d3cb816056f448559
 }
