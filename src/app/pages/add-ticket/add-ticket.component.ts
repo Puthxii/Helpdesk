@@ -214,7 +214,7 @@ export class AddTicketComponent implements OnInit {
       site: ['', [Validators.required]],
       module: [''],
       creater: ['', [Validators.required]],
-      type: [''],
+      type: ['', [Validators.required]],
       subject: ['', [
         Validators.required,
         Validators.maxLength(50)]
@@ -222,7 +222,7 @@ export class AddTicketComponent implements OnInit {
       priority: [''],
       description: ['', [
         Validators.required,
-        Validators.maxLength(250)]
+        Validators.maxLength(500)]
       ],
       resolveDescription: [''],
       status: [''],
