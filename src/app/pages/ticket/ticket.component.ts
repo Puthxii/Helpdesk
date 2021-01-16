@@ -17,6 +17,14 @@ import { Validators } from '@angular/forms';
   styleUrls: ['./ticket.component.scss']
 })
 export class TicketComponent implements OnInit {
+  searchValue = '';
+  Ticket: Ticket[];
+  ticket$: Observable<Ticket[]>;
+  ticket: any;
+  id: string;
+  status: string;
+  countAll: number;
+  max: number;
   constructor(
     private auth: AuthService,
     private ticketService: TicketService,
@@ -26,13 +34,6 @@ export class TicketComponent implements OnInit {
   ) { }
 
   public filterTicketForm: FormGroup;
-  searchValue = ''
-  Ticket: Ticket[]
-  ticket$: Observable<Ticket[]>
-  ticket: any
-  id: string
-  status: string
-  countAll: number
   activeState = 'Draft'
   Status = [
     { value: 'Draft' },
@@ -69,6 +70,8 @@ export class TicketComponent implements OnInit {
 
   startIndex = 0;
   endIndex = 7;
+  tabindex = 0;
+
   user: any
   User: User
   user$: any
@@ -188,12 +191,30 @@ export class TicketComponent implements OnInit {
   }
 
   getArrayFromNumber(length) {
-    return new Array(Math.ceil(length / 7));
+    this.max = (Math.ceil(length / 7))
+    return new Array(Math.ceil(this.max));
   }
 
   updateIndex(pageIndex) {
     this.startIndex = pageIndex * 7;
     this.endIndex = this.startIndex + 7;
+  }
+
+  previousIndex() {
+    if (this.tabindex > 0) {
+      this.tabindex -= 1
+    }
+    this.startIndex = this.tabindex * 7;
+    this.endIndex = this.startIndex + 7;
+  }
+
+  nextIndex() {
+    if (this.tabindex < this.max - 1) {
+      this.tabindex += 1
+    }
+    this.startIndex = this.tabindex * 7;
+    this.endIndex = this.startIndex + 7;
+
   }
 
   getIcon(sources: any) {

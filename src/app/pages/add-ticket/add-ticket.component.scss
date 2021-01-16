@@ -36,3 +36,8 @@ h3{
 .dropdownModule {
     margin-top: -1.3rem;
 }
+
+.control-label::after {
+    content: "*";
+    color: red;
+}
