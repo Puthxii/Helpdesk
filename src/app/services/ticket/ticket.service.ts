@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { AngularFirestore, fromDocRef } from 'angularfire2/firestore';
 import { Ticket } from './ticket.model';
 import { Injectable } from '@angular/core';
@@ -30,17 +31,43 @@ export class TicketService {
     });
   }
 
-  getTicketsListByStatus(status: string) {
+  getTicketsListByFilter(status: string, creater: string) {
+    console.log(status)
+    console.log(creater)
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
-      .orderBy('date', 'desc'));
+      .where('staff', '==', creater)
+      .orderBy('date', 'desc')
+    )
   }
 
-  async updateStatusById(id) {
+  async cancelTicket(id) {
     try {
       this.afs.collection('ticket').doc(id).update({
-        status: 'close'
+        status: 'Cancel'
       });
+      this.successNotification();
+    } catch (error) {
+      this.errorNotification();
+    }
+  }
+
+  async changeStatusPendingById(id){
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        status: 'Pending'
+      })
+      this.successNotification();
+    } catch (error) {
+      this.errorNotification();
+    }
+  }
+
+  async changeStatusCloseById(id){
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        status: 'Close'
+      })
       this.successNotification();
     } catch (error) {
       this.errorNotification();
@@ -102,6 +129,9 @@ export class TicketService {
   }
 
   getTicketsList() {
-    return this.afs.collection('ticket', ref => ref.orderBy('date', 'desc'));
+    return this.afs.collection('ticket', ref => ref
+      .where('status', 'in', ['Draft', 'MOre Info', 'Pending', 'Resolved', 'Close'])
+      .orderBy('date', 'desc')
+    );
   }
 }

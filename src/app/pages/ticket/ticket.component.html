@@ -8,8 +8,9 @@
         </h5>
         <div class="form-check">
           <label class="form-check-label">
-            <input type="checkbox" class="form-check-input">
-            My Tickets <i class="input-helper"></i>
+            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
+              (change)="checkValue(isChecked?'ture':'false')">
+            My Tickets {{ isChecked }}<i class="input-helper"></i>
           </label>
         </div>
         <div class="form-control-sm">
@@ -27,8 +28,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('draft')">
-        <div class="card draft mt-2">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Draft')">
+        <div class="card draft mt-2" [class.active]="'Draft' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -46,8 +47,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('more_info')">
-        <div class="card moreinfo mt-2">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('More Info')">
+        <div class="card moreinfo mt-2" [class.active]="'More Info' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -65,8 +66,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('pending')">
-        <div class="card pending mt-2">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Pending')">
+        <div class="card pending mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -84,8 +85,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('resolved')">
-        <div class="card resolved mt-2">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Resolved')">
+        <div class="card resolved mt-2" [class.active]="'Resolved' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -103,8 +104,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('close')">
-        <div class="card closed mt-2">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Close')">
+        <div class="card closed mt-2" [class.active]="'Close' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -122,8 +123,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket()">
-        <div class="card all mt-2">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket('All')">
+        <div class="card all mt-2" [class.active]="'All' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -156,14 +157,16 @@
                   <span>{{ticket.subject}}</span>
                 </div>
                 <div class="col">
-                  <i class="fas fa-globe-americas" style="color: gray;"></i><span class="mx-1"
+                  <i class="{{ getIcon(ticket.source) }}" style="color: gray;"></i><span class="mx-1"
                     style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
                 </div>
                 <div class="col">
                   <span for="">{{ticket.site.product.name}}</span>
                 </div>
                 <div class="col">
-                  <span style="color: gray;">Create {{ticket.date}}</span>
+                  <span style="color: gray;">Create {{ ticket.date.singleDate?.formatted?
+                    ticket.date.singleDate.formatted
+                    : ''}}</span>
                 </div>
               </div>
               <div class="col-3 center">
@@ -175,20 +178,19 @@
               <div class="col-2 center paperclass">
                 <i class="fas fa-paperclip secondary-color paperclip"></i>
               </div>
-              <div class="col-1">
+              <div class="col-2">
                 <div class="col">
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
-                      <div class="dropdown dd">
+                      <div class="dropdown dd" >
                         <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-circle mx-2 text-left"></i>{{ticket.priority}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> Medium </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-star mx-2"></i> High </a>
+                          <a *ngFor="let priority of Prioritys" class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> {{priority.name}} </a>
                         </div>
-                      </div>
+                      </div>             
                     </div>
                   </div>
                 </div>
@@ -200,11 +202,8 @@
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-info-circle mx-2 text-left"></i>{{ticket.type}}
                         </button>
-                        <div *ngFor="let type of Type" class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"> <i class="fas fa-plus-circle mx-2"></i> ...</a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Info </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-question-circle mx-2"></i> Consult </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-info-circle mx-2"></i> Other </a>
+                        <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                          <a *ngFor="let type of Types" class="dropdown-item" href="#"> <i class="fas fa-circle mx-2"></i> {{type.name}} </a>
                         </div>
                       </div>
                     </div>
@@ -218,21 +217,14 @@
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-pen mx-2 text-left"></i>{{ticket.status}}
                         </button>
-                        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Pending </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Assign </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Resoled </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Reject </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Revert </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>
-                          <a class="dropdown-item" href="#"> <i class="fas fa-pen mx-2 text-left"></i> More Info </a>
+                        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton" > 
+                          <a class="dropdown-item" (click)="onChangeStatusPending(ticket.id)" > <i class="fas fa-pen mx-2 text-left"></i> Pending </a>
+                          <a class="dropdown-item" (click)="changeStatusCloseById(ticket.id)"> <i class="fas fa-pen mx-2 text-left"></i> Close </a>                          
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-1 ">
               </div>
               <div class="col-2 center action">
                 <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
@@ -256,6 +248,12 @@
           <li *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index" class="page-item">
             <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
           </li>
+<<<<<<< HEAD
+=======
+          <li *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index" class="page-item">
+            <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
+          </li>
+>>>>>>> 4dcb5117e4bc1612ca3c725d3cb816056f448559
           <li class="page-item">
             <a class="page-link" (click)="nextIndex()">Next</a>
           </li>

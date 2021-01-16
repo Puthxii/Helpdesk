@@ -7,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import * as moment from 'moment';
 import { Site } from 'src/app/services/site/site.model';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/services/user.model';
+import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 
 @Component({
   selector: 'app-add-ticket',
@@ -18,10 +19,6 @@ import { User } from 'src/app/services/user.model';
   styleUrls: ['./add-ticket.component.scss'],
 })
 export class AddTicketComponent implements OnInit {
-  user;
-  Product: Product;
-  site$: Observable<any>;
-  user$: any;
   constructor(
     private auth: AuthService,
     public ticketService: TicketService,
@@ -78,6 +75,10 @@ export class AddTicketComponent implements OnInit {
   get status() {
     return this.addTicketForm.get('status');
   }
+  user;
+  Product: Product;
+  site$: Observable<any>;
+  user$: any;
 
   public addTicketForm: FormGroup;
   hideResolve = false;
@@ -90,7 +91,7 @@ export class AddTicketComponent implements OnInit {
   Site: Site[];
   moduleList: any[];
   Sources = [
-    { name: 'Facebook' },
+    { name: 'Facebook',},
     { name: 'Line' },
     { name: 'Email' },
     { name: 'Telephone' },
@@ -112,10 +113,15 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Status = [
-    { name: 'Save as draft', value: 'draft' },
-    { name: 'Save as pending', value: 'pending' },
-    { name: 'Save as close', value: 'close' }
+    { name: 'Save as draft', value: 'Draft' },
+    { name: 'Save as pending', value: 'Pending' },
+    { name: 'Save as close', value: 'Close' }
   ];
+
+  myOptions: IAngularMyDpOptions = {
+    dateRange: false,
+    dateFormat: 'dd/mm/yyyy'
+  };
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
@@ -141,6 +147,7 @@ export class AddTicketComponent implements OnInit {
       if (this.user$.roles.customer === true) {
         this.setCreater();
         this.setSource();
+        this.setType();
         this.getSiteCustomer();
       } else {
         this.setStaff();
@@ -152,6 +159,12 @@ export class AddTicketComponent implements OnInit {
   setSource() {
     this.addTicketForm.patchValue({
       source: 'Website'
+    });
+  }
+
+  setType() {
+    this.addTicketForm.patchValue({
+      type: 'Info'
     });
   }
 
@@ -189,18 +202,19 @@ export class AddTicketComponent implements OnInit {
 
   setStatus() {
     this.addTicketForm.patchValue({
-      status: 'draft'
+      status: 'Draft'
     });
   }
 
   buildForm() {
+    const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.addTicketForm = this.fb.group({
-      date: ['', [Validators.required]],
+      date: [model, [Validators.required]],
       source: ['', [Validators.required]],
       site: ['', [Validators.required]],
       module: [''],
       creater: ['', [Validators.required]],
-      type: [''],
+      type: ['', [Validators.required]],
       subject: ['', [
         Validators.required,
         Validators.maxLength(50)]
@@ -208,7 +222,7 @@ export class AddTicketComponent implements OnInit {
       priority: [''],
       description: ['', [
         Validators.required,
-        Validators.maxLength(250)]
+        Validators.maxLength(500)]
       ],
       resolveDescription: [''],
       status: [''],
@@ -217,7 +231,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   hideTextArea(type: any) {
-    if (type === 'info' || type === 'consult') {
+    if (type === 'Info' || type === 'Consult') {
       this.hideResolve = true;
     } else {
       this.hideResolve = false;

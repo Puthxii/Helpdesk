@@ -26,6 +26,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { DetailComponent } from './pages/detail/detail.component';
 import { Error404Component } from './error-pages/error404/error404.component';
 import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
+import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    AngularMyDatePickerModule
 
   ],
   providers: [AuthService, AngularFireDatabase, AuthGuard],
