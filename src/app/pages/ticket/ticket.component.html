@@ -182,7 +182,7 @@
                 <div class="col">
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
-                      <div class="dropdown dd">
+                      <div class="dropdown dd"  *ngIf="auth.isSupporter(user)">
                         <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-circle mx-2 text-left"></i>{{ticket.priority}}
@@ -198,7 +198,7 @@
                 <div class="col">
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
-                      <div class="dropdown dd">
+                      <div class="dropdown dd" *ngIf="auth.isSupporter(user)">
                         <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-info-circle mx-2 text-left"></i>{{ticket.type}}
@@ -214,7 +214,7 @@
                 <div class="col">
                   <div class="row">
                     <div class="col-md-3 text-lg-left">
-                      <div class="dropdown dd">
+                      <div class="dropdown dd" *ngIf="auth.isSupporter(user)">
                         <button class="btn dropdown-toggle status" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-pen mx-2 text-left"></i>{{ticket.status}}

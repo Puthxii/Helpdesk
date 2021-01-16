@@ -1,3 +1,4 @@
+import { SiteTicketComponent } from './pages/site-ticket/site-ticket.component';
 import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { NgModule, Component } from '@angular/core';
@@ -42,6 +43,10 @@ const router: Routes = [
       {
         path: 'ticket',
         component: TicketComponent
+      },
+      {
+        path: 'site-ticket',
+        component: SiteTicketComponent
       },
       {
         path: 'profile',
