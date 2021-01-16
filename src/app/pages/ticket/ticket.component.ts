@@ -46,17 +46,17 @@ export class TicketComponent implements OnInit {
   CountStatus = []
 
   Types = [
-    { name: 'Info' },
-    { name: 'Consult' },
-    { name: 'Problem' },
-    { name: 'Add-ons' }
+    { name: 'Info', icon: 'fas fa-info-circle mx-2' },
+    { name: 'Consult', icon: 'fas fa-question-circle mx-2' },
+    { name: 'Problem', icon: 'fas fa-exclamation-circle mx-2' },
+    { name: 'Add-ons', icon: 'fas fa-plus-circle mx-2' }
   ];
 
   Prioritys = [
-    { name: 'Low' },
-    { name: 'Medium' },
-    { name: 'High' },
-    { name: 'Critical' }
+    { name: 'Low' , icon: 'fas fa-square mx-2' },
+    { name: 'Medium', icon: 'fas fa-circle mx-2' },
+    { name: 'High',  icon: 'fas fa-star mx-2' },
+    { name: 'Critical',  icon: 'fas fa-fire mx-2' }
   ];
 
   Sources = [
@@ -186,6 +186,14 @@ export class TicketComponent implements OnInit {
     this.ticketService.changeStatusPendingById(id)
   }
 
+  changePriority(id, priority: string) {
+    this.ticketService.changePriority(id, priority)
+  }
+
+  changeType(id, type: string) {
+    this.ticketService.changeType(id, type)
+  }
+
   getBySearch(value) {
     this.ticket$ = this.ticketService.getByKeyWord(value)
       .snapshotChanges().pipe(
@@ -265,10 +273,26 @@ export class TicketComponent implements OnInit {
 
   }
 
-  getIcon(sources: any) {
+  getSourcesIcon(sources: any) {
     for (let i = 0; this.Sources.length; i++) {
       if (this.Sources[i].name === sources) {
         return this.Sources[i].icon
+      }
+    }
+  }
+
+  getPriorityIcon(priority: any) {
+    for (let i = 0; this.Prioritys.length; i++) {
+      if (this.Prioritys[i].name === priority) {
+        return this.Prioritys[i].icon
+      }
+    }
+  }
+
+  getTypeIcon(type: any) {
+    for (let i = 0; this.Types.length; i++) {
+      if (this.Types[i].name === type) {
+        return this.Types[i].icon
       }
     }
   }

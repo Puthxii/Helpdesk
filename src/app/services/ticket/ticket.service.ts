@@ -82,6 +82,26 @@ export class TicketService {
     }
   }
 
+  async changePriority(id, priority: any) {
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        priority
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async changeType(id, type: any) {
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        type
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async addTicket(ticket: Ticket) {
     try {
       this.afs.collection('ticket').add({

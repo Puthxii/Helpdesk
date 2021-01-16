@@ -170,7 +170,7 @@
                   <span>{{ticket.subject}}</span>
                 </div>
                 <div class="col">
-                  <i class="{{ getIcon(ticket.source) }}" style="color: gray;"></i><span class="mx-1"
+                  <i class="{{ getSourcesIcon(ticket.source) }}" style="color: gray;"></i><span class="mx-1"
                     style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
                 </div>
                 <div class="col">
@@ -196,13 +196,13 @@
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
                       <div class="dropdown dd"  *ngIf="auth.isSupporter(user)">
-                        <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton"
+                        <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton" 
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-circle mx-2 text-left"></i>{{ticket.priority}}
+                          <i class="{{ getPriorityIcon(ticket.priority)}} text-left"></i>{{ticket.priority}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a *ngFor="let priority of Prioritys" class="dropdown-item" href="#"> <i
-                              class="fas fa-circle mx-2"></i> {{priority.name}} </a>
+                          <a *ngFor="let priority of Prioritys" class="dropdown-item" (click)="changePriority(ticket.id, priority.name)"> 
+                            <i class="{{ priority.icon }}" value="priority.name"></i> {{priority.name}} </a>
                         </div>
                       </div>
                     </div>
@@ -214,11 +214,11 @@
                       <div class="dropdown dd" *ngIf="auth.isSupporter(user)">
                         <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-info-circle mx-2 text-left"></i>{{ticket.type}}
+                          <i class="{{ getTypeIcon(ticket.type)}} text-left"></i>{{ticket.type}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                          <a *ngFor="let type of Types" class="dropdown-item" href="#"> <i
-                              class="fas fa-circle mx-2"></i> {{type.name}} </a>
+                          <a *ngFor="let type of Types" class="dropdown-item" (click)="changeType(ticket.id, type.name)"> 
+                            <i class="{{ type.icon }}" value="type.name"></i> {{type.name}} </a>
                         </div>
                       </div>
                     </div>
