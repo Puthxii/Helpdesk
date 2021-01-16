@@ -18,6 +18,7 @@ export class TicketComponent implements OnInit {
   id: string;
   status: string;
   countAll: number;
+  max: number;
   Status = [
     { value: 'draft' },
     { value: 'more_info' },
@@ -45,6 +46,7 @@ export class TicketComponent implements OnInit {
 
   startIndex = 0;
   endIndex = 7;
+  tabindex = 0;
 
   constructor(
     private ticketService: TicketService,
@@ -121,11 +123,32 @@ export class TicketComponent implements OnInit {
   }
 
   getArrayFromNumber(length) {
-    return new Array(Math.ceil(length / 7));
+    this.max = (Math.ceil(length / 7))
+    return new Array(Math.ceil(this.max));
   }
 
   updateIndex(pageIndex) {
     this.startIndex = pageIndex * 7;
     this.endIndex = this.startIndex + 7;
   }
+
+  previousIndex() {
+    if (this.tabindex > 0) {
+      this.tabindex -= 1
+    }
+    this.startIndex = this.tabindex * 7;
+    this.endIndex = this.startIndex + 7;
+  }
+
+  nextIndex() {
+    if (this.tabindex < this.max - 1) {
+      this.tabindex += 1
+    }
+    this.startIndex = this.tabindex * 7;
+    this.endIndex = this.startIndex + 7;
+
+  }
+
+
+
 }
