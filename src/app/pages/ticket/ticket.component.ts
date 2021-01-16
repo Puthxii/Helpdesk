@@ -185,8 +185,42 @@ export class TicketComponent implements OnInit {
     this.ticketService.changeStatusPendingById(id)
   }
 
-  getBySearch(value) {
+  getByKeyWord(value: string) {
     this.ticket$ = this.ticketService.getByKeyWord(value)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+
+  getByCurrentnameStatus(value, currentname, status) {
+    this.ticket$ = this.ticketService.getByCurrentnameStatus(value, currentname, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getByStatus(value, status) {
+    this.ticket$ = this.ticketService.getByStatus(value, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getByCurrentname(value: string, currentName: string) {
+    this.ticket$ = this.ticketService.getByCurrentname(value, currentName)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -198,7 +232,16 @@ export class TicketComponent implements OnInit {
 
   search() {
     const value = this.searchValue;
-    value ? this.getBySearch(value) : this.getByStatusCurentnameFilter('Draft', this.currentName)
+    // value ? this.getBySearch(value) : this.getByStatusCurentnameFilter(this.status, this.currentName)
+    if (this.isChecked === true && this.status != null && this.status !== 'All') {
+      this.getByCurrentnameStatus(value, this.currentName, this.status)
+    } else if (this.isChecked === false && this.status != null && this.status !== 'All') {
+      this.getByStatus(value, this.status)
+    } else if (this.isChecked === true && this.status === 'All') {
+      this.getByCurrentname(value, this.currentName)
+    } else if (this.isChecked === false && this.status === 'All') {
+      this.getByKeyWord(value)
+    }
   }
 
   isDraft(ticket) {

@@ -8,7 +8,6 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   providedIn: 'root'
 })
 export class TicketService {
-
   constructor(
     private afs: AngularFirestore
   ) { }
@@ -40,8 +39,6 @@ export class TicketService {
   }
 
   getTicketsListByFilter(status: string, creater: string) {
-    console.log(status)
-    console.log(creater)
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
       .where('staff', '==', creater)
@@ -123,6 +120,31 @@ export class TicketService {
 
   getByKeyWord(value: any) {
     return this.afs.collection('ticket', (ref) => ref
+      .orderBy('subject')
+      .startAt(value)
+      .endAt(value + '\uf8ff'));
+  }
+
+  getByStatus(value: string, status: string) {
+    return this.afs.collection('ticket', (ref) => ref
+      .where('status', '==', status)
+      .orderBy('subject')
+      .startAt(value)
+      .endAt(value + '\uf8ff'));
+  }
+
+  getByCurrentnameStatus(value: string, currentName: string, status: string) {
+    return this.afs.collection('ticket', (ref) => ref
+      .where('status', '==', status)
+      .where('staff', '==', currentName)
+      .orderBy('subject')
+      .startAt(value)
+      .endAt(value + '\uf8ff'));
+  }
+
+  getByCurrentname(value: string, currentName: string) {
+    return this.afs.collection('ticket', (ref) => ref
+      .where('staff', '==', currentName)
       .orderBy('subject')
       .startAt(value)
       .endAt(value + '\uf8ff'));
