@@ -202,7 +202,7 @@ export class AddTicketComponent implements OnInit {
 
   setStatus() {
     this.addTicketForm.patchValue({
-      status: 'draft'
+      status: 'Draft'
     });
   }
 
