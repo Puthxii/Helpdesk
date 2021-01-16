@@ -95,7 +95,6 @@ export class TicketComponent implements OnInit {
     if (this.isChecked === true) {
       this.getCurrentUserByRoles()
     } else {
-      alert(this.status)
       this.status === 'All' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
       this.getCountByStatus()
       this.getCountToltal()
@@ -117,7 +116,7 @@ export class TicketComponent implements OnInit {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
         this.getCountByStatusCurrentname()
         this.getCountToltalCurrentname()
-        this.getByStatusCurentnameFilter(this.status, this.currentName)
+        this.status === 'All' ? this.getAllTicket(this.status) : this.getByStatusCurentnameFilter(this.status, this.currentName)
       } else {
         console.log('other');
       }
@@ -207,6 +206,7 @@ export class TicketComponent implements OnInit {
   }
 
   setStatus(status: string) {
+    this.updateIndex(0)
     this.setStatusState(status)
     this.status = status
     this.isFilter()
