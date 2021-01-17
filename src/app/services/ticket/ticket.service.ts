@@ -39,6 +39,14 @@ export class TicketService {
     });
   }
 
+  errorCancel() {
+    Swal.fire({
+      icon: 'error',
+      title: 'error',
+      text: 'Your ticket has not been saved',
+    }).then((result) => {
+    });
+  }
   confirmCancel() {
     Swal.fire(
       'Deleted!',
@@ -89,14 +97,16 @@ export class TicketService {
       })
     }
 
-    async changeStatus(id, status: any) {
+    async changeStatus(id, status: any, staff: any) {
     try {
+      console.log(id, status, staff)
       this.afs.collection('ticket').doc(id).update({
         status
       })
-      this.successNotification();
+      this.setAction(id, status, staff)
+      this.successCancel();
     } catch (error) {
-      this.errorNotification();
+      this.errorCancel();
     }
   }
 
@@ -134,12 +144,29 @@ export class TicketService {
         description: ticket.description,
         resolveDescription: ticket.resolveDescription,
         status: ticket.status,
-        staff: ticket.staff
+        staff: ticket.staff,
+        action: [{
+          staff : ticket.staff,
+          status: ticket.status,
+          date: new Date(),
+        }]
       });
       this.successNotification();
+      // this.setAction(id, staff, status);
     } catch (error) {
       this.errorNotification();
     }
+  }
+
+  setAction(id: any, status: string, staff: any) {
+      this.afs.collection('ticket').doc(id).set({
+           action: [{
+            staff,
+            status,
+            date: new Date(),
+        }]
+      },
+    )
   }
 
   getByKeyWord(keword: any) {

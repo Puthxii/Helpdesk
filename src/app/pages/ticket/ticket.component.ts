@@ -26,6 +26,7 @@ export class TicketComponent implements OnInit {
   countAll: number;
   max: number;
   keword = null
+  staff: any;
   constructor(
     private auth: AuthService,
     private ticketService: TicketService,
@@ -179,16 +180,8 @@ export class TicketComponent implements OnInit {
     this.ticketService.cancelTicket(id, subject)
   }
 
-  // onChangeStatusPending(id) {
-  //   this.ticketService.changeStatusPendingById(id)
-  // }
-
-  // changeStatusCloseById(id) {
-  //   this.ticketService.changeStatusPendingById(id)
-  // }
-
-  changeStatus(id, status: any) {
-    this.ticketService.changeStatus(id, status)
+  changeStatus(id, status: any, staff: any) {
+    this.ticketService.changeStatus(id, status, staff)
   }
 
   changePriority(id, priority: string) {
@@ -461,5 +454,9 @@ export class TicketComponent implements OnInit {
         return { id, ...data };
       }))
     )
+  }
+
+  getCurrentStaff(){
+    return this.staff = this.currentName
   }
 }

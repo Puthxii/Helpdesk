@@ -106,10 +106,10 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Prioritys = [
-    { name: 'Low' },
-    { name: 'Medium' },
-    { name: 'High' },
-    { name: 'Critical' }
+    { name: 'Low', color: '#2ED0B9'},
+    { name: 'Medium', color: '#FFBE96' },
+    { name: 'High', color: '#2ED0B9' },
+    { name: 'Critical', color: '#FE8896' }
   ];
 
   Status = [
@@ -207,7 +207,6 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  
   setPriority() {
     this.addTicketForm.patchValue({
       priority: 'Low'

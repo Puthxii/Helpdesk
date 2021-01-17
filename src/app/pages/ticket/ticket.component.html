@@ -242,7 +242,7 @@
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                           <a *ngFor="let activeStatus of ActiveStatus" class="dropdown-item"
-                            (click)="changeStatus(ticket.id, activeStatus.name)">
+                            (click)="changeStatus(ticket.id, activeStatus.name, getCurrentStaff())">
                             <i class="fas fa-pen mx-2 text-left" value="activeStatus.value"></i> {{activeStatus.name}} </a>
                         </div>
                       </div>
