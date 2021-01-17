@@ -14,4 +14,10 @@ export interface Ticket {
     resolveDescription: string;
     status: string;
     staff?: string;
+    action?: Actions[];
+}
+export interface Actions {
+    data: any,
+    status: string,
+    staff: string
 }

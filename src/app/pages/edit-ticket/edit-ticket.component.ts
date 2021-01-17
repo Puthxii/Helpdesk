@@ -66,18 +66,19 @@ export class EditTicketComponent implements OnInit {
     this.ticketService.getTicketByid(this.id).subscribe(data => {
       this.ticket = data
       this.editTicket.patchValue({
-        date:  this.ticket.date,
-        source:  this.ticket.source,
-        site:  this.ticket.site,
-        module:  this.ticket.module,
-        creater:  this.ticket.creater,
-        type:  this.ticket.type,
-        subject:  this.ticket.subject,
-        priority:  this.ticket.priority,
-        description:  this.ticket.description,
-        resolveDescription:  this.ticket.resolveDescription,
-        status:  this.ticket.status,
-        staff:  this.ticket.staff
+        date: this.ticket.date,
+        source: this.ticket.source,
+        site: this.ticket.site,
+        module: this.ticket.module,
+        creater: this.ticket.creater,
+        type: this.ticket.type,
+        subject: this.ticket.subject,
+        priority: this.ticket.priority,
+        description: this.ticket.description,
+        resolveDescription: this.ticket.resolveDescription,
+        status: this.ticket.status,
+        staff: this.ticket.staff,
+        siteName: this.ticket.site.nameEN,
       });
       // this.editTicket.setValue(data)
       this.moduleList = this.editTicket.controls.site.value.module
@@ -155,6 +156,7 @@ export class EditTicketComponent implements OnInit {
       resolveDescription: [''],
       status: [''],
       staff: [''],
+      siteName: ['']
     });
   }
 
