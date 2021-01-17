@@ -60,21 +60,32 @@ export class TicketService {
     }
   }
 
-  async changeStatusPendingById(id) {
-    try {
-      this.afs.collection('ticket').doc(id).update({
-        status: 'Pending'
-      })
-      this.successNotification();
-    } catch (error) {
-      this.errorNotification();
-    }
-  }
+  // async changeStatusPendingById(id) {
+  //   try {
+  //     this.afs.collection('ticket').doc(id).update({
+  //       status: 'Pending'
+  //     })
+  //     this.successNotification();
+  //   } catch (error) {
+  //     this.errorNotification();
+  //   }
+  // }
 
-  async changeStatusCloseById(id) {
+  // async changeStatusCloseById(id) {
+  //   try {
+  //     this.afs.collection('ticket').doc(id).update({
+  //       status: 'Close'
+  //     })
+  //     this.successNotification();
+  //   } catch (error) {
+  //     this.errorNotification();
+  //   }
+  // }
+
+    async changeStatus(id, status: any) {
     try {
       this.afs.collection('ticket').doc(id).update({
-        status: 'Close'
+        status
       })
       this.successNotification();
     } catch (error) {

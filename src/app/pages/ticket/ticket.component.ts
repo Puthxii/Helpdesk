@@ -178,12 +178,16 @@ export class TicketComponent implements OnInit {
     this.ticketService.cancelTicket(id)
   }
 
-  onChangeStatusPending(id) {
-    this.ticketService.changeStatusPendingById(id)
-  }
+  // onChangeStatusPending(id) {
+  //   this.ticketService.changeStatusPendingById(id)
+  // }
 
-  changeStatusCloseById(id) {
-    this.ticketService.changeStatusPendingById(id)
+  // changeStatusCloseById(id) {
+  //   this.ticketService.changeStatusPendingById(id)
+  // }
+
+  changeStatus(id, status: any){
+    this.ticketService.changeStatus(id, status)
   }
 
   changePriority(id, priority: string) {

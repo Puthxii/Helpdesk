@@ -148,6 +148,7 @@ export class AddTicketComponent implements OnInit {
         this.setCreater();
         this.setSource();
         this.setType();
+        this.setPriority();
         this.getSiteCustomer();
       } else {
         this.setStaff();
@@ -206,6 +207,12 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
+  
+  setPriority() {
+    this.addTicketForm.patchValue({
+      priority: 'Draft'
+    });
+  }
   buildForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.addTicketForm = this.fb.group({
@@ -219,7 +226,7 @@ export class AddTicketComponent implements OnInit {
         Validators.required,
         Validators.maxLength(50)]
       ],
-      priority: [''],
+      priority: ['', [Validators.required]],
       description: ['', [
         Validators.required,
         Validators.maxLength(500)]

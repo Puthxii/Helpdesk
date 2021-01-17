@@ -233,10 +233,10 @@
                           <i class="fas fa-pen mx-2 text-left"></i>{{ticket.status}}
                         </button>
                         <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" (click)="onChangeStatusPending(ticket.id)"> <i
-                              class="fas fa-pen mx-2 text-left"></i> Pending </a>
-                          <a class="dropdown-item" (click)="changeStatusCloseById(ticket.id)"> <i
-                              class="fas fa-pen mx-2 text-left"></i> Close </a>
+                          <a class="dropdown-item" (click)="changeStatus(ticket.id, status.name)"> <i
+                              class="fas fa-pen mx-2 text-left" value="status.name"></i> Pending </a>
+                          <a class="dropdown-item" (click)="changeStatus(ticket.id, status.name)"> <i
+                              class="fas fa-pen mx-2 text-left" value="status.name"></i> Close </a>
                         </div>
                       </div>
                     </div>
