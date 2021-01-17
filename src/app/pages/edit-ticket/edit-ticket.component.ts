@@ -7,6 +7,9 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
 import { Ticket } from 'src/app/services/ticket/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
+import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
+import * as moment from 'moment';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'edit-ticket',
@@ -51,6 +54,11 @@ export class EditTicketComponent implements OnInit {
 
   ticket: any;
 
+  myOptions: IAngularMyDpOptions = {
+    dateRange: false,
+    dateFormat: 'dd/mm/yyyy'
+  };
+
   constructor(
     private ticketService: TicketService,
     private route: ActivatedRoute,
@@ -69,6 +77,7 @@ export class EditTicketComponent implements OnInit {
         date: this.ticket.date,
         source: this.ticket.source,
         site: this.ticket.site,
+        product: this.ticket.site.product.name,
         module: this.ticket.module,
         creater: this.ticket.creater,
         type: this.ticket.type,
@@ -92,75 +101,89 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.controls.site.value.users;
   }
 
-  // get date(){
-  //  return this.editTicket.get('date') 
-  // }
+  get date() {
+    return this.editTicket.get('date')
+  }
 
-  // get source() {
-  //   return this.editTicket.get('source');
-  // }
+  get source() {
+    return this.editTicket.get('source');
+  }
 
-  // get site() {
-  //   return this.editTicket.get('site');
-  // }
+  get site() {
+    return this.editTicket.get('site');
+  }
 
-  // get maintenancePackage() {
-  //   return this.editTicket.get('maintenancePackage');
-  // }
+  get maintenancePackage() {
+    return this.editTicket.get('maintenancePackage');
+  }
 
-  // get module() {
-  //   return this.editTicket.get('module');
-  // }
+  get module() {
+    return this.editTicket.get('module');
+  }
 
-  // get creater() {
-  //   return this.editTicket.get('creater');
-  // }
+  get creater() {
+    return this.editTicket.get('creater');
+  }
 
-  // get type() {
-  //   return this.editTicket.get('type');
-  // }
+  get type() {
+    return this.editTicket.get('type');
+  }
 
-  // get subject() {
-  //   return this.editTicket.get('subject');
-  // }
+  get subject() {
+    return this.editTicket.get('subject');
+  }
 
-  // get priority() {
-  //   return this.editTicket.get('priority');
-  // }
+  get priority() {
+    return this.editTicket.get('priority');
+  }
 
-  // get description() {
-  //   return this.editTicket.get('description');
-  // }
+  get description() {
+    return this.editTicket.get('description');
+  }
 
-  // get resolveDescription() {
-  //   return this.editTicket.get('resolveDescription');
-  // }
+  get resolveDescription() {
+    return this.editTicket.get('resolveDescription');
+  }
 
-  // get status() {
-  //   return this.editTicket.get('status');
-  // }
+  get status() {
+    return this.editTicket.get('status');
+  }
 
   upadateTicketForm() {
+    const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.editTicket = this.fb.group({
-      date: [''],
-      source: [''],
+      date: [model, [Validators.required]],
+      source: ['', [Validators.required]],
       site: [''],
       module: [''],
-      creater: [''],
-      // maintenancePackage: [''],
-      // product: [''],
-      type: [''],
-      subject: [''],
-      priority: [''],
-      description: [''],
+      creater: ['', [Validators.required]],
+      type: ['', [Validators.required]],
+      subject: ['', [
+        Validators.required,
+        Validators.maxLength(50)]
+      ],
+      priority: ['', [Validators.required]],
+      description: ['', [
+        Validators.required,
+        Validators.maxLength(500)]
+      ],
       resolveDescription: [''],
       status: [''],
       staff: [''],
-      siteName: ['']
+      product: [''],
+      siteName: [''],
+      maintenancePackage: ['']
     });
   }
 
   upadateForm() {
-    // this.ticketService.editTicket(this.editTicket.value);
+    this.ticketService.editTicket(this.editTicket.value, this.id);
   }
+
+  getMaPackage() {
+    const maStartDate = moment(this.editTicket.controls.site.value.maStartDate).format('DD/MM/YYYY');
+    const maEndDate = moment(this.editTicket.controls.site.value.maEndDate).format('DD/MM/YYYY');
+    return maStartDate + ' - ' + maEndDate;
+  }
+
 }

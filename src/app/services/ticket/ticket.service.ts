@@ -78,7 +78,7 @@ export class TicketService {
   //   }
   // }
 
-    async changeStatus(id, status: any) {
+  async changeStatus(id, status: any) {
     try {
       this.afs.collection('ticket').doc(id).update({
         status
@@ -124,29 +124,34 @@ export class TicketService {
         resolveDescription: ticket.resolveDescription,
         status: ticket.status,
         staff: ticket.staff
-      });
+      })
       this.successNotification();
     } catch (error) {
       this.errorNotification();
     }
   }
 
-  // editTicket(ticket: Ticket) {
-  //   this.afs.collection('ticket').doc('ticket').update({
-  //     date: ticket.date,
-  //     source: ticket.source,
-  //     site: ticket.site,
-  //     module: ticket.module,
-  //     creater: ticket.creater,
-  //     type: ticket.type,
-  //     subject: ticket.subject,
-  //     priority: ticket.priority,
-  //     description: ticket.description,
-  //     resolveDescription: ticket.resolveDescription,
-  //     status: ticket.status,
-  //     staff: ticket.staff
-  //   })
-  // }
+  async editTicket(ticket: Ticket, id: any) {
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        date: ticket.date,
+        source: ticket.source,
+        site: ticket.site,
+        module: ticket.module,
+        creater: ticket.creater,
+        type: ticket.type,
+        subject: ticket.subject,
+        priority: ticket.priority,
+        description: ticket.description,
+        resolveDescription: ticket.resolveDescription,
+        status: ticket.status,
+        staff: ticket.staff
+      })
+      this.successNotification();
+    } catch (error) {
+      this.errorNotification();
+    }
+  }
 
   getByKeyWord(keword: any) {
     return this.afs.collection('ticket', (ref) => ref

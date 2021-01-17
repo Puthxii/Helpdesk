@@ -13,17 +13,35 @@
         <form [formGroup]="editTicket" (ngSubmit)="upadateForm()" *ngIf="site$ | async; else loading; let Site">
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="date">Date</label>
-              <input type="date" formControlName="date" class="form-control" id="date" validate>
+              <label class="control-label" for="date">Date</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
+                  formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                    <i class="fas fa-calendar"></i>
+                  </button>
+                </div>
+                <div *ngIf="date.invalid && (date.dirty || date.touched)" class="danger-color">
+                  <div *ngIf="date.errors.required">
+                    Date is required.
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="form-group col-md-6">
-              <label for="source">Source</label>
+              <label class="control-label" for="source">Source</label>
               <select name="source" formControlName="source" class="form-control" id="source">
                 <option value="">choose source...</option>
                 <option *ngFor="let source of Sources" [ngValue]="source.name">
                   {{ source.name }}
                 </option>
               </select>
+              <div *ngIf="source.invalid && (source.dirty || source.touched)" class="danger-color">
+                <div *ngIf="source.errors.required">
+                  Source is required.
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-row">
@@ -32,30 +50,30 @@
               <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
             </div>
             <div class="form-group col-md-6">
-              <label for=" creater">Creater</label>
+              <label for="creater" class="control-label">Creater</label>
               <select name="creater" formControlName="creater" class="form-control" id="creater">
                 <option value="">choose creater...</option>
                 <option *ngFor="let user of getCreate()" [ngValue]="user">
                   {{ user }}
                 </option>
               </select>
-              <!-- <div class="danger-color">
+              <div *ngIf="creater.invalid && (creater.dirty || creater.touched)" class="danger-color">
                 <div *ngIf="creater.errors.required">
                   Creater is required.
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
           <div class="form-row">
-            <!-- <div class="form-group col-md-6">
+            <div class="form-group col-md-6">
               <label for="maintenancePackage">Maintenance Package</label>
               <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
-                placeholder="Maintenance Package">
-            </div> -->
-            <!-- <div class="form-group col-md-6">
+                value="{{ getMaPackage() }}" placeholder="Maintenance Package" readonly>
+            </div>
+            <div class="form-group col-md-6">
               <label for="product">Product</label>
-              <input type=text class="form-control" formControlName="product" placeholder="Product">
-            </div> -->
+              <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
+            </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -66,11 +84,11 @@
                   {{ type.name }}
                 </option>
               </select>
-              <!-- <div class="danger-color">
-                <div>
+              <div *ngIf="type.invalid && (type.dirty || type.touched)" class="danger-color">
+                <div *ngIf="type.errors.required">
                   Type is required.
                 </div>
-              </div> -->
+              </div>
             </div>
             <div class="form-group col-md-6">
               <label class="control-label" for="priority">Priority</label>
@@ -80,16 +98,16 @@
                   {{ priority.name }}
                 </option>
               </select>
-              <!-- <div class="danger-color">
+              <div *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="danger-color">
                 <div *ngIf="priority.errors.required">
                   Priority is required.
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label for="module">Module</label>
+              <label for="module" class="control-label">Module</label>
               <ng-multiselect-dropdown class="container" [data]="moduleList" id="module" formControlName="module"
                 [settings]="dropdownSettings">
               </ng-multiselect-dropdown>
@@ -97,31 +115,31 @@
           </div>
           <div class="form-row dropdownModule">
             <div class="form-group col-md-12">
-              <label for="subject">Subject</label>
+              <label for="subject" class="control-label">Subject</label>
               <input formControlName="subject" type="text" class="form-control" id="subject" placeholder="Subject"
                 required>
-              <!-- <div class="danger-color">
+              <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
                 <div *ngIf="subject.errors.required">
                   Subject is required.
                 </div>
                 <div *ngIf="subject.errors.maxlength">
                   Subject is less than 50 characters
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label for="description">Description</label>
+              <label for="description" class="control-label">Description</label>
               <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
-              <!-- <div class="danger-color">
+              <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
                 <div *ngIf="description.errors.required">
                   Description is required.
                 </div>
                 <div *ngIf="description.errors.maxlength">
                   Description is less than 250 characters
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
           <div class="form-row">
