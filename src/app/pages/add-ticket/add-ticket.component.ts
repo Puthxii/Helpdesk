@@ -210,7 +210,7 @@ export class AddTicketComponent implements OnInit {
   
   setPriority() {
     this.addTicketForm.patchValue({
-      priority: 'Draft'
+      priority: 'Low'
     });
   }
   buildForm() {
