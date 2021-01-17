@@ -66,7 +66,7 @@ export class TicketService {
     try {
       Swal.fire({
         title: 'Are you sure delete',
-        text: subject ,
+        text: subject,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -83,13 +83,13 @@ export class TicketService {
     }
   }
 
-    cancelticket(id) {
-      this.afs.collection('ticket').doc(id).update({
-        status: 'Cancel'
-      })
-    }
+  cancelticket(id) {
+    this.afs.collection('ticket').doc(id).update({
+      status: 'Cancel'
+    })
+  }
 
-    async changeStatus(id, status: any) {
+  async changeStatus(id, status: any) {
     try {
       this.afs.collection('ticket').doc(id).update({
         status
@@ -135,7 +135,29 @@ export class TicketService {
         resolveDescription: ticket.resolveDescription,
         status: ticket.status,
         staff: ticket.staff
-      });
+      })
+      this.successNotification();
+    } catch (error) {
+      this.errorNotification();
+    }
+  }
+
+  async editTicket(ticket: Ticket, id: any) {
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        date: ticket.date,
+        source: ticket.source,
+        site: ticket.site,
+        module: ticket.module,
+        creater: ticket.creater,
+        type: ticket.type,
+        subject: ticket.subject,
+        priority: ticket.priority,
+        description: ticket.description,
+        resolveDescription: ticket.resolveDescription,
+        status: ticket.status,
+        staff: ticket.staff
+      })
       this.successNotification();
     } catch (error) {
       this.errorNotification();

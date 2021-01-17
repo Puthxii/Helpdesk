@@ -139,6 +139,7 @@ export class AddTicketComponent implements OnInit {
       };
     this.setDate();
     this.setStatus();
+    this.setDateDefault()
   }
 
   getUserValue() {
@@ -207,7 +208,7 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  
+
   setPriority() {
     this.addTicketForm.patchValue({
       priority: 'Low'
@@ -294,4 +295,18 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.controls.site.value.users;
   }
 
+  setDateDefault(): void {
+    const date = new Date();
+    this.addTicketForm.patchValue({
+      date: {
+        singleDate: {
+          date: {
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDate()
+          }
+        }
+      }
+    });
+  }
 }
