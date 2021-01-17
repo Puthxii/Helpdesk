@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="card-body">
-        <form [formGroup]="editTicket" (ngSubmit)="upadateForm()">
+        <form [formGroup]="editTicket" (ngSubmit)="upadateForm()" *ngIf="site$ | async; else loading; let Site">
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="date">Date</label>
@@ -20,14 +20,10 @@
               <label for="source">Source</label>
               <select name="source" formControlName="source" class="form-control" id="source">
                 <option value="">choose source...</option>
-                <!-- <option>
-                </option> -->
+                <option *ngFor="let source of Sources" [ngValue]="source.name">
+                  {{ source.name }}
+                </option>
               </select>
-              <!-- <div>
-                <div *ngIf="source.errors.required">
-                  Source is required.
-                </div>
-              </div> -->
             </div>
           </div>
           <div class="form-row">
@@ -35,23 +31,18 @@
               <label for="site">Site Name</label>
               <select name="site" formControlName="site" class="form-control" id="site">
                 <option value="">choose site...</option>
-                <!-- <option>
-                 
-                </option> -->
+                <option *ngFor=" let site of Site" [ngValue]="site">
+                  {{ site.nameEN? site.nameEN : '-' }}
+                </option>
               </select>
-              <!-- <div class="danger-color">
-                <div *ngIf="site.errors.required">
-                  Site name is required.
-                </div>
-              </div> -->
             </div>
             <div class="form-group col-md-6">
               <label for=" creater">Creater</label>
               <select name="creater" formControlName="creater" class="form-control" id="creater">
                 <option value="">choose creater...</option>
-                <!-- <option>
-                  
-                </option> -->
+                <option *ngFor="let user of getCreate()" [ngValue]="user">
+                  {{ user }}
+                </option>
               </select>
               <!-- <div class="danger-color">
                 <div *ngIf="creater.errors.required">
@@ -73,12 +64,12 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="Type">Type</label>
-              <select formControlName="type" name="Type" class="form-control" id="type">
+              <label class="control-label" for="Type">Type</label>
+              <select name="Type" formControlName="type" class="form-control" id="type">
                 <option value="">choose type...</option>
-                <!-- <option>
-    
-                </option> -->
+                <option *ngFor="let type of Types" [ngValue]="type.name">
+                  {{ type.name }}
+                </option>
               </select>
               <!-- <div class="danger-color">
                 <div>
@@ -87,12 +78,12 @@
               </div> -->
             </div>
             <div class="form-group col-md-6">
-              <label for="priority">Priority</label>
-              <select formControlName="priority" name="priority" class="form-control" id="priority">
+              <label class="control-label" for="priority">Priority</label>
+              <select name="priority" formControlName="priority" class="form-control" id="priority">
                 <option value="">choose priority...</option>
-                <!-- <option>
-
-                </option> -->
+                <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
+                  {{ priority.name }}
+                </option>
               </select>
               <!-- <div class="danger-color">
                 <div *ngIf="priority.errors.required">

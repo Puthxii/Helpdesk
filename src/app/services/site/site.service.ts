@@ -1,7 +1,6 @@
-import { async } from '@angular/core/testing';
 import { Product } from './../product/product.model';
 import { Site } from './site.model';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/internal/observable/combineLatest';
