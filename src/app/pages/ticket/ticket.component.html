@@ -240,11 +240,10 @@
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-pen mx-2 text-left"></i>{{ticket.status}}
                         </button>
-                        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" (click)="changeStatus(ticket.id, status.name)"> <i
-                              class="fas fa-pen mx-2 text-left" value="status.name"></i> Pending </a>
-                          <a class="dropdown-item" (click)="changeStatus(ticket.id, status.name)"> <i
-                              class="fas fa-pen mx-2 text-left" value="status.name"></i> Close </a>
+                        <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                          <a *ngFor="let activeStatus of ActiveStatus" class="dropdown-item"
+                            (click)="changeStatus(ticket.id, activeStatus.name)">
+                            <i class="fas fa-pen mx-2 text-left" value="activeStatus.value"></i> {{activeStatus.name}} </a>
                         </div>
                       </div>
                     </div>
@@ -253,7 +252,7 @@
               </div>
               <div class="col-xl-2 col-sm-6 col-12 center action">
                 <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
-                  (click)="onSelectedDelete(ticket.id)"></i>
+                  (click)="onSelectedDelete(ticket.id, ticket.subject)"></i>
                 <a [routerLink]="['/edit-ticket', ticket.id]">
                   <i class="fas fa-pen mx-1 secondary-color icon"></i>
                 </a>

@@ -43,7 +43,10 @@ export class TicketComponent implements OnInit {
     { value: 'Resolved' },
     { value: 'Close' }
   ]
-
+  ActiveStatus = [
+    { name: 'Pending' },
+    { name: 'Close' }
+  ]
   CountStatus = []
 
   Types = [
@@ -172,8 +175,8 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  onSelectedDelete(id) {
-    this.ticketService.cancelTicket(id)
+  onSelectedDelete(id, subject: any) {
+    this.ticketService.cancelTicket(id, subject)
   }
 
   // onChangeStatusPending(id) {
@@ -184,7 +187,7 @@ export class TicketComponent implements OnInit {
   //   this.ticketService.changeStatusPendingById(id)
   // }
 
-  changeStatus(id, status: any){
+  changeStatus(id, status: any) {
     this.ticketService.changeStatus(id, status)
   }
 

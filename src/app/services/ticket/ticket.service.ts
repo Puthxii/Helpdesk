@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Ticket } from './ticket.model';
 import { Injectable } from '@angular/core';
@@ -30,6 +31,22 @@ export class TicketService {
     });
   }
 
+  successCancel() {
+    Swal.fire({
+      text: 'Your ticket has been saved',
+      icon: 'success',
+    }).then((result) => {
+    });
+  }
+
+  confirmCancel() {
+    Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )
+  }
+
   getTicketsListByStatusFilter(status: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
@@ -45,38 +62,32 @@ export class TicketService {
     )
   }
 
-  async cancelTicket(id) {
+  async cancelTicket(id, subject) {
     try {
-      this.afs.collection('ticket').doc(id).update({
-        status: 'Cancel'
-      });
-      this.successNotification();
+      Swal.fire({
+        title: 'Are you sure delete',
+        text: subject ,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.cancelticket(id)
+          this.confirmCancel()
+        }
+      })
     } catch (error) {
       this.errorNotification();
     }
   }
 
-  // async changeStatusPendingById(id) {
-  //   try {
-  //     this.afs.collection('ticket').doc(id).update({
-  //       status: 'Pending'
-  //     })
-  //     this.successNotification();
-  //   } catch (error) {
-  //     this.errorNotification();
-  //   }
-  // }
-
-  // async changeStatusCloseById(id) {
-  //   try {
-  //     this.afs.collection('ticket').doc(id).update({
-  //       status: 'Close'
-  //     })
-  //     this.successNotification();
-  //   } catch (error) {
-  //     this.errorNotification();
-  //   }
-  // }
+    cancelticket(id) {
+      this.afs.collection('ticket').doc(id).update({
+        status: 'Cancel'
+      })
+    }
 
     async changeStatus(id, status: any) {
     try {
@@ -130,23 +141,6 @@ export class TicketService {
       this.errorNotification();
     }
   }
-
-  // editTicket(ticket: Ticket) {
-  //   this.afs.collection('ticket').doc('ticket').update({
-  //     date: ticket.date,
-  //     source: ticket.source,
-  //     site: ticket.site,
-  //     module: ticket.module,
-  //     creater: ticket.creater,
-  //     type: ticket.type,
-  //     subject: ticket.subject,
-  //     priority: ticket.priority,
-  //     description: ticket.description,
-  //     resolveDescription: ticket.resolveDescription,
-  //     status: ticket.status,
-  //     staff: ticket.staff
-  //   })
-  // }
 
   getByKeyWord(keword: any) {
     return this.afs.collection('ticket', (ref) => ref
