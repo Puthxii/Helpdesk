@@ -75,7 +75,22 @@
     margin-bottom: 5px;
 }
 
-.priority {
+.type {
+    width: 128px;
+    background-color: #3096E7;
+    color: white;
+    height: 30px;
+    padding: 3px;
+}
+.status {
+    width: 128px;
+    background-color: #6ba3b4;
+    color: white;
+    height: 30px;
+    padding: 3px;
+}
+
+.low{
     width: 128px;
     background-color: #2ED0B9;
     color: white;
@@ -83,20 +98,30 @@
     padding: 3px;
 }
 
-.type {
-    width: 128px;
-    background-color: #FE8896;
-    color: white;
-    height: 30px;
-    padding: 3px;
-}
-.status {
+.medium{
     width: 128px;
     background-color: #FFBE96;
     color: white;
     height: 30px;
     padding: 3px;
 }
+
+.high{
+    width: 128px;
+    background-color: #FE8896;
+    color: white;
+    height: 30px;
+    padding: 3px;
+}
+
+.critical{
+    width: 128px;
+    background-color: #533380;
+    color: white;
+    height: 30px;
+    padding: 3px;
+}
+
 .action{
     padding-top: 35px;
 }
@@ -107,25 +132,6 @@
     padding: 0.5em 0.6em;
     background-color: white;
 }
-// .paperclip{
-//     display: inline-block;
-//     border-radius: 60px;
-//     box-shadow: 0px 0px 2px white;
-//     padding: 0.5em 0.6em;
-//     background-color: white;
-// }
-// .paperclass{
-//     padding-top: 35px;
-//     padding-left: 100px;
-// }
-// .detail{
-//     width: 330px;
-//     height: 110px;
-// }
-/* Styles for wrapping the search box */
-
-
-/* Bootstrap 4 text input with search icon */
 
 .has-search .form-control {
     padding-left: 2.375rem;
