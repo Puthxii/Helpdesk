@@ -106,10 +106,10 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Prioritys = [
-    { name: 'Low' },
-    { name: 'Medium' },
-    { name: 'High' },
-    { name: 'Critical' }
+    { name: 'Low'},
+    { name: 'Medium'},
+    { name: 'High'},
+    { name: 'Critical'}
   ];
 
   Status = [
@@ -208,12 +208,12 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-
   setPriority() {
     this.addTicketForm.patchValue({
       priority: 'Low'
     });
   }
+  
   buildForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.addTicketForm = this.fb.group({

@@ -25,6 +25,24 @@ export class TicketComponent implements OnInit {
   countAll: number;
   max: number;
   keword = null
+  staff: any;
+  selectedColor = '';
+
+  colors = [
+    {
+      name: 'yellow',
+      value: '#ffff00'
+    },
+    {
+      name: 'red',
+      value: '#ff3300'
+    },
+    {
+      name: 'blue',
+      value: '#0000ff'
+    }
+  ];
+  priorityClass: string;
   constructor(
     private auth: AuthService,
     private ticketService: TicketService,
@@ -54,12 +72,30 @@ export class TicketComponent implements OnInit {
     { name: 'Problem', icon: 'fas fa-exclamation-circle mx-2' },
     { name: 'Add-ons', icon: 'fas fa-plus-circle mx-2' }
   ];
+  data = [
+    {
+      name: 'Low',
+      value: '#2ED0B9'
+    },
+    {
+      name: 'Medium',
+      value: '#FFBE96'
+    },
+    {
+      name: 'High',
+      value: '#FE8896'
+    },
+    {
+      name: 'Critical',
+      value: '#FE8896'
+    }
+  ];
 
   Prioritys = [
-    { name: 'Low', icon: 'fas fa-square mx-2' },
-    { name: 'Medium', icon: 'fas fa-circle mx-2' },
-    { name: 'High', icon: 'fas fa-star mx-2' },
-    { name: 'Critical', icon: 'fas fa-fire mx-2' }
+    { name: 'Low', icon: 'fas fa-square mx-2', value: `btn-secondary` },
+    { name: 'Medium', icon: 'fas fa-circle mx-2', value: `btn-success` },
+    { name: 'High', icon: 'fas fa-star mx-2', value: `btn-secondary` },
+    { name: 'Critical', icon: 'fas fa-fire mx-2', value: `btn-secondary` }
   ];
 
   Sources = [
@@ -178,11 +214,12 @@ export class TicketComponent implements OnInit {
     this.ticketService.cancelTicket(id, subject)
   }
 
-  changeStatus(id, status: any) {
-    this.ticketService.changeStatus(id, status)
+  changeStatus(id, status: any, staff: any) {
+    this.ticketService.changeStatus(id, status, staff)
   }
 
   changePriority(id, priority: string) {
+    this.priorityClass = priority
     this.ticketService.changePriority(id, priority)
   }
 
@@ -329,6 +366,7 @@ export class TicketComponent implements OnInit {
     }
   }
 
+
   getTypeIcon(type: any) {
     for (let i = 0; this.Types.length; i++) {
       if (this.Types[i].name === type) {
@@ -452,5 +490,36 @@ export class TicketComponent implements OnInit {
         return { id, ...data };
       }))
     )
+  }
+
+  getCurrentStaff() {
+    return this.staff = this.currentName
+  }
+
+  onChange(value) {
+    this.selectedColor = value;
+  }
+
+  classPriority(priority: any) {
+    let color = ''
+    switch (priority) {
+      case 'Low': {
+        color = 'low'
+        break
+      }
+      case 'Medium': {
+        color = 'medium'
+        break
+      }
+      case 'High': {
+        color = 'high'
+        break;
+      }
+      case 'Critical': {
+        color = 'critical'
+        break;
+      }
+    }
+    return `btn dropdown-toggle ${color}`
   }
 }

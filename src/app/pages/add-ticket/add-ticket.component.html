@@ -60,7 +60,7 @@
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label class="control-label" for=" creater">Creater</label>
+              <label class="control-label" for=" creater">Creator</label>
               <select name="creater" formControlName="creater" class="form-control" id="creater">
                 <option value="">choose creater...</option>
                 <option *ngFor="let user of getCreate()" [ngValue]="user">
@@ -156,7 +156,7 @@
           </div>
           <div class="row">
             <div class="form-group col-md-12" *ngIf="hideResolve">
-              <label class="" for="resolve">Resolve Description</label>
+              <label for="resolve">Resolve Description</label>
               <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription"
                 rows="3"></textarea>
             </div>

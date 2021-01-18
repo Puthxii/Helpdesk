@@ -196,10 +196,10 @@
                 <div class="col">
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
-                      <div class="dropdown dd" *ngIf="auth.isSupporter(user)">
-                        <button class="btn dropdown-toggle priority" type="button" id="dropdownMenuButton"
+                      <div class="dropdown dd">
+                        <button class="{{ classPriority(ticket.priority) }}" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="{{ getPriorityIcon(ticket.priority)}} text-left"></i>{{ticket.priority}}
+                          <i class="{{ getPriorityIcon(ticket.priority) }} text-left"></i>{{ticket.priority}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                           <a *ngFor="let priority of Prioritys" class="dropdown-item"
@@ -213,7 +213,7 @@
                 <div class="col-xl-1 col-sm-6 col-12">
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
-                      <div class="dropdown dd" *ngIf="auth.isSupporter(user)">
+                      <div class="dropdown dd">
                         <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="{{ getTypeIcon(ticket.type)}} text-left"></i>{{ticket.type}}
@@ -237,7 +237,7 @@
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                           <a *ngFor="let activeStatus of ActiveStatus" class="dropdown-item"
-                            (click)="changeStatus(ticket.id, activeStatus.name)">
+                            (click)="changeStatus(ticket.id, activeStatus.name, getCurrentStaff())">
                             <i class="fas fa-pen mx-2 text-left" value="activeStatus.value"></i> {{activeStatus.name}}
                           </a>
                         </div>
@@ -248,12 +248,12 @@
               </div>
               <div class="col-xl-2 col-sm-6 col-12 center action">
                 <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
-                  (click)="onSelectedDelete(ticket.id, ticket.subject)"></i>
+                  (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
                 <a [routerLink]="['/edit-ticket', ticket.id]">
-                  <i class="fas fa-pen mx-1 secondary-color icon"></i>
+                  <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket"></i>
                 </a>
                 <a [routerLink]="['/detail', ticket.id]">
-                  <i class="fas fa-eye mx-1 secondary-color icon"></i>
+                  <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket"></i>
                 </a>
               </div>
             </div>
