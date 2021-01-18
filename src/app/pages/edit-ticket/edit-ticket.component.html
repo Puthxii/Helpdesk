@@ -32,7 +32,6 @@
             <div class="form-group col-md-6">
               <label class="control-label" for="source">Source</label>
               <select name="source" formControlName="source" class="form-control" id="source">
-                <option value="">choose source...</option>
                 <option *ngFor="let source of Sources" [ngValue]="source.name">
                   {{ source.name }}
                 </option>
@@ -52,7 +51,6 @@
             <div class="form-group col-md-6">
               <label for="creater" class="control-label">Creater</label>
               <select name="creater" formControlName="creater" class="form-control" id="creater">
-                <option value="">choose creater...</option>
                 <option *ngFor="let user of getCreate()" [ngValue]="user">
                   {{ user }}
                 </option>
@@ -79,7 +77,6 @@
             <div class="form-group col-md-6">
               <label class="control-label" for="Type">Type</label>
               <select name="Type" formControlName="type" class="form-control" id="type">
-                <option value="">choose type...</option>
                 <option *ngFor="let type of Types" [ngValue]="type.name">
                   {{ type.name }}
                 </option>
@@ -93,7 +90,6 @@
             <div class="form-group col-md-6">
               <label class="control-label" for="priority">Priority</label>
               <select name="priority" formControlName="priority" class="form-control" id="priority">
-                <option value="">choose priority...</option>
                 <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
                   {{ priority.name }}
                 </option>
@@ -145,7 +141,7 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <div class="btn-group btn-save">
-                <button type="submit" class="btn btn-success btn-block" [disabled]="!editTicket">
+                <button type="submit" class="btn btn-success btn-block" [disabled]="!editTicket.valid">
                   Save
                 </button>
               </div>
