@@ -97,7 +97,7 @@ export class TicketService {
     })
   }
 
-    async changeStatus(id, status: any, staff: any) {
+  async changeStatus(id, status: any, staff: any) {
     try {
       console.log(id, status, staff)
       this.afs.collection('ticket').doc(id).update({
@@ -146,7 +146,7 @@ export class TicketService {
         status: ticket.status,
         staff: ticket.staff,
         action: [{
-          staff : ticket.staff,
+          staff: ticket.staff,
           status: ticket.status,
           date: new Date(),
         }]
@@ -158,14 +158,36 @@ export class TicketService {
     }
   }
 
+  async editTicket(ticket: Ticket, id: any) {
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        date: ticket.date,
+        source: ticket.source,
+        site: ticket.site,
+        module: ticket.module,
+        creater: ticket.creater,
+        type: ticket.type,
+        subject: ticket.subject,
+        priority: ticket.priority,
+        description: ticket.description,
+        resolveDescription: ticket.resolveDescription,
+        status: ticket.status,
+        staff: ticket.staff
+      })
+      this.successNotification();
+    } catch (error) {
+      this.errorNotification();
+    }
+  }
+
   setAction(id: any, status: string, staff: any) {
-      this.afs.collection('ticket').doc(id).set({
-           action: [{
-            staff,
-            status,
-            date: new Date(),
-        }]
-      },
+    this.afs.collection('ticket').doc(id).set({
+      action: [{
+        staff,
+        status,
+        date: new Date(),
+      }]
+    },
     )
   }
 
