@@ -5,6 +5,7 @@ import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { SupportGuard } from './guards/support.guard';
+import { CustomerGuard } from './guards/customer.guard';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { AddTicketComponent } from './pages/add-ticket/add-ticket.component';
@@ -42,16 +43,17 @@ const router: Routes = [
       },
       {
         path: 'ticket',
-        component: TicketComponent
+        component: TicketComponent,
+        canActivate: [SupportGuard]
       },
       {
         path: 'site-ticket',
-        component: SiteTicketComponent
+        component: SiteTicketComponent,
+        canActivate: [CustomerGuard]
       },
       {
         path: 'profile',
         component: ProfileComponent,
-        canActivate: [AuthGuard]
       },
       {
         path: 'detail',

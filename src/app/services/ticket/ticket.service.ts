@@ -74,7 +74,7 @@ export class TicketService {
     try {
       Swal.fire({
         title: 'Are you sure delete',
-        text: subject ,
+        text: subject,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -91,11 +91,11 @@ export class TicketService {
     }
   }
 
-    cancelticket(id) {
-      this.afs.collection('ticket').doc(id).update({
-        status: 'Cancel'
-      })
-    }
+  cancelticket(id) {
+    this.afs.collection('ticket').doc(id).update({
+      status: 'Cancel'
+    })
+  }
 
     async changeStatus(id, status: any, staff: any) {
     try {

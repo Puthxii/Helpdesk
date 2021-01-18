@@ -139,6 +139,7 @@ export class AddTicketComponent implements OnInit {
       };
     this.setDate();
     this.setStatus();
+    this.setDateDefault()
   }
 
   getUserValue() {
@@ -212,6 +213,7 @@ export class AddTicketComponent implements OnInit {
       priority: 'Low'
     });
   }
+  
   buildForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.addTicketForm = this.fb.group({
@@ -293,4 +295,18 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.controls.site.value.users;
   }
 
+  setDateDefault(): void {
+    const date = new Date();
+    this.addTicketForm.patchValue({
+      date: {
+        singleDate: {
+          date: {
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDate()
+          }
+        }
+      }
+    });
+  }
 }
