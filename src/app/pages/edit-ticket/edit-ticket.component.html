@@ -49,7 +49,7 @@
               <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
             </div>
             <div class="form-group col-md-6">
-              <label for="creater" class="control-label">Creater</label>
+              <label for="creater" class="control-label">Creator</label>
               <select name="creater" formControlName="creater" class="form-control" id="creater">
                 <option *ngFor="let user of getCreate()" [ngValue]="user">
                   {{ user }}
