@@ -47,6 +47,16 @@ export class TicketService {
     }).then((result) => {
     });
   }
+
+  errorDelete() {
+    Swal.fire({
+      icon: 'error',
+      title: 'error',
+      text: 'Your ticket has not been delete',
+    }).then((result) => {
+    });
+  }
+
   confirmCancel() {
     Swal.fire(
       'Deleted!',
@@ -87,7 +97,7 @@ export class TicketService {
         }
       })
     } catch (error) {
-      this.errorNotification();
+      this.errorDelete();
     }
   }
 
