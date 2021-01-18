@@ -252,12 +252,12 @@
               </div>
               <div class="col-xl-2 col-sm-6 col-12 center action">
                 <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
-                  (click)="onSelectedDelete(ticket.id, ticket.subject)"></i>
+                  (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
                 <a [routerLink]="['/edit-ticket', ticket.id]">
-                  <i class="fas fa-pen mx-1 secondary-color icon"></i>
+                  <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket"></i>
                 </a>
                 <a [routerLink]="['/detail', ticket.id]">
-                  <i class="fas fa-eye mx-1 secondary-color icon"></i>
+                  <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket"></i>
                 </a>
               </div>
             </div>
