@@ -26,22 +26,7 @@ export class TicketComponent implements OnInit {
   max: number;
   keword = null
   staff: any;
-  selectedColor = '';
-
-  colors = [
-    {
-      name: 'yellow',
-      value: '#ffff00'
-    },
-    {
-      name: 'red',
-      value: '#ff3300'
-    },
-    {
-      name: 'blue',
-      value: '#0000ff'
-    }
-  ];
+  selectedColor = ''
   priorityClass: string;
   constructor(
     private auth: AuthService,
@@ -72,30 +57,12 @@ export class TicketComponent implements OnInit {
     { name: 'Problem', icon: 'fas fa-exclamation-circle mx-2' },
     { name: 'Add-ons', icon: 'fas fa-plus-circle mx-2' }
   ];
-  data = [
-    {
-      name: 'Low',
-      value: '#2ED0B9'
-    },
-    {
-      name: 'Medium',
-      value: '#FFBE96'
-    },
-    {
-      name: 'High',
-      value: '#FE8896'
-    },
-    {
-      name: 'Critical',
-      value: '#FE8896'
-    }
-  ];
 
   Prioritys = [
-    { name: 'Low', icon: 'fas fa-square mx-2', value: `btn-secondary` },
-    { name: 'Medium', icon: 'fas fa-circle mx-2', value: `btn-success` },
-    { name: 'High', icon: 'fas fa-star mx-2', value: `btn-secondary` },
-    { name: 'Critical', icon: 'fas fa-fire mx-2', value: `btn-secondary` }
+    { name: 'Low', icon: 'fas fa-square mx-2' },
+    { name: 'Medium', icon: 'fas fa-circle mx-2' },
+    { name: 'High', icon: 'fas fa-star mx-2' },
+    { name: 'Critical', icon: 'fas fa-fire mx-2' }
   ];
 
   Sources = [
