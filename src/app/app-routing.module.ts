@@ -43,13 +43,13 @@ const router: Routes = [
       },
       {
         path: 'ticket',
-        component: TicketComponent,
-        canActivate: [SupportGuard]
+        canActivate: [SupportGuard],
+        component: TicketComponent
       },
       {
         path: 'site-ticket',
-        component: SiteTicketComponent,
-        canActivate: [CustomerGuard]
+        canActivate: [CustomerGuard],
+        component: SiteTicketComponent
       },
       {
         path: 'profile',

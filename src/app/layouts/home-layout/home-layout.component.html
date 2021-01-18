@@ -19,7 +19,7 @@
             <a [routerLink]="['/site-ticket']" class=" list-group-item list-group-item-action bg-white"
                 *ngIf="auth.isCustomer(user)">
                 <i class="fas fa-ticket-alt"></i>
-                <span class="menu-title"> Site Ticket</span>
+                <span class="menu-title"> Ticket</span>
             </a>
             <a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white"
                 *ngIf="auth.isSupporter(user)">

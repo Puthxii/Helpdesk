@@ -8,21 +8,37 @@
         </h5>
         <div class="form-check">
           <label class="form-check-label">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
+              (change)="checkValue(isChecked?'ture':'false')">
             My Tickets<i class="input-helper"></i>
           </label>
         </div>
         <div class="form-control-sm">
           <div class="form-group has-search mb-2">
             <span class="fa fa-search form-control-feedback"></span>
-            <input type="search" class="form-control" placeholder="Search Tickets">
+            <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
+              (keyup)="search()" placeholder="Search Tickets">
           </div>
         </div>
-        <div class="form-control-sm">
-          <div class="form-group has-search mb-2">
-            <input type="date" class="form-control" placeholder="date">
+        <form [formGroup]="filterTicketForm">
+          <div class="form-control-sm">
+            <div class="input-group mb-2">
+              <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="date"
+                formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
+                (dateChanged)="onDateChanged($event)">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="dp.clearDate()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class=" input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                  <i class="fas fa-calendar"></i>
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
     <div class="row">
@@ -107,29 +123,35 @@
 </div>
 <div class="container-fluid">
   <div class="card mt-3">
-    <div class="card-header text-left">
-      <div class="card mt-3">
-        <div class="card-header">
+    <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; index as i">
+      <div class="card mt-2" *ngFor="let ticket of ticket$">
+        <div class="card-header" style="background-color: #F2EDF3;">
           <div class="row">
             <div class="col-3">
               <div class="col">
-                <span>OPAC no working</span>
+                <span>{{ticket.subject}}</span>
               </div>
               <div class="col">
                 <i class="fas fa-globe-asia" style="color: gray;"></i>
-                <span> Teenapat Ratanawong-WU</span>
+                <span class="mx-1" style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
               </div>
               <div class="col">
-                <span for="">WALAI Ultimate</span>
+                <span for="">{{ticket.site.product.name}}</span>
               </div>
               <div class="col">
-                <span style="color: gray;">Create 14/12/2020</span>
+                <span style="color: gray;">
+                  Create
+                  {{ ticket.date.singleDate?.formatted?
+                  ticket.date.singleDate.formatted
+                  : ''}}
+                </span>
               </div>
             </div>
             <div class="col-3 center">
               <div class="form-group">
-                <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3"
-                  readonly></textarea>
+                <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3" readonly>
+                  {{ticket.description}}
+                </textarea>
               </div>
             </div>
             <div class="col-2 center paperclass">
@@ -138,13 +160,15 @@
             <div class="col-2">
               <div class="col">
                 <div class="row">
-                  <div class="col-md-3 text-lg-left  mt-4">
-                    <span class="badge badge-primary status"><i class="fas fa-pen mx-2"></i>Pending</span>                
+                  <div class="col-md-4 text-lg-left mt-4">
+                    <span class="badge badge-primary status"><i class="fas fa-pen mx-2"></i>
+                      {{ticket.status == 'Draft' ? 'Sent' : ''}}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-2 center action">
+            <div class="col-2 action">
               <i class="fas fa-trash mx-1 secondary-color icon"></i>
               <a [routerLink]="['/edit-ticket']">
                 <i class="fas fa-pen mx-1 secondary-color icon"></i>

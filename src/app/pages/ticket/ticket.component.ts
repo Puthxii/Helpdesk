@@ -1,4 +1,3 @@
-import { async } from '@angular/core/testing';
 import { Ticket } from './../../services/ticket/ticket.model';
 import { TicketService } from './../../services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
@@ -178,14 +177,6 @@ export class TicketComponent implements OnInit {
   onSelectedDelete(id, subject: any) {
     this.ticketService.cancelTicket(id, subject)
   }
-
-  // onChangeStatusPending(id) {
-  //   this.ticketService.changeStatusPendingById(id)
-  // }
-
-  // changeStatusCloseById(id) {
-  //   this.ticketService.changeStatusPendingById(id)
-  // }
 
   changeStatus(id, status: any) {
     this.ticketService.changeStatus(id, status)

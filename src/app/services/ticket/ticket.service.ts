@@ -294,4 +294,12 @@ export class TicketService {
     );
   }
 
+  getTicketByCreaterStatus(creater: any, status: string) {
+    return this.afs.collection('ticket', ref => ref
+      .where('creater', '==', creater)
+      .where('status', '==', status)
+      .orderBy('date', 'desc')
+    );
+  }
+
 }

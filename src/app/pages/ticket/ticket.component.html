@@ -20,11 +20,6 @@
               (keyup)="search()" placeholder="Search Tickets">
           </div>
         </div>
-        <!-- <div class="form-control-sm">
-          <div class="form-group has-search mb-2">
-            <input type="date" class="form-control" placeholder="date">
-          </div>
-        </div> -->
         <form [formGroup]="filterTicketForm">
           <div class="form-control-sm">
             <div class="input-group mb-2">
@@ -176,8 +171,8 @@
                   <span>{{ticket.subject}}</span>
                 </div>
                 <div class="col">
-                  <i class="{{ getSourcesIcon(ticket.source) }}" style="color: gray;"></i><span class="mx-1"
-                    style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
+                  <i class="{{ getSourcesIcon(ticket.source) }}" style="color: gray;"></i>
+                  <span class="mx-1" style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
                 </div>
                 <div class="col">
                   <span for="">{{ticket.site.product.name}}</span>
@@ -243,7 +238,8 @@
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                           <a *ngFor="let activeStatus of ActiveStatus" class="dropdown-item"
                             (click)="changeStatus(ticket.id, activeStatus.name)">
-                            <i class="fas fa-pen mx-2 text-left" value="activeStatus.value"></i> {{activeStatus.name}} </a>
+                            <i class="fas fa-pen mx-2 text-left" value="activeStatus.value"></i> {{activeStatus.name}}
+                          </a>
                         </div>
                       </div>
                     </div>
