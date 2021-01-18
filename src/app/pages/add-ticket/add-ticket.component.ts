@@ -106,10 +106,10 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Prioritys = [
-    { name: 'Low'},
-    { name: 'Medium'},
-    { name: 'High'},
-    { name: 'Critical'}
+    { name: 'Low' },
+    { name: 'Medium' },
+    { name: 'High' },
+    { name: 'Critical' }
   ];
 
   Status = [
@@ -213,7 +213,7 @@ export class AddTicketComponent implements OnInit {
       priority: 'Low'
     });
   }
-  
+
   buildForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.addTicketForm = this.fb.group({
@@ -234,7 +234,8 @@ export class AddTicketComponent implements OnInit {
       ],
       resolveDescription: [''],
       status: [''],
-      staff: ['']
+      staff: [''],
+      email: ['']
     });
   }
 
@@ -292,6 +293,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   getCreate() {
+    console.log(this.addTicketForm.controls.site.value.users);
     return this.addTicketForm.controls.site.value.users;
   }
 
@@ -309,4 +311,24 @@ export class AddTicketComponent implements OnInit {
       }
     });
   }
+
+  getCustomerContact(name) {
+    console.log(name)
+    this.userService.getUserbyName(name).snapshotChanges().subscribe(data => {
+      data.map(a => {
+        const data = a.payload.doc.data() as User
+        const id = a.payload.doc.id
+        this.setEmail(data)
+        return { id, ...data }
+      })
+    })
+  }
+
+  setEmail(data: User) {
+    console.log(data);
+    this.addTicketForm.patchValue({
+      email: data.email
+    });
+  }
+
 }

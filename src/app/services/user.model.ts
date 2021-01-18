@@ -8,6 +8,7 @@ export interface Roles {
 export interface User {
     uid: string;
     email: string;
+    name?: string;
     firsName?: string;
     lastName?: string;
     mobileNumber?: string;

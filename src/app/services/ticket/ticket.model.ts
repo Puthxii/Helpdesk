@@ -15,6 +15,7 @@ export interface Ticket {
     status: string;
     staff?: string;
     action?: Actions[];
+    email?: string;
 }
 export interface Actions {
     data: any,

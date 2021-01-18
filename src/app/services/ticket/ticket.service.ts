@@ -145,6 +145,7 @@ export class TicketService {
         resolveDescription: ticket.resolveDescription,
         status: ticket.status,
         staff: ticket.staff,
+        email: ticket.email,
         action: [{
           staff: ticket.staff,
           status: ticket.status,
