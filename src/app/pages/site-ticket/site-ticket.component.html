@@ -42,8 +42,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card sent mt-2">
+      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Draft')">
+        <div class="card sent mt-2" [class.active]="'Draft' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -54,15 +54,17 @@
                   <span>Sent</span>
                 </div>
                 <div class="media-body text-right">
-                  <span></span>
+                  <span>
+                    {{ CountStatus[0] }}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card accept mt-2">
+      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Pending')">
+        <div class="card accept mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -73,15 +75,17 @@
                   <span>Accept</span>
                 </div>
                 <div class="media-body text-right">
-                  <span></span>
+                  <span>
+                    {{ CountStatus[1] }}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card done mt-2">
+      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Close')">
+        <div class="card done mt-2" [class.active]="'Close' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -92,15 +96,17 @@
                   <span>Done</span>
                 </div>
                 <div class="media-body text-right">
-                  <span></span>
+                  <span>
+                    {{ CountStatus[2] }}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card reject mt-2">
+      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Reject')">
+        <div class="card reject mt-2" [class.active]="'Reject' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -111,7 +117,9 @@
                   <span>Reject</span>
                 </div>
                 <div class="media-body text-right">
-                  <span></span>
+                  <span>
+                    {{ CountStatus[3] }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -162,7 +170,7 @@
                 <div class="row">
                   <div class="col-md-4 text-lg-left mt-4">
                     <span class="badge badge-primary status"><i class="fas fa-pen mx-2"></i>
-                      {{ticket.status == 'Draft' ? 'Sent' : ''}}
+                      {{ getStatusName(ticket.status) }}
                     </span>
                   </div>
                 </div>

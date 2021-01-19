@@ -6,8 +6,8 @@
 }
 
 .sent.active {
-    background: #a0a0a2 !important;
-    color: #ffff;
+    background-image: linear-gradient(to right, #ffd5bb 20%, #69ade6 100%);
+    color: white;
 }
 
 .accept {
@@ -17,8 +17,9 @@
     color: white;
 }
 
+
 .accept.active {
-    background: #a0a0a2 !important;
+    background-image: linear-gradient(to right, #69ade6 30%, #6fcec0 70%);
     color: #ffff;
 }
 
@@ -30,7 +31,7 @@
 }
 
 .done.active {
-    background: #a0a0a2 !important;
+    background-color: #6fcec0;
     color: #ffff;
 }
 
@@ -42,7 +43,7 @@
 }
 
 .reject.active {
-    background: #a0a0a2 !important;
+    background-color:  #ffbcc4;
     color: #ffff;
 }
 

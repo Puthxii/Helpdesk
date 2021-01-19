@@ -341,4 +341,18 @@ export class TicketService {
     );
   }
 
+  getCountByStatusCreaterStatus(status: string, creater: any) {
+    return this.afs.collection('ticket', ref => ref
+      .where('status', '==', status)
+      .where('creater', '==', creater)
+    ).valueChanges();
+  }
+
+  getTicketBySiteStatus(site: any, status: string) {
+    return this.afs.collection('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where('status', '==', status)
+      .orderBy('date', 'desc')
+    )
+  }
 }
