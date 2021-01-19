@@ -111,11 +111,10 @@ export class TicketService {
 
   async changeStatus(id, status: any, staff: any) {
     try {
-      console.log(id, status, staff)
       this.afs.collection('ticket').doc(id).update({
         status
       })
-      this.setAction(id, status, staff)
+      this.setActionById(id, status, staff)
       this.successCancel();
     } catch (error) {
       this.errorCancel();
@@ -144,7 +143,7 @@ export class TicketService {
 
   async addTicket(ticket: Ticket) {
     try {
-      this.afs.collection('ticket').add({
+      (await this.afs.collection('ticket').add({
         date: ticket.date,
         source: ticket.source,
         site: ticket.site,
@@ -163,7 +162,14 @@ export class TicketService {
           status: ticket.status,
           date: new Date(),
         }]
-      });
+      }))
+        .collection('action')
+        .add({
+          staff: ticket.staff,
+          status: ticket.status,
+          date: new Date(),
+        })
+        ;
       this.successNotification();
     } catch (error) {
       this.errorNotification();
@@ -192,16 +198,14 @@ export class TicketService {
     }
   }
 
-  setAction(id: any, status: string, staff: any) {
-    this.afs.collection('ticket').doc(id).set({
-      action: [{
+  setActionById(id: any, status: string, staff: any) {
+    this.afs.collection('ticket').doc(id)
+      .collection('action')
+      .add({
         staff,
         status,
         date: new Date(),
-      }]
-    },
-      { merge: true }
-    )
+      })
   }
 
   getByKeyWord(keword: any) {
