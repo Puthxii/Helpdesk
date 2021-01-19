@@ -1,5 +1,5 @@
-import { Product } from './../product/product.model';
-import { Site } from './site.model';
+import { Product } from '../../models/product.model';
+import { Site } from '../../models/site.model';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs/operators';

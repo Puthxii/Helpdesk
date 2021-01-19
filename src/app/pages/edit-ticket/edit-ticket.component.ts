@@ -1,15 +1,16 @@
 import { SiteService } from './../../services/site/site.service';
-import { Site } from './../../services/site/site.model';
+import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
-import { Ticket } from 'src/app/services/ticket/ticket.model';
+import { Ticket } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
 import { Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'edit-ticket',
@@ -24,8 +25,10 @@ export class EditTicketComponent implements OnInit {
   public editTicket: FormGroup;
   moduleList: any[];
   Site: Site[];
+  user
   Sources = [
     { name: 'Facebook', },
+    { name: 'Website' },
     { name: 'Line' },
     { name: 'Email' },
     { name: 'Telephone' },
@@ -65,11 +68,13 @@ export class EditTicketComponent implements OnInit {
     private siteService: SiteService,
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
+    private auth: AuthService
   ) {
     this.route.params.subscribe(params => this.id = params.id)
   }
 
   ngOnInit() {
+    this.auth.user$.subscribe(user => this.user = user)
     this.upadateTicketForm()
     this.ticketService.getTicketByid(this.id).subscribe(data => {
       this.ticket = data

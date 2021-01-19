@@ -1,9 +1,10 @@
 import { TicketService } from 'src/app/services/ticket/ticket.service';
-import { Ticket } from './../../services/ticket/ticket.model';
+import { Ticket } from '../../models/ticket.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import * as moment from 'moment';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'detail',
@@ -14,14 +15,17 @@ export class DetailComponent implements OnInit {
   ticket$: Observable<Ticket>;
   id: string;
   addTicketForm: any;
+  user
   constructor(
     private ticketService: TicketService,
     private route: ActivatedRoute,
+    private auth: AuthService
   ) {
     this.route.params.subscribe(params => this.id = params.id);
   }
 
   ngOnInit() {
+    this.auth.user$.subscribe(user => this.user = user)
     this.ticket$ = this.ticketService.getTicketByid(this.id);
   }
 

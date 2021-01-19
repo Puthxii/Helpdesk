@@ -67,7 +67,10 @@
 
           <div class="form-row">
             <div class="form-group col-md-12">
-              <button type="button" class="btn back" [routerLink]="['/ticket']">Back</button>
+              <button type="button" class="btn back" [routerLink]="['/ticket']"
+                *ngIf="auth.isSupporter(user)">Back</button>
+              <button type="button" class="btn back" [routerLink]="['/site-ticket']"
+                *ngIf="auth.isCustomer(user)">Back</button>
             </div>
           </div>
         </form>

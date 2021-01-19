@@ -1,7 +1,7 @@
-import { Roles } from './../../services/user.model';
+import { Roles } from '../../models/user.model';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
-import { User } from '../../services/user.model';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-staff',

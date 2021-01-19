@@ -10,7 +10,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 import { AlertService } from '../../_alert/alert.service';
 import { Options } from '../../_alert/alert.model';
 import { switchMap } from 'rxjs/operators';
-import { User } from '../user.model';
+import { User } from '../../models/user.model';
 @Injectable()
 export class AuthService {
   options: Options;

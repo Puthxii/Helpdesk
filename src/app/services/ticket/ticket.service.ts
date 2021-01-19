@@ -1,15 +1,17 @@
 import { Subject } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Ticket } from './ticket.model';
+import { Ticket } from '../../models/ticket.model';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketService {
   constructor(
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private router: Router,
   ) { }
 
   successNotification() {
@@ -17,7 +19,7 @@ export class TicketService {
       text: 'Your ticket has been saved',
       icon: 'success',
     }).then((result) => {
-      window.location.href = './../ticket';
+      this.router.navigate(['/ticket']);
     });
   }
 
@@ -27,7 +29,7 @@ export class TicketService {
       title: 'error',
       text: 'Your ticket has not been saved',
     }).then((result) => {
-      window.location.href = './../ticket';
+      this.router.navigate(['/ticket']);
     });
   }
 
@@ -163,7 +165,6 @@ export class TicketService {
         }]
       });
       this.successNotification();
-      // this.setAction(id, staff, status);
     } catch (error) {
       this.errorNotification();
     }
@@ -341,4 +342,18 @@ export class TicketService {
     );
   }
 
+  getCountByStatusCreaterStatus(status: string, creater: any) {
+    return this.afs.collection('ticket', ref => ref
+      .where('status', '==', status)
+      .where('creater', '==', creater)
+    ).valueChanges();
+  }
+
+  getTicketBySiteStatus(site: any, status: string) {
+    return this.afs.collection('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where('status', '==', status)
+      .orderBy('date', 'desc')
+    )
+  }
 }
