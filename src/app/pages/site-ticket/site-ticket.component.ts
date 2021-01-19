@@ -119,7 +119,7 @@ export class SiteTicketComponent implements OnInit {
   }
 
   setStatus(status: string) {
-    // this.updateIndex(0)
+    this.updateIndex(0)
     this.setStatusState(status)
     this.status = status
     this.isFilter()
