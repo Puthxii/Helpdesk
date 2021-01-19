@@ -59,4 +59,7 @@ body {
     #wrapper.toggled #sidebar-wrapper {
       margin-left: -15rem;
     }
+    .img{
+      border-radius: 50%;
+    }
   }  
