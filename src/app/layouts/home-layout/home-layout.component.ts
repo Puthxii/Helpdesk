@@ -1,7 +1,8 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { User } from 'src/app/services/user.model';
+import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -12,8 +13,9 @@ import { UserService } from 'src/app/services/user/user.service';
 export class HomeLayoutComponent implements OnInit {
   User: User;
   user;
+  user$: any
   AuthService: any;
-  user$: any;
+
 
   constructor(
     private router: Router,
@@ -23,28 +25,31 @@ export class HomeLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user)
+    this.User = this.auth.authState;
     this.getUserValue();
   }
 
   toggleOffcanvas() {
     document.querySelector('.sidebar-offcanvas').classList.toggle('toggled');
   }
+
   getUserValue() {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
-      this.User = data.payload.data() as User;
-      if (this.user$.roles.customer === true) {
-        this.setPhotoURL();
-      } else {
+      this.user$ = data.payload.data() as User;
+
+      // console.log(this.user$);
+      // if (this.user$.roles.customer === true) {
+      //   this.setPhotoURL();
+      // } else {
         // this.setStaff();
         // this.site$ = this.siteService.getSitesList();
-      }
+
+      // }
     });
   }
 
-  setPhotoURL() {
-    this.user.patchValue({
-      photoURL: this.User.photoURL
-    });
-  }
+  // setPhotoURL() {
+  //   this.User.photoURL;
+  // }
 
 }

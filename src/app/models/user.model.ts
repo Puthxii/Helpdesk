@@ -6,12 +6,12 @@ export interface Roles {
 }
 
 export interface User {
-    uid: string;
-    email: string;
+    uid?: string;
+    email?: string;
     name?: string;
     firsName?: string;
     lastName?: string;
     mobileNumber?: string;
-    roles: Roles;
-    photoURL: string;
+    roles?: Roles;
+    photoURL?: string;
 }
