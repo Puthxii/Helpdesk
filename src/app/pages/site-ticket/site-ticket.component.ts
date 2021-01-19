@@ -29,6 +29,10 @@ export class SiteTicketComponent implements OnInit {
   user$: any
   creater: any
   isChecked = true
+  max: number;
+  startIndex = 0;
+  endIndex = 7;
+  tabindex = 0;
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
@@ -83,5 +87,32 @@ export class SiteTicketComponent implements OnInit {
   }
 
   checkValue(event: any) {
+  }
+  
+  getArrayFromNumber(length) {
+    this.max = (Math.ceil(length / 7))
+    return new Array(Math.ceil(this.max));
+  }
+  
+  updateIndex(pageIndex) {
+    this.startIndex = pageIndex * 7;
+    this.endIndex = this.startIndex + 7;
+  }
+
+  previousIndex() {
+    if (this.tabindex > 0) {
+      this.tabindex -= 1
+    }
+    this.startIndex = this.tabindex * 7;
+    this.endIndex = this.startIndex + 7;
+  }
+
+  nextIndex() {
+    if (this.tabindex < this.max - 1) {
+      this.tabindex += 1
+    }
+    this.startIndex = this.tabindex * 7;
+    this.endIndex = this.startIndex + 7;
+
   }
 }
