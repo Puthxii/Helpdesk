@@ -362,7 +362,6 @@ export class TicketComponent implements OnInit {
   onDateChanged(event: IMyDateModel): void {
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
-    alert(this.isChecked + ' ' + this.status + ' ' + this.keword + ' ' + this.currentName + ' ' + startDate)
     this.updateIndex(0)
     if (startDate != null && endDate != null) {
       if (this.isChecked === true && this.status != null && this.status !== 'All' && this.keword != null) {
