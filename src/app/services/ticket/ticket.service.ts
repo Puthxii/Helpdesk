@@ -19,7 +19,7 @@ export class TicketService {
       text: 'Your ticket has been saved',
       icon: 'success',
     }).then((result) => {
-      this.router.navigate(['/ticket']);
+      this.router.navigate(['/']);
     });
   }
 
@@ -29,7 +29,7 @@ export class TicketService {
       title: 'error',
       text: 'Your ticket has not been saved',
     }).then((result) => {
-      this.router.navigate(['/ticket']);
+      this.router.navigate(['/']);
     });
   }
 
