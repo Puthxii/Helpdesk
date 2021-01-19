@@ -134,6 +134,10 @@ export class SiteTicketComponent implements OnInit {
         statusString = 'Sent'
         break
       }
+      case 'More Info': {
+        statusString = 'More Info'
+        break
+      }
       case 'Pending': {
         statusString = 'Accept'
         break
@@ -155,6 +159,10 @@ export class SiteTicketComponent implements OnInit {
     switch (status) {
       case 'Draft': {
         classIcon = 'fa-pen'
+        break
+      }
+      case 'More Info': {
+        classIcon = 'fa-file'
         break
       }
       case 'Pending': {
@@ -179,6 +187,10 @@ export class SiteTicketComponent implements OnInit {
     switch (status) {
       case 'Draft': {
         classBackground = 'sent'
+        break
+      }
+      case 'More Info': {
+        classBackground = 'moreinfo'
         break
       }
       case 'Pending': {

@@ -162,7 +162,7 @@
 <div class="container-fluid">
   <div>
     <div class="card mt-3">
-      <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; index as i">
+      <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; else loading; index as i">
         <div class="card mb-2" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
           <div class="card-header" style="background-color: #F2EDF3;">
             <div class="detail">
@@ -257,7 +257,12 @@
           </div>
         </div>
       </div>
-      <ul class="pagination justify-content-end">
+      <div *ngIf="(ticket$| async)?.length === 0">
+        <div class="alert alert-warning" role="alert">
+          <strong>Not found ticket</strong>
+        </div>
+      </div>
+      <ul *ngIf="(ticket$| async)?.length != 0" class="pagination justify-content-end">
         <li class="page-item">
           <a class="page-link" (click)="previousIndex()">Previous</a>
         </li>
