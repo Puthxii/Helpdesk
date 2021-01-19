@@ -6,9 +6,9 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { Ticket } from 'src/app/services/ticket/ticket.model';
+import { Ticket } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
-import { User } from 'src/app/services/user.model';
+import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({

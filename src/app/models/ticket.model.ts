@@ -1,4 +1,4 @@
-import { Site, MaLevel } from './../site/site.model';
+import { Site, MaLevel } from './site.model';
 export interface Ticket {
     id: any;
     date: string;

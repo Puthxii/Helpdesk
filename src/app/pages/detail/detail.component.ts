@@ -1,5 +1,5 @@
 import { TicketService } from 'src/app/services/ticket/ticket.service';
-import { Ticket } from './../../services/ticket/ticket.model';
+import { Ticket } from '../../models/ticket.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';

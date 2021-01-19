@@ -1,4 +1,4 @@
-import { User } from './services/user.model';
+import { User } from './models/user.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Component, ElementRef } from '@angular/core';
 @Component({

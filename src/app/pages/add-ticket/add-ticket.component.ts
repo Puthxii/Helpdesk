@@ -1,16 +1,16 @@
 import { UserService } from 'src/app/services/user/user.service';
-import { Product } from './../../services/product/product.model';
+import { Product } from '../../models/product.model';
 import { ProductService } from './../../services/product/product.service';
 import { SiteService } from './../../services/site/site.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import * as moment from 'moment';
-import { Site } from 'src/app/services/site/site.model';
+import { Site } from 'src/app/models/site.model';
 import { Observable } from 'rxjs';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { User } from 'src/app/services/user.model';
+import { User } from 'src/app/models/user.model';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 
 @Component({
@@ -25,8 +25,9 @@ export class AddTicketComponent implements OnInit {
     public siteService: SiteService,
     public productService: ProductService,
     public fb: FormBuilder,
-    public userService: UserService
-  ) { }
+    public userService: UserService,
+  ) {
+  }
 
   get date() {
     return this.addTicketForm.get('date');
@@ -79,7 +80,6 @@ export class AddTicketComponent implements OnInit {
   Product: Product;
   site$: Observable<any>;
   user$: any;
-
   public addTicketForm: FormGroup;
   hideResolve = false;
   dropdownList = [];
@@ -306,7 +306,8 @@ export class AddTicketComponent implements OnInit {
             year: date.getFullYear(),
             month: date.getMonth() + 1,
             day: date.getDate()
-          }
+          },
+          formatted: date.getDate() + '/' + date.getMonth() + 1 + '/' + date.getFullYear()
         }
       }
     });

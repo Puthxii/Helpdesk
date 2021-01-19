@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Ticket } from './ticket.model';
+import { Ticket } from '../../models/ticket.model';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 

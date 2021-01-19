@@ -1,11 +1,11 @@
 import { SiteService } from './../../services/site/site.service';
-import { Site } from './../../services/site/site.model';
+import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
-import { Ticket } from 'src/app/services/ticket/ticket.model';
+import { Ticket } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
