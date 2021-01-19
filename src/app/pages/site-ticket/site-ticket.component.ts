@@ -44,6 +44,7 @@ export class SiteTicketComponent implements OnInit {
   CountStatus = []
   Status = [
     { value: 'Draft' },
+    { value: 'More Info' },
     { value: 'Pending' },
     { value: 'Close' },
     { value: 'Reject' }

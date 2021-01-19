@@ -63,6 +63,25 @@
           </div>
         </div>
       </div>
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('More Info')">
+        <div class="card moreinfo mt-2" [class.active]="'More Info' === activeState">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-file float-left mx-1"></i>
+                </div>
+                <div class="media-body text-right">
+                  <span>More Info</span>
+                </div>
+                <div class="media-body text-right">
+                  <span>{{ CountStatus[1] }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Pending')">
         <div class="card accept mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
@@ -76,7 +95,7 @@
                 </div>
                 <div class="media-body text-right">
                   <span>
-                    {{ CountStatus[1] }}
+                    {{ CountStatus[2] }}
                   </span>
                 </div>
               </div>
@@ -97,7 +116,7 @@
                 </div>
                 <div class="media-body text-right">
                   <span>
-                    {{ CountStatus[2] }}
+                    {{ CountStatus[3] }}
                   </span>
                 </div>
               </div>
@@ -118,7 +137,7 @@
                 </div>
                 <div class="media-body text-right">
                   <span>
-                    {{ CountStatus[3] }}
+                    {{ CountStatus[4] }}
                   </span>
                 </div>
               </div>

@@ -17,7 +17,7 @@
           <div class="form-group has-search mb-2">
             <span class="fa fa-search form-control-feedback"></span>
             <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
-              (keyup)="search()" placeholder="Search Tickets">
+              (keyup)="search()" placeholder="Search Subject">
           </div>
         </div>
         <form [formGroup]="filterTicketForm">
@@ -230,7 +230,7 @@
                       <div class="dropdown dd">
                         <button class="btn dropdown-toggle status" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="{{ getStatusIcon(ticket.status)}}"  ></i>{{ticket.status}}
+                          <i class="{{ getStatusIcon(ticket.status)}}"></i>{{ticket.status}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                           <a *ngFor="let activeStatus of ActiveStatus" class="dropdown-item"

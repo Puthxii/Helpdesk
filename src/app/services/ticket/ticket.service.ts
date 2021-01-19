@@ -207,6 +207,7 @@ export class TicketService {
   getByKeyWord(keword: any) {
     return this.afs.collection('ticket', (ref) => ref
       .orderBy('subject')
+      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
       .startAt(keword)
       .endAt(keword + '\uf8ff'));
   }
