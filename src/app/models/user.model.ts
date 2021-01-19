@@ -13,5 +13,5 @@ export interface User {
     lastName?: string;
     mobileNumber?: string;
     roles: Roles;
-    photoURL: string;
+    photoURL?: string;
 }
