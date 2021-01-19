@@ -30,15 +30,15 @@ export class HomeLayoutComponent implements OnInit {
     document.querySelector('.sidebar-offcanvas').classList.toggle('toggled');
   }
   getUserValue() {
-    this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
-      this.User = data.payload.data() as User;
-      if (this.user$.roles.customer === true) {
-        this.setPhotoURL();
-      } else {
-        // this.setStaff();
-        // this.site$ = this.siteService.getSitesList();
-      }
-    });
+    // this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
+    //   this.User = data.payload.data() as User;
+    //   if (this.user$.roles.customer === true) {
+    //     this.setPhotoURL();
+    //   } else {
+    //     // this.setStaff();
+    //     // this.site$ = this.siteService.getSitesList();
+    //   }
+    // });
   }
 
   setPhotoURL() {
