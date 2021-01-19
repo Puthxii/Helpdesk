@@ -148,6 +148,7 @@ export class AuthService {
     const data: User = {
       uid: this.authState.user.uid,
       email: this.authState.user.email,
+      photoURL: this.authState.user.photoURL,
       roles: {
         customer: true
       }
@@ -162,6 +163,7 @@ export class AuthService {
     const data: User = {
       uid: this.authState.user.uid,
       email: this.authState.user.email,
+      photoURL: this.authState.user.photoURL,
       roles: {
         customer: true
       }
