@@ -46,10 +46,11 @@ export class TicketComponent implements OnInit {
     { value: 'Close' }
   ]
   ActiveStatus = [
-    { name: 'Pending' },
-    { name: 'Close' },
-    { name: 'Reject'},
-    { name: 'More Info'}
+    { name: 'Draft', icon: 'fas fa-pen mx-2' },
+    { name: 'Pending', icon: 'fas fa-clock mx-2' },
+    { name: 'Close', icon: 'fas fa-check-circle mx-2' },
+    { name: 'Reject', icon: 'fas fa-times-circle mx-2'},
+    { name: 'More Info', icon: 'fas fa-file mx-2'}
   ]
   CountStatus = []
 
@@ -340,6 +341,14 @@ export class TicketComponent implements OnInit {
     for (let i = 0; this.Types.length; i++) {
       if (this.Types[i].name === type) {
         return this.Types[i].icon
+      }
+    }
+  }
+
+  getStatusIcon(status: any) {
+    for (let i = 0; this.ActiveStatus.length; i++) {
+      if (this.ActiveStatus[i].name === status) {
+        return this.ActiveStatus[i].icon
       }
     }
   }
