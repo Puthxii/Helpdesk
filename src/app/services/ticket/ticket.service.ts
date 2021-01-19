@@ -199,6 +199,7 @@ export class TicketService {
         date: new Date(),
       }]
     },
+    {merge: true}
     )
   }
 
