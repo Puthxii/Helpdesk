@@ -47,7 +47,8 @@ export class TicketComponent implements OnInit {
   ]
   ActiveStatus = [
     { name: 'Pending' },
-    { name: 'Close' }
+    { name: 'Close' },
+    { name: 'Reject'}
   ]
   CountStatus = []
 
