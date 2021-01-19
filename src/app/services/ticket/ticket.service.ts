@@ -200,7 +200,7 @@ export class TicketService {
         date: new Date(),
       }]
     },
-    {merge: true}
+      { merge: true }
     )
   }
 
@@ -356,4 +356,25 @@ export class TicketService {
       .orderBy('date', 'desc')
     )
   }
+
+  getByKewordCreatorStatus(keword: any, creater: any, status: string) {
+    return this.afs.collection('ticket', (ref) => ref
+      .where('status', '==', status)
+      .where('creater', '==', creater)
+      .orderBy('subject')
+      .startAt(keword)
+      .endAt(keword + '\uf8ff')
+    )
+  }
+
+  getByKewordSiteStatus(keword: any, site: any, status: string) {
+    return this.afs.collection('ticket', ref => ref
+      .where('status', '==', status)
+      .where('site.initials', '==', site)
+      .orderBy('subject')
+      .startAt(keword)
+      .endAt(keword + '\uf8ff')
+    )
+  }
+
 }

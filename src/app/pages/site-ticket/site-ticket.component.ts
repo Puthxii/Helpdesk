@@ -10,8 +10,6 @@ import { Ticket } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
-import { hrtime } from 'process';
-import { $ } from 'protractor';
 
 @Component({
   selector: 'app-site-ticket',
@@ -50,6 +48,8 @@ export class SiteTicketComponent implements OnInit {
     { value: 'Close' },
     { value: 'Reject' }
   ]
+  keword = null
+  searchValue = '';
 
   ngOnInit() {
     this.buildForm()
@@ -94,7 +94,6 @@ export class SiteTicketComponent implements OnInit {
     if (this.isChecked === true && this.status != null) {
       this.getUserValue()
     } else {
-      console.log(this.siteState);
       this.getTicketBySiteStatus(this.siteState, this.status)
       this.getCountByStatus()
     }
@@ -112,6 +111,7 @@ export class SiteTicketComponent implements OnInit {
   }
 
   checkValue(event: any) {
+    this.updateIndex(0)
     this.isFilter()
   }
 
@@ -239,6 +239,46 @@ export class SiteTicketComponent implements OnInit {
     }
     this.startIndex = this.tabindex * 7;
     this.endIndex = this.startIndex + 7;
+  }
 
+
+  isDraft(ticket) {
+    return ticket.status === 'Draft';
+  }
+
+  onSelectedDelete(id, subject: any) {
+    this.ticketService.cancelTicket(id, subject)
+  }
+
+  search() {
+    this.keword = this.searchValue
+    this.updateIndex(0)
+    if (this.isChecked === true && this.status != null) {
+      this.getByKewordCreatorStatus(this.keword, this.creater, this.status)
+    } else if (this.isChecked === false && this.status != null) {
+      this.getByKewordSiteStatus(this.keword, this.siteState, this.status)
+    }
+  }
+
+  getByKewordCreatorStatus(keword: any, creater: any, status: string) {
+    this.ticket$ = this.ticketService.getByKewordCreatorStatus(keword, creater, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getByKewordSiteStatus(keword: any, site: any, status: string) {
+    this.ticket$ = this.ticketService.getByKewordSiteStatus(keword, site, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
   }
 }
