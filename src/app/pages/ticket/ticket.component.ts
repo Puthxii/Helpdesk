@@ -43,6 +43,7 @@ export class TicketComponent implements OnInit {
     { value: 'More Info' },
     { value: 'Pending' },
     { value: 'Resolved' },
+    { value: 'Reject'},
     { value: 'Close' }
   ]
   ActiveStatus = [
@@ -50,7 +51,7 @@ export class TicketComponent implements OnInit {
     { name: 'Pending', icon: 'fas fa-clock mx-2' },
     { name: 'Close', icon: 'fas fa-check-circle mx-2' },
     { name: 'Reject', icon: 'fas fa-times-circle mx-2'},
-    { name: 'More Info', icon: 'fas fa-file mx-2'}
+    { name: 'More Info', icon: 'fas fa-file mx-2'},
   ]
   CountStatus = []
 

@@ -166,7 +166,7 @@
         <div class="card mb-2" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
           <div class="card-header" style="background-color: #F2EDF3;">
             <div class="detail">
-              <div class="col-xl-3 col-sm-6 col-12">
+              <div class="col-lg-4 col-sm-6 col-12">
                 <div class="col">
                   <span>{{ticket.subject}}</span>
                 </div>
@@ -183,16 +183,13 @@
                     : ''}}</span>
                 </div>
               </div>
-              <div class="col-xl-3 col-sm-6 col-12 center">
+              <div class="col-lg-3 col-sm-6 col-12 center">
                 <div class="form-group">
                   <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3"
                     readonly>{{ticket.description}}</textarea>
                 </div>
               </div>
-              <div class="col-xl-1 col-sm-6 col-12 center paperclass mt-3">
-                <i class="fas fa-paperclip secondary-color icon"></i>
-              </div>
-              <div class="col-xl-2 col-sm-6 col-12">
+              <div class="col-lg-2 col-sm-6 col-12 ">
                 <div class="col">
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
@@ -210,7 +207,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xl-1 col-sm-6 col-12">
+                <div class="col-xl-3 col-sm-6 col-12">
                   <div class="row">
                     <div class="col-md-4 text-lg-left">
                       <div class="dropdown dd">
@@ -227,7 +224,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xl-1 col-sm-6 col-12">
+                <div class="col-xl-2 col-sm-6 col-12">
                   <div class="row">
                     <div class="col-md-3 text-lg-left">
                       <div class="dropdown dd">
@@ -246,7 +243,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xl-2 col-sm-6 col-12 center action">
+              <div class="col-lg-2 col-sm-6 col-12 center action">
                 <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
                   (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
                 <a [routerLink]="['/edit-ticket', ticket.id]">
