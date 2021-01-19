@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -36,20 +36,7 @@ export class HomeLayoutComponent implements OnInit {
   getUserValue() {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
-
-      // console.log(this.user$);
-      // if (this.user$.roles.customer === true) {
-      //   this.setPhotoURL();
-      // } else {
-        // this.setStaff();
-        // this.site$ = this.siteService.getSitesList();
-
-      // }
-    });
+    })
   }
-
-  // setPhotoURL() {
-  //   this.User.photoURL;
-  // }
 
 }

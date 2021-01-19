@@ -11,6 +11,7 @@ import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { hrtime } from 'process';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-site-ticket',
@@ -146,7 +147,53 @@ export class SiteTicketComponent implements OnInit {
       }
     }
     return statusString
+  }
 
+  getPriorityIcon(status) {
+    let classIcon = ''
+    switch (status) {
+      case 'Draft': {
+        classIcon = 'fa-pen'
+        break
+      }
+      case 'Pending': {
+        classIcon = 'fa-clock'
+        break
+      }
+      case 'Close': {
+        classIcon = 'fa-check-circle'
+        break;
+      }
+      case 'Reject': {
+        classIcon = 'fa-times-circle'
+        break;
+      }
+    }
+    return `fas ${classIcon} mx-2`
+  }
+
+
+  getBackgroundColor(status) {
+    let classBackground = ''
+    switch (status) {
+      case 'Draft': {
+        classBackground = 'sent'
+        break
+      }
+      case 'Pending': {
+        classBackground = 'accept'
+        break
+      }
+      case 'Close': {
+        classBackground = 'done'
+        break;
+      }
+      case 'Reject': {
+        classBackground = 'reject'
+        break;
+      }
+    }
+    return `badge ${classBackground} status`
   }
 
   getCountByStatus() {
