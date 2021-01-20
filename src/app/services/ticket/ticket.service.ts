@@ -156,12 +156,7 @@ export class TicketService {
         resolveDescription: ticket.resolveDescription,
         status: ticket.status,
         staff: ticket.staff,
-        email: ticket.email,
-        action: [{
-          staff: ticket.staff,
-          status: ticket.status,
-          date: new Date(),
-        }]
+        email: ticket.email
       }))
         .collection('action')
         .add({
@@ -423,4 +418,13 @@ export class TicketService {
       .where('status', '==', status)
     )
   }
+
+  getTrack(id: string): any {
+    return this.afs.collection('ticket').doc(id)
+      .collection('action', ref => ref
+        // .where('staff', '==', 'Support Test')
+        .orderBy('date', 'desc'))
+  }
+
+
 }
