@@ -10,26 +10,26 @@
     color: white;
 }
 
-.moreinfo {
+.pending {
     background:#FE8896;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
-.moreinfo.active {
+.pending.active {
     background: #ffbcc4 !important;
     color: white;
 }
 
-.pending {
+.in-progress {
     background-image: linear-gradient(to right, #FE8896 20%, #3096E7 100%);
     border: none;
     border-radius: 5px;
     color: white;
 }
 
-.pending.active {
+.in-progress.active {
     background-image: linear-gradient(to right, #ffbcc4 20%, #69ade6 100%);
     color: white;
 }
@@ -58,14 +58,14 @@
     color: white;
 }
 
-.all {
+.total {
     background-image: linear-gradient(to right, #2ED0B9 40%, #3096E7 70%);
     border: none;
     border-radius: 5px;
     color: white;
 }
 
-.all.active {
+.total.active {
     background-image: linear-gradient(to right, #6fcec0 40%, #69ade6 70%);
     color: white;
 }
@@ -75,14 +75,15 @@
 }
 
 .type {
-    width: 128px;
+    width: 144px;
     background-color: #3096E7;
     color: white;
     height: 30px;
     padding: 3px;
 }
+
 .status {
-    width: 128px;
+    width: 144px;
     background-color: #6ba3b4;
     color: white;
     height: 30px;
@@ -90,7 +91,7 @@
 }
 
 .low{
-    width: 128px;
+    width: 144px;
     background-color: #2ED0B9;
     color: white;
     height: 30px;
@@ -98,7 +99,7 @@
 }
 
 .medium{
-    width: 128px;
+    width: 144px;
     background-color: #FFBE96;
     color: white;
     height: 30px;
@@ -106,7 +107,7 @@
 }
 
 .high{
-    width: 128px;
+    width: 144px;
     background-color: #FE8896;
     color: white;
     height: 30px;
@@ -114,7 +115,7 @@
 }
 
 .critical{
-    width: 128px;
+    width: 144px;
     background-color: #533380;
     color: white;
     height: 30px;
