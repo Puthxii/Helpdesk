@@ -154,7 +154,7 @@
       <div class="card mt-2" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
         <div class="card-header" style="background-color: #F2EDF3;">
           <div class="row">
-            <div class="col-4">
+            <div class="col-6">
               <div class="col">
                 <span>{{ticket.subject}}</span>
               </div>
@@ -174,7 +174,7 @@
                 </span>
               </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <div class="col">
                 <div class="row">
                   <div class="col-md-4 text-lg-left mt-4">
@@ -186,7 +186,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-4 action">
+            <div class="col-3 action">
               <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
                 (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
               <a [routerLink]="['/edit-ticket', ticket.id]">

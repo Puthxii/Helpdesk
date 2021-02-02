@@ -165,30 +165,7 @@
       <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; else loading; index as i">
         <div class="card mb-2" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
           <div class="card-header" style="background-color: #F2EDF3;">
-            <div class="detail">
-              <div class="col-lg-4 col-sm-6 col-12">
-                <div class="col">
-                  <span>{{ticket.subject}}</span>
-                </div>
-                <div class="col">
-                  <i class="{{ getSourcesIcon(ticket.source) }}" style="color: gray;"></i>
-                  <span class="mx-1" style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
-                </div>
-                <div class="col">
-                  <span for="">{{ticket.site.product.name}}</span>
-                </div>
-                <div class="col">
-                  <span style="color: gray;">Create {{ ticket.date.singleDate?.formatted?
-                    ticket.date.singleDate.formatted
-                    : ''}}</span>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-6 col-12 center">
-                <div class="form-group">
-                  <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3"
-                    readonly>{{ticket.description}}</textarea>
-                </div>
-              </div>
+            <div class="detail-problem">
               <div class="col-lg-2 col-sm-6 col-12 ">
                 <div class="col">
                   <div class="row">
@@ -241,6 +218,23 @@
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 col-12">
+                <div class="col">
+                  <span>{{ticket.subject}}</span>
+                </div>
+                <div class="col">
+                  <i class="{{ getSourcesIcon(ticket.source) }}" style="color: gray;"></i>
+                  <span class="mx-1" style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
+                </div>
+                <div class="col">
+                  <span for="">{{ticket.site.product.name}}</span>
+                </div>
+                <div class="col">
+                  <span style="color: gray;">Create {{ ticket.date.singleDate?.formatted?
+                    ticket.date.singleDate.formatted
+                    : ''}}</span>
                 </div>
               </div>
               <div class="col-lg-2 col-sm-6 col-12 center action">
