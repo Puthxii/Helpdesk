@@ -154,13 +154,13 @@
       <div class="card mt-2" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
         <div class="card-header" style="background-color: #F2EDF3;">
           <div class="row">
-            <div class="col-3">
+            <div class="col-4">
               <div class="col">
                 <span>{{ticket.subject}}</span>
               </div>
               <div class="col">
                 <i class="fas fa-globe-asia" style="color: gray;"></i>
-                <span class="mx-1" style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
+                <span class="mx-1" style="color: black;">{{ticket.creater}}</span>
               </div>
               <div class="col">
                 <span for="">{{ticket.site.product.name}}</span>
@@ -174,13 +174,7 @@
                 </span>
               </div>
             </div>
-            <div class="col-4 center">
-              <div class="form-group">
-                <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3"
-                  readonly>{{ticket.description}}</textarea>
-              </div>
-            </div>
-            <div class="col-2 mx-3">
+            <div class="col-4">
               <div class="col">
                 <div class="row">
                   <div class="col-md-4 text-lg-left mt-4">
@@ -192,7 +186,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-2 action">
+            <div class="col-4 action">
               <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
                 (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
               <a [routerLink]="['/edit-ticket', ticket.id]">
