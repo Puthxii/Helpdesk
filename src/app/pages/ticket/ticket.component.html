@@ -61,8 +61,13 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
       <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('More Info')">
         <div class="card pending mt-2" [class.active]="'More Info' === activeState">
+=======
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Pending')">
+        <div class="card pending mt-2" [class.active]="'Pending' === activeState">
+>>>>>>> c3fb7bb73a98ca213f07a837be0f78c8ffd16503
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -86,7 +91,7 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-clock float-left"></i>
+                  <i class="fas fa-clock float-left mx-1"></i>
                 </div>
                 <div class="media-body text-right">
                   <span>Progress</span>
@@ -118,8 +123,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Close')">
-        <div class="card closed mt-2" [class.active]="'Close' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Closed')">
+        <div class="card closed mt-2" [class.active]="'Closed' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -137,8 +142,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket('All')">
-        <div class="card all mt-2" [class.active]="'All' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket('Total')">
+        <div class="card total mt-2" [class.active]="'Total' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -146,7 +151,7 @@
                   <i class="fas fa-clone float-left"></i>
                 </div>
                 <div class="media-body text-right">
-                  <span>All</span>
+                  <span>Total</span>
                 </div>
                 <div class="media-body text-right">
                   <span>{{ countAll }}</span>
@@ -230,7 +235,7 @@
                       <div class="dropdown dd">
                         <button class="btn dropdown-toggle status" type="button" id="dropdownMenuButton"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="{{ getStatusIcon(ticket.status)}}"  ></i>{{ticket.status}}
+                          <i class="{{ getStatusIcon(ticket.status)}}"></i>{{ticket.status}}
                         </button>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                           <a *ngFor="let activeStatus of ActiveStatus" class="dropdown-item"

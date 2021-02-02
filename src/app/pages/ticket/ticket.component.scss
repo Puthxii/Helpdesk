@@ -58,15 +58,15 @@
     color: white;
 }
 
-.all {
-    background: cadetblue;
+.total {
+    background:cadetblue;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
-.all.active {
-    background: rgb(166, 199, 201) !important;
+.total.active {
+    background: rgb(142, 174, 175);
     color: white;
 }
 
@@ -75,14 +75,15 @@
 }
 
 .type {
-    width: 128px;
+    width: 144px;
     background-color: #3096E7;
     color: white;
     height: 30px;
     padding: 3px;
 }
+
 .status {
-    width: 128px;
+    width: 144px;
     background-color: #6ba3b4;
     color: white;
     height: 30px;
@@ -90,7 +91,7 @@
 }
 
 .low{
-    width: 128px;
+    width: 144px;
     background-color: #2ED0B9;
     color: white;
     height: 30px;
@@ -98,7 +99,7 @@
 }
 
 .medium{
-    width: 128px;
+    width: 144px;
     background-color: #FFBE96;
     color: white;
     height: 30px;
@@ -106,7 +107,7 @@
 }
 
 .high{
-    width: 128px;
+    width: 144px;
     background-color: #FE8896;
     color: white;
     height: 30px;
@@ -114,7 +115,7 @@
 }
 
 .critical{
-    width: 128px;
+    width: 144px;
     background-color: #533380;
     color: white;
     height: 30px;
