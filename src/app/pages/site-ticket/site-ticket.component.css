@@ -1,12 +1,24 @@
 .sent {
-    background-image: linear-gradient(to right, #FFBE96 20%, #3096E7 100%);
+    background-image: linear-gradient(to right, #3096E7 20%,  #FFBE96 100%);
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .sent.active {
-    background-image: linear-gradient(to right, #ffd5bb 20%, #69ade6 100%);
+    background-image: linear-gradient(to right, #69ade6  20%, #ffd5bb 100%);
+    color: white;
+}
+
+.moreinfo {
+    background-color:  #FFBE96;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.moreinfo.active {
+    background-color:  #ffd5bb;    
     color: white;
 }
 

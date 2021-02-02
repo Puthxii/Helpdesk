@@ -48,10 +48,17 @@ export class TicketComponent implements OnInit {
   ]
   ActiveStatus = [
     { name: 'Draft', icon: 'fas fa-pen mx-2' },
+<<<<<<< HEAD
     { name: 'In Progress', icon: 'fas fa-clock mx-2' },
     { name: 'Closed', icon: 'fas fa-check-circle mx-2' },
     { name: 'Rejected', icon: 'fas fa-times-circle mx-2' },
     { name: 'Pending', icon: 'fas fa-file mx-2' }
+=======
+    { name: 'Pending', icon: 'fas fa-clock mx-2' },
+    { name: 'Close', icon: 'fas fa-check-circle mx-2' },
+    { name: 'Reject', icon: 'fas fa-times-circle mx-2' },
+    { name: 'More Info', icon: 'fas fa-file mx-2' }
+>>>>>>> ac8a612935da9311c1f5292cedf40c853b469ab3
   ]
   CountStatus = []
 
@@ -363,7 +370,6 @@ export class TicketComponent implements OnInit {
   onDateChanged(event: IMyDateModel): void {
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
-    alert(this.isChecked + ' ' + this.status + ' ' + this.keword + ' ' + this.currentName + ' ' + startDate)
     this.updateIndex(0)
     if (startDate != null && endDate != null) {
       if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.keword != null) {
