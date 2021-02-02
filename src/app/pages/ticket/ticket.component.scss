@@ -10,63 +10,63 @@
     color: white;
 }
 
-.moreinfo {
-    background:#FE8896;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.moreinfo.active {
-    background: #ffbcc4 !important;
-    color: white;
-}
-
 .pending {
-    background-image: linear-gradient(to right, #FE8896 20%, #3096E7 100%);
+    background: orange;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .pending.active {
-    background-image: linear-gradient(to right, #ffbcc4 20%, #69ade6 100%);
+    background: rgb(255, 202, 103);
+    color: white;
+}
+
+.inProgress {
+    background: #3399CC;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.inProgress.active {
+    background: #75a5bd;
     color: white;
 }
 
 .resolved {
-    background:#3096E7;
+    background:turquoise;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .resolved.active {
-    background: #69ade6 !important;
+    background: rgb(138, 212, 205);
     color: white;
 }
 
 .closed {
-    background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
+    background: slateblue;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .closed.active {
-    background-image: linear-gradient(to right, #69ade6 30%, #6fcec0 70%);
+    background: rgb(145, 138, 187);
     color: white;
 }
 
 .all {
-    background-image: linear-gradient(to right, #2ED0B9 40%, #3096E7 70%);
+    background: cadetblue;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .all.active {
-    background-image: linear-gradient(to right, #6fcec0 40%, #69ade6 70%);
+    background: rgb(166, 199, 201) !important;
     color: white;
 }
 
