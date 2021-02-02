@@ -1,12 +1,12 @@
 .draft{
-    background-image: linear-gradient(to right, #FFBE96 20%, #FE8896 100%);
+    background: slategray;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .draft.active {
-    background-image: linear-gradient(to right, #ffd5bb 20%, #ffbcc4 100%);
+    background: rgb(165, 174, 184);
     color: white;
 }
 
