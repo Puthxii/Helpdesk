@@ -13,5 +13,6 @@ module.exports = {
     "linebreak-style": 0,
     "eol-last": 0,
     "semi": ["error", "always"],
+    "indent": "off",
   },
 };

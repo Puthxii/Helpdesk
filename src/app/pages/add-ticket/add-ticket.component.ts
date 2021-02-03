@@ -294,7 +294,6 @@ export class AddTicketComponent implements OnInit {
   }
 
   getCreate() {
-    console.log(this.addTicketForm.controls.site.value.users);
     return this.addTicketForm.controls.site.value.users;
   }
 
@@ -315,7 +314,6 @@ export class AddTicketComponent implements OnInit {
   }
 
   getCustomerContact(name) {
-    console.log('?/', name)
     this.userService.getUserbyName(name).snapshotChanges().subscribe(data => {
       data.map(a => {
         const data = a.payload.doc.data() as User
@@ -327,7 +325,6 @@ export class AddTicketComponent implements OnInit {
   }
 
   setEmail(data: User) {
-    console.log('?', data);
     this.addTicketForm.patchValue({
       email: data.email
     });
