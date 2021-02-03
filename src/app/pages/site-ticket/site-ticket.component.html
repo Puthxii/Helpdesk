@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Draft')">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Draft')">
         <div class="card sent mt-2" [class.active]="'Draft' === activeState">
           <div class="card-content">
             <div class="card-body">
@@ -63,7 +63,26 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Pending')">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('More Info')">
+        <div class="card moreinfo mt-2" [class.active]="'More Info' === activeState">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-file float-left mx-1"></i>
+                </div>
+                <div class="media-body text-right">
+                  <span>More Info</span>
+                </div>
+                <div class="media-body text-right">
+                  <span>{{ CountStatus[1] }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Pending')">
         <div class="card accept mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
             <div class="card-body">
@@ -76,7 +95,7 @@
                 </div>
                 <div class="media-body text-right">
                   <span>
-                    {{ CountStatus[1] }}
+                    {{ CountStatus[2] }}
                   </span>
                 </div>
               </div>
@@ -84,7 +103,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Close')">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Close')">
         <div class="card done mt-2" [class.active]="'Close' === activeState">
           <div class="card-content">
             <div class="card-body">
@@ -97,7 +116,7 @@
                 </div>
                 <div class="media-body text-right">
                   <span>
-                    {{ CountStatus[2] }}
+                    {{ CountStatus[3] }}
                   </span>
                 </div>
               </div>
@@ -105,7 +124,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Reject')">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Reject')">
         <div class="card reject mt-2" [class.active]="'Reject' === activeState">
           <div class="card-content">
             <div class="card-body">
@@ -118,7 +137,7 @@
                 </div>
                 <div class="media-body text-right">
                   <span>
-                    {{ CountStatus[3] }}
+                    {{ CountStatus[4] }}
                   </span>
                 </div>
               </div>
@@ -135,13 +154,13 @@
       <div class="card mt-2" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
         <div class="card-header" style="background-color: #F2EDF3;">
           <div class="row">
-            <div class="col-3">
+            <div class="col-6">
               <div class="col">
                 <span>{{ticket.subject}}</span>
               </div>
               <div class="col">
                 <i class="fas fa-globe-asia" style="color: gray;"></i>
-                <span class="mx-1" style="color: black;">{{ticket.creater}} - {{ticket.site.initials}}</span>
+                <span class="mx-1" style="color: black;">{{ticket.creater}}</span>
               </div>
               <div class="col">
                 <span for="">{{ticket.site.product.name}}</span>
@@ -155,13 +174,7 @@
                 </span>
               </div>
             </div>
-            <div class="col-4 center">
-              <div class="form-group">
-                <textarea class="form-control detail" id="exampleFormControlTextarea1" rows="3"
-                  readonly>{{ticket.description}}</textarea>
-              </div>
-            </div>
-            <div class="col-2 mx-3">
+            <div class="col-3">
               <div class="col">
                 <div class="row">
                   <div class="col-md-4 text-lg-left mt-4">
@@ -173,7 +186,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-2 action">
+            <div class="col-3 action">
               <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
                 (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
               <a [routerLink]="['/edit-ticket', ticket.id]">
@@ -187,7 +200,12 @@
         </div>
       </div>
     </div>
-    <ul class="pagination justify-content-end">
+    <div *ngIf="(ticket$| async)?.length === 0">
+      <div class="alert alert-warning" role="alert">
+        <strong>Not found ticket</strong>
+      </div>
+    </div>
+    <ul class="pagination justify-content-end" *ngIf="(ticket$| async)?.length != 0">
       <li class="page-item">
         <a class="page-link" (click)="previousIndex()">Previous</a>
       </li>

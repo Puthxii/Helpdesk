@@ -44,6 +44,7 @@ export class SiteTicketComponent implements OnInit {
   CountStatus = []
   Status = [
     { value: 'Draft' },
+    { value: 'More Info' },
     { value: 'Pending' },
     { value: 'Close' },
     { value: 'Reject' }
@@ -68,6 +69,19 @@ export class SiteTicketComponent implements OnInit {
   onDateChanged(event: IMyDateModel): void {
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
+    this.updateIndex(0)
+    if (startDate != null && endDate != null) {
+      if (this.isChecked === true && this.status != null && this.keword != null) {
+        this.getByCreatorStatusKeword(this.creater, this.status, this.keword, startDate, endDate)
+      } else if (this.isChecked === true && this.status != null && this.keword == null) {
+        this.getByCreatorStatus(this.creater, this.status, startDate, endDate)
+      } else if (this.isChecked === false && this.status != null && this.keword != null) {
+        this.getBySiteStatusKeword(this.siteState, this.status, this.keword, startDate, endDate)
+      } else if (this.isChecked === false && this.status != null && this.keword == null) {
+        this.getBySiteStatus(this.siteState, this.status, startDate, endDate)
+      }
+    }
+
   }
 
   getUserValue() {
@@ -133,6 +147,10 @@ export class SiteTicketComponent implements OnInit {
         statusString = 'Sent'
         break
       }
+      case 'More Info': {
+        statusString = 'More Info'
+        break
+      }
       case 'Pending': {
         statusString = 'Accept'
         break
@@ -154,6 +172,10 @@ export class SiteTicketComponent implements OnInit {
     switch (status) {
       case 'Draft': {
         classIcon = 'fa-pen'
+        break
+      }
+      case 'More Info': {
+        classIcon = 'fa-file'
         break
       }
       case 'Pending': {
@@ -178,6 +200,10 @@ export class SiteTicketComponent implements OnInit {
     switch (status) {
       case 'Draft': {
         classBackground = 'sent'
+        break
+      }
+      case 'More Info': {
+        classBackground = 'moreinfo'
         break
       }
       case 'Pending': {
@@ -280,5 +306,46 @@ export class SiteTicketComponent implements OnInit {
           return { id, ...data };
         }))
       );
+  }
+
+  getBySiteStatus(siteState: any, status: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getBySiteStatus(siteState, status, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+  getBySiteStatusKeword(siteState: any, status: string, keword: any, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getBySiteStatusKeword(siteState, status, keword, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+  getByCreatorStatus(creater: any, status: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCreatorStatus(creater, status, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
+  }
+  getByCreatorStatusKeword(creater: any, status: string, keword: any, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCreatorStatusKeword(creater, status, keword, startDate, endDate)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      )
   }
 }

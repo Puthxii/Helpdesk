@@ -1,72 +1,72 @@
 .draft{
-    background-image: linear-gradient(to right, #FFBE96 20%, #FE8896 100%);
+    background: slategray;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .draft.active {
-    background-image: linear-gradient(to right, #ffd5bb 20%, #ffbcc4 100%);
+    background: rgb(165, 174, 184);
     color: white;
 }
 
 .pending {
-    background:#FE8896;
+    background: orange;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .pending.active {
-    background: #ffbcc4 !important;
+    background: rgb(255, 202, 103);
     color: white;
 }
 
-.in-progress {
-    background-image: linear-gradient(to right, #FE8896 20%, #3096E7 100%);
+.inProgress {
+    background: #3399CC;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
-.in-progress.active {
-    background-image: linear-gradient(to right, #ffbcc4 20%, #69ade6 100%);
+.inProgress.active {
+    background: #75a5bd;
     color: white;
 }
 
 .resolved {
-    background:#3096E7;
+    background:turquoise;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .resolved.active {
-    background: #69ade6 !important;
+    background: rgb(138, 212, 205);
     color: white;
 }
 
 .closed {
-    background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
+    background: slateblue;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .closed.active {
-    background-image: linear-gradient(to right, #69ade6 30%, #6fcec0 70%);
+    background: rgb(145, 138, 187);
     color: white;
 }
 
 .total {
-    background-image: linear-gradient(to right, #2ED0B9 40%, #3096E7 70%);
+    background:cadetblue;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .total.active {
-    background-image: linear-gradient(to right, #6fcec0 40%, #69ade6 70%);
+    background: rgb(142, 174, 175);
     color: white;
 }
 
@@ -163,7 +163,7 @@
     position: relative;
 }
 
-.detail {
+.detail-problem{
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
