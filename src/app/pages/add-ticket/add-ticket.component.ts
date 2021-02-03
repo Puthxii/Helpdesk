@@ -151,6 +151,7 @@ export class AddTicketComponent implements OnInit {
         this.setType();
         this.setPriority();
         this.getSiteCustomer();
+        this.getCustomerContact(this.user$.name);
       } else {
         this.setStaff();
         this.site$ = this.siteService.getSitesList();
@@ -314,7 +315,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   getCustomerContact(name) {
-    console.log(name)
+    console.log('?/', name)
     this.userService.getUserbyName(name).snapshotChanges().subscribe(data => {
       data.map(a => {
         const data = a.payload.doc.data() as User
@@ -326,7 +327,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   setEmail(data: User) {
-    console.log(data);
+    console.log('?', data);
     this.addTicketForm.patchValue({
       email: data.email
     });
