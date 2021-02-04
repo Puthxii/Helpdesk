@@ -41,7 +41,7 @@
         </form>
       </div>
     </div>
-    <div class="row">
+    <div class="row ml-5">
       <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Draft')">
         <div class="card draft mt-2" [class.active]="'Draft' === activeState">
           <div class="card-content">
@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Pending')">
+      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Pending')">
         <div class="card inProgress mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
             <div class="card-body">
@@ -89,7 +89,7 @@
                   <i class="fas fa-clock float-left mx-1"></i>
                 </div>
                 <div class="media-body text-right">
-                  <span>Progress</span>
+                  <span>In Progress</span>
                 </div>
                 <div class="media-body text-right">
                   <span>{{ CountStatus[2] }}</span>
