@@ -30,6 +30,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   get date() {
+    console.log(this.addTicketForm.get('date').value);
     return this.addTicketForm.get('date');
   }
 
@@ -113,10 +114,9 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Status = [
-    { name: 'Save as in progress', value: 'inProgress'},
-    { name: 'Save as draft', value: 'Draft' },
-    { name: 'Save as pending', value: 'Pending' },
-    { name: 'Save as close', value: 'Close'}
+    { name: 'Save as In Progress', value: 'In Progress' },
+    { name: 'Save as Draft', value: 'Draft' },
+    { name: 'Save as Closed', value: 'Closed' }
   ];
 
   myOptions: IAngularMyDpOptions = {
@@ -138,7 +138,6 @@ export class AddTicketComponent implements OnInit {
         allowSearchFilter: true,
         enableCheckAll: false
       };
-    this.setDate();
     this.setStatus();
     this.setDateDefault()
   }
@@ -198,15 +197,9 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  setDate() {
-    this.addTicketForm.patchValue({
-      date: this.maxDate
-    });
-  }
-
   setStatus() {
     this.addTicketForm.patchValue({
-      status: 'Draft'
+      status: 'In Progress'
     });
   }
 
@@ -302,13 +295,16 @@ export class AddTicketComponent implements OnInit {
     const date = new Date();
     this.addTicketForm.patchValue({
       date: {
+        dateRange: null,
+        isRange: false,
         singleDate: {
           date: {
             year: date.getFullYear(),
             month: date.getMonth() + 1,
             day: date.getDate()
           },
-          formatted: date.getDate() + '/' + date.getMonth() + 1 + '/' + date.getFullYear()
+          formatted: date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear(),
+          jsDate: new Date()
         }
       }
     });
