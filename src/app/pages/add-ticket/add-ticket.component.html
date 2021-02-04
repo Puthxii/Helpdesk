@@ -13,7 +13,7 @@
         <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()" *ngIf="site$ | async; else loading; let Site">
           <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
-              <label class="control-label" for="date">Date</label>
+              <label class="control-label" for="date">Date Inform</label>
               <div class="input-group">
                 <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
                   formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
@@ -60,7 +60,7 @@
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label class="control-label" for=" creater">Creator</label>
+              <label class="control-label" for=" creater">Creator Name</label>
               <select name="creater" formControlName="creater" class="form-control" id="creater"
                 (ngModelChange)="getCustomerContact($event)">
                 <option value="">choose creater...</option>

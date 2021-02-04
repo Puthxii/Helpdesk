@@ -40,18 +40,18 @@ export class TicketComponent implements OnInit {
   activeState = 'Draft'
   Status = [
     { value: 'Draft' },
-    { value: 'More Info' },
     { value: 'Pending' },
+    { value: 'In Progress' },
     { value: 'Resolved' },
-    { value: 'Reject' },
-    { value: 'Close' }
+    { value: 'Closed' },
+    { value: 'Rejected' }
   ]
   ActiveStatus = [
     { name: 'Draft', icon: 'fas fa-pen mx-2' },
-    { name: 'Pending', icon: 'fas fa-clock mx-2' },
-    { name: 'Close', icon: 'fas fa-check-circle mx-2' },
-    { name: 'Reject', icon: 'fas fa-times-circle mx-2' },
-    { name: 'More Info', icon: 'fas fa-file mx-2' }
+    { name: 'In Progress', icon: 'fas fa-clock mx-2' },
+    { name: 'Closed', icon: 'fas fa-check-circle mx-2' },
+    { name: 'Rejected', icon: 'fas fa-times-circle mx-2' },
+    { name: 'Pending', icon: 'fas fa-file mx-2' }
   ]
   CountStatus = []
 
@@ -105,7 +105,7 @@ export class TicketComponent implements OnInit {
     if (this.isChecked === true) {
       this.getCurrentUserByRoles()
     } else {
-      this.status === 'All' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
+      this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
       this.getCountByStatus()
       this.getCountToltal()
       this.search()
@@ -126,7 +126,7 @@ export class TicketComponent implements OnInit {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
         this.getCountByStatusCurrentname()
         this.getCountToltalCurrentname()
-        this.status === 'All' ? this.getAllTicket(this.status) : this.getByStatusCurentnameFilter(this.status, this.currentName)
+        this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusCurentnameFilter(this.status, this.currentName)
       } else { }
     });
   }
@@ -171,6 +171,7 @@ export class TicketComponent implements OnInit {
   }
 
   getByStatusCurentnameFilter(status: string, creater: string) {
+    console.log(status);
     this.ticket$ = this.ticketService.getTicketsListByFilter(status, creater)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -246,13 +247,13 @@ export class TicketComponent implements OnInit {
   search() {
     this.keword = this.searchValue
     this.updateIndex(0)
-    if (this.isChecked === true && this.status != null && this.status != 'All') {
+    if (this.isChecked === true && this.status != null && this.status != 'Total') {
       this.getByCurrentnameStatus(this.keword, this.currentName, this.status)
-    } else if (this.isChecked === false && this.status != null && this.status != 'All') {
+    } else if (this.isChecked === false && this.status != null && this.status != 'Total') {
       this.getByStatus(this.keword, this.status)
-    } else if (this.isChecked === true && this.status === 'All') {
+    } else if (this.isChecked === true && this.status === 'Total') {
       this.getByCurrentname(this.keword, this.currentName)
-    } else if (this.isChecked === false && this.status === 'All') {
+    } else if (this.isChecked === false && this.status === 'Total') {
       this.getByKeyWord(this.keword)
     }
   }
@@ -364,21 +365,21 @@ export class TicketComponent implements OnInit {
     const endDate = event.dateRange.endJsDate
     this.updateIndex(0)
     if (startDate != null && endDate != null) {
-      if (this.isChecked === true && this.status != null && this.status !== 'All' && this.keword != null) {
+      if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.keword != null) {
         this.getByCurrentnameStatusKewordDateRange(this.keword, this.currentName, this.status, startDate, endDate)
-      } else if (this.isChecked === true && this.status != null && this.status !== 'All' && this.keword == null) {
+      } else if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.keword == null) {
         this.getByCurrentnameStatusDateRange(this.currentName, this.status, startDate, endDate)
-      } else if (this.isChecked === false && this.status != null && this.status !== 'All' && this.keword != null) {
+      } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && this.keword != null) {
         this.getByStatusKewordDateRange(this.keword, this.status, startDate, endDate)
-      } else if (this.isChecked === false && this.status != null && this.status !== 'All' && this.keword == null) {
+      } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && this.keword == null) {
         this.getByStatusDateRange(this.status, startDate, endDate)
-      } else if (this.isChecked === true && this.status === 'All' && this.keword != null) {
+      } else if (this.isChecked === true && this.status === 'Total' && this.keword != null) {
         this.getByCurrentnameKewordDateRange(this.keword, this.currentName, startDate, endDate)
-      } else if (this.isChecked === true && this.status === 'All' && this.keword == null) {
+      } else if (this.isChecked === true && this.status === 'Total' && this.keword == null) {
         this.getByCurrentnameDateRange(this.currentName, startDate, endDate)
-      } else if (this.isChecked === false && this.status === 'All' && this.keword != null) {
+      } else if (this.isChecked === false && this.status === 'Total' && this.keword != null) {
         this.getByKewordDaterange(this.keword, startDate, endDate)
-      } else if (this.isChecked === false && this.status === 'All' && this.keword == null) {
+      } else if (this.isChecked === false && this.status === 'Total' && this.keword == null) {
         this.getByDaterange(startDate, endDate)
       }
     }

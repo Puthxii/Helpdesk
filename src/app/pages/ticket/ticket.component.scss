@@ -1,72 +1,72 @@
 .draft{
-    background-image: linear-gradient(to right, #FFBE96 20%, #FE8896 100%);
+    background: slategray;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .draft.active {
-    background-image: linear-gradient(to right, #ffd5bb 20%, #ffbcc4 100%);
-    color: white;
-}
-
-.moreinfo {
-    background:#FE8896;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.moreinfo.active {
-    background: #ffbcc4 !important;
+    background: rgb(165, 174, 184);
     color: white;
 }
 
 .pending {
-    background-image: linear-gradient(to right, #FE8896 20%, #3096E7 100%);
+    background: orange;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .pending.active {
-    background-image: linear-gradient(to right, #ffbcc4 20%, #69ade6 100%);
+    background: rgb(255, 202, 103);
+    color: white;
+}
+
+.inProgress {
+    background: #3399CC;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.inProgress.active {
+    background: #75a5bd;
     color: white;
 }
 
 .resolved {
-    background:#3096E7;
+    background:turquoise;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .resolved.active {
-    background: #69ade6 !important;
+    background: rgb(138, 212, 205);
     color: white;
 }
 
 .closed {
-    background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
+    background: slateblue;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .closed.active {
-    background-image: linear-gradient(to right, #69ade6 30%, #6fcec0 70%);
+    background: rgb(145, 138, 187);
     color: white;
 }
 
-.all {
-    background-image: linear-gradient(to right, #2ED0B9 40%, #3096E7 70%);
+.total {
+    background:cadetblue;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
-.all.active {
-    background-image: linear-gradient(to right, #6fcec0 40%, #69ade6 70%);
+.total.active {
+    background: rgb(142, 174, 175);
     color: white;
 }
 
@@ -75,14 +75,15 @@
 }
 
 .type {
-    width: 128px;
+    width: 144px;
     background-color: #3096E7;
     color: white;
     height: 30px;
     padding: 3px;
 }
+
 .status {
-    width: 128px;
+    width: 144px;
     background-color: #6ba3b4;
     color: white;
     height: 30px;
@@ -90,7 +91,7 @@
 }
 
 .low{
-    width: 128px;
+    width: 144px;
     background-color: #2ED0B9;
     color: white;
     height: 30px;
@@ -98,7 +99,7 @@
 }
 
 .medium{
-    width: 128px;
+    width: 144px;
     background-color: #FFBE96;
     color: white;
     height: 30px;
@@ -106,7 +107,7 @@
 }
 
 .high{
-    width: 128px;
+    width: 144px;
     background-color: #FE8896;
     color: white;
     height: 30px;
@@ -114,7 +115,7 @@
 }
 
 .critical{
-    width: 128px;
+    width: 144px;
     background-color: #533380;
     color: white;
     height: 30px;
@@ -162,11 +163,22 @@
     position: relative;
 }
 
-.detail {
+.detail-problem{
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-right: -141px;
     margin-left: -15px;
+}
+
+.pagination .page-item .page-link {
+  border-radius: 0 !important;
+}
+
+.pagination .page-link {
+  border-top-style: none !important;
+  border-bottom-style: none !important;
+  background-color: #f6f6f6 !important;
+  color: black !important;
 }

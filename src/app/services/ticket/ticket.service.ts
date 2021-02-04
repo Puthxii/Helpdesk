@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Ticket } from '../../models/ticket.model';
 import { Injectable } from '@angular/core';
@@ -253,14 +252,14 @@ export class TicketService {
 
   getTicketsList() {
     return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
+      .where('status', 'in', ['Draft', 'In Progress', 'Pending', 'Resolved', 'Closed'])
       .orderBy('date', 'desc')
     );
   }
 
   getTicketsListCurrentname(creater: string) {
     return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
+      .where('status', 'in', ['Draft', 'In Progress', 'Pending', 'Resolved', 'Closed'])
       .where('staff', '==', creater)
       .orderBy('date', 'desc')
     );
