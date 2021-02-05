@@ -138,7 +138,6 @@ export class AddTicketComponent implements OnInit {
         allowSearchFilter: true,
         enableCheckAll: false
       };
-    this.setStatus();
     this.setDateDefault()
   }
 
@@ -150,10 +149,12 @@ export class AddTicketComponent implements OnInit {
         this.setSource();
         this.setType();
         this.setPriority();
+        this.setStatusCustomer();
         this.getSiteCustomer();
         this.getCustomerContact(this.user$.name);
       } else {
         this.setStaff();
+        this.setStatus();
         this.site$ = this.siteService.getSitesList();
       }
     });
@@ -200,6 +201,12 @@ export class AddTicketComponent implements OnInit {
   setStatus() {
     this.addTicketForm.patchValue({
       status: 'In Progress'
+    });
+  }
+
+  setStatusCustomer() {
+    this.addTicketForm.patchValue({
+      status: 'Draft'
     });
   }
 
