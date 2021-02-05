@@ -41,14 +41,14 @@
         </form>
       </div>
     </div>
-    <div class="row ml-5">
+    <div class="row">
       <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Draft')">
         <div class="card draft mt-2" [class.active]="'Draft' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-pen float-left"></i>
+                  <i class="fas fa-pen float-left mr-2"></i>
                 </div>
                 <div class="media-body text-right">
                   <span>Draft</span>
@@ -67,12 +67,12 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-file float-left mx-1"></i>
+                  <i class="fas fa-file float-left mr-2"></i>
                 </div>
                 <div class="media-body text-right">
                   <span>Pending</span>
                 </div>
-                <div class="media-body text-right">
+                <div class="media-body text-right ml-2">
                   <span>{{ CountStatus[1] }}</span>
                 </div>
               </div>
@@ -80,18 +80,18 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12" (click)="setStatus('Pending')">
+      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('Pending')">
         <div class="card inProgress mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-clock float-left mx-1"></i>
+                  <i class="fas fa-clock float-lefts"></i>
                 </div>
-                <div class="media-body text-right">
+                <div class="media-body text-center ml-5">
                   <span>In Progress</span>
                 </div>
-                <div class="media-body text-right">
+                <div class="media-body text-right mr-2">
                   <span>{{ CountStatus[2] }}</span>
                 </div>
               </div>
@@ -105,12 +105,12 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-check float-left mx-1"></i>
+                  <i class="fas fa-check float-left mr-2"></i>
                 </div>
                 <div class="media-body text-right">
                   <span>Resolved</span>
                 </div>
-                <div class="media-body text-right">
+                <div class="media-body text-right ml-2">
                   <span>{{ CountStatus[3] }}</span>
                 </div>
               </div>
@@ -124,7 +124,7 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-clone float-left"></i>
+                  <i class="fas fa-clone float-left mr-2"></i>
                 </div>
                 <div class="media-body text-right">
                   <span>Total</span>
