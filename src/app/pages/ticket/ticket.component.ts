@@ -76,14 +76,13 @@ export class TicketComponent implements OnInit {
     { icon: 'fas fa-phone-alt', name: 'Telephone' },
     { icon: 'fas fa-user-friends', name: 'Onsite' },
     { icon: 'fab fa-facebook-square', name: 'Facebook' },
-    { icon: 'fab fa-ellipsis-h', name: 'Conference'},
+    { icon: 'fab fa-ellipsis-h', name: 'Conference' },
     { icon: 'fab fa-video', name: 'Other' }
   ];
 
   startIndex = 0;
   endIndex = 7;
   tabindex = 0;
-
   user: any
   User: User
   user$: any

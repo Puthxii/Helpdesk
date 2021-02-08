@@ -162,13 +162,12 @@
               </div>
               <div class="col-md-4 text-lg-left">
                 <div class="dropdown dd">
-                  <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     <i class="{{ getTypeIcon(ticket.type)}} text-left"></i>{{ticket.type}}
                   </button>
                   <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                    <a *ngFor="let type of Types" class="dropdown-item"
-                      (click)="changeType(ticket.id, type.name)">
+                    <a *ngFor="let type of Types" class="dropdown-item" (click)="changeType(ticket.id, type.name)">
                       <i class="{{ type.icon }}" value="type.name"></i> {{type.name}} </a>
                   </div>
                 </div>
