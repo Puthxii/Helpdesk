@@ -31,12 +31,18 @@
             </div>
             <div class="form-group col-md-6">
               <label class="control-label" for="source">Source</label>
-              <select name="source" formControlName="source" class="form-control" id="source">
+                <select class="form-control fa selected">
+                  <option value="">Select</option>
+                  <option class="fa selected" selected>Hi i am &#xf2b9; fontawesome </option>
+                  <option class="fa selected">Hi i am &#xf30b; fontawesome 5.6 </option>
+                  <option class="fa selected">Hi i am &#xf0f3; fontawesome 5.6 </option>
+                </select>
+              <!-- <select name="source" formControlName="source" class="form-control" id="source">
                 <option value="">choose source...</option>
-                <option *ngFor="let source of Sources" [ngValue]="source.name">
-                  {{ source.name }}
+                <option  *ngFor="let source of Sources" [ngValue]="source.name">
+                  &#xf3c0; {{ source.name }}
                 </option>
-              </select>
+              </select> -->
               <div *ngIf="source.invalid && (source.dirty || source.touched)" class="danger-color">
                 <div *ngIf="source.errors.required">
                   Source is required.

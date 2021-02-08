@@ -152,7 +152,7 @@ export class SiteTicketComponent implements OnInit {
         break
       }
       case 'Pending': {
-        statusString = 'Accept'
+        statusString = 'Accepted'
         break
       }
       case 'Close': {
