@@ -91,23 +91,14 @@ export class AddTicketComponent implements OnInit {
   User: User;
   Site: Site[];
   moduleList: any[];
-  // Sources = [
-  //   { name: 'Line' },
-  //   { name: 'Email' },
-  //   { name: 'Telephone' },
-  //   { name: 'Facebook', },
-  //   { name: 'Onsite' },
-  //   { name: 'Conference' },
-  //   { name: 'Other' },
-  // ];
-    Sources = [
-      { unicode: 'f3c0', icon: 'fab fa-line', name: 'Line' },
-      { unicode: 'f0e0', icon: 'fas fa-envelope', name: 'Email' },
-      { unicode: 'f879', icon: 'fas fa-phone-alt', name: 'Telephone' },
-      { unicode: 'f082', icon: 'fab fa-facebook-square', name: 'Facebook' },
-      { unicode: 'f500', icon: 'fas fa-u7ser-friends', name: 'Onsite' },
-      { unicode: 'f03d', icon: 'fab fa-video', name: 'Conference'},
-      { unicode: 'f141', icon: 'fab fa-ellipsis-h', name: 'Other...' }
+  Sources = [
+    { name: 'Line' },
+    { name: 'Email' },
+    { name: 'Telephone' },
+    { name: 'Facebook', },
+    { name: 'Onsite' },
+    { name: 'Conference' },
+    { name: 'Other' },
   ];
 
   Types = [
