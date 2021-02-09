@@ -252,14 +252,14 @@ export class TicketService {
 
   getTicketsList() {
     return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', ['Draft', 'In Progress', 'Pending', 'Resolved', 'Closed'])
+      .where('status', 'in', ['Draft', 'In Progress', 'Pending', 'Resolved'])
       .orderBy('date', 'desc')
     );
   }
 
   getTicketsListCurrentname(creater: string) {
     return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', ['Draft', 'In Progress', 'Pending', 'Resolved', 'Closed'])
+      .where('status', 'in', ['Draft', 'In Progress', 'Pending', 'Resolved'])
       .where('staff', '==', creater)
       .orderBy('date', 'desc')
     );

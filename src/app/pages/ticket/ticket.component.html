@@ -61,8 +61,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('More Info')">
-        <div class="card pending mt-2" [class.active]="'More Info' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Pending')">
+        <div class="card pending mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -80,8 +80,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('Pending')">
-        <div class="card inProgress mt-2" [class.active]="'Pending' === activeState">
+      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('In Progress')">
+        <div class="card in-progress mt-2" [class.active]="'In Progress' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
