@@ -303,6 +303,7 @@ export class TicketComponent implements OnInit {
   }
 
   updateIndex(pageIndex) {
+    this.tabindex = pageIndex;
     this.startIndex = pageIndex * 7;
     this.endIndex = this.startIndex + 7;
   }
@@ -321,7 +322,6 @@ export class TicketComponent implements OnInit {
     }
     this.startIndex = this.tabindex * 7;
     this.endIndex = this.startIndex + 7;
-
   }
 
   getSourcesIcon(sources: any) {
