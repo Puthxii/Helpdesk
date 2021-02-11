@@ -172,7 +172,6 @@ export class TicketComponent implements OnInit {
   }
 
   getByStatusCurentnameFilter(status: string, creater: string) {
-    console.log(status);
     this.ticket$ = this.ticketService.getTicketsListByFilter(status, creater)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {

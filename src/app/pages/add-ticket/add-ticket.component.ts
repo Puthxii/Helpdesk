@@ -30,7 +30,6 @@ export class AddTicketComponent implements OnInit {
   }
 
   get date() {
-    console.log(this.addTicketForm.get('date').value);
     return this.addTicketForm.get('date');
   }
 

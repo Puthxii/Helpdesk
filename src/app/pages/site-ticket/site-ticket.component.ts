@@ -147,20 +147,20 @@ export class SiteTicketComponent implements OnInit {
         statusString = 'Sent'
         break
       }
-      case 'More Info': {
+      case 'Pending': {
         statusString = 'More Info'
         break
       }
-      case 'Pending': {
+      case 'In Progress': {
         statusString = 'Accepted'
         break
       }
-      case 'Close': {
+      case 'Closed': {
         statusString = 'Done'
         break;
       }
-      case 'Reject': {
-        statusString = 'Reject'
+      case 'Rejected': {
+        statusString = 'Rejected'
         break;
       }
     }
@@ -174,19 +174,19 @@ export class SiteTicketComponent implements OnInit {
         classIcon = 'fa-pen'
         break
       }
-      case 'More Info': {
+      case 'Pending': {
         classIcon = 'fa-file'
         break
       }
-      case 'Pending': {
+      case 'In Progress': {
         classIcon = 'fa-clock'
         break
       }
-      case 'Close': {
+      case 'Closed': {
         classIcon = 'fa-check-circle'
         break;
       }
-      case 'Reject': {
+      case 'Rejected': {
         classIcon = 'fa-times-circle'
         break;
       }
@@ -202,19 +202,19 @@ export class SiteTicketComponent implements OnInit {
         classBackground = 'sent'
         break
       }
-      case 'More Info': {
+      case 'Pending': {
         classBackground = 'moreinfo'
         break
       }
-      case 'Pending': {
+      case 'In Progress': {
         classBackground = 'accept'
         break
       }
-      case 'Close': {
+      case 'Closed': {
         classBackground = 'done'
         break;
       }
-      case 'Reject': {
+      case 'Rejected': {
         classBackground = 'reject'
         break;
       }

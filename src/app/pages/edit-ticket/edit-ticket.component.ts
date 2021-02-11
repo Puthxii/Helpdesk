@@ -94,10 +94,7 @@ export class EditTicketComponent implements OnInit {
         staff: this.ticket.staff,
         siteName: this.ticket.site.nameEN,
       });
-      // this.editTicket.setValue(data)
       this.moduleList = this.editTicket.controls.site.value.module
-      // this.editTicket.controls.site = this.editTicket.controls.site.value.nameEN
-      console.log(this.editTicket);
     })
     this.site$ = this.siteService.getSitesList()
   }
