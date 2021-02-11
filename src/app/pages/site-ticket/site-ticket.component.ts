@@ -44,10 +44,10 @@ export class SiteTicketComponent implements OnInit {
   CountStatus = []
   Status = [
     { value: 'Draft' },
-    { value: 'More Info' },
     { value: 'Pending' },
-    { value: 'Close' },
-    { value: 'Reject' }
+    { value: 'In Progress' },
+    { value: 'Closed' },
+    { value: 'Rejected' }
   ]
   keword = null
   searchValue = '';

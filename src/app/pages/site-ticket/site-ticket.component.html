@@ -63,8 +63,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('More Info')">
-        <div class="card moreinfo mt-2" [class.active]="'More Info' === activeState">
+      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('Pending')">
+        <div class="card moreinfo mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -82,8 +82,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Pending')">
-        <div class="card accept mt-2" [class.active]="'Pending' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('In Progess')">
+        <div class="card accept mt-2" [class.active]="'In Progress' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -103,8 +103,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Close')">
-        <div class="card done mt-2" [class.active]="'Close' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Closed')">
+        <div class="card done mt-2" [class.active]="'Closed' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -124,8 +124,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Reject')">
-        <div class="card reject mt-2" [class.active]="'Reject' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Rejected')">
+        <div class="card reject mt-2" [class.active]="'Rejected' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">

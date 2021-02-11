@@ -61,8 +61,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('More Info')">
-        <div class="card pending mt-2" [class.active]="'More Info' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Pending')">
+        <div class="card pending mt-2" [class.active]="'Pending' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -80,8 +80,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('Pending')">
-        <div class="card inProgress mt-2" [class.active]="'Pending' === activeState">
+      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('In Progress')">
+        <div class="card in-progress mt-2" [class.active]="'In Progress' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -162,13 +162,12 @@
               </div>
               <div class="col-md-4 text-lg-left">
                 <div class="dropdown dd">
-                  <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn dropdown-toggle type" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     <i class="{{ getTypeIcon(ticket.type)}} text-left"></i>{{ticket.type}}
                   </button>
                   <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                    <a *ngFor="let type of Types" class="dropdown-item"
-                      (click)="changeType(ticket.id, type.name)">
+                    <a *ngFor="let type of Types" class="dropdown-item" (click)="changeType(ticket.id, type.name)">
                       <i class="{{ type.icon }}" value="type.name"></i> {{type.name}} </a>
                   </div>
                 </div>
