@@ -247,6 +247,7 @@ export class SiteTicketComponent implements OnInit {
   }
 
   updateIndex(pageIndex) {
+    this.tabindex = pageIndex
     this.startIndex = pageIndex * 7;
     this.endIndex = this.startIndex + 7;
   }
