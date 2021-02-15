@@ -115,9 +115,9 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Status = [
-    { name: 'Save as In Progress', value: 'In Progress' },
+    { name: 'Save as Inform', value: 'Informed' },
     { name: 'Save as Draft', value: 'Draft' },
-    { name: 'Save as Closed', value: 'Closed' }
+    { name: 'Save as Reject', value: 'Rejected' },
   ];
 
   myOptions: IAngularMyDpOptions = {
@@ -245,8 +245,28 @@ export class AddTicketComponent implements OnInit {
   hideTextArea(type: any) {
     if (type === 'Info' || type === 'Consult') {
       this.hideResolve = true;
-    } else {
+      if (this.Status.indexOf({ name: 'Save as Close', value: 'Closed' }) !== -1) {
+        console.log('has dont push');
+      } else {
+        console.log('dont have push');
+        this.Status.push(
+          { name: 'Save as Close', value: 'Closed' },
+        );
+
+        // this.Status.push(
+        //   { name: 'Save as Close', value: 'Closed' },
+        // );
+      }
+    } else if (type === 'Problem' || type === 'Add-ons') {
       this.hideResolve = false;
+      this.removeStatus('Closed');
+    }
+  }
+
+  removeStatus(status: string) {
+    const index: number = this.Status.indexOf({ name: '', value: status });
+    if (index === -1) {
+      this.Status.splice(index, 1);
     }
   }
 
@@ -335,8 +355,7 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  //todo : set default type and priority to undefined
-  //todo : set status draft only
   //todo : set option save button when selected type
   //todo : fix bug date
+
 }
