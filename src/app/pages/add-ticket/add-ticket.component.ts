@@ -49,8 +49,8 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('module');
   }
 
-  get creater() {
-    return this.addTicketForm.get('creater');
+  get creator() {
+    return this.addTicketForm.get('creator');
   }
 
   get type() {
@@ -146,7 +146,7 @@ export class AddTicketComponent implements OnInit {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
       if (this.user$.roles.customer === true) {
-        this.setCreater();
+        this.setCreator();
         this.setSource();
         this.setType();
         this.setPriority();
@@ -187,9 +187,9 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  setCreater() {
+  setCreator() {
     this.addTicketForm.patchValue({
-      creater: this.user$.firstName + ' ' + this.user$.lastName
+      creator: this.user$.firstName + ' ' + this.user$.lastName
     });
   }
 
@@ -201,19 +201,19 @@ export class AddTicketComponent implements OnInit {
 
   setStatus() {
     this.addTicketForm.patchValue({
-      status: 'In Progress'
+      status: 'Draft'
     });
   }
 
   setStatusCustomer() {
     this.addTicketForm.patchValue({
-      status: 'Draft'
+      status: 'Sent'
     });
   }
 
   setPriority() {
     this.addTicketForm.patchValue({
-      priority: 'Low'
+      priority: 'Undefined'
     });
   }
 
@@ -224,7 +224,7 @@ export class AddTicketComponent implements OnInit {
       source: ['', [Validators.required]],
       site: ['', [Validators.required]],
       module: [''],
-      creater: ['', [Validators.required]],
+      creator: ['', [Validators.required]],
       type: ['', [Validators.required]],
       subject: ['', [
         Validators.required,
@@ -335,4 +335,8 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
+  //todo : set default type and priority to undefined
+  //todo : set status draft only
+  //todo : set option save button when selected type
+  //todo : fix bug date
 }

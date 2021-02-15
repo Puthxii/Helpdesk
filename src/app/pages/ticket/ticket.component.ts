@@ -171,8 +171,8 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  getByStatusCurentnameFilter(status: string, creater: string) {
-    this.ticket$ = this.ticketService.getTicketsListByFilter(status, creater)
+  getByStatusCurentnameFilter(status: string, creator: string) {
+    this.ticket$ = this.ticketService.getTicketsListByFilter(status, creator)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;

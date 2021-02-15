@@ -49,15 +49,15 @@
               <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
             </div>
             <div class="form-group col-md-6">
-              <label for="creater" class="control-label">Creator</label>
-              <select name="creater" formControlName="creater" class="form-control" id="creater">
+              <label for="creator" class="control-label">Creator</label>
+              <select name="creator" formControlName="creator" class="form-control" id="creator">
                 <option *ngFor="let user of getCreate()" [ngValue]="user">
                   {{ user }}
                 </option>
               </select>
-              <div *ngIf="creater.invalid && (creater.dirty || creater.touched)" class="danger-color">
-                <div *ngIf="creater.errors.required">
-                  Creater is required.
+              <div *ngIf="creator.invalid && (creator.dirty || creator.touched)" class="danger-color">
+                <div *ngIf="creator.errors.required">
+                  Creator is required.
                 </div>
               </div>
             </div>
