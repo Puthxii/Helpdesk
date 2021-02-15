@@ -169,7 +169,7 @@ export class AddTicketComponent implements OnInit {
 
   setType() {
     this.addTicketForm.patchValue({
-      type: 'Info'
+      type: 'Undefined'
     });
   }
 
@@ -207,7 +207,7 @@ export class AddTicketComponent implements OnInit {
 
   setStatusCustomer() {
     this.addTicketForm.patchValue({
-      status: 'Sent'
+      status: 'Informed'
     });
   }
 
