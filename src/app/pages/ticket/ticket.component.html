@@ -223,18 +223,5 @@
         <strong>Not found ticket</strong>
       </div>
     </div>
-    <ul *ngIf="(ticket$| async)?.length != 0" class="pagination justify-content-end">
-      <li class="page-item" [ngClass]="{'disabled': tabindex <= 0}">
-        <a class="page-link" (click)="previousIndex()">Previous</a>
-      </li>
-      <ng-container *ngFor="let i of getArrayFromNumber((ticket$| async)?.length); let in = index">
-        <li class="page-item" [ngClass]="{'active': tabindex === in}">
-          <a class="page-link" (click)="updateIndex(in)">{{in+1}}</a>
-        </li>
-      </ng-container>
-      <li class="page-item" [ngClass]="{'disabled': tabindex >= max - 1}">
-        <a class="page-link" (click)="nextIndex()">Next</a>
-      </li>
-    </ul>
   </div>
 </div>
