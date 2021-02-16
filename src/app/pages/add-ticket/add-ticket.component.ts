@@ -259,7 +259,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   addStatus(status: string) {
-    if (this.Status.some(obj => obj.value === status)) {
+    if (this.Status.some(item => item.value === status)) {
       console.log('Object found inside the array.');
     } else {
       let name;
