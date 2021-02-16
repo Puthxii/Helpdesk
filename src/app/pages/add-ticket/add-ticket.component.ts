@@ -245,28 +245,40 @@ export class AddTicketComponent implements OnInit {
   hideTextArea(type: any) {
     if (type === 'Info' || type === 'Consult') {
       this.hideResolve = true;
-      if (this.Status.indexOf({ name: 'Save as Close', value: 'Closed' }) !== -1) {
-        console.log('has dont push');
-      } else {
-        console.log('dont have push');
-        this.Status.push(
-          { name: 'Save as Close', value: 'Closed' },
-        );
-
-        // this.Status.push(
-        //   { name: 'Save as Close', value: 'Closed' },
-        // );
-      }
+      this.removeStatus('In Progress');
+      this.addStatus('Closed');
     } else if (type === 'Problem' || type === 'Add-ons') {
       this.hideResolve = false;
       this.removeStatus('Closed');
+      this.addStatus('In Progress');
     }
   }
 
   removeStatus(status: string) {
-    const index: number = this.Status.indexOf({ name: '', value: status });
-    if (index === -1) {
-      this.Status.splice(index, 1);
+    this.Status = this.Status.filter(item => item.value !== status);
+  }
+
+  addStatus(status: string) {
+    if (this.Status.some(obj => obj.value === status)) {
+      console.log('Object found inside the array.');
+    } else {
+      let name;
+      let value;
+      switch (status) {
+        case 'Closed':
+          name = 'Save as Close'
+          value = status
+          break;
+        case 'In Progress':
+          name = 'Save as In Progress'
+          value = status
+          break;
+        default:
+          name = `Save as ${status}`
+          value = status
+          break;
+      }
+      return this.Status.push({ name, value })
     }
   }
 
