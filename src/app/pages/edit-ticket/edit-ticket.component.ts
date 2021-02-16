@@ -84,7 +84,7 @@ export class EditTicketComponent implements OnInit {
         site: this.ticket.site,
         product: this.ticket.site.product.name,
         module: this.ticket.module,
-        creater: this.ticket.creater,
+        creator: this.ticket.creator,
         type: this.ticket.type,
         subject: this.ticket.subject,
         priority: this.ticket.priority,
@@ -94,10 +94,7 @@ export class EditTicketComponent implements OnInit {
         staff: this.ticket.staff,
         siteName: this.ticket.site.nameEN,
       });
-      // this.editTicket.setValue(data)
       this.moduleList = this.editTicket.controls.site.value.module
-      // this.editTicket.controls.site = this.editTicket.controls.site.value.nameEN
-      console.log(this.editTicket);
     })
     this.site$ = this.siteService.getSitesList()
   }
@@ -126,8 +123,8 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('module');
   }
 
-  get creater() {
-    return this.editTicket.get('creater');
+  get creator() {
+    return this.editTicket.get('creator');
   }
 
   get type() {
@@ -161,7 +158,7 @@ export class EditTicketComponent implements OnInit {
       source: ['', [Validators.required]],
       site: [''],
       module: [''],
-      creater: ['', [Validators.required]],
+      creator: ['', [Validators.required]],
       type: ['', [Validators.required]],
       subject: ['', [
         Validators.required,

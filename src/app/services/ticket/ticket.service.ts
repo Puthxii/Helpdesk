@@ -73,10 +73,10 @@ export class TicketService {
     )
   }
 
-  getTicketsListByFilter(status: string, creater: string) {
+  getTicketsListByFilter(status: string, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
-      .where('staff', '==', creater)
+      .where('staff', '==', creator)
       .orderBy('date', 'desc')
     )
   }
@@ -147,7 +147,7 @@ export class TicketService {
         source: ticket.source,
         site: ticket.site,
         module: ticket.module,
-        creater: ticket.creater,
+        creator: ticket.creator,
         type: ticket.type,
         subject: ticket.subject,
         priority: ticket.priority,
@@ -177,7 +177,7 @@ export class TicketService {
         source: ticket.source,
         site: ticket.site,
         module: ticket.module,
-        creater: ticket.creater,
+        creator: ticket.creator,
         type: ticket.type,
         subject: ticket.subject,
         priority: ticket.priority,
@@ -243,10 +243,10 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref.where('status', '==', status)).valueChanges();
   }
 
-  getCountByStatusCurrentname(status: string, creater: string) {
+  getCountByStatusCurrentname(status: string, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
-      .where('staff', '==', creater)
+      .where('staff', '==', creator)
     ).valueChanges();
   }
 
@@ -257,10 +257,10 @@ export class TicketService {
     );
   }
 
-  getTicketsListCurrentname(creater: string) {
+  getTicketsListCurrentname(creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', ['Draft', 'In Progress', 'Pending', 'Resolved'])
-      .where('staff', '==', creater)
+      .where('staff', '==', creator)
       .orderBy('date', 'desc')
     );
   }
@@ -273,21 +273,21 @@ export class TicketService {
     );
   }
 
-  getByCurrentnameStatusKewordDateRange(keword: any, creater: string, status: string, startDate: Date, endDate: Date) {
+  getByCurrentnameStatusKewordDateRange(keword: any, creator: string, status: string, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
-      .where('staff', '==', creater)
+      .where('staff', '==', creator)
       .where('status', '==', status)
       .where('subject', '==', keword)
     );
   }
 
-  getByCurrentnameStatusDateRange(creater: string, status: string, startDate: Date, endDate: Date) {
+  getByCurrentnameStatusDateRange(creator: string, status: string, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
-      .where('staff', '==', creater)
+      .where('staff', '==', creator)
       .where('status', '==', status)
     );
   }
@@ -301,22 +301,22 @@ export class TicketService {
     );
   }
 
-  getByCurrentnameKewordDateRange(keword: any, creater: string, startDate: Date, endDate: Date) {
+  getByCurrentnameKewordDateRange(keword: any, creator: string, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
       .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
-      .where('staff', '==', creater)
+      .where('staff', '==', creator)
       .where('subject', '==', keword)
     );
   }
 
-  getByCurrentnameDateRange(creater: string, startDate: Date, endDate: Date) {
+  getByCurrentnameDateRange(creator: string, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
       .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
-      .where('staff', '==', creater)
+      .where('staff', '==', creator)
     );
   }
 
@@ -337,18 +337,18 @@ export class TicketService {
     );
   }
 
-  getTicketByCreaterStatus(creater: any, status: string) {
+  getTicketByCreatorStatus(creator: any, status: string) {
     return this.afs.collection('ticket', ref => ref
-      .where('creater', '==', creater)
+      .where('creator', '==', creator)
       .where('status', '==', status)
       .orderBy('date', 'desc')
     );
   }
 
-  getCountByStatusCreaterStatus(status: string, creater: any) {
+  getCountByStatusCreatorStatus(status: string, creator: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
-      .where('creater', '==', creater)
+      .where('creator', '==', creator)
     ).valueChanges();
   }
 
@@ -360,10 +360,10 @@ export class TicketService {
     )
   }
 
-  getByKewordCreatorStatus(keword: any, creater: any, status: string) {
+  getByKewordCreatorStatus(keword: any, creator: any, status: string) {
     return this.afs.collection('ticket', (ref) => ref
       .where('status', '==', status)
-      .where('creater', '==', creater)
+      .where('creator', '==', creator)
       .orderBy('subject')
       .startAt(keword)
       .endAt(keword + '\uf8ff')
@@ -380,21 +380,21 @@ export class TicketService {
     )
   }
 
-  getByCreatorStatusKeword(creater: any, status: string, keword: any, startDate: Date, endDate: Date) {
+  getByCreatorStatusKeword(creator: any, status: string, keword: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
-      .where('creater', '==', creater)
+      .where('creator', '==', creator)
       .where('status', '==', status)
       .where('subject', '==', keword)
     )
   }
 
-  getByCreatorStatus(creater: any, status: string, startDate: Date, endDate: Date) {
+  getByCreatorStatus(creator: any, status: string, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
-      .where('creater', '==', creater)
+      .where('creator', '==', creator)
       .where('status', '==', status)
     )
   }

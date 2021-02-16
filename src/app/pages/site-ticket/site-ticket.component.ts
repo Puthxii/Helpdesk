@@ -27,7 +27,7 @@ export class SiteTicketComponent implements OnInit {
   user: any
   User: User
   user$: any
-  creater: any
+  creator: any
   isChecked = true
   max: number;
   startIndex = 0;
@@ -72,9 +72,9 @@ export class SiteTicketComponent implements OnInit {
     this.updateIndex(0)
     if (startDate != null && endDate != null) {
       if (this.isChecked === true && this.status != null && this.keword != null) {
-        this.getByCreatorStatusKeword(this.creater, this.status, this.keword, startDate, endDate)
+        this.getByCreatorStatusKeword(this.creator, this.status, this.keword, startDate, endDate)
       } else if (this.isChecked === true && this.status != null && this.keword == null) {
-        this.getByCreatorStatus(this.creater, this.status, startDate, endDate)
+        this.getByCreatorStatus(this.creator, this.status, startDate, endDate)
       } else if (this.isChecked === false && this.status != null && this.keword != null) {
         this.getBySiteStatusKeword(this.siteState, this.status, this.keword, startDate, endDate)
       } else if (this.isChecked === false && this.status != null && this.keword == null) {
@@ -88,17 +88,17 @@ export class SiteTicketComponent implements OnInit {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
       if (this.user$.roles.customer === true) {
-        this.creater = this.user$.firstName + ' ' + this.user$.lastName
+        this.creator = this.user$.firstName + ' ' + this.user$.lastName
         this.siteState = this.user$.site
-        this.getCountByStatusCreaterStatus()
-        this.getTicketByCreaterStatus(this.creater, this.status)
+        this.getCountByStatusCreatorStatus()
+        this.getTicketByCreatorStatus(this.creator, this.status)
       } else { }
     });
   }
 
-  getCountByStatusCreaterStatus() {
+  getCountByStatusCreatorStatus() {
     for (let i = 0; this.Status.length > i; i++) {
-      this.ticketService.getCountByStatusCreaterStatus(this.Status[i].value, this.creater).subscribe(result => {
+      this.ticketService.getCountByStatusCreatorStatus(this.Status[i].value, this.creator).subscribe(result => {
         this.CountStatus[i] = result.length;
       });
     }
@@ -113,8 +113,8 @@ export class SiteTicketComponent implements OnInit {
     }
   }
 
-  getTicketByCreaterStatus(creater: any, status: string) {
-    this.ticket$ = this.ticketService.getTicketByCreaterStatus(creater, status)
+  getTicketByCreatorStatus(creator: any, status: string) {
+    this.ticket$ = this.ticketService.getTicketByCreatorStatus(creator, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -147,20 +147,20 @@ export class SiteTicketComponent implements OnInit {
         statusString = 'Sent'
         break
       }
-      case 'More Info': {
+      case 'Pending': {
         statusString = 'More Info'
         break
       }
-      case 'Pending': {
+      case 'In Progress': {
         statusString = 'Accepted'
         break
       }
-      case 'Close': {
+      case 'Closed': {
         statusString = 'Done'
         break;
       }
-      case 'Reject': {
-        statusString = 'Reject'
+      case 'Rejected': {
+        statusString = 'Rejected'
         break;
       }
     }
@@ -174,19 +174,19 @@ export class SiteTicketComponent implements OnInit {
         classIcon = 'fa-pen'
         break
       }
-      case 'More Info': {
+      case 'Pending': {
         classIcon = 'fa-file'
         break
       }
-      case 'Pending': {
+      case 'In Progress': {
         classIcon = 'fa-clock'
         break
       }
-      case 'Close': {
+      case 'Closed': {
         classIcon = 'fa-check-circle'
         break;
       }
-      case 'Reject': {
+      case 'Rejected': {
         classIcon = 'fa-times-circle'
         break;
       }
@@ -202,19 +202,19 @@ export class SiteTicketComponent implements OnInit {
         classBackground = 'sent'
         break
       }
-      case 'More Info': {
+      case 'Pending': {
         classBackground = 'moreinfo'
         break
       }
-      case 'Pending': {
+      case 'In Progress': {
         classBackground = 'accept'
         break
       }
-      case 'Close': {
+      case 'Closed': {
         classBackground = 'done'
         break;
       }
-      case 'Reject': {
+      case 'Rejected': {
         classBackground = 'reject'
         break;
       }
@@ -281,14 +281,14 @@ export class SiteTicketComponent implements OnInit {
     this.keword = this.searchValue
     this.updateIndex(0)
     if (this.isChecked === true && this.status != null) {
-      this.getByKewordCreatorStatus(this.keword, this.creater, this.status)
+      this.getByKewordCreatorStatus(this.keword, this.creator, this.status)
     } else if (this.isChecked === false && this.status != null) {
       this.getByKewordSiteStatus(this.keword, this.siteState, this.status)
     }
   }
 
-  getByKewordCreatorStatus(keword: any, creater: any, status: string) {
-    this.ticket$ = this.ticketService.getByKewordCreatorStatus(keword, creater, status)
+  getByKewordCreatorStatus(keword: any, creator: any, status: string) {
+    this.ticket$ = this.ticketService.getByKewordCreatorStatus(keword, creator, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -329,8 +329,8 @@ export class SiteTicketComponent implements OnInit {
         }))
       )
   }
-  getByCreatorStatus(creater: any, status: string, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCreatorStatus(creater, status, startDate, endDate)
+  getByCreatorStatus(creator: any, status: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCreatorStatus(creator, status, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -339,8 +339,8 @@ export class SiteTicketComponent implements OnInit {
         }))
       )
   }
-  getByCreatorStatusKeword(creater: any, status: string, keword: any, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCreatorStatusKeword(creater, status, keword, startDate, endDate)
+  getByCreatorStatusKeword(creator: any, status: string, keword: any, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCreatorStatusKeword(creator, status, keword, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;

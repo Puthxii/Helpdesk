@@ -33,7 +33,6 @@ export class AddTicketComponent implements OnInit {
   }
 
   get date() {
-    console.log(this.addTicketForm.get('date').value);
     return this.addTicketForm.get('date');
   }
 
@@ -53,8 +52,8 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('module');
   }
 
-  get creater() {
-    return this.addTicketForm.get('creater');
+  get creator() {
+    return this.addTicketForm.get('creator');
   }
 
   get type() {
@@ -119,9 +118,9 @@ export class AddTicketComponent implements OnInit {
   ];
 
   Status = [
-    { name: 'Save as In Progress', value: 'In Progress' },
+    { name: 'Save as Inform', value: 'Informed' },
     { name: 'Save as Draft', value: 'Draft' },
-    { name: 'Save as Closed', value: 'Closed' }
+    { name: 'Save as Reject', value: 'Rejected' },
   ];
 
   myOptions: IAngularMyDpOptions = {
@@ -150,7 +149,7 @@ export class AddTicketComponent implements OnInit {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
       if (this.user$.roles.customer === true) {
-        this.setCreater();
+        this.setCreator();
         this.setSource();
         this.setType();
         this.setPriority();
@@ -173,7 +172,7 @@ export class AddTicketComponent implements OnInit {
 
   setType() {
     this.addTicketForm.patchValue({
-      type: 'Info'
+      type: 'Undefined'
     });
   }
 
@@ -191,9 +190,9 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  setCreater() {
+  setCreator() {
     this.addTicketForm.patchValue({
-      creater: this.user$.firstName + ' ' + this.user$.lastName
+      creator: this.user$.firstName + ' ' + this.user$.lastName
     });
   }
 
@@ -205,19 +204,19 @@ export class AddTicketComponent implements OnInit {
 
   setStatus() {
     this.addTicketForm.patchValue({
-      status: 'In Progress'
+      status: 'Draft'
     });
   }
 
   setStatusCustomer() {
     this.addTicketForm.patchValue({
-      status: 'Draft'
+      status: 'Informed'
     });
   }
 
   setPriority() {
     this.addTicketForm.patchValue({
-      priority: 'Low'
+      priority: 'Undefined'
     });
   }
 
@@ -228,7 +227,7 @@ export class AddTicketComponent implements OnInit {
       source: ['', [Validators.required]],
       site: ['', [Validators.required]],
       module: [''],
-      creater: ['', [Validators.required]],
+      creator: ['', [Validators.required]],
       type: ['', [Validators.required]],
       subject: ['', [
         Validators.required,
@@ -249,8 +248,40 @@ export class AddTicketComponent implements OnInit {
   hideTextArea(type: any) {
     if (type === 'Info' || type === 'Consult') {
       this.hideResolve = true;
-    } else {
+      this.removeStatus('In Progress');
+      this.addStatus('Closed');
+    } else if (type === 'Problem' || type === 'Add-ons') {
       this.hideResolve = false;
+      this.removeStatus('Closed');
+      this.addStatus('In Progress');
+    }
+  }
+
+  removeStatus(status: string) {
+    this.Status = this.Status.filter(item => item.value !== status);
+  }
+
+  addStatus(status: string) {
+    if (this.Status.some(obj => obj.value === status)) {
+      console.log('Object found inside the array.');
+    } else {
+      let name;
+      let value;
+      switch (status) {
+        case 'Closed':
+          name = 'Save as Close'
+          value = status
+          break;
+        case 'In Progress':
+          name = 'Save as In Progress'
+          value = status
+          break;
+        default:
+          name = `Save as ${status}`
+          value = status
+          break;
+      }
+      return this.Status.push({ name, value })
     }
   }
 

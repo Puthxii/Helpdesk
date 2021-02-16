@@ -82,7 +82,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('In Progess')">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('In Progress')">
         <div class="card accept mt-2" [class.active]="'In Progress' === activeState">
           <div class="card-content">
             <div class="card-body">
@@ -130,7 +130,7 @@
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="fas fa-clock float-left mr-2"></i>
+                  <i class="fas fa-times-circle float-left mr-2"></i>
                 </div>
                 <div class="media-body text-right mr-2">
                   <span>Rejected</span>
@@ -160,7 +160,7 @@
               </div>
               <div class="col">
                 <i class="fas fa-globe-asia" style="color: gray;"></i>
-                <span class="mx-1" style="color: black;">{{ticket.creater}}</span>
+                <span class="mx-1" style="color: black;">{{ticket.creator}}</span>
               </div>
               <div class="col">
                 <span for="">{{ticket.site.product.name}}</span>
