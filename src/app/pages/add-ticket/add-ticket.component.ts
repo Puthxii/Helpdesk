@@ -12,6 +12,8 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/models/user.model';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-ticket',
@@ -26,6 +28,7 @@ export class AddTicketComponent implements OnInit {
     public productService: ProductService,
     public fb: FormBuilder,
     public userService: UserService,
+    private router: Router,
   ) {
   }
 
@@ -367,7 +370,18 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  //todo : set option save button when selected type
-  //todo : fix bug date
-
+  alertCancelTicket() {
+    Swal.fire({
+      title: 'Do you want to cancel add ticket.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, I do'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/']);
+      }
+    })
+  }
 }

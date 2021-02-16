@@ -73,7 +73,7 @@ export class TicketComponent implements OnInit {
     { icon: 'fas fa-globe-americas', name: 'Website' },
     { icon: 'fab fa-line', name: 'Line' },
     { icon: 'fas fa-envelope', name: 'Email' },
-    { icon: 'fas fa-phone-alt', name: 'Telephone' },
+    { icon: 'fas fa-phone', name: 'Telephone' },
     { icon: 'fas fa-user-friends', name: 'Onsite' },
     { icon: 'fab fa-facebook-square', name: 'Facebook' },
     { icon: 'fab fa-ellipsis-h', name: 'Conference' },
