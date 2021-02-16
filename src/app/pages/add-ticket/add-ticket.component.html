@@ -51,7 +51,8 @@
                 Choose site name...
               </button>
               <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -61,7 +62,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <input type="text" class="form-control" placeholder="Search">
+                      <input type="text" class="form-control" formControlName="site" placeholder="Search">
                       <!-- <select name="site" formControlName="site" class="form-control" id="site">
                         <option value="">choose site...</option>
                         <option *ngFor=" let site of Site" [ngValue]="site">
@@ -208,7 +209,7 @@
                   </button>
                 </div>
               </div>
-              <button type="button" class="btn btn-light btn-cancel"  (click)="alertCancelTicket()">Cancel</button>
+              <button type="button" class="btn btn-light btn-cancel" (click)="alertCancelTicket()">Cancel</button>
             </div>
           </div>
         </form>
