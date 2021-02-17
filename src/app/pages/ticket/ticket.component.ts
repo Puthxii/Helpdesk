@@ -502,4 +502,9 @@ export class TicketComponent implements OnInit {
     }
     return `btn dropdown-toggle ${color}`
   }
+
+  // todo : OnInit Set Option (Flag, Role, ID)
+  // todo : Get Ticket load
+  // todo : Create search option form Ticket load
+  // todo : Update status form action
 }
