@@ -66,6 +66,22 @@ export class TicketService {
     )
   }
 
+  alertCancelAddTicket(){
+    Swal.fire({
+      title: 'Do you want to cancel add ticket.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#5cb85c',
+      cancelButtonColor: '#d9534f',
+      confirmButtonText: 'Yes, I do',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/']);
+      }
+    })
+  }
+
   getTicketsListByStatusFilter(status: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
