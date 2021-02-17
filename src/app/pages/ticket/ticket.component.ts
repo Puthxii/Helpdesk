@@ -17,6 +17,13 @@ import { Validators } from '@angular/forms';
   styleUrls: ['./ticket.component.scss']
 })
 export class TicketComponent implements OnInit {
+  constructor(
+    private auth: AuthService,
+    private ticketService: TicketService,
+    public userService: UserService,
+    public fb: FormBuilder,
+
+  ) { }
   searchValue = '';
   Ticket: Ticket[];
   ticket$: Observable<Ticket[]>;
@@ -28,13 +35,6 @@ export class TicketComponent implements OnInit {
   staff: any;
   selectedColor = ''
   priorityClass: string;
-  constructor(
-    private auth: AuthService,
-    private ticketService: TicketService,
-    public userService: UserService,
-    public fb: FormBuilder,
-
-  ) { }
 
   public filterTicketForm: FormGroup
   activeState = 'Draft'
@@ -95,11 +95,27 @@ export class TicketComponent implements OnInit {
     dateFormat: 'dd/mm/yyyy'
   }
 
+  // todo : OnInit Set Option (Flag, Role, ID)
+  // todo : Get Ticket load
+  // todo : Create search option form Ticket load
+  // todo : Update status form action
+
+  Flag = {
+    myTicke: true,
+    myTeam: false,
+    mySite: false
+  }
+
+  Role;
+
+
+
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
     this.buildForm()
-    this.isFilter()
+    // this.isFilter()
+    this.ticketService.getLoadTicket()
   }
 
   isFilter() {
@@ -124,6 +140,8 @@ export class TicketComponent implements OnInit {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.supporter === true) {
+        this.Role = this.user$.roles.supporter
+        console.log(this.Role)
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
         this.getCountByStatusCurrentname()
         this.getCountToltalCurrentname()
@@ -502,9 +520,4 @@ export class TicketComponent implements OnInit {
     }
     return `btn dropdown-toggle ${color}`
   }
-
-  // todo : OnInit Set Option (Flag, Role, ID)
-  // todo : Get Ticket load
-  // todo : Create search option form Ticket load
-  // todo : Update status form action
 }
