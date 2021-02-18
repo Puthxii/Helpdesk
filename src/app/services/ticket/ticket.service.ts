@@ -427,16 +427,21 @@ export class TicketService {
 
   // todo: Change get Ticket
 
-  getLoadTicket() {
-    const supporter = ['Draft', 'Informed', 'More Info', 'In Proress', 'Resolved']
+  getLoadTicket(role) {
+    // const customer = ['Informed', 'More Info', 'In Proress', 'Accepted', 'Assigned', 'Resolved', 'Rejected']
+    // const supporter = ['Draft', 'Informed', 'More Info', 'In Proress', 'Resolved']
+    // const maintenance = ['In Proress', 'Accepted']
+    // const supervisor = ['Accepted', 'Assigned']
+    // const developer = ['Assigned', 'Resolved']
+
     this.afs.collection('ticket', ref => ref
-      .where('status', 'in', supporter)
-    ).snapshotChanges().subscribe(data => {
-      data.map(a => {
-        const data = a.payload.doc.data() as Ticket;
-        const id = a.payload.doc.id;
-        console.log(id, data);
-      })
-    });
+      .where('status', 'in', role))
+      .snapshotChanges().subscribe(data => {
+        data.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          console.log(id, data);
+        })
+      });
   }
 }

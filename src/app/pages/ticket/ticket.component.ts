@@ -38,6 +38,8 @@ export class TicketComponent implements OnInit {
 
   public filterTicketForm: FormGroup
   activeState = 'Draft'
+  supporter = ['Draft', 'Informed', 'More Info', 'In Progress', 'Accepted', ' ', 'Resolved']
+
   Status = [
     { value: 'Draft' },
     { value: 'Pending' },
@@ -95,27 +97,24 @@ export class TicketComponent implements OnInit {
     dateFormat: 'dd/mm/yyyy'
   }
 
-  // todo : OnInit Set Option (Flag, Role, ID)
-  // todo : Get Ticket load
-  // todo : Create search option form Ticket load
-  // todo : Update status form action
+  // todo : OnInit Set Option (Flag, Role, ID) /
+  // todo : Get Ticket load  /
+  // todo : Create search option form Ticket load /
+  // todo : Update status form action /
 
   Flag = {
     myTicke: true,
     myTeam: false,
     mySite: false
   }
-
   Role;
-
-
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
     this.buildForm()
     // this.isFilter()
-    this.ticketService.getLoadTicket()
+    this.ticketService.getLoadTicket(this.supporter)
   }
 
   isFilter() {
