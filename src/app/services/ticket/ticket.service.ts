@@ -434,14 +434,7 @@ export class TicketService {
     // const supervisor = ['Accepted', 'Assigned']
     // const developer = ['Assigned', 'Resolved']
 
-    this.afs.collection('ticket', ref => ref
+    return this.afs.collection('ticket', ref => ref
       .where('status', 'in', role))
-      .snapshotChanges().subscribe(data => {
-        data.map(a => {
-          const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
-          console.log(id, data);
-        })
-      });
   }
 }
