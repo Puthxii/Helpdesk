@@ -133,14 +133,6 @@ export class TicketComponent implements OnInit {
     )
   }
 
-  getDraftLength() {
-    for (let i = 0; this.Status.length > i; i++) {
-      this.ticket$.subscribe(result => {
-        this.CountStatus[i] = result.length;
-      });
-    }
-  }
-
   isFilter() {
     if (this.isChecked === true) {
       this.getCurrentUserByRoles()

@@ -54,7 +54,7 @@
                   <span>Draft</span>
                 </div>
                 <div class="media-body text-right">
-                  <span>{{ getDraftLength() }}</span>
+                  <span>{{ (ticket$ | async)?.length }}</span>
                 </div>
               </div>
             </div>
@@ -162,7 +162,7 @@
 <div class="container-fluid">
   <div class="card mt-3">
     <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; else loading; index as i">
-      <div class="card mb-2" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
+      <div class="card mb-2" *ngFor="let ticket of ticket$">
         <div class="card-header" style="background-color: #F2EDF3;">
           <div class="row detail-problem">
             <div class="col-xl-3 col-sm-4 col-12">
