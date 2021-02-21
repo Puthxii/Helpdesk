@@ -105,15 +105,16 @@ export class TicketComponent implements OnInit {
 
   // todo : OnInit Set Option (Flag, Role, ID) /
   // todo : Get Ticket load  /
-  // todo : Create search option form Ticket load /
-  // todo : Update status form action /
+  // todo : Create search option form Ticket load
+  // todo : Update status form action
 
   Flag = {
     myTicke: true,
     myTeam: false,
     mySite: false
   }
-  Role;
+  Role: any;
+  Draft: []
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
@@ -132,6 +133,7 @@ export class TicketComponent implements OnInit {
       }))
     )
     console.log(this.ticket$)
+
   }
 
   isFilter() {
@@ -216,20 +218,20 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  onSelectedDelete(id, subject: any) {
+  onSelectedDelete(id: any, subject: any) {
     this.ticketService.cancelTicket(id, subject)
   }
 
-  changeStatus(id, status: any, staff: any) {
+  changeStatus(id: any, status: any, staff: any) {
     this.ticketService.changeStatus(id, status, staff)
   }
 
-  changePriority(id, priority: string) {
+  changePriority(id: any, priority: string) {
     this.priorityClass = priority
     this.ticketService.changePriority(id, priority)
   }
 
-  changeType(id, type: string) {
+  changeType(id: any, type: string) {
     this.ticketService.changeType(id, type)
   }
 
@@ -245,7 +247,7 @@ export class TicketComponent implements OnInit {
   }
 
 
-  getByCurrentnameStatus(value, currentname, status) {
+  getByCurrentnameStatus(value: string, currentname: string, status: string) {
     this.ticket$ = this.ticketService.getByCurrentnameStatus(value, currentname, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -256,7 +258,7 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  getByStatus(value, status) {
+  getByStatus(value: string, status: string) {
     this.ticket$ = this.ticketService.getByStatus(value, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -291,7 +293,7 @@ export class TicketComponent implements OnInit {
     }
   }
 
-  isDraft(ticket) {
+  isDraft(ticket: { status: string; }) {
     return ticket.status === 'Draft';
   }
 
@@ -479,7 +481,7 @@ export class TicketComponent implements OnInit {
     return this.staff = this.currentName
   }
 
-  onChange(value) {
+  onChange(value: string) {
     this.selectedColor = value;
   }
 
