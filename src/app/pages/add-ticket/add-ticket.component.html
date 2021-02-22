@@ -46,9 +46,9 @@
           </div>
           <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
-              <label class="control-label" for="site">Site Name</label>
-              <button type="button" class="btn btn-primary siteName" data-toggle="modal" data-target="#exampleModal">
-                Choose site name...
+              <label class="control-label">Site Name</label>
+              <button type="button" class="btn btn-primary siteName" ng-maxlength="20" data-toggle="modal" data-target="#exampleModal">
+                {{ displaySelectedSite() }}
               </button>
               <!-- Modal -->
               <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -62,17 +62,19 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <input type="text" class="form-control" formControlName="site" placeholder="Search">
-                      <!-- <select name="site" formControlName="site" class="form-control" id="site">
+                      <!-- <input type="text" class="form-control" formControlName="site" placeholder="Search"> -->
+                      <select name="site" formControlName="site" class="form-control" id="site">
                         <option value="">choose site...</option>
                         <option *ngFor=" let site of Site" [ngValue]="site">
                           {{ site.nameEN? site.nameEN : '-' }}
                         </option>
-                      </select> -->
+                      </select>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-success">Submit</button>
+                      <button type="button" class="btn btn-primary"  (click)="onSelectedSite(site.value)">Save changes</button>
+                      <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-success">Submit</button> -->
                     </div>
                   </div>
                 </div>

@@ -13,6 +13,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/models/user.model';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { Router } from '@angular/router';
+import { Ticket } from 'src/app/models/ticket.model';
+
 
 @Component({
   selector: 'app-add-ticket',
@@ -81,6 +83,7 @@ export class AddTicketComponent implements OnInit {
   user;
   Product: Product;
   site$: Observable<any>;
+  ticket$: Observable<Ticket>;
   user$: any;
   public addTicketForm: FormGroup;
   hideResolve = false;
@@ -372,4 +375,19 @@ export class AddTicketComponent implements OnInit {
   alertCancelTicket() {
     this.ticketService.alertCancelAddTicket()
   }
+
+  // onSelectedSite(){
+  //   console.log(this.site.value.nameEN);
+  // }
+
+  onSelectedSite(value: any) {
+    this.addTicketForm.patchValue({
+      site: value
+    });
+  }
+  
+  displaySelectedSite(): any {
+    return (this.site.value.nameEN) ? this.site.value.nameEN: 'Choose site...';
+  }
 }
+
