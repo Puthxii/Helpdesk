@@ -37,6 +37,8 @@ export class TicketMaComponent implements OnInit {
 
   public filterTicketForm: FormGroup
 
+  Maintenance = ['In Progress', 'Accepted']
+
   Status = [
     { value: 'In Progress' },
     { value: 'Accepted' },
@@ -141,7 +143,7 @@ export class TicketMaComponent implements OnInit {
     this.setStatusState(status)
     this.status = status
     if (this.isChecked === true) {
-      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName).snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Maintenance).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc.id;
@@ -149,7 +151,7 @@ export class TicketMaComponent implements OnInit {
         }))
       )
     } else {
-      this.ticket$ = this.ticketService.getTicketsList().snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsList(this.Maintenance).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc.id;

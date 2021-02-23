@@ -37,6 +37,8 @@ export class TicketSupComponent implements OnInit {
 
   public filterTicketForm: FormGroup
 
+  Supervisor = ['Accepted', 'Assigned']
+
   Status = [
     { value: 'Accepted' },
     { value: 'Assigned' },
@@ -136,7 +138,7 @@ export class TicketSupComponent implements OnInit {
     this.status = status
     this.isFilter()
   }
-  
+
   setStatusState(status: string) {
     this.activeState = status;
   }
@@ -145,7 +147,7 @@ export class TicketSupComponent implements OnInit {
     this.setStatusState(status)
     this.status = status
     if (this.isChecked === true) {
-      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName).snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Supervisor).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc.id;
@@ -153,7 +155,7 @@ export class TicketSupComponent implements OnInit {
         }))
       )
     } else {
-      this.ticket$ = this.ticketService.getTicketsList().snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsList(this.Supervisor).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc.id;

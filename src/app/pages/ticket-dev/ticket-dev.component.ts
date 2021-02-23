@@ -10,6 +10,7 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { ThrowStmt } from '@angular/compiler';
 @Component({
   selector: 'ticket-dev',
   templateUrl: './ticket-dev.component.html',
@@ -41,6 +42,9 @@ export class TicketDevComponent implements OnInit {
     { value: 'Assigned' },
     { value: 'Resolved' }
   ]
+
+  Developer = ['Assigned', 'Resolved']
+
   activeState = 'Assigned'
   CountStatus = []
   user: any
@@ -136,7 +140,7 @@ export class TicketDevComponent implements OnInit {
     this.status = status
     this.isFilter()
   }
-  
+
   setStatusState(status: string) {
     this.activeState = status;
   }
@@ -145,7 +149,7 @@ export class TicketDevComponent implements OnInit {
     this.setStatusState(status)
     this.status = status
     if (this.isChecked === true) {
-      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName).snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Developer).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc.id;
@@ -153,7 +157,7 @@ export class TicketDevComponent implements OnInit {
         }))
       )
     } else {
-      this.ticket$ = this.ticketService.getTicketsList().snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsList(this.Developer).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc.id;
