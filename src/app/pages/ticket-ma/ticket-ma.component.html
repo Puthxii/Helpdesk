@@ -91,11 +91,11 @@
                 <div class="dropdown dd">
                   <button  class="btn dropdown-toggle status" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-check-circle text-left mr-2"></i>In progress
+                    <i class="fas fa-pen text-left mr-2"></i>{{ticket.status}}
                   </button>
                   <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item">
-                      <i class="fas fa-check-circle" value="priority.name"></i> Accepted </a>
+                      <i class="fas fa-file float mr-2" value="statusname"></i> {{ticket.status}} </a>
                   </div>
                 </div>
               </div>
