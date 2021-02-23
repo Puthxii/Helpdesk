@@ -66,14 +66,14 @@ export class TicketService {
     )
   }
 
-  getTicketsListByStatusFilter(status: string) {
+  getTicketsListByStatusFilter(status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
       .orderBy('date', 'desc')
     )
   }
 
-  getTicketsListByFilter(status: string, creator: string) {
+  getTicketsListByFilter(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
       .where('staff', '==', creator)
@@ -192,7 +192,7 @@ export class TicketService {
     }
   }
 
-  setActionById(id: any, status: string, staff: any) {
+  setActionById(id: any, status: any, staff: any) {
     this.afs.collection('ticket').doc(id)
       .collection('action')
       .add({
@@ -210,7 +210,7 @@ export class TicketService {
       .endAt(keword + '\uf8ff'));
   }
 
-  getByStatus(keword: string, status: string) {
+  getByStatus(keword: string, status: any) {
     return this.afs.collection('ticket', (ref) => ref
       .where('status', '==', status)
       .orderBy('subject')
@@ -218,7 +218,7 @@ export class TicketService {
       .endAt(keword + '\uf8ff'));
   }
 
-  getByCurrentnameStatus(keword: string, currentName: string, status: string) {
+  getByCurrentnameStatus(keword: string, currentName: string, status: any) {
     return this.afs.collection('ticket', (ref) => ref
       .where('status', '==', status)
       .where('staff', '==', currentName)
@@ -239,11 +239,11 @@ export class TicketService {
     return this.afs.doc<Ticket>(`ticket/` + id).valueChanges();
   }
 
-  getCountByStatus(status: string) {
+  getCountByStatus(status: any) {
     return this.afs.collection('ticket', ref => ref.where('status', '==', status)).valueChanges();
   }
 
-  getCountByStatusCurrentname(status: string, creator: string) {
+  getCountByStatusCurrentname(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
       .where('staff', '==', creator)
@@ -273,7 +273,7 @@ export class TicketService {
     );
   }
 
-  getByCurrentnameStatusKewordDateRange(keword: any, creator: string, status: string, startDate: Date, endDate: Date) {
+  getByCurrentnameStatusKewordDateRange(keword: any, creator: string, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
@@ -283,7 +283,7 @@ export class TicketService {
     );
   }
 
-  getByCurrentnameStatusDateRange(creator: string, status: string, startDate: Date, endDate: Date) {
+  getByCurrentnameStatusDateRange(creator: string, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
@@ -292,7 +292,7 @@ export class TicketService {
     );
   }
 
-  getByStatusKewordDateRange(keword: any, status: string, startDate: Date, endDate: Date) {
+  getByStatusKewordDateRange(keword: any, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
@@ -329,7 +329,7 @@ export class TicketService {
     );
   }
 
-  getByStatusDateRange(status: string, startDate: Date, endDate: Date) {
+  getByStatusDateRange(status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
@@ -337,7 +337,7 @@ export class TicketService {
     );
   }
 
-  getTicketByCreatorStatus(creator: any, status: string) {
+  getTicketByCreatorStatus(creator: any, status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('creator', '==', creator)
       .where('status', '==', status)
@@ -345,14 +345,14 @@ export class TicketService {
     );
   }
 
-  getCountByStatusCreatorStatus(status: string, creator: any) {
+  getCountByStatusCreatorStatus(status: any, creator: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
       .where('creator', '==', creator)
     ).valueChanges();
   }
 
-  getTicketBySiteStatus(site: any, status: string) {
+  getTicketBySiteStatus(site: any, status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('site.initials', '==', site)
       .where('status', '==', status)
@@ -360,7 +360,7 @@ export class TicketService {
     )
   }
 
-  getByKewordCreatorStatus(keword: any, creator: any, status: string) {
+  getByKewordCreatorStatus(keword: any, creator: any, status: any) {
     return this.afs.collection('ticket', (ref) => ref
       .where('status', '==', status)
       .where('creator', '==', creator)
@@ -370,7 +370,7 @@ export class TicketService {
     )
   }
 
-  getByKewordSiteStatus(keword: any, site: any, status: string) {
+  getByKewordSiteStatus(keword: any, site: any, status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
       .where('site.initials', '==', site)
@@ -380,7 +380,7 @@ export class TicketService {
     )
   }
 
-  getByCreatorStatusKeword(creator: any, status: string, keword: any, startDate: Date, endDate: Date) {
+  getByCreatorStatusKeword(creator: any, status: any, keword: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
@@ -390,7 +390,7 @@ export class TicketService {
     )
   }
 
-  getByCreatorStatus(creator: any, status: string, startDate: Date, endDate: Date) {
+  getByCreatorStatus(creator: any, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
@@ -399,7 +399,7 @@ export class TicketService {
     )
   }
 
-  getBySiteStatusKeword(siteState: any, status: string, keword: any, startDate: Date, endDate: Date) {
+  getBySiteStatusKeword(siteState: any, status: any, keword: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
@@ -409,7 +409,7 @@ export class TicketService {
     )
   }
 
-  getBySiteStatus(siteState: any, status: string, startDate: Date, endDate: Date) {
+  getBySiteStatus(siteState: any, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)

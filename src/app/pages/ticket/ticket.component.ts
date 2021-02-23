@@ -39,15 +39,15 @@ export class TicketComponent implements OnInit {
   public filterTicketForm: FormGroup
   activeState = 'Draft'
 
-  Supporter = ['Draft', 'Informed', 'More Info', 'In Progress', 'Resolved']
+  Supporter = ['Draft', 'Informed', 'More Info', 'In Progress', 'Accepted', 'Assigned', 'Resolved']
 
   Status = [
     { value: 'Draft' },
     { value: 'Informed' },
     { value: 'More Info' },
     { value: 'In Progress' },
-    // { value: 'Accepted', },
-    // { value: 'Assigned', },
+    { value: 'Accepted', },
+    { value: 'Assigned', },
     { value: 'Resolved' },
 
   ]
@@ -147,6 +147,10 @@ export class TicketComponent implements OnInit {
     }
   }
 
+  getSum() {
+    return this.CountStatus[3] + this.CountStatus[4] + this.CountStatus[5]
+  }
+
   getCountByStatusCurrentname() {
     for (let i = 0; this.Status.length > i; i++) {
       this.ticketService.getCountByStatusCurrentname(this.Status[i].value, this.currentName).subscribe(result => {
@@ -167,7 +171,7 @@ export class TicketComponent implements OnInit {
     });
   }
 
-  getByStatusFilter(status: string) {
+  getByStatusFilter(status: any) {
     this.ticket$ = this.ticketService.getTicketsListByStatusFilter(status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -178,7 +182,7 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  getByStatusCurentnameFilter(status: string, creator: string) {
+  getByStatusCurentnameFilter(status: any, creator: string) {
     this.ticket$ = this.ticketService.getTicketsListByFilter(status, creator)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -218,7 +222,7 @@ export class TicketComponent implements OnInit {
   }
 
 
-  getByCurrentnameStatus(value: string, currentname: string, status: string) {
+  getByCurrentnameStatus(value: string, currentname: string, status: any) {
     this.ticket$ = this.ticketService.getByCurrentnameStatus(value, currentname, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -229,7 +233,7 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  getByStatus(value: string, status: string) {
+  getByStatus(value: string, status: any) {
     this.ticket$ = this.ticketService.getByStatus(value, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -264,17 +268,17 @@ export class TicketComponent implements OnInit {
     }
   }
 
-  isDraft(ticket: { status: string; }) {
+  isDraft(ticket: { status: any; }) {
     return ticket.status === 'Draft';
   }
 
-  setStatus(status: string) {
+  setStatus(status: any) {
     this.setStatusState(status)
     this.status = status
     this.isFilter()
   }
 
-  getAllTicket(status: string) {
+  getAllTicket(status: any) {
     this.setStatusState(status)
     this.status = status
     if (this.isChecked === true) {
@@ -296,7 +300,7 @@ export class TicketComponent implements OnInit {
     }
   }
 
-  setStatusState(status: string) {
+  setStatusState(status: any) {
     this.activeState = status;
   }
 
@@ -361,7 +365,7 @@ export class TicketComponent implements OnInit {
     }
   }
 
-  getByCurrentnameStatusKewordDateRange(keword: any, currentName: string, status: string, startDate: Date, endDate: Date) {
+  getByCurrentnameStatusKewordDateRange(keword: any, currentName: string, status: any, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getByCurrentnameStatusKewordDateRange(keword, currentName, status, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -372,7 +376,7 @@ export class TicketComponent implements OnInit {
       )
   }
 
-  getByCurrentnameStatusDateRange(currentName: string, status: string, startDate: Date, endDate: Date) {
+  getByCurrentnameStatusDateRange(currentName: string, status: any, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getByCurrentnameStatusDateRange(currentName, status, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -383,7 +387,7 @@ export class TicketComponent implements OnInit {
       )
   }
 
-  getByStatusKewordDateRange(keword: any, status: string, startDate: Date, endDate: Date) {
+  getByStatusKewordDateRange(keword: any, status: any, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getByStatusKewordDateRange(keword, status, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -394,7 +398,7 @@ export class TicketComponent implements OnInit {
       )
   }
 
-  getByStatusDateRange(status: string, startDate: Date, endDate: Date) {
+  getByStatusDateRange(status: any, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getByStatusDateRange(status, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
