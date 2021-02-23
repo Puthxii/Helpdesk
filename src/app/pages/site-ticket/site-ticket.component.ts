@@ -37,14 +37,14 @@ export class SiteTicketComponent implements OnInit {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
-  status = 'Draft'
-  activeState = 'Draft'
+  status = 'Informed'
+  activeState = 'Informed'
   ticket$: Observable<Ticket[]>;
   siteState
   CountStatus = []
   Status = [
-    { value: 'Draft' },
-    { value: 'Pending' },
+    { value: 'Informed' },
+    { value: 'MoreInfo' },
     { value: 'In Progress' },
     { value: 'Closed' },
     { value: 'Rejected' }
@@ -143,8 +143,8 @@ export class SiteTicketComponent implements OnInit {
   getStatusName(status) {
     let statusString = ''
     switch (status) {
-      case 'Draft': {
-        statusString = 'Sent'
+      case 'Informed': {
+        statusString = 'Informed'
         break
       }
       case 'Pending': {
@@ -170,7 +170,7 @@ export class SiteTicketComponent implements OnInit {
   getPriorityIcon(status) {
     let classIcon = ''
     switch (status) {
-      case 'Draft': {
+      case 'Informed': {
         classIcon = 'fa-pen'
         break
       }
@@ -198,11 +198,11 @@ export class SiteTicketComponent implements OnInit {
   getBackgroundColor(status) {
     let classBackground = ''
     switch (status) {
-      case 'Draft': {
-        classBackground = 'sent'
+      case 'Informed': {
+        classBackground = 'informed'
         break
       }
-      case 'Pending': {
+      case 'More Info ': {
         classBackground = 'moreinfo'
         break
       }
@@ -270,7 +270,7 @@ export class SiteTicketComponent implements OnInit {
 
 
   isDraft(ticket) {
-    return ticket.status === 'Draft';
+    return ticket.status === 'Informed';
   }
 
   onSelectedDelete(id, subject: any) {
@@ -350,3 +350,5 @@ export class SiteTicketComponent implements OnInit {
       )
   }
 }
+
+/*In progress(Support) = Accepted (Customer) */

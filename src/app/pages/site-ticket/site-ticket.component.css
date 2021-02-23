@@ -1,11 +1,11 @@
-.sent {
+.informed {
     background-image: linear-gradient(to right, #3096E7 20%,  #FFBE96 100%);
     border: none;
     border-radius: 5px;
     color: white;
 }
 
-.sent.active {
+.informed.active {
     background-image: linear-gradient(to right, #69ade6  20%, #ffd5bb 100%);
     color: white;
 }

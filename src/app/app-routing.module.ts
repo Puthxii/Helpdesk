@@ -1,3 +1,6 @@
+import { TicketDevComponent } from './pages/ticket-dev/ticket-dev.component';
+import { TicketSupComponent } from './pages/ticket-sup/ticket-sup.component';
+import { TicketMaComponent } from './pages/ticket-ma/ticket-ma.component';
 import { SiteTicketComponent } from './pages/site-ticket/site-ticket.component';
 import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
 import { DetailComponent } from './pages/detail/detail.component';
@@ -71,6 +74,18 @@ const router: Routes = [
         path: 'edit-ticket/:id',
         component: EditTicketComponent
       },
+      {
+        path: 'ticket-ma',
+        component: TicketMaComponent
+      },
+      {
+        path: 'ticket-sup',
+        component: TicketSupComponent
+      },
+      {
+        path: 'ticket-dev',
+        component: TicketDevComponent
+      }
     ]
   },
   {
