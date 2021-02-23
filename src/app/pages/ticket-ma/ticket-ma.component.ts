@@ -69,6 +69,7 @@ export class TicketMaComponent implements OnInit {
       this.getCurrentUserByRoles()
     } else {
       this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
+      this.getCountToltal()
       this.getCountByStatus()
     }
   }
@@ -86,6 +87,7 @@ export class TicketMaComponent implements OnInit {
       if (this.user$.roles.supporter === true) {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
         this.getCountByStatusCurrentname()
+        this.getCountToltalCurrentname()
         this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusCurentnameFilter(this.status, this.currentName)
       } else { }
     });
@@ -165,16 +167,23 @@ export class TicketMaComponent implements OnInit {
     this.activeState = status;
   }
 
-  getArrayFromNumber(length) {
-    this.max = (Math.ceil(length / 7))
-    return new Array(Math.ceil(this.max));
-  }
-
   onChange(value) {
     this.selectedColor = value;
   }
 
   checkValue(event: any) {
     this.isFilter()
+  }
+
+  getCountToltal() {
+    this.ticketService.getTicketsList(this.Maintenance).valueChanges().subscribe(result => {
+      this.countAll = result.length;
+    });
+  }
+
+  getCountToltalCurrentname() {
+    this.ticketService.getTicketsListCurrentname(this.currentName, this.Maintenance).valueChanges().subscribe(result => {
+      this.countAll = result.length;
+    });
   }
 }

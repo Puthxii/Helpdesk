@@ -72,6 +72,7 @@ export class TicketDevComponent implements OnInit {
     } else {
       this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
       this.getCountByStatus()
+      this.getCountToltal()
     }
   }
 
@@ -88,6 +89,7 @@ export class TicketDevComponent implements OnInit {
       if (this.user$.roles.supporter === true) {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
         this.getCountByStatusCurrentname()
+        this.getCountToltalCurrentname()
         this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusCurentnameFilter(this.status, this.currentName)
       } else { }
     });
@@ -173,5 +175,17 @@ export class TicketDevComponent implements OnInit {
 
   checkValue(event: any) {
     this.isFilter()
+  }
+
+  getCountToltal() {
+    this.ticketService.getTicketsList(this.Developer).valueChanges().subscribe(result => {
+      this.countAll = result.length;
+    });
+  }
+
+  getCountToltalCurrentname() {
+    this.ticketService.getTicketsListCurrentname(this.currentName, this.Developer).valueChanges().subscribe(result => {
+      this.countAll = result.length;
+    });
   }
 }
