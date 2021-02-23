@@ -32,12 +32,12 @@
                 <span class="menu-title"> Supervisor</span>
             </a>
             <a [routerLink]=" ['/ticket-dev']" class=" list-group-item list-group-item-action bg-white"
-                *ngIf="auth.isSupporter(user)">
+                *ngIf="auth.isDeveloper(user)">
                 <i class="fas fa-ticket-alt"></i>
                 <span class="menu-title"> Developer</span>
             </a>
             <a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white"
-                *ngIf="auth.isSupporter(user)">
+                *ngIf="auth.isStaff(user)">
                 <i class="fas fa-user-tie"></i>
                 <span class="menu-title"> Staff</span>
             </a>

@@ -171,6 +171,11 @@ export class AuthService {
     return userRef.set(data, { merge: true });
   }
 
+  isCustomer(user: User): boolean {
+    const allowed = ['customer'];
+    return this.checkAuthorization(user, allowed);
+  }
+
   isSupporter(user: User): boolean {
     const allowed = ['supporter'];
     return this.checkAuthorization(user, allowed);
@@ -186,8 +191,13 @@ export class AuthService {
     return this.checkAuthorization(user, allowed);
   }
 
-  isCustomer(user: User): boolean {
-    const allowed = ['customer'];
+  isDeveloper(user: User): boolean {
+    const allowed = ['developer'];
+    return this.checkAuthorization(user, allowed);
+  }
+
+  isStaff(user: User): boolean {
+    const allowed = ['supporter', 'maintenance', 'supervisor', 'developer'];
     return this.checkAuthorization(user, allowed);
   }
 

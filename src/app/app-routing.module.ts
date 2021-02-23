@@ -22,6 +22,8 @@ import { TicketComponent } from './pages/ticket/ticket.component';
 import { Error404Component } from './error-pages/error404/error404.component';
 import { MaintenanceGuard } from './guards/ma.guard';
 import { SupervisorGuard } from './guards/suppervisor.guard';
+import { DeveloperGuard } from './guards/developer.guard';
+import { StaffGuard } from './guards/staff.guard';
 
 const router: Routes = [
   {
@@ -36,7 +38,7 @@ const router: Routes = [
       {
         path: 'staff',
         component: StaffComponent,
-        canActivate: [SupportGuard]
+        canActivate: [StaffGuard]
       },
       {
         path: 'register-staff',
@@ -88,6 +90,7 @@ const router: Routes = [
       },
       {
         path: 'ticket-dev',
+        canActivate: [DeveloperGuard],
         component: TicketDevComponent
       }
     ]
