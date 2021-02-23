@@ -47,6 +47,7 @@
           <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
               <label class="control-label" for="site">Site Name</label>
+<<<<<<< HEAD
               <button type="button" class="btn btn-primary siteName" data-toggle="modal" data-target="#exampleModal">
                 Choose site name...
               </button>
@@ -63,12 +64,12 @@
                     </div>
                     <div class="modal-body">
                       <input type="text" class="form-control" formControlName="site" placeholder="Search">
-                      <!-- <select name="site" formControlName="site" class="form-control" id="site">
+                      <select name="site" formControlName="site" class="form-control" id="site">
                         <option value="">choose site...</option>
                         <option *ngFor=" let site of Site" [ngValue]="site">
                           {{ site.nameEN? site.nameEN : '-' }}
                         </option>
-                      </select> -->
+                      </select>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -77,6 +78,14 @@
                   </div>
                 </div>
               </div>
+=======
+              <select name="site" formControlName="site" class="form-control" id="site">
+                <option value="">choose site...</option>
+                <option *ngFor=" let site of Site" [ngValue]="site">
+                  {{ site.nameEN? site.nameEN : '-' }}
+                </option>
+              </select>
+>>>>>>> 82463b2667f4fed51d7e54fa3f9ce161cce80e0d
               <div *ngIf="site.invalid && (site.dirty || site.touched)" class="danger-color">
                 <div *ngIf="site.errors.required">
                   Site name is required.

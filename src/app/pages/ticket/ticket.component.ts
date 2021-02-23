@@ -38,24 +38,33 @@ export class TicketComponent implements OnInit {
 
   public filterTicketForm: FormGroup
   activeState = 'Draft'
+
+  Supporter = ['Draft', 'Informed', 'More Info', 'In Progress', 'Resolved']
+
   Status = [
     { value: 'Draft' },
-    { value: 'Pending' },
+    { value: 'Informed' },
+    { value: 'More Info' },
     { value: 'In Progress' },
+    // { value: 'Accepted', },
+    // { value: 'Assigned', },
     { value: 'Resolved' },
-    { value: 'Closed' },
-    { value: 'Rejected' }
+
   ]
+
   ActiveStatus = [
     { name: 'Draft', icon: 'fas fa-pen mx-2' },
+    { name: 'Informed', icon: 'fas fa-pen mx-2' },
+    { name: 'More Info', icon: 'fas fa-clock mx-2' },
     { name: 'In Progress', icon: 'fas fa-clock mx-2' },
-    { name: 'Closed', icon: 'fas fa-check-circle mx-2' },
-    { name: 'Rejected', icon: 'fas fa-times-circle mx-2' },
-    { name: 'Pending', icon: 'fas fa-file mx-2' }
+    { name: 'Accepted', icon: 'fas fa-check-circle mx-2' },
+    { name: 'Assigned', icon: 'fas fa-times-circle mx-2' },
+    { name: 'Resolved', icon: 'fas fa-file mx-2' }
   ]
   CountStatus = []
 
   Types = [
+    { name: 'Undefined', icon: '' },
     { name: 'Info', icon: 'fas fa-info-circle mx-2' },
     { name: 'Consult', icon: 'fas fa-question-circle mx-2' },
     { name: 'Problem', icon: 'fas fa-exclamation-circle mx-2' },
@@ -63,6 +72,7 @@ export class TicketComponent implements OnInit {
   ];
 
   Prioritys = [
+    { name: 'Undefined', icon: '' },
     { name: 'Low', icon: 'fas fa-square mx-2' },
     { name: 'Medium', icon: 'fas fa-circle mx-2' },
     { name: 'High', icon: 'fas fa-star mx-2' },
@@ -80,9 +90,6 @@ export class TicketComponent implements OnInit {
     { icon: 'fab fa-video', name: 'Other' }
   ];
 
-  startIndex = 0;
-  endIndex = 7;
-  tabindex = 0;
   user: any
   User: User
   user$: any
@@ -149,13 +156,13 @@ export class TicketComponent implements OnInit {
   }
 
   getCountToltal() {
-    this.ticketService.getTicketsList().valueChanges().subscribe(result => {
+    this.ticketService.getTicketsList(this.Supporter).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
 
   getCountToltalCurrentname() {
-    this.ticketService.getTicketsListCurrentname(this.currentName).valueChanges().subscribe(result => {
+    this.ticketService.getTicketsListCurrentname(this.currentName, this.Supporter).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
@@ -182,25 +189,25 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  onSelectedDelete(id, subject: any) {
+  onSelectedDelete(id: any, subject: any) {
     this.ticketService.cancelTicket(id, subject)
   }
 
-  changeStatus(id, status: any, staff: any) {
+  changeStatus(id: string, status: any, staff: any) {
     this.ticketService.changeStatus(id, status, staff)
   }
 
-  changePriority(id, priority: string) {
+  changePriority(id: string, priority: string) {
     this.priorityClass = priority
     this.ticketService.changePriority(id, priority)
   }
 
-  changeType(id, type: string) {
+  changeType(id: string, type: string) {
     this.ticketService.changeType(id, type)
   }
 
   getByKeyWord(value: string) {
-    this.ticket$ = this.ticketService.getByKeyWord(value)
+    this.ticket$ = this.ticketService.getByKeyWord(value, this.Supporter)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -211,7 +218,7 @@ export class TicketComponent implements OnInit {
   }
 
 
-  getByCurrentnameStatus(value, currentname, status) {
+  getByCurrentnameStatus(value: string, currentname: string, status: string) {
     this.ticket$ = this.ticketService.getByCurrentnameStatus(value, currentname, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -222,7 +229,7 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  getByStatus(value, status) {
+  getByStatus(value: string, status: string) {
     this.ticket$ = this.ticketService.getByStatus(value, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -246,7 +253,6 @@ export class TicketComponent implements OnInit {
 
   search() {
     this.keword = this.searchValue
-    this.updateIndex(0)
     if (this.isChecked === true && this.status != null && this.status != 'Total') {
       this.getByCurrentnameStatus(this.keword, this.currentName, this.status)
     } else if (this.isChecked === false && this.status != null && this.status != 'Total') {
@@ -258,12 +264,11 @@ export class TicketComponent implements OnInit {
     }
   }
 
-  isDraft(ticket) {
+  isDraft(ticket: { status: string; }) {
     return ticket.status === 'Draft';
   }
 
   setStatus(status: string) {
-    this.updateIndex(0)
     this.setStatusState(status)
     this.status = status
     this.isFilter()
@@ -273,7 +278,7 @@ export class TicketComponent implements OnInit {
     this.setStatusState(status)
     this.status = status
     if (this.isChecked === true) {
-      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName).snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Supporter).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc.id;
@@ -281,7 +286,7 @@ export class TicketComponent implements OnInit {
         }))
       )
     } else {
-      this.ticket$ = this.ticketService.getTicketsList().snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsList(this.Supporter).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc.id;
@@ -293,33 +298,6 @@ export class TicketComponent implements OnInit {
 
   setStatusState(status: string) {
     this.activeState = status;
-  }
-
-  getArrayFromNumber(length) {
-    this.max = (Math.ceil(length / 7))
-    return new Array(Math.ceil(this.max));
-  }
-
-  updateIndex(pageIndex) {
-    this.tabindex = pageIndex;
-    this.startIndex = pageIndex * 7;
-    this.endIndex = this.startIndex + 7;
-  }
-
-  previousIndex() {
-    if (this.tabindex > 0) {
-      this.tabindex -= 1
-    }
-    this.startIndex = this.tabindex * 7;
-    this.endIndex = this.startIndex + 7;
-  }
-
-  nextIndex() {
-    if (this.tabindex < this.max - 1) {
-      this.tabindex += 1
-    }
-    this.startIndex = this.tabindex * 7;
-    this.endIndex = this.startIndex + 7;
   }
 
   getSourcesIcon(sources: any) {
@@ -362,7 +340,6 @@ export class TicketComponent implements OnInit {
   onDateChanged(event: IMyDateModel): void {
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
-    this.updateIndex(0)
     if (startDate != null && endDate != null) {
       if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.keword != null) {
         this.getByCurrentnameStatusKewordDateRange(this.keword, this.currentName, this.status, startDate, endDate)
@@ -429,7 +406,7 @@ export class TicketComponent implements OnInit {
   }
 
   getByCurrentnameKewordDateRange(keword: any, currentName: string, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCurrentnameKewordDateRange(keword, currentName, startDate, endDate)
+    this.ticket$ = this.ticketService.getByCurrentnameKewordDateRange(keword, currentName, startDate, endDate, this.Supporter)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -440,7 +417,7 @@ export class TicketComponent implements OnInit {
   }
 
   getByCurrentnameDateRange(currentName: string, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCurrentnameDateRange(currentName, startDate, endDate)
+    this.ticket$ = this.ticketService.getByCurrentnameDateRange(currentName, startDate, endDate, this.Supporter)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -451,7 +428,7 @@ export class TicketComponent implements OnInit {
   }
 
   getByKewordDaterange(keword: any, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByKewordDaterange(keword, startDate, endDate)
+    this.ticket$ = this.ticketService.getByKewordDaterange(keword, startDate, endDate, this.Supporter)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -462,7 +439,7 @@ export class TicketComponent implements OnInit {
   }
 
   getByDaterange(startDate: any, endDate: any) {
-    this.ticket$ = this.ticketService.getByDaterange(startDate, endDate).snapshotChanges().pipe(
+    this.ticket$ = this.ticketService.getByDaterange(startDate, endDate, this.Supporter).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Ticket;
         const id = a.payload.doc.id;
@@ -475,7 +452,7 @@ export class TicketComponent implements OnInit {
     return this.staff = this.currentName
   }
 
-  onChange(value) {
+  onChange(value: string) {
     this.selectedColor = value;
   }
 

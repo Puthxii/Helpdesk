@@ -1,3 +1,4 @@
+import { TicketDevComponent } from './pages/ticket-dev/ticket-dev.component';
 import { TicketSupComponent } from './pages/ticket-sup/ticket-sup.component';
 import { TicketMaComponent } from './pages/ticket-ma/ticket-ma.component';
 import { SiteTicketComponent } from './pages/site-ticket/site-ticket.component';
@@ -48,7 +49,8 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
     EditTicketComponent,
     SiteTicketComponent,
     TicketMaComponent,
-    TicketSupComponent
+    TicketSupComponent,
+    TicketDevComponent
   ],
   imports: [
     FormsModule,
