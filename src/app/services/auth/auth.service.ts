@@ -181,6 +181,11 @@ export class AuthService {
     return this.checkAuthorization(user, allowed);
   }
 
+  isSupervisor(user: User): boolean {
+    const allowed = ['supervisor'];
+    return this.checkAuthorization(user, allowed);
+  }
+
   isCustomer(user: User): boolean {
     const allowed = ['customer'];
     return this.checkAuthorization(user, allowed);

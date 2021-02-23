@@ -27,9 +27,9 @@
                 <span class="menu-title"> MA</span>
             </a>
             <a [routerLink]=" ['/ticket-sup']" class=" list-group-item list-group-item-action bg-white"
-                *ngIf="auth.isSupporter(user)">
+                *ngIf="auth.isSupervisor(user)">
                 <i class="fas fa-ticket-alt"></i>
-                <span class="menu-title"> Suppervisor</span>
+                <span class="menu-title"> Supervisor</span>
             </a>
             <a [routerLink]=" ['/ticket-dev']" class=" list-group-item list-group-item-action bg-white"
                 *ngIf="auth.isSupporter(user)">
