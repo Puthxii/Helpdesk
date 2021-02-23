@@ -46,8 +46,8 @@ export class TicketComponent implements OnInit {
     { value: 'Informed' },
     { value: 'More Info' },
     { value: 'In Progress' },
-    // { value: 'Accepted', },
-    // { value: 'Assigned', },
+    { value: 'Accepted', },
+    { value: 'Assigned', },
     { value: 'Resolved' },
 
   ]
@@ -145,6 +145,10 @@ export class TicketComponent implements OnInit {
         this.CountStatus[i] = result.length;
       });
     }
+  }
+
+  getSum() {
+    return this.CountStatus[3] + this.CountStatus[4] + this.CountStatus[5]
   }
 
   getCountByStatusCurrentname() {
