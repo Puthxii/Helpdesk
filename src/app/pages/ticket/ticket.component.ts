@@ -39,7 +39,7 @@ export class TicketComponent implements OnInit {
   public filterTicketForm: FormGroup
   activeState = 'Draft'
 
-  Supporter = ['Draft', 'Informed', 'More Info', 'In Proress', 'Resolved']
+  Supporter = ['Draft', 'Informed', 'More Info', 'In Progress', 'Resolved']
 
   Status = [
     { value: 'Draft' },
