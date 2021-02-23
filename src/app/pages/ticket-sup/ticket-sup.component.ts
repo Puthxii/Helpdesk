@@ -11,11 +11,11 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 @Component({
-  selector: 'ticket-ma',
-  templateUrl: './ticket-ma.component.html',
-  styleUrls: ['./ticket-ma.component.css']
+  selector: 'ticket-sup',
+  templateUrl: './ticket-sup.component.html',
+  styleUrls: ['./ticket-sup.component.css']
 })
-export class TicketMaComponent implements OnInit {
+export class TicketSupComponent implements OnInit {
   searchValue = '';
   Ticket: Ticket[];
   ticket$: Observable<Ticket[]>;
@@ -38,16 +38,16 @@ export class TicketMaComponent implements OnInit {
   public filterTicketForm: FormGroup
 
   Status = [
-    { value: 'In Progress' },
     { value: 'Accepted' },
+    { value: 'Assigned' },
   ]
-  activeState = 'In Progress'
+  activeState = 'Accepted'
   CountStatus = []
   user: any
   User: User
   user$: any
   isChecked = true
-  status = 'In Progress'
+  status = 'Accepted'
   currentName: string
 
   myOptions: IAngularMyDpOptions = {
@@ -128,13 +128,17 @@ export class TicketMaComponent implements OnInit {
   }
 
   isDraft(ticket: { status: string; }) {
-    return ticket.status === 'In Progress';
+    return ticket.status === 'Accepted';
   }
 
   setStatus(status: string) {
     this.setStatusState(status)
     this.status = status
     this.isFilter()
+  }
+  
+  setStatusState(status: string) {
+    this.activeState = status;
   }
 
   getAllTicket(status: string) {
@@ -159,16 +163,7 @@ export class TicketMaComponent implements OnInit {
     }
   }
 
-  setStatusState(status: string) {
-    this.activeState = status;
-  }
-
-  getArrayFromNumber(length) {
-    this.max = (Math.ceil(length / 7))
-    return new Array(Math.ceil(this.max));
-  }
-
-  onChange(value) {
+  onChange(value: string) {
     this.selectedColor = value;
   }
 

@@ -356,7 +356,6 @@ export class TicketComponent implements OnInit {
   }
 
   checkValue(event: any) {
-    this.updateIndex(0)
     this.isFilter()
   }
 

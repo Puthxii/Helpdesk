@@ -1,3 +1,4 @@
+import { TicketSupComponent } from './pages/ticket-sup/ticket-sup.component';
 import { TicketMaComponent } from './pages/ticket-ma/ticket-ma.component';
 import { SiteTicketComponent } from './pages/site-ticket/site-ticket.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -46,7 +47,8 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
     Error404Component,
     EditTicketComponent,
     SiteTicketComponent,
-    TicketMaComponent
+    TicketMaComponent,
+    TicketSupComponent
   ],
   imports: [
     FormsModule,

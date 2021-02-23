@@ -8,7 +8,8 @@
         </h5>
         <div class="form-check">
           <label class="form-check-label">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
+              (change)="checkValue(isChecked?'ture':'false')">
             My Tickets<i class="input-helper"></i>
           </label>
         </div>
@@ -39,8 +40,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('In Progress')">
-        <div class="card inprogress mt-2" [class.active]="'In Progress' === activeState">
+      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('Accepted')">
+        <div class="card accepted mt-2" [class.active]="'Accepted' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -48,7 +49,7 @@
                   <i class="fas fa-pen float-left mr-2"></i>
                 </div>
                 <div class="media-body text-right">
-                  <span>In Progress</span>
+                  <span>Accepted</span>
                 </div>
                 <div class="media-body text-right">
                   <span>{{ CountStatus[0] }}</span>
@@ -58,8 +59,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('Accepted')">
-        <div class="card accepted mt-2" [class.active]="'Accepted' === activeState">
+      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('Assigned')">
+        <div class="card assigned mt-2" [class.active]="'Assigned' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -67,7 +68,7 @@
                   <i class="fas fa-file float-left mr-2"></i>
                 </div>
                 <div class="media-body text-right">
-                  <span>Accepted</span>
+                  <span>Assigned</span>
                 </div>
                 <div class="media-body text-right ml-2">
                   <span>{{ CountStatus[1] }}</span>

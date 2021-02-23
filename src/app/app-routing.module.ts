@@ -1,3 +1,4 @@
+import { TicketSupComponent } from './pages/ticket-sup/ticket-sup.component';
 import { TicketMaComponent } from './pages/ticket-ma/ticket-ma.component';
 import { SiteTicketComponent } from './pages/site-ticket/site-ticket.component';
 import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
@@ -75,6 +76,10 @@ const router: Routes = [
       {
         path: 'ticket-ma',
         component: TicketMaComponent
+      },
+      {
+        path: 'ticket-sup',
+        component: TicketSupComponent
       }
     ]
   },
