@@ -20,6 +20,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { StaffComponent } from './pages/staff/staff.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
 import { Error404Component } from './error-pages/error404/error404.component';
+import { MaintenanceGuard } from './guards/ma.guard';
 
 const router: Routes = [
   {
@@ -76,6 +77,7 @@ const router: Routes = [
       },
       {
         path: 'ticket-ma',
+        canActivate: [MaintenanceGuard],
         component: TicketMaComponent
       },
       {

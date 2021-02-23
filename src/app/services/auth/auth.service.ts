@@ -176,6 +176,11 @@ export class AuthService {
     return this.checkAuthorization(user, allowed);
   }
 
+  isMaintenance(user: User): boolean {
+    const allowed = ['maintenance'];
+    return this.checkAuthorization(user, allowed);
+  }
+
   isCustomer(user: User): boolean {
     const allowed = ['customer'];
     return this.checkAuthorization(user, allowed);
