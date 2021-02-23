@@ -80,9 +80,6 @@ export class TicketComponent implements OnInit {
     { icon: 'fab fa-video', name: 'Other' }
   ];
 
-  startIndex = 0;
-  endIndex = 7;
-  tabindex = 0;
   user: any
   User: User
   user$: any
@@ -246,7 +243,6 @@ export class TicketComponent implements OnInit {
 
   search() {
     this.keword = this.searchValue
-    this.updateIndex(0)
     if (this.isChecked === true && this.status != null && this.status != 'Total') {
       this.getByCurrentnameStatus(this.keword, this.currentName, this.status)
     } else if (this.isChecked === false && this.status != null && this.status != 'Total') {
@@ -263,7 +259,6 @@ export class TicketComponent implements OnInit {
   }
 
   setStatus(status: string) {
-    this.updateIndex(0)
     this.setStatusState(status)
     this.status = status
     this.isFilter()
@@ -293,33 +288,6 @@ export class TicketComponent implements OnInit {
 
   setStatusState(status: string) {
     this.activeState = status;
-  }
-
-  getArrayFromNumber(length) {
-    this.max = (Math.ceil(length / 7))
-    return new Array(Math.ceil(this.max));
-  }
-
-  updateIndex(pageIndex) {
-    this.tabindex = pageIndex;
-    this.startIndex = pageIndex * 7;
-    this.endIndex = this.startIndex + 7;
-  }
-
-  previousIndex() {
-    if (this.tabindex > 0) {
-      this.tabindex -= 1
-    }
-    this.startIndex = this.tabindex * 7;
-    this.endIndex = this.startIndex + 7;
-  }
-
-  nextIndex() {
-    if (this.tabindex < this.max - 1) {
-      this.tabindex += 1
-    }
-    this.startIndex = this.tabindex * 7;
-    this.endIndex = this.startIndex + 7;
   }
 
   getSourcesIcon(sources: any) {
@@ -356,14 +324,12 @@ export class TicketComponent implements OnInit {
   }
 
   checkValue(event: any) {
-    this.updateIndex(0)
     this.isFilter()
   }
 
   onDateChanged(event: IMyDateModel): void {
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
-    this.updateIndex(0)
     if (startDate != null && endDate != null) {
       if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.keword != null) {
         this.getByCurrentnameStatusKewordDateRange(this.keword, this.currentName, this.status, startDate, endDate)
