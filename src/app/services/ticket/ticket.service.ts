@@ -17,7 +17,7 @@ export class TicketService {
     Swal.fire({
       text: 'Your ticket has been saved',
       icon: 'success',
-    }).then((result) => {
+    }).then((result: any) => {
       this.router.navigate(['/']);
     });
   }
@@ -27,7 +27,7 @@ export class TicketService {
       icon: 'error',
       title: 'error',
       text: 'Your ticket has not been saved',
-    }).then((result) => {
+    }).then((result: any) => {
       this.router.navigate(['/']);
     });
   }
@@ -36,7 +36,7 @@ export class TicketService {
     Swal.fire({
       text: 'Your ticket has been saved',
       icon: 'success',
-    }).then((result) => {
+    }).then((result: any) => {
     });
   }
 
@@ -45,7 +45,7 @@ export class TicketService {
       icon: 'error',
       title: 'error',
       text: 'Your ticket has not been saved',
-    }).then((result) => {
+    }).then((result: any) => {
     });
   }
 
@@ -54,7 +54,7 @@ export class TicketService {
       icon: 'error',
       title: 'error',
       text: 'Your ticket has not been delete',
-    }).then((result) => {
+    }).then((result: any) => {
     });
   }
 
@@ -81,7 +81,7 @@ export class TicketService {
     )
   }
 
-  async cancelTicket(id, subject) {
+  async cancelTicket(id: any, subject: any) {
     try {
       Swal.fire({
         title: 'Are you sure delete',
@@ -91,7 +91,7 @@ export class TicketService {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
+      }).then((result: { isConfirmed: any; }) => {
         if (result.isConfirmed) {
           this.cancelticket(id)
           this.confirmCancel()
@@ -102,13 +102,13 @@ export class TicketService {
     }
   }
 
-  cancelticket(id) {
+  cancelticket(id: string) {
     this.afs.collection('ticket').doc(id).update({
       status: 'Cancel'
     })
   }
 
-  async changeStatus(id, status: any, staff: any) {
+  async changeStatus(id: string, status: any, staff: any) {
     try {
       this.afs.collection('ticket').doc(id).update({
         status
@@ -120,7 +120,7 @@ export class TicketService {
     }
   }
 
-  async changePriority(id, priority: any) {
+  async changePriority(id: string, priority: any) {
     try {
       this.afs.collection('ticket').doc(id).update({
         priority
@@ -130,7 +130,7 @@ export class TicketService {
     }
   }
 
-  async changeType(id, type: any) {
+  async changeType(id: string, type: any) {
     try {
       this.afs.collection('ticket').doc(id).update({
         type
@@ -202,10 +202,10 @@ export class TicketService {
       })
   }
 
-  getByKeyWord(keword: any) {
+  getByKeyWord(keword: any, role) {
     return this.afs.collection('ticket', (ref) => ref
       .orderBy('subject')
-      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
+      .where('status', 'in', role)
       .startAt(keword)
       .endAt(keword + '\uf8ff'));
   }
@@ -250,26 +250,26 @@ export class TicketService {
     ).valueChanges();
   }
 
-  getTicketsList(role) {
+  getTicketsList(role: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', role)
       .orderBy('date', 'desc')
     );
   }
 
-  getTicketsListCurrentname(creator: string) {
+  getTicketsListCurrentname(creator: string, role: any) {
     return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', ['Draft', 'In Progress', 'Pending', 'Resolved'])
+      .where('status', 'in', role)
       .where('staff', '==', creator)
       .orderBy('date', 'desc')
     );
   }
 
-  getByDaterange(startDate, endDate) {
+  getByDaterange(startDate: any, endDate: any, role: any) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
-      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
+      .where('status', 'in', role)
     );
   }
 
@@ -301,30 +301,30 @@ export class TicketService {
     );
   }
 
-  getByCurrentnameKewordDateRange(keword: any, creator: string, startDate: Date, endDate: Date) {
+  getByCurrentnameKewordDateRange(keword: any, creator: string, startDate: Date, endDate: Date, role: any) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
-      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
+      .where('status', 'in', role)
       .where('staff', '==', creator)
       .where('subject', '==', keword)
     );
   }
 
-  getByCurrentnameDateRange(creator: string, startDate: Date, endDate: Date) {
+  getByCurrentnameDateRange(creator: string, startDate: Date, endDate: Date, role: any) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
-      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
+      .where('status', 'in', role)
       .where('staff', '==', creator)
     );
   }
 
-  getByKewordDaterange(keword: any, startDate: Date, endDate: Date) {
+  getByKewordDaterange(keword: any, startDate: Date, endDate: Date, role: any) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>', startDate)
       .where('date.singleDate.jsDate', '<', endDate)
-      .where('status', 'in', ['Draft', 'More Info', 'Pending', 'Resolved', 'Close'])
+      .where('status', 'in', role)
       .where('subject', '==', keword)
     );
   }
