@@ -1,0 +1,61 @@
+.inprogress{
+    background: slategray;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.inprogress.active {
+    background: rgb(165, 174, 184);
+    color: white;
+}
+
+.accepted {
+    background: orange;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.accepted.active {
+    background: rgb(255, 202, 103);
+    color: white;
+}
+.dd {
+    margin-bottom: 5px;
+}
+
+.status {
+    width: 144px;
+    background-color: #6ba3b4;
+    color: white;
+    height: 30px;
+    padding: 3px;
+}
+
+.action{
+    padding-top: 35px;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.searchbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
