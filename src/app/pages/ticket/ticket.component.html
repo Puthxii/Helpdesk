@@ -61,8 +61,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Pending')">
-        <div class="card pending mt-2" [class.active]="'Pending' === activeState">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Informed')">
+        <div class="card pending mt-2" [class.active]="'Informed' === activeState">
           <div class="card-content">
             <div class="card-body">
               <div class="media d-flex">
@@ -111,7 +111,7 @@
                   <span>In Progress</span>
                 </div>
                 <div class="media-body text-right ml-2">
-                  <span>{{ CountStatus[2] }}</span>
+                  <span>{{ CountStatus[3] }}</span>
                 </div>
               </div>
             </div>
@@ -130,7 +130,7 @@
                   <span>Resolved</span>
                 </div>
                 <div class="media-body text-right ml-2">
-                  <span>{{ CountStatus[3] }}</span>
+                  <span>{{ CountStatus[4] }}</span>
                 </div>
               </div>
             </div>

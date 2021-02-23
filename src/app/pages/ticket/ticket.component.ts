@@ -38,14 +38,17 @@ export class TicketComponent implements OnInit {
 
   public filterTicketForm: FormGroup
   activeState = 'Draft'
+
+  Supporter = ['Draft', 'Informed', 'More Info', 'In Proress', 'Resolved']
+
   Status = [
     { value: 'Draft' },
-    { value: 'Pending' },
+    { value: 'Informed' },
+    { value: 'More Info' },
     { value: 'In Progress' },
     { value: 'Resolved' },
-    { value: 'Closed' },
-    { value: 'Rejected' }
   ]
+
   ActiveStatus = [
     { name: 'Draft', icon: 'fas fa-pen mx-2' },
     { name: 'In Progress', icon: 'fas fa-clock mx-2' },
@@ -146,7 +149,7 @@ export class TicketComponent implements OnInit {
   }
 
   getCountToltal() {
-    this.ticketService.getTicketsList().valueChanges().subscribe(result => {
+    this.ticketService.getTicketsList(this.Supporter).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
@@ -276,7 +279,7 @@ export class TicketComponent implements OnInit {
         }))
       )
     } else {
-      this.ticket$ = this.ticketService.getTicketsList().snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsList(this.Supporter).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc.id;

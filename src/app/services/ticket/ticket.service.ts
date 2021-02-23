@@ -250,9 +250,9 @@ export class TicketService {
     ).valueChanges();
   }
 
-  getTicketsList() {
+  getTicketsList(role) {
     return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', ['Draft', 'In Progress', 'Pending', 'Resolved'])
+      .where('status', 'in', role)
       .orderBy('date', 'desc')
     );
   }
