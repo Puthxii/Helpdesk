@@ -19,7 +19,7 @@ export const CurrentStatus = [
     { name: 'Informed', icon: 'fas fa-pen mx-2' },
     { name: 'More Info', icon: 'fas fa-clock mx-2' },
     { name: 'In Progress', icon: 'fas fa-clock mx-2' },
-    { name: 'Accepted', icon: 'fas fa-check-circle mx-2' },
-    { name: 'Assigned', icon: 'fas fa-times-circle mx-2' },
-    { name: 'Resolved', icon: 'fas fa-file mx-2' }
+    { name: 'Accepted', icon: 'fas fa-check mx-2' },
+    { name: 'Assigned', icon: 'fas fa-user-check mx-2' },
+    { name: 'Resolved', icon: 'fas fa-tasks mx-2' }
 ]
