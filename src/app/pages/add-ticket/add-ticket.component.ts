@@ -265,8 +265,8 @@ export class AddTicketComponent implements OnInit {
     if (this.Status.some(item => item.value === status)) {
       console.log('Object found inside the array.');
     } else {
-      let name;
-      let value;
+      let name: string;
+      let value: string;
       switch (status) {
         case 'Closed':
           name = 'Save as Close'

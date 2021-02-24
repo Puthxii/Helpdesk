@@ -64,7 +64,7 @@ export class TicketComponent implements OnInit {
   CountStatus = []
 
   Types = [
-    { name: 'Undefined', icon: '' },
+    { name: 'Undefined', icon: 'fas fa-times-circle mx-2' },
     { name: 'Info', icon: 'fas fa-info-circle mx-2' },
     { name: 'Consult', icon: 'fas fa-question-circle mx-2' },
     { name: 'Problem', icon: 'fas fa-exclamation-circle mx-2' },
@@ -72,7 +72,7 @@ export class TicketComponent implements OnInit {
   ];
 
   Prioritys = [
-    { name: 'Undefined', icon: '' },
+    { name: 'Undefined', icon: 'fas fa-times-circle mx-2' },
     { name: 'Low', icon: 'fas fa-square mx-2' },
     { name: 'Medium', icon: 'fas fa-circle mx-2' },
     { name: 'High', icon: 'fas fa-star mx-2' },
@@ -197,15 +197,18 @@ export class TicketComponent implements OnInit {
     this.ticketService.cancelTicket(id, subject)
   }
 
+  // todo : event chang status
   changeStatus(id: string, status: any, staff: any) {
     this.ticketService.changeStatus(id, status, staff)
   }
 
+  // todo : event chang priority
   changePriority(id: string, priority: string) {
     this.priorityClass = priority
     this.ticketService.changePriority(id, priority)
   }
 
+  // todo : event chang type
   changeType(id: string, type: string) {
     this.ticketService.changeType(id, type)
   }
@@ -479,7 +482,10 @@ export class TicketComponent implements OnInit {
         color = 'critical'
         break;
       }
+      case 'Undefined': {
+        color = 'undefined'
+      }
     }
-    return `btn dropdown-toggle ${color}`
+    return `${color}`
   }
 }
