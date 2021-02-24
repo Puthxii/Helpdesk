@@ -109,13 +109,22 @@
             <div class="col-xl-3 col-sm-4 col-12">
               <div class="col-3 text-lg-left">
                 <div class="dropdown dd">
-                  <button class="btn dropdown-toggle status" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-pen text-left mr-2"></i>{{ticket.status}}
-                  </button>
-                  <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item">
-                      <i class="fas fa-file float mr-2" value="statusname"></i> {{ticket.status}} </a>
+                  <div class="{{ classPriority(ticket.priority) }}">
+                    <i class="{{ getPriorityIcon(ticket.priority) }} text-left"></i>{{ticket.priority}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 text-lg-left">
+                <div class="dropdown dd">
+                  <div class="type">
+                    <i class="{{ getTypeIcon(ticket.type)}} text-left"></i>{{ticket.type}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 text-lg-left">
+                <div class="dropdown dd">
+                  <div class="status">
+                    <i class="{{ getStatusIcon(ticket.status)}}"></i>{{ticket.status}}
                   </div>
                 </div>
               </div>

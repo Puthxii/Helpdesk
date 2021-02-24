@@ -10,6 +10,7 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-ticket',
@@ -29,6 +30,9 @@ export class TicketComponent implements OnInit {
   selectedColor = ''
   priorityClass: string;
   constructor(
+    @Inject('PRIORITY') public Prioritys: any[],
+    @Inject('TYPES') public Types: any[],
+    @Inject('STATUS') public CurrentStatus: any[],
     private auth: AuthService,
     private ticketService: TicketService,
     public userService: UserService,
@@ -49,35 +53,9 @@ export class TicketComponent implements OnInit {
     { value: 'Accepted', },
     { value: 'Assigned', },
     { value: 'Resolved' },
-
   ]
 
-  ActiveStatus = [
-    { name: 'Draft', icon: 'fas fa-pen mx-2' },
-    { name: 'Informed', icon: 'fas fa-pen mx-2' },
-    { name: 'More Info', icon: 'fas fa-clock mx-2' },
-    { name: 'In Progress', icon: 'fas fa-clock mx-2' },
-    { name: 'Accepted', icon: 'fas fa-check-circle mx-2' },
-    { name: 'Assigned', icon: 'fas fa-times-circle mx-2' },
-    { name: 'Resolved', icon: 'fas fa-file mx-2' }
-  ]
   CountStatus = []
-
-  Types = [
-    { name: 'Undefined', icon: 'fas fa-times-circle mx-2' },
-    { name: 'Info', icon: 'fas fa-info-circle mx-2' },
-    { name: 'Consult', icon: 'fas fa-question-circle mx-2' },
-    { name: 'Problem', icon: 'fas fa-exclamation-circle mx-2' },
-    { name: 'Add-ons', icon: 'fas fa-plus-circle mx-2' }
-  ];
-
-  Prioritys = [
-    { name: 'Undefined', icon: 'fas fa-times-circle mx-2' },
-    { name: 'Low', icon: 'fas fa-square mx-2' },
-    { name: 'Medium', icon: 'fas fa-circle mx-2' },
-    { name: 'High', icon: 'fas fa-star mx-2' },
-    { name: 'Critical', icon: 'fas fa-fire mx-2' }
-  ];
 
   Sources = [
     { icon: 'fas fa-globe-americas', name: 'Website' },
@@ -323,7 +301,6 @@ export class TicketComponent implements OnInit {
     }
   }
 
-
   getTypeIcon(type: any) {
     for (let i = 0; this.Types.length; i++) {
       if (this.Types[i].name === type) {
@@ -333,9 +310,9 @@ export class TicketComponent implements OnInit {
   }
 
   getStatusIcon(status: any) {
-    for (let i = 0; this.ActiveStatus.length; i++) {
-      if (this.ActiveStatus[i].name === status) {
-        return this.ActiveStatus[i].icon
+    for (let i = 0; this.CurrentStatus.length; i++) {
+      if (this.CurrentStatus[i].name === status) {
+        return this.CurrentStatus[i].icon
       }
     }
   }

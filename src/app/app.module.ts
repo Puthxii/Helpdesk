@@ -30,6 +30,7 @@ import { DetailComponent } from './pages/detail/detail.component';
 import { Error404Component } from './error-pages/error404/error404.component';
 import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
+import { CurrentStatus, Prioritys, Types } from './shared/constant';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,14 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
     AngularMyDatePickerModule
 
   ],
-  providers: [AuthService, AngularFireDatabase, AuthGuard],
+  providers: [
+    AuthService,
+    AngularFireDatabase,
+    AuthGuard,
+    { provide: 'PRIORITY', useValue: Prioritys },
+    { provide: 'TYPES', useValue: Types },
+    { provide: 'STATUS', useValue: CurrentStatus }
+  ],
   bootstrap: [AppComponent]
 })
 
