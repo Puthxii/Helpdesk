@@ -202,7 +202,6 @@ export class TicketComponent implements OnInit {
       );
   }
 
-
   getByCurrentnameStatus(value: string, currentname: string, status: any) {
     this.ticket$ = this.ticketService.getByCurrentnameStatus(value, currentname, status)
       .snapshotChanges().pipe(

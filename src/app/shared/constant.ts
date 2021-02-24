@@ -17,7 +17,7 @@ export const Types = [
 export const CurrentStatus = [
     { name: 'Draft', icon: 'fas fa-pen mx-2' },
     { name: 'Informed', icon: 'fas fa-pen mx-2' },
-    { name: 'More Info', icon: 'fas fa-clock mx-2' },
+    { name: 'More Info', icon: 'fas fa-history mx-2' },
     { name: 'In Progress', icon: 'fas fa-clock mx-2' },
     { name: 'Accepted', icon: 'fas fa-check mx-2' },
     { name: 'Assigned', icon: 'fas fa-user-check mx-2' },

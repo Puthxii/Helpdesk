@@ -11,6 +11,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ThrowStmt } from '@angular/compiler';
+import { Inject } from '@angular/core';
 @Component({
   selector: 'ticket-dev',
   templateUrl: './ticket-dev.component.html',
@@ -29,6 +30,9 @@ export class TicketDevComponent implements OnInit {
   selectedColor = ''
   priorityClass: string;
   constructor(
+    @Inject('PRIORITY') public Prioritys: any[],
+    @Inject('TYPES') public Types: any[],
+    @Inject('STATUS') public CurrentStatus: any[],
     private auth: AuthService,
     private ticketService: TicketService,
     public userService: UserService,
@@ -187,5 +191,55 @@ export class TicketDevComponent implements OnInit {
     this.ticketService.getTicketsListCurrentname(this.currentName, this.Developer).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
+  }
+
+  classPriority(priority: any) {
+    let color = ''
+    switch (priority) {
+      case 'Low': {
+        color = 'low'
+        break
+      }
+      case 'Medium': {
+        color = 'medium'
+        break
+      }
+      case 'High': {
+        color = 'high'
+        break;
+      }
+      case 'Critical': {
+        color = 'critical'
+        break;
+      }
+      case 'Undefined': {
+        color = 'undefined'
+      }
+    }
+    return `${color}`
+  }
+
+  getPriorityIcon(priority: any) {
+    for (let i = 0; this.Prioritys.length; i++) {
+      if (this.Prioritys[i].name === priority) {
+        return this.Prioritys[i].icon
+      }
+    }
+  }
+
+  getTypeIcon(type: any) {
+    for (let i = 0; this.Types.length; i++) {
+      if (this.Types[i].name === type) {
+        return this.Types[i].icon
+      }
+    }
+  }
+
+  getStatusIcon(status: any) {
+    for (let i = 0; this.CurrentStatus.length; i++) {
+      if (this.CurrentStatus[i].name === status) {
+        return this.CurrentStatus[i].icon
+      }
+    }
   }
 }
