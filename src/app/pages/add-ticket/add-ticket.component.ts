@@ -249,12 +249,16 @@ export class AddTicketComponent implements OnInit {
     if (type === 'Info' || type === 'Consult') {
       this.hideResolve = true;
       this.removeStatus('In Progress');
-      this.addStatus('Closed');
+      this.isResolveDescription(Event)
     } else if (type === 'Problem' || type === 'Add-ons') {
       this.hideResolve = false;
       this.removeStatus('Closed');
       this.addStatus('In Progress');
     }
+  }
+
+  isResolveDescription(event: any) {
+    (this.addTicketForm.controls.resolveDescription.value) ? this.addStatus('Closed') : this.removeStatus('Closed')
   }
 
   removeStatus(status: string) {
