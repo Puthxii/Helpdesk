@@ -269,10 +269,12 @@ export class AddTicketComponent implements OnInit {
       let value: string;
       switch (status) {
         case 'Closed':
+          this.setStatus()
           name = 'Save as Close'
           value = status
           break;
         case 'In Progress':
+          this.setStatus()
           name = 'Save as In Progress'
           value = status
           break;
