@@ -50,9 +50,9 @@ export class EditTicketComponent implements OnInit {
   ];
 
   Status = [
-    { name: 'Save as draft', value: 'Draft' },
-    { name: 'Save as pending', value: 'Pending' },
-    { name: 'Save as close', value: 'Close' }
+    // { name: 'Save as Inform', value: 'Informed' },
+    // { name: 'Save as Draft', value: 'Draft' },
+    // { name: 'Save as Reject', value: 'Rejected' },
   ];
 
   ticket: any;
@@ -188,4 +188,50 @@ export class EditTicketComponent implements OnInit {
     return maStartDate + ' - ' + maEndDate;
   }
 
+  displaySelectedStatus(): any {
+    return (this.status.value) ? 'Save as ' + this.status.value : 'Save as draft';
+  }
+
+  onSelectedStatus(value: any) {
+    this.editTicket.patchValue({
+      status: value
+    });
+  }
+
+  filterAction() {
+    const currentStatus = this.status.value
+    if (currentStatus === 'Draft') {
+      this.Status = [
+        { name: 'Save as Inform', value: 'Informed' },
+        { name: 'Save as In Progress', value: 'In Progress' },
+        { name: 'Save as Close', value: 'Closed' },
+      ];
+    } else if (currentStatus === 'Informed') {
+      this.Status = [
+        { name: 'Save as Reject', value: 'Rejected' },
+        { name: 'Save as In Progress', value: 'In Progress' },
+        { name: 'Save as Close', value: 'Closed' },
+        { name: 'Save as More Info', value: 'More Info' },
+      ];
+    } else if (currentStatus === 'Resolved') {
+      this.Status = [
+        { name: 'Save as Close', value: 'Closed' },
+      ];
+    } else if (currentStatus === 'In Progress') {
+      this.Status = [
+        { name: 'Save as Accept', value: 'Accepted' },
+        { name: 'Save as Reject', value: 'Rejected' },
+        { name: 'Save as Pending', value: 'Pending' },
+      ];
+    } else if (currentStatus === 'Accepted') {
+      this.Status = [
+        { name: 'Save as Assign', value: 'Assigned' },
+        { name: 'Save as In Progress', value: 'In Progress' },
+      ];
+    } else if (currentStatus === 'Assigned') {
+      this.Status = [
+        { name: 'Save as Resolve', value: 'Resolved' },
+      ];
+    }
+  }
 }
