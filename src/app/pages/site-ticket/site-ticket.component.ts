@@ -30,9 +30,6 @@ export class SiteTicketComponent implements OnInit {
   creator: any
   isChecked = true
   max: number;
-  startIndex = 0;
-  endIndex = 7;
-  tabindex = 0;
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
@@ -46,6 +43,8 @@ export class SiteTicketComponent implements OnInit {
     { value: 'Informed' },
     { value: 'MoreInfo' },
     { value: 'In Progress' },
+    { value: 'Accepted', },
+    { value: 'Assigned', },
     { value: 'Closed' },
     { value: 'Rejected' }
   ]
@@ -69,7 +68,6 @@ export class SiteTicketComponent implements OnInit {
   onDateChanged(event: IMyDateModel): void {
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
-    this.updateIndex(0)
     if (startDate != null && endDate != null) {
       if (this.isChecked === true && this.status != null && this.keword != null) {
         this.getByCreatorStatusKeword(this.creator, this.status, this.keword, startDate, endDate)
@@ -125,7 +123,6 @@ export class SiteTicketComponent implements OnInit {
   }
 
   checkValue(event: any) {
-    this.updateIndex(0)
     this.isFilter()
   }
 
@@ -134,17 +131,20 @@ export class SiteTicketComponent implements OnInit {
   }
 
   setStatus(status: string) {
-    this.updateIndex(0)
     this.setStatusState(status)
     this.status = status
     this.isFilter()
+  }
+
+  getSum() {
+    return this.CountStatus[2] + this.CountStatus[3] + this.CountStatus[4]
   }
 
   getStatusName(status) {
     let statusString = ''
     switch (status) {
       case 'Informed': {
-        statusString = 'Informed'
+        statusString = 'Sent'
         break
       }
       case 'Pending': {
@@ -152,6 +152,14 @@ export class SiteTicketComponent implements OnInit {
         break
       }
       case 'In Progress': {
+        statusString = 'Accepted'
+        break
+      }
+      case 'Accepted': {
+        statusString = 'Accepted'
+        break
+      }
+      case 'Assigned': {
         statusString = 'Accepted'
         break
       }
@@ -179,6 +187,14 @@ export class SiteTicketComponent implements OnInit {
         break
       }
       case 'In Progress': {
+        classIcon = 'fa-clock'
+        break
+      }
+      case 'Accepted': {
+        classIcon = 'fa-clock'
+        break
+      }
+      case 'Assigned': {
         classIcon = 'fa-clock'
         break
       }
@@ -241,34 +257,6 @@ export class SiteTicketComponent implements OnInit {
       );
   }
 
-  getArrayFromNumber(length) {
-    this.max = (Math.ceil(length / 7))
-    return new Array(Math.ceil(this.max));
-  }
-
-  updateIndex(pageIndex) {
-    this.tabindex = pageIndex
-    this.startIndex = pageIndex * 7;
-    this.endIndex = this.startIndex + 7;
-  }
-
-  previousIndex() {
-    if (this.tabindex > 0) {
-      this.tabindex -= 1
-    }
-    this.startIndex = this.tabindex * 7;
-    this.endIndex = this.startIndex + 7;
-  }
-
-  nextIndex() {
-    if (this.tabindex < this.max - 1) {
-      this.tabindex += 1
-    }
-    this.startIndex = this.tabindex * 7;
-    this.endIndex = this.startIndex + 7;
-  }
-
-
   isDraft(ticket) {
     return ticket.status === 'Informed';
   }
@@ -279,7 +267,6 @@ export class SiteTicketComponent implements OnInit {
 
   search() {
     this.keword = this.searchValue
-    this.updateIndex(0)
     if (this.isChecked === true && this.status != null) {
       this.getByKewordCreatorStatus(this.keword, this.creator, this.status)
     } else if (this.isChecked === false && this.status != null) {
@@ -319,6 +306,7 @@ export class SiteTicketComponent implements OnInit {
         }))
       )
   }
+
   getBySiteStatusKeword(siteState: any, status: string, keword: any, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getBySiteStatusKeword(siteState, status, keword, startDate, endDate)
       .snapshotChanges().pipe(
@@ -329,6 +317,7 @@ export class SiteTicketComponent implements OnInit {
         }))
       )
   }
+
   getByCreatorStatus(creator: any, status: string, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getByCreatorStatus(creator, status, startDate, endDate)
       .snapshotChanges().pipe(
@@ -339,6 +328,7 @@ export class SiteTicketComponent implements OnInit {
         }))
       )
   }
+
   getByCreatorStatusKeword(creator: any, status: string, keword: any, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getByCreatorStatusKeword(creator, status, keword, startDate, endDate)
       .snapshotChanges().pipe(
@@ -350,5 +340,3 @@ export class SiteTicketComponent implements OnInit {
       )
   }
 }
-
-/*In progress(Support) = Accepted (Customer) */
