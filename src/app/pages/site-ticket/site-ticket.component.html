@@ -95,7 +95,7 @@
                 </div>
                 <div class="media-body text-right">
                   <span>
-                    {{ CountStatus[2] }}
+                    {{ getSum() }}
                   </span>
                 </div>
               </div>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="media-body text-right">
                   <span>
-                    {{ CountStatus[3] }}
+                    {{ CountStatus[5] }}
                   </span>
                 </div>
               </div>
@@ -137,7 +137,7 @@
                 </div>
                 <div class="media-body text-right">
                   <span>
-                    {{ CountStatus[4] }}
+                    {{ CountStatus[6] }}
                   </span>
                 </div>
               </div>
@@ -167,7 +167,7 @@
               </div>
               <div class="col">
                 <span style="color: gray;">
-                  Create
+                  Created
                   {{ ticket.date.singleDate?.formatted?
                   ticket.date.singleDate.formatted
                   : ''}}
