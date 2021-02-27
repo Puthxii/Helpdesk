@@ -37,11 +37,11 @@ export class SiteTicketComponent implements OnInit {
   status = 'Informed'
   activeState = 'Informed'
   ticket$: Observable<Ticket[]>;
-  siteState
+  siteState: any
   CountStatus = []
   Status = [
     { value: 'Informed' },
-    { value: 'MoreInfo' },
+    { value: 'More Info' },
     { value: 'In Progress' },
     { value: 'Accepted', },
     { value: 'Assigned', },
@@ -140,14 +140,14 @@ export class SiteTicketComponent implements OnInit {
     return this.CountStatus[2] + this.CountStatus[3] + this.CountStatus[4]
   }
 
-  getStatusName(status) {
+  getStatusName(status: any) {
     let statusString = ''
     switch (status) {
       case 'Informed': {
         statusString = 'Sent'
         break
       }
-      case 'Pending': {
+      case 'More Info': {
         statusString = 'More Info'
         break
       }
@@ -175,14 +175,14 @@ export class SiteTicketComponent implements OnInit {
     return statusString
   }
 
-  getPriorityIcon(status) {
+  getPriorityIcon(status: any) {
     let classIcon = ''
     switch (status) {
       case 'Informed': {
         classIcon = 'fa-pen'
         break
       }
-      case 'Pending': {
+      case 'More Info': {
         classIcon = 'fa-file'
         break
       }
@@ -211,14 +211,14 @@ export class SiteTicketComponent implements OnInit {
   }
 
 
-  getBackgroundColor(status) {
+  getBackgroundColor(status: any) {
     let classBackground = ''
     switch (status) {
       case 'Informed': {
         classBackground = 'informed'
         break
       }
-      case 'More Info ': {
+      case 'More Info': {
         classBackground = 'moreinfo'
         break
       }
@@ -257,11 +257,15 @@ export class SiteTicketComponent implements OnInit {
       );
   }
 
-  isDraft(ticket) {
+  isDraft(ticket: { status: string; }) {
     return ticket.status === 'Informed';
   }
 
-  onSelectedDelete(id, subject: any) {
+  isInformedMoreInfo(ticket: { status: string; }) {
+    return ticket.status === 'Informed' || ticket.status === 'More Info';
+  }
+
+  onSelectedDelete(id: any, subject: any) {
     this.ticketService.cancelTicket(id, subject)
   }
 
