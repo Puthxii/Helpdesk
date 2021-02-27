@@ -162,13 +162,16 @@
                 rows="3"></textarea>
             </div>
           </div>
-          <div class="form-row">
-            <!-- <div class="form-group col-md-12" *ngIf="auth.isSupporter(user)">
-              <label class="control-label" for="assign">Assign Task</label>
-              <ng-multiselect-dropdown class="container" [placeholder]="'choose Developer...'" [data]="devList"
-                id="assign" [settings]="dropdownDev">
-              </ng-multiselect-dropdown>
-            </div> -->
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label class="control-label" for="assign">Assign task to dev</label>
+              <select name="assign"  class="form-control" id="assign">
+                <option value="">choose dev...</option>
+                <option *ngFor="let staff of Staff">
+                  {{staff.firstName}} {{staff.lastName}}
+                </option>
+              </select>
+            </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
