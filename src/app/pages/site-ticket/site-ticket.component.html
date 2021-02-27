@@ -186,7 +186,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-3 action">
               <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
                 (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
               <a [routerLink]="['/edit-ticket', ticket.id]">
