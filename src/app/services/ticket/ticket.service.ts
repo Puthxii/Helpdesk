@@ -162,8 +162,7 @@ export class TicketService {
           staff: ticket.staff,
           status: ticket.status,
           date: new Date(),
-        })
-        ;
+        });
       this.successNotification();
     } catch (error) {
       this.errorNotification();
