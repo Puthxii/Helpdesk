@@ -163,6 +163,14 @@
             </div>
           </div>
           <div class="form-row">
+            <!-- <div class="form-group col-md-12" *ngIf="auth.isSupporter(user)">
+              <label class="control-label" for="assign">Assign Task</label>
+              <ng-multiselect-dropdown class="container" [placeholder]="'choose Developer...'" [data]="devList"
+                id="assign" [settings]="dropdownDev">
+              </ng-multiselect-dropdown>
+            </div> -->
+          </div>
+          <div class="form-row">
             <div class="form-group col-md-12">
               <div class="btn-group btn-save" style="float: right;">
                 <button type="submit" class="btn btn-success" *ngIf="auth.isSupporter(user)"

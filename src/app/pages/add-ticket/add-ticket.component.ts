@@ -79,6 +79,7 @@ export class AddTicketComponent implements OnInit {
   get status() {
     return this.addTicketForm.get('status');
   }
+  users: any;
   user;
   Product: Product;
   site$: Observable<any>;
@@ -93,6 +94,7 @@ export class AddTicketComponent implements OnInit {
   User: User;
   Site: Site[];
   moduleList: any[];
+  devList: any[];
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -328,6 +330,11 @@ export class AddTicketComponent implements OnInit {
       this.moduleList = [];
     }
     return this.moduleList;
+  }
+
+  getDev() {
+   this.devList = this.addTicketForm.controls.staff.value.firstName
+   return this.devList;
   }
 
   getCreate() {
