@@ -39,6 +39,7 @@ export class SiteTicketComponent implements OnInit {
   ticket$: Observable<Ticket[]>;
   siteState: any
   CountStatus = []
+  statusSpecail = ['In Progress', 'Accepted', 'Assigned']
   Status = [
     { value: 'Informed' },
     { value: 'More Info' },
@@ -89,7 +90,9 @@ export class SiteTicketComponent implements OnInit {
         this.creator = this.user$.firstName + ' ' + this.user$.lastName
         this.siteState = this.user$.site
         this.getCountByStatusCreatorStatus()
-        this.getTicketByCreatorStatus(this.creator, this.status)
+        this.status === 'In Progress' ?
+          this.getTicketByCreatorSpecialStatus(this.creator, this.statusSpecail) :
+          this.getTicketByCreatorStatus(this.creator, this.status)
       } else { }
     });
   }
@@ -106,9 +109,22 @@ export class SiteTicketComponent implements OnInit {
     if (this.isChecked === true && this.status != null) {
       this.getUserValue()
     } else {
-      this.getTicketBySiteStatus(this.siteState, this.status)
+      this.status === 'In Progress' ?
+        this.getBySiteStatusSpecialFilter(this.siteState, this.statusSpecail) :
+        this.getTicketBySiteStatus(this.siteState, this.status)
       this.getCountByStatus()
     }
+  }
+
+  getTicketByCreatorSpecialStatus(creator: any, status: any) {
+    this.ticket$ = this.ticketService.getTicketByCreatorSpecialStatus(creator, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
   }
 
   getTicketByCreatorStatus(creator: any, status: string) {
@@ -244,6 +260,17 @@ export class SiteTicketComponent implements OnInit {
         this.CountStatus[i] = result.length;
       });
     }
+  }
+
+  getBySiteStatusSpecialFilter(site: any, status: any) {
+    this.ticket$ = this.ticketService.getTicketBySiteSpecialStatus(site, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
   }
 
   getTicketBySiteStatus(site: any, status: string) {

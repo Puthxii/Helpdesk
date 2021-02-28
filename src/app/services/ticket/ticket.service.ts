@@ -351,6 +351,14 @@ export class TicketService {
     );
   }
 
+  getTicketByCreatorSpecialStatus(creator: any, status: any) {
+    return this.afs.collection('ticket', ref => ref
+      .where('creator', '==', creator)
+      .where('status', '==', status)
+      .orderBy('date', 'desc')
+    );
+  }
+
   getTicketByCreatorStatus(creator: any, status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('creator', '==', creator)
@@ -364,6 +372,14 @@ export class TicketService {
       .where('status', '==', status)
       .where('creator', '==', creator)
     ).valueChanges();
+  }
+
+  getTicketBySiteSpecialStatus(site: any, status: any) {
+    return this.afs.collection('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where('status', 'in', status)
+      .orderBy('date', 'desc')
+    )
   }
 
   getTicketBySiteStatus(site: any, status: any) {
