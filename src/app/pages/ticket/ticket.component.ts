@@ -99,7 +99,6 @@ export class TicketComponent implements OnInit {
           this.getByStatusFilter(this.status)
       this.getCountByStatus()
       this.getCountToltal()
-      // this.search()
     }
   }
 
