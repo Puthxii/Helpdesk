@@ -11,7 +11,8 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
-
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/models/user.model';
 @Component({
   selector: 'edit-ticket',
   templateUrl: './edit-ticket.component.html',
@@ -26,6 +27,8 @@ export class EditTicketComponent implements OnInit {
   moduleList: any[];
   Site: Site[];
   user
+  Staff: User[];
+  staff: any;
   Sources = [
     { name: 'Facebook', },
     { name: 'Website' },
@@ -68,7 +71,8 @@ export class EditTicketComponent implements OnInit {
     private siteService: SiteService,
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    public userService: UserService,
   ) {
     this.route.params.subscribe(params => this.id = params.id)
   }
@@ -97,6 +101,14 @@ export class EditTicketComponent implements OnInit {
       this.moduleList = this.editTicket.controls.site.value.module
     })
     this.site$ = this.siteService.getSitesList()
+    this.userService.getStaffsList().snapshotChanges().subscribe(data => {
+      this.Staff = [];
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['$uid'] = items.payload.doc.id;
+        this.Staff.push(item as User)
+      })
+    });
   }
 
   getCreate() {
@@ -187,5 +199,7 @@ export class EditTicketComponent implements OnInit {
     const maEndDate = moment(this.editTicket.controls.site.value.maEndDate).format('DD/MM/YYYY');
     return maStartDate + ' - ' + maEndDate;
   }
+
+  inProgress(){}
 
 }

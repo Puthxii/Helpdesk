@@ -95,7 +95,7 @@ export class AddTicketComponent implements OnInit {
   Site: Site[];
   moduleList: any[];
   devList: any[];
-  Staff: User[];
+  currentName: string
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -146,14 +146,6 @@ export class AddTicketComponent implements OnInit {
         enableCheckAll: false
       };
     this.setDateDefault()
-    this.userService.getStaffsList().snapshotChanges().subscribe(data => {
-      this.Staff = [];
-      data.map(items => {
-        const item = items.payload.doc.data();
-        item['$uid'] = items.payload.doc.id;
-        this.Staff.push(item as User)
-      })
-    });
   }
 
   getUserValue() {
