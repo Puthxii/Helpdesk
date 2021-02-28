@@ -29,6 +29,7 @@ export class TicketComponent implements OnInit {
   staff: any;
   selectedColor = ''
   priorityClass: string;
+  statusSpecail = ['In Progress', 'Accepted', 'Assigned']
   constructor(
     @Inject('PRIORITY') public Prioritys: any[],
     @Inject('TYPES') public Types: any[],
@@ -91,7 +92,11 @@ export class TicketComponent implements OnInit {
     if (this.isChecked === true) {
       this.getCurrentUserByRoles()
     } else {
-      this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
+      this.status === 'Total' ?
+        this.getAllTicket(this.status) :
+        this.status === 'In Progress' ?
+          this.getByStatusSpecialFilter(this.statusSpecail) :
+          this.getByStatusFilter(this.status)
       this.getCountByStatus()
       this.getCountToltal()
       this.search()
@@ -112,7 +117,11 @@ export class TicketComponent implements OnInit {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
         this.getCountByStatusCurrentname()
         this.getCountToltalCurrentname()
-        this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusCurentnameFilter(this.status, this.currentName)
+        this.status === 'Total' ?
+          this.getAllTicket(this.status) :
+          this.status === 'In Progress' ?
+            this.getByStatusCurentnameSpecialFilter(this.statusSpecail, this.currentName) :
+            this.getByStatusCurentnameFilter(this.status, this.currentName)
       } else { }
     });
   }
@@ -151,6 +160,28 @@ export class TicketComponent implements OnInit {
 
   getByStatusFilter(status: any) {
     this.ticket$ = this.ticketService.getTicketsListByStatusFilter(status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getByStatusSpecialFilter(status: any) {
+    this.ticket$ = this.ticketService.getTicketsListByStatusSpecialFilter(this.statusSpecail)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getByStatusCurentnameSpecialFilter(status: any, creator: string) {
+    this.ticket$ = this.ticketService.getTicketsListByCreatorSpecialStatus(status, creator)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;

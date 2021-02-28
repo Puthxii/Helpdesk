@@ -73,6 +73,21 @@ export class TicketService {
     )
   }
 
+  getTicketsListByStatusSpecialFilter(status: any) {
+    return this.afs.collection('ticket', ref => ref
+      .where('status', 'in', status)
+      .orderBy('date', 'desc')
+    )
+  }
+
+  getTicketsListByCreatorSpecialStatus(status: any, creator: string) {
+    return this.afs.collection('ticket', ref => ref
+      .where('status', 'in', status)
+      .where('staff', '==', creator)
+      .orderBy('date', 'desc')
+    )
+  }
+
   getTicketsListByFilter(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
