@@ -136,7 +136,7 @@ export class TicketSupComponent implements OnInit {
   }
 
   isDraft(ticket: { status: string; }) {
-    return ticket.status === 'Accepted';
+    return ticket.status === 'Draft';
   }
 
   setStatus(status: string) {

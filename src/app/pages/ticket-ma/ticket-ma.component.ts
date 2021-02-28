@@ -136,7 +136,7 @@ export class TicketMaComponent implements OnInit {
   }
 
   isDraft(ticket: { status: string; }) {
-    return ticket.status === 'In Progress';
+    return ticket.status === 'Draft';
   }
 
   setStatus(status: string) {

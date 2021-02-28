@@ -138,7 +138,7 @@ export class TicketDevComponent implements OnInit {
   }
 
   isDraft(ticket: { status: string; }) {
-    return ticket.status === 'Assigned';
+    return ticket.status === 'Draft';
   }
 
   setStatus(status: string) {
