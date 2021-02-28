@@ -99,7 +99,7 @@ export class TicketComponent implements OnInit {
           this.getByStatusFilter(this.status)
       this.getCountByStatus()
       this.getCountToltal()
-      this.search()
+      // this.search()
     }
   }
 
@@ -170,7 +170,7 @@ export class TicketComponent implements OnInit {
   }
 
   getByStatusSpecialFilter(status: any) {
-    this.ticket$ = this.ticketService.getTicketsListByStatusSpecialFilter(this.statusSpecail)
+    this.ticket$ = this.ticketService.getTicketsListByStatusSpecialFilter(status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
