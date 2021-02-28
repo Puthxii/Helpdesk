@@ -11,7 +11,8 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
-
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/models/user.model';
 @Component({
   selector: 'edit-ticket',
   templateUrl: './edit-ticket.component.html',
@@ -26,6 +27,11 @@ export class EditTicketComponent implements OnInit {
   moduleList: any[];
   Site: Site[];
   user
+  Staff: User[];
+  staff: any;
+  statusCurrent: any;
+  currentName: string
+  currentStatus: string
   Sources = [
     { name: 'Facebook', },
     { name: 'Website' },
@@ -68,7 +74,8 @@ export class EditTicketComponent implements OnInit {
     private siteService: SiteService,
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    public userService: UserService,
   ) {
     this.route.params.subscribe(params => this.id = params.id)
   }
@@ -97,6 +104,14 @@ export class EditTicketComponent implements OnInit {
       this.moduleList = this.editTicket.controls.site.value.module
     })
     this.site$ = this.siteService.getSitesList()
+    this.userService.getStaffsList().snapshotChanges().subscribe(data => {
+      this.Staff = [];
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['$uid'] = items.payload.doc.id;
+        this.Staff.push(item as User)
+      })
+    });
   }
 
   getCreate() {
@@ -151,6 +166,10 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('status');
   }
 
+  get assign() {
+    return this.editTicket.get('assign');
+  }
+
   upadateTicketForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.editTicket = this.fb.group({
@@ -174,7 +193,8 @@ export class EditTicketComponent implements OnInit {
       staff: [''],
       product: [''],
       siteName: [''],
-      maintenancePackage: ['']
+      maintenancePackage: [''],
+      assign: ['']
     });
   }
 
@@ -234,4 +254,16 @@ export class EditTicketComponent implements OnInit {
       ];
     }
   }
+
+  isAssignDev() {
+    if (this.editTicket.controls.assign.value) {
+      const status = 'In Progress'
+      this.ticketService.setActionById(this.id, status, this.getStaff())
+    }
+  }
+
+  getStaff(): any {
+    return this.editTicket.controls.assign.value.firstName + ' ' + this.editTicket.controls.assign.value.lastName
+  }
+
 }
