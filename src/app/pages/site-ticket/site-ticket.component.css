@@ -95,14 +95,6 @@
     position: relative;
 }
 
-.icon {
-    display: inline-block;
-    border-radius: 60px;
-    box-shadow: 0px 0px 2px white;
-    padding: 0.5em 0.6em;
-    background-color: white;
-}
-
 .paperclip{
     display: inline-block;
     border-radius: 60px;
