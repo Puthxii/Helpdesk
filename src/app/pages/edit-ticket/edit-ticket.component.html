@@ -141,10 +141,10 @@
           <div class="row">
             <div class="form-group col-md-12">
               <label class="control-label" for="assign">Assign task to dev</label>
-              <select name="assign"  class="form-control" id="assign">
+              <select name="assign" class="form-control" id="assign" (change)="assignDev(staff.firstName, ticket.status)">
                 <option value="">choose dev...</option>
-                <option *ngFor="let staff of Staff" (click)="inProgress()">
-                  {{staff.firstName}} {{staff.lastName}}
+                <option *ngFor="let staff of Staff" [ngValue]="staff.firstName">
+                  {{staff.firstName}} 
                 </option>
               </select>
             </div>

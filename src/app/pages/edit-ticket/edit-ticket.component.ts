@@ -29,6 +29,9 @@ export class EditTicketComponent implements OnInit {
   user
   Staff: User[];
   staff: any;
+  statusCurrent: any;
+  currentName: string
+  currentStatus: string
   Sources = [
     { name: 'Facebook', },
     { name: 'Website' },
@@ -200,6 +203,21 @@ export class EditTicketComponent implements OnInit {
     return maStartDate + ' - ' + maEndDate;
   }
 
-  inProgress(){}
+  // testAlert() {
+  //   alert('test')
+  // }
+  firstName: string
+  assignDev(firstName: string, status: string){
+    this.firstName = firstName
+    this.ticketService.assignDev(firstName,status)
+    console.log(this.firstName, status); 
+  }
 
+  getCurrentStaff(){
+    return this.staff = this.currentName
+  }
+
+  getCurrentStatus(){
+    return this.statusCurrent = this.currentStatus
+  }
 }
