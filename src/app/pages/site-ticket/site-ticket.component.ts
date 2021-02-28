@@ -100,7 +100,6 @@ export class SiteTicketComponent implements OnInit {
   getCountByStatusCreatorStatus() {
     for (let i = 0; this.Status.length > i; i++) {
       this.ticketService.getCountByStatusCreatorStatus(this.Status[i].value, this.creator).subscribe(result => {
-        console.log(this.Status[i].value, this.CountStatus[i]);
         this.CountStatus[i] = result.length;
       });
     }
