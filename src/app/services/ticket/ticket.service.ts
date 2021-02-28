@@ -140,10 +140,6 @@ export class TicketService {
     }
   }
 
-   assignDev(id: string, status: string) {
-    this.afs.collection('ticket').doc(id).update(status === 'In Progress')
-  }
-
   async addTicket(ticket: Ticket) {
     try {
       (await this.afs.collection('ticket').add({

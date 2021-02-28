@@ -166,6 +166,10 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('status');
   }
 
+  get assign() {
+    return this.editTicket.get('assign');
+  }
+
   upadateTicketForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.editTicket = this.fb.group({
@@ -189,7 +193,8 @@ export class EditTicketComponent implements OnInit {
       staff: [''],
       product: [''],
       siteName: [''],
-      maintenancePackage: ['']
+      maintenancePackage: [''],
+      assign: ['']
     });
   }
 
@@ -203,21 +208,15 @@ export class EditTicketComponent implements OnInit {
     return maStartDate + ' - ' + maEndDate;
   }
 
-  // testAlert() {
-  //   alert('test')
-  // }
-  firstName: string
-  assignDev(firstName: string, status: string){
-    this.firstName = firstName
-    this.ticketService.assignDev(firstName,status)
-    console.log(this.firstName, status); 
+  isAssignDev() {
+    if (this.editTicket.controls.assign.value) {
+      const status = 'In Progress'
+      this.ticketService.setActionById(this.id, status, this.getStaff())
+    }
   }
 
-  getCurrentStaff(){
-    return this.staff = this.currentName
+  getStaff(): any {
+    return this.editTicket.controls.assign.value.firstName + ' ' + this.editTicket.controls.assign.value.lastName
   }
 
-  getCurrentStatus(){
-    return this.statusCurrent = this.currentStatus
-  }
 }
