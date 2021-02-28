@@ -46,7 +46,7 @@ export class SiteTicketComponent implements OnInit {
     { value: 'In Progress' },
     { value: 'Accepted', },
     { value: 'Assigned', },
-    { value: 'Closed' },
+    { value: 'Resolved' },
     { value: 'Rejected' }
   ]
   keword = null
@@ -90,7 +90,7 @@ export class SiteTicketComponent implements OnInit {
         this.creator = this.user$.firstName + ' ' + this.user$.lastName
         this.siteState = this.user$.site
         this.getCountByStatusCreatorStatus()
-        this.status === 'In Progress' ?
+        this.status === 'Accepted' ?
           this.getTicketByCreatorSpecialStatus(this.creator, this.statusSpecail) :
           this.getTicketByCreatorStatus(this.creator, this.status)
       } else { }
@@ -100,6 +100,7 @@ export class SiteTicketComponent implements OnInit {
   getCountByStatusCreatorStatus() {
     for (let i = 0; this.Status.length > i; i++) {
       this.ticketService.getCountByStatusCreatorStatus(this.Status[i].value, this.creator).subscribe(result => {
+        console.log(this.Status[i].value, this.CountStatus[i]);
         this.CountStatus[i] = result.length;
       });
     }
@@ -109,7 +110,7 @@ export class SiteTicketComponent implements OnInit {
     if (this.isChecked === true && this.status != null) {
       this.getUserValue()
     } else {
-      this.status === 'In Progress' ?
+      this.status === 'Accepted' ?
         this.getBySiteStatusSpecialFilter(this.siteState, this.statusSpecail) :
         this.getTicketBySiteStatus(this.siteState, this.status)
       this.getCountByStatus()
@@ -179,7 +180,7 @@ export class SiteTicketComponent implements OnInit {
         statusString = 'Accepted'
         break
       }
-      case 'Closed': {
+      case 'Resolved': {
         statusString = 'Done'
         break;
       }
@@ -214,7 +215,7 @@ export class SiteTicketComponent implements OnInit {
         classIcon = 'fa-clock'
         break
       }
-      case 'Closed': {
+      case 'Resolved': {
         classIcon = 'fa-check-circle'
         break;
       }
@@ -242,7 +243,15 @@ export class SiteTicketComponent implements OnInit {
         classBackground = 'accept'
         break
       }
-      case 'Closed': {
+      case 'Accepted': {
+        classBackground = 'accept'
+        break
+      }
+      case 'Assigned': {
+        classBackground = 'accept'
+        break
+      }
+      case 'Resolved': {
         classBackground = 'done'
         break;
       }

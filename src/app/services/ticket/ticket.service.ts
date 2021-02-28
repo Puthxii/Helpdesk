@@ -354,7 +354,7 @@ export class TicketService {
   getTicketByCreatorSpecialStatus(creator: any, status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('creator', '==', creator)
-      .where('status', '==', status)
+      .where('status', 'in', status)
       .orderBy('date', 'desc')
     );
   }
