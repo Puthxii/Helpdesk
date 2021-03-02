@@ -234,6 +234,11 @@ export class EditTicketComponent implements OnInit {
         { name: 'Save as Close', value: 'Closed' },
         { name: 'Save as More Info', value: 'More Info' },
       ];
+    } else if (currentStatus === 'More Info') {
+      this.Status = [
+        { name: 'Save as Inform', value: 'Informed' },
+        { name: 'Save as In Progress', value: 'In Progress' },
+      ];
     } else if (currentStatus === 'Resolved') {
       this.Status = [
         { name: 'Save as Close', value: 'Closed' },
