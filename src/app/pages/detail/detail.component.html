@@ -61,9 +61,14 @@
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <h5 for="source">Track</h5>
-                  <div class="row" *ngFor="let action of Action">
-                    <!-- {{ action.payload.doc }} -->
-                    <!-- {{ getAction(action) }} -->
+                  <div class="row">
+                    <ul>
+                      <li *ngFor="let action of actions | async">
+                        Staff: {{ action?.staff }} <br />
+                        status: {{ action?.status }} <br />
+                        date: {{ action?.date | datePipe: 'lll' }} <br />
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>

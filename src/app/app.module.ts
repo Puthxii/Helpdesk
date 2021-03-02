@@ -31,6 +31,7 @@ import { Error404Component } from './error-pages/error404/error404.component';
 import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { CurrentStatus, Prioritys, Types } from './shared/constant';
+import { DatePipe } from './pipes/date.pipe';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CurrentStatus, Prioritys, Types } from './shared/constant';
     SiteTicketComponent,
     TicketMaComponent,
     TicketSupComponent,
-    TicketDevComponent
+    TicketDevComponent,
+    DatePipe
   ],
   imports: [
     FormsModule,
