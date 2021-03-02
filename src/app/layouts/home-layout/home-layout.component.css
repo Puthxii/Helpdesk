@@ -63,22 +63,30 @@ body {
       border-radius: 50%;
     }
     .dashboard.active {
-      color:teal;
+      color: var(--primary-color);
     }
 
     .supporter.active {
-      color:teal;
+      color: var(--primary-color);
     }
 
     .ma.active {
-      color:teal;
+      color: var(--primary-color);
     }
 
     .supervisor.active {
-      color:teal;
+      color: var(--primary-color);
     }
 
     .dev.active {
-      color:teal;
+      color: var(--primary-color);
+    }
+
+    .staff.active {
+      color: var(--primary-color);
+    }
+    
+    .new.active {
+      color: var(--primary-color);
     }
   }  

@@ -7,37 +7,40 @@
             </h3>
         </a>
         <div class="list-group list-group-flush">
-            <a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white dashboard" (click)="setMenu('Dashboard')" [class.active]="'Dashboard' === activeState">
+            <a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white dashboard"
+                (click)="setMenu('Dashboard')" [class.active]="'Dashboard' === activeState">
                 <i class="fas fa-chart-pie"></i>
                 <span class="menu-title"> Dashboard</span>
             </a>
-            <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white supporter" (click)="setMenu('Supporter')" [class.active]="'Supporter' === activeState"
+            <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white supporter"
+                (click)="setMenu('Supporter')" [class.active]="'Supporter' === activeState"
                 *ngIf="auth.isSupporter(user)">
                 <i class="fas fa-ticket-alt"></i>
                 <span class="menu-title"> Supporter</span>
             </a>
-            <a [routerLink]="['/site-ticket']" class=" list-group-item list-group-item-action bg-whitec customer" (click)="setMenu('Customer')" [class.active]="'Customer' === activeState"
-                *ngIf="auth.isCustomer(user)">
+            <a [routerLink]="['/site-ticket']" class=" list-group-item list-group-item-action bg-whitec customer"
+                (click)="setMenu('Customer')" [class.active]="'Customer' === activeState" *ngIf="auth.isCustomer(user)">
                 <i class="fas fa-ticket-alt"></i>
                 <span class="menu-title"> Ticket</span>
             </a>
-            <a [routerLink]=" ['/ticket-ma']" class=" list-group-item list-group-item-action bg-white ma" (click)="setMenu('Ma')" [class.active]="'Ma' === activeState"
-                *ngIf="auth.isMaintenance(user)">
+            <a [routerLink]=" ['/ticket-ma']" class=" list-group-item list-group-item-action bg-white ma"
+                (click)="setMenu('Ma')" [class.active]="'Ma' === activeState" *ngIf="auth.isMaintenance(user)">
                 <i class="fas fa-ticket-alt"></i>
                 <span class="menu-title"> MA</span>
             </a>
-            <a [routerLink]=" ['/ticket-sup']" class=" list-group-item list-group-item-action bg-white supervisor" (click)="setMenu('Supervisor')" [class.active]="'Supervisor' === activeState"
+            <a [routerLink]=" ['/ticket-sup']" class=" list-group-item list-group-item-action bg-white supervisor"
+                (click)="setMenu('Supervisor')" [class.active]="'Supervisor' === activeState"
                 *ngIf="auth.isSupervisor(user)">
                 <i class="fas fa-ticket-alt"></i>
                 <span class="menu-title"> Supervisor</span>
             </a>
-            <a [routerLink]=" ['/ticket-dev']" class=" list-group-item list-group-item-action bg-white dev" (click)="setMenu('Dev')" [class.active]="'Dev' === activeState"
-                *ngIf="auth.isDeveloper(user)">
+            <a [routerLink]=" ['/ticket-dev']" class=" list-group-item list-group-item-action bg-white dev"
+                (click)="setMenu('Dev')" [class.active]="'Dev' === activeState" *ngIf="auth.isDeveloper(user)">
                 <i class="fas fa-ticket-alt"></i>
                 <span class="menu-title"> Developer</span>
             </a>
-            <a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white"
-                *ngIf="auth.isStaff(user)">
+            <a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white staff"
+                (click)="setMenu('Staff')" [class.active]="'Staff' === activeState" *ngIf="auth.isStaff(user)">
                 <i class="fas fa-user-tie"></i>
                 <span class="menu-title"> Staff</span>
             </a>
@@ -56,7 +59,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['/add-ticket']" [title]="'New Ticket'">
+                        <a class="nav-link new" [routerLink]="['/add-ticket']" [title]="'New Ticket'"
+                            (click)="setMenu('New')" [class.active]="'New' === activeState">
                             <i class="fas fa-plus-square fa-lg"></i>
                         </a>
                     </li>
