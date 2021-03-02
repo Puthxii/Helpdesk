@@ -302,7 +302,15 @@ export class AddTicketComponent implements OnInit {
   }
 
   displaySelectedStatus(): any {
-    return (this.status.value) ? 'Save as ' + this.status.value : 'Save as draft';
+    return (this.status.value) ? this.mathStatus(this.status.value) : 'Save as draft';
+  }
+
+  mathStatus(status): any {
+    for (let i = 0; this.Status.length; i++) {
+      if (this.Status[i].value === status) {
+        return this.Status[i].name
+      }
+    }
   }
 
   onSelectedStatus(value: any) {
