@@ -62,4 +62,23 @@ body {
     .img{
       border-radius: 50%;
     }
+    .dashboard.active {
+      color:teal;
+    }
+
+    .supporter.active {
+      color:teal;
+    }
+
+    .ma.active {
+      color:teal;
+    }
+
+    .supervisor.active {
+      color:teal;
+    }
+
+    .dev.active {
+      color:teal;
+    }
   }  

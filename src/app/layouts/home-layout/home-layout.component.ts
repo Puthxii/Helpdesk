@@ -15,7 +15,8 @@ export class HomeLayoutComponent implements OnInit {
   user;
   user$: any
   AuthService: any;
-
+  activeState: any;
+  menu: any;
 
   constructor(
     private router: Router,
@@ -37,6 +38,15 @@ export class HomeLayoutComponent implements OnInit {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
     })
+  }
+
+  setMenuState(menu: any) {
+    this.activeState = menu;
+  }
+
+  setMenu(menu: any) {
+    this.setMenuState(menu)
+    this.menu = menu
   }
 
 }
