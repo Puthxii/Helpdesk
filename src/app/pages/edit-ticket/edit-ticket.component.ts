@@ -32,7 +32,6 @@ export class EditTicketComponent implements OnInit {
   staff: any;
   statusCurrent: any;
   currentName: string
-  currentStatus: string
   Sources = [
     { name: 'Facebook', },
     { name: 'Website' },
@@ -57,9 +56,13 @@ export class EditTicketComponent implements OnInit {
   ];
 
   Status = [
-    // { name: 'Save as Inform', value: 'Informed' },
-    // { name: 'Save as Draft', value: 'Draft' },
-    // { name: 'Save as Reject', value: 'Rejected' },
+    { name: 'Save as Draft', value: 'Draft' },
+    { name: 'Save as Inform', value: 'Informed' },
+    { name: 'Save as More Info', value: 'More Info' },
+    { name: 'Save as In Progress', value: 'In Progress' },
+    { name: 'Save as Accept', value: 'Accepted' },
+    { name: 'Save as Assign', value: 'Assigned' },
+    { name: 'Save as Resolve', value: 'Resolved' },
   ];
 
   ticket: any;
@@ -101,8 +104,8 @@ export class EditTicketComponent implements OnInit {
         status: this.ticket.status,
         staff: this.ticket.staff,
         siteName: this.ticket.site.nameEN,
+        currentStatus: this.ticket.status
       });
-      this.moduleList = this.editTicket.controls.site.value.module
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
@@ -195,7 +198,8 @@ export class EditTicketComponent implements OnInit {
       product: [''],
       siteName: [''],
       maintenancePackage: [''],
-      assign: ['']
+      assign: [''],
+      currentStatus: ['']
     });
   }
 
@@ -211,7 +215,15 @@ export class EditTicketComponent implements OnInit {
   }
 
   displaySelectedStatus(): any {
-    return (this.status.value) ? 'Save as ' + this.status.value : 'Save as draft';
+    return (this.status.value) ? this.mathStatus(this.status.value) : 'Save as draft';
+  }
+
+  mathStatus(status: string): string {
+    for (let i = 0; this.Status.length; i++) {
+      if (this.Status[i].value === status) {
+        return this.Status[i].name
+      }
+    }
   }
 
   onSelectedStatus(value: any) {
@@ -220,50 +232,80 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
-  setStatus() {
-    this.editTicket.patchValue({
-      status: 'Draft'
-    });
+  filterAction() {
+    const currentStatus = this.editTicket.controls.currentStatus.value
+    if (currentStatus === 'Draft') {
+      this.removeStatus('Accepted');
+      this.removeStatus('Assigned');
+      this.removeStatus('Resolved');
+      this.removeStatus('Close');
+      this.isCloseInProgress()
+    } else if (currentStatus === 'Informed') {
+      this.addStatus('More Info');
+      this.addStatus('Rejected');
+      this.removeStatus('Accepted');
+      this.removeStatus('Assigned');
+      this.removeStatus('Resolved');
+      this.isCloseInProgress()
+      this.removeStatus('Draft');
+      this.removeStatus('Assigned');
+    } else if (currentStatus === 'More Info') {
+      this.addStatus('More Info');
+      this.addStatus('Informed');
+      this.addStatus('Rejected');
+      this.isCloseInProgress()
+      this.removeStatus('Draft');
+      this.removeStatus('Accepted');
+      this.removeStatus('Assigned');
+      this.removeStatus('Resolved');
+    } else if (currentStatus === 'In Progress') {
+      this.addStatus('Accepted');
+      this.addStatus('Rejected');
+      this.isConsult()
+      this.removeStatus('Draft');
+      this.removeStatus('Informed');
+      this.removeStatus('More Info');
+      this.removeStatus('Assigned');
+      this.removeStatus('Resolved');
+    } else if (currentStatus === 'Accepted') {
+      this.addStatus('Assigned');
+      this.removeStatus('Draft');
+      this.removeStatus('Informed');
+      this.removeStatus('More Info');
+      this.removeStatus('Resolved');
+    } else if (currentStatus === 'Assigned') {
+      this.removeStatus('Draft');
+      this.removeStatus('Informed');
+      this.removeStatus('More Info');
+      this.removeStatus('In Progress');
+      this.removeStatus('Accepted');
+      this.addStatus('Resolved');
+    } else if (currentStatus === 'Resolved') {
+      this.removeStatus('Draft');
+      this.removeStatus('Informed');
+      this.removeStatus('More Info');
+      this.removeStatus('In Progress');
+      this.removeStatus('Accepted');
+      this.removeStatus('Assigned');
+      this.addStatus('Closed');
+    }
   }
 
-  filterAction() {
-    const currentStatus = this.status.value
-    if (currentStatus === 'Draft') {
-      this.Status = [
-        { name: 'Save as Inform', value: 'Informed' },
-        { name: 'Save as In Progress', value: 'In Progress' },
-      ];
+  isConsult() {
+    if (this.editTicket.controls.type.value === 'Add-ons') {
+      this.addStatus('Pending');
+    } else {
+      this.removeStatus('Pending');
+    }
+  }
+
+  isCloseInProgress() {
+    if (this.editTicket.controls.type.value === 'Info' || this.editTicket.controls.type.value === 'Consult') {
+      this.removeStatus('In Progress');
       this.isResolveDescription(Event)
-    } else if (currentStatus === 'Informed') {
-      this.Status = [
-        { name: 'Save as Reject', value: 'Rejected' },
-        { name: 'Save as In Progress', value: 'In Progress' },
-        { name: 'Save as More Info', value: 'More Info' },
-      ];
-    } else if (currentStatus === 'More Info') {
-      this.Status = [
-        { name: 'Save as Inform', value: 'Informed' },
-        { name: 'Save as In Progress', value: 'In Progress' },
-      ];
-    } else if (currentStatus === 'Resolved') {
-      this.Status = [
-        { name: 'Save as Close', value: 'Closed' },
-      ];
-    } else if (currentStatus === 'In Progress') {
-      this.Status = [
-        { name: 'Save as Accept', value: 'Accepted' },
-        { name: 'Save as Reject', value: 'Rejected' },
-        { name: 'Save as Pending', value: 'Pending' },
-      ];
-    } else if (currentStatus === 'Accepted') {
-      this.Status = [
-        { name: 'Save as Assign', value: 'Assigned' },
-        { name: 'Save as In Progress', value: 'In Progress' },
-      ];
-    } else if (currentStatus === 'Assigned') {
-      this.Status = [
-        { name: 'Save as Resolve', value: 'Resolved' },
-      ];
+    } else if (this.editTicket.controls.type.value === 'Problem' || this.editTicket.controls.type.value === 'Add-ons') {
+      this.removeStatus('Closed');
+      this.addStatus('In Progress');
     }
   }
 
@@ -294,9 +336,6 @@ export class EditTicketComponent implements OnInit {
   }
 
   removeStatus(status: string) {
-    if (status === 'Closed') {
-      this.setStatus()
-    }
     this.Status = this.Status.filter(item => item.value !== status)
   }
 
@@ -307,14 +346,40 @@ export class EditTicketComponent implements OnInit {
       let name: string;
       let value: string;
       switch (status) {
-        case 'Closed':
-          this.setStatus()
-          name = 'Save as Close'
+        case 'Draft':
+          name = 'Save as Draft'
+          value = status
+          break;
+        case 'Informed':
+          name = 'Save as Inform'
+          value = status
+          break;
+        case 'More Info':
+          name = 'Save as More Info'
           value = status
           break;
         case 'In Progress':
-          this.setStatus()
           name = 'Save as In Progress'
+          value = status
+          break;
+        case 'Accepted':
+          name = 'Save as Accept'
+          value = status
+          break;
+        case 'Assigned':
+          name = 'Save as Assign'
+          value = status
+          break;
+        case 'Resolved':
+          name = 'Save as Resolve'
+          value = status
+          break;
+        case 'Rejected':
+          name = 'Save as Reject'
+          value = status
+          break;
+        case 'Closed':
+          name = 'Save as Close'
           value = status
           break;
         default:
