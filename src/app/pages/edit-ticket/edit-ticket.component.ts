@@ -13,8 +13,9 @@ import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
+
 @Component({
-  selector: 'edit-ticket',
+  selector: 'app-edit-ticket',
   templateUrl: './edit-ticket.component.html',
   styleUrls: ['./edit-ticket.component.css']
 })
@@ -100,12 +101,13 @@ export class EditTicketComponent implements OnInit {
         status: this.ticket.status,
         staff: this.ticket.staff,
         siteName: this.ticket.site.nameEN,
+        assign: this.ticket.assign
       });
       this.moduleList = this.editTicket.controls.site.value.module
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
-      this.Staff = [];
+      this.Staff = []
       data.map(items => {
         const item = items.payload.doc.data();
         item['$uid'] = items.payload.doc.id;
@@ -172,7 +174,7 @@ export class EditTicketComponent implements OnInit {
 
   setStatus(value) {
     this.editTicket.patchValue({
-      status: value
+      status: value,
     });
   }
 
@@ -272,16 +274,11 @@ export class EditTicketComponent implements OnInit {
 
   isSubmitAssignDev() {
     if (this.editTicket.controls.assign.value) {
-      this.ticketService.setActionById(this.id, this.editTicket.controls.status.value, this.getStaff())
+      this.ticketService.setActionById(this.id, this.editTicket.controls.status.value, this.editTicket.controls.assign.value)
     }
-  }
-
-  getStaff(): any {
-    return this.editTicket.controls.assign.value.firstName + ' ' + this.editTicket.controls.assign.value.lastName
   }
 
   isAcceptedAssigned() {
     return this.editTicket.controls.status.value === 'Accepted' || this.editTicket.controls.status.value === 'Assigned'
   }
-  
 }
