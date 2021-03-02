@@ -80,7 +80,7 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('status');
   }
   users: any;
-  user;
+  user: User;
   Product: Product;
   site$: Observable<any>;
   user$: any;
@@ -305,7 +305,7 @@ export class AddTicketComponent implements OnInit {
     return (this.status.value) ? this.mathStatus(this.status.value) : 'Save as draft';
   }
 
-  mathStatus(status): any {
+  mathStatus(status: string): string {
     for (let i = 0; this.Status.length; i++) {
       if (this.Status[i].value === status) {
         return this.Status[i].name
@@ -377,7 +377,7 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  getCustomerContact(name) {
+  getCustomerContact(name: string) {
     this.userService.getUserbyName(name).snapshotChanges().subscribe(data => {
       data.map(a => {
         const data = a.payload.doc.data() as User
@@ -402,7 +402,7 @@ export class AddTicketComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, I do'
-    }).then((result) => {
+    }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
         this.router.navigate(['/']);
       }
