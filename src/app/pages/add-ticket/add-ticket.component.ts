@@ -265,7 +265,10 @@ export class AddTicketComponent implements OnInit {
   }
 
   removeStatus(status: string) {
-    this.Status = this.Status.filter(item => item.value !== status);
+    if (status === 'Closed') {
+      this.setStatus()
+    }
+    this.Status = this.Status.filter(item => item.value !== status)
   }
 
   addStatus(status: string) {
