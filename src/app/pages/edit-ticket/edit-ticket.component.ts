@@ -265,6 +265,8 @@ export class EditTicketComponent implements OnInit {
   isAssignDev() {
     if (this.editTicket.controls.assign.value) {
       this.setStatus('Assigned')
+    } else {
+      this.setStatus('Accepted')
     }
   }
 
