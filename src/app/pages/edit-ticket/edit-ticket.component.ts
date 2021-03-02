@@ -104,7 +104,8 @@ export class EditTicketComponent implements OnInit {
         status: this.ticket.status,
         staff: this.ticket.staff,
         siteName: this.ticket.site.nameEN,
-        assign: this.ticket.assign
+        assign: this.ticket.assign,
+        currentStatus: this.ticket.status
       });
     })
     this.site$ = this.siteService.getSitesList()
