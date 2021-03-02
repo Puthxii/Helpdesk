@@ -170,6 +170,12 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('assign');
   }
 
+  setStatus(value) {
+    this.editTicket.patchValue({
+      status: value
+    });
+  }
+
   upadateTicketForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.editTicket = this.fb.group({
@@ -200,6 +206,7 @@ export class EditTicketComponent implements OnInit {
 
   upadateForm() {
     this.ticketService.editTicket(this.editTicket.value, this.id);
+    this.isSubmitAssignDev()
   }
 
   getMaPackage() {
@@ -257,8 +264,13 @@ export class EditTicketComponent implements OnInit {
 
   isAssignDev() {
     if (this.editTicket.controls.assign.value) {
-      const status = 'In Progress'
-      this.ticketService.setActionById(this.id, status, this.getStaff())
+      this.setStatus('Assigned')
+    }
+  }
+
+  isSubmitAssignDev() {
+    if (this.editTicket.controls.assign.value) {
+      this.ticketService.setActionById(this.id, this.editTicket.controls.status.value, this.getStaff())
     }
   }
 
@@ -266,4 +278,8 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.controls.assign.value.firstName + ' ' + this.editTicket.controls.assign.value.lastName
   }
 
+  isAcceptedAssigned() {
+    return this.editTicket.controls.status.value === 'Accepted' || this.editTicket.controls.status.value === 'Assigned'
+  }
+  
 }
