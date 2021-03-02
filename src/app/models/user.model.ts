@@ -10,8 +10,9 @@ export interface User {
     uid?: string
     email?: string
     name?: string
-    firsName?: string
+    firstName?: string
     lastName?: string
+    fullName?: string
     mobileNumber?: string
     roles?: Roles
     photoURL?: string

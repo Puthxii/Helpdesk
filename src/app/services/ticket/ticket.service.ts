@@ -198,7 +198,8 @@ export class TicketService {
         description: ticket.description,
         resolveDescription: ticket.resolveDescription,
         status: ticket.status,
-        staff: ticket.staff
+        staff: ticket.staff,
+        assign: ticket.assign
       })
       this.successNotification();
     } catch (error) {

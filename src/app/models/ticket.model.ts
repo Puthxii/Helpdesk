@@ -16,6 +16,7 @@ export interface Ticket {
     staff?: string;
     action?: Actions[];
     email?: string;
+    assign: string;
 }
 export interface Actions {
     data: any,

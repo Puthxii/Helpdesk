@@ -151,7 +151,7 @@
               <select formControlName="assign" name="assign" class="form-control" id="assign"
                 (ngModelChange)="isAssignDev($event)">
                 <option value="">choose dev...</option>
-                <option *ngFor="let staff of Staff" [ngValue]="staff">
+                <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
                   {{staff.firstName}} {{staff.lastName}}
               </select>
             </div>
