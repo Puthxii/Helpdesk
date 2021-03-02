@@ -257,9 +257,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   isAssignDev() {
-    if (this.editTicket.controls.assign.value) {
-      this.onSelectedStatus('Assigned')
-    }
+    (this.editTicket.controls.assign.value) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
   isSubmitAssignDev() {
