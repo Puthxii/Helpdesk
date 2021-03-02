@@ -13,6 +13,7 @@ import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
+
 @Component({
   selector: 'edit-ticket',
   templateUrl: './edit-ticket.component.html',
@@ -219,19 +220,24 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
+  setStatus() {
+    this.editTicket.patchValue({
+      status: 'Draft'
+    });
+  }
+
   filterAction() {
     const currentStatus = this.status.value
     if (currentStatus === 'Draft') {
       this.Status = [
         { name: 'Save as Inform', value: 'Informed' },
         { name: 'Save as In Progress', value: 'In Progress' },
-        { name: 'Save as Close', value: 'Closed' },
       ];
+      this.isResolveDescription(Event)
     } else if (currentStatus === 'Informed') {
       this.Status = [
         { name: 'Save as Reject', value: 'Rejected' },
         { name: 'Save as In Progress', value: 'In Progress' },
-        { name: 'Save as Close', value: 'Closed' },
         { name: 'Save as More Info', value: 'More Info' },
       ];
     } else if (currentStatus === 'More Info') {
@@ -277,6 +283,47 @@ export class EditTicketComponent implements OnInit {
 
   isAcceptedAssigned() {
     return this.editTicket.controls.status.value === 'Accepted' || this.editTicket.controls.status.value === 'Assigned'
+  }
+
+  isSelectedType() {
+    return (this.editTicket.controls.type.value === 'Info' || this.editTicket.controls.type.value === 'Consult')
+  }
+
+  isResolveDescription(event: any) {
+    (this.editTicket.controls.resolveDescription.value) ? this.addStatus('Closed') : this.removeStatus('Closed')
+  }
+
+  removeStatus(status: string) {
+    if (status === 'Closed') {
+      this.setStatus()
+    }
+    this.Status = this.Status.filter(item => item.value !== status)
+  }
+
+  addStatus(status: string) {
+    if (this.Status.some(item => item.value === status)) {
+      console.log('Object found inside the array.');
+    } else {
+      let name: string;
+      let value: string;
+      switch (status) {
+        case 'Closed':
+          this.setStatus()
+          name = 'Save as Close'
+          value = status
+          break;
+        case 'In Progress':
+          this.setStatus()
+          name = 'Save as In Progress'
+          value = status
+          break;
+        default:
+          name = `Save as ${status}`
+          value = status
+          break;
+      }
+      return this.Status.push({ name, value })
+    }
   }
 
 }

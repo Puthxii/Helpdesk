@@ -139,6 +139,13 @@
             </div>
           </div>
           <div class="row">
+            <div class="form-group col-md-12" *ngIf="isSelectedType()">
+              <label for="resolve">Resolve Description</label>
+              <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
+                (ngModelChange)="isResolveDescription($event)"></textarea>
+            </div>
+          </div>
+          <div class="row">
             <div class="form-group col-md-12" *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()">
               <label class="control-label" for="assign">Assign task to dev</label>
               <select formControlName="assign" name="assign" class="form-control" id="assign"
