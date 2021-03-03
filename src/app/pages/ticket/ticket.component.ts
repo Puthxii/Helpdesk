@@ -65,8 +65,8 @@ export class TicketComponent implements OnInit {
     { icon: 'fas fa-phone', name: 'Telephone' },
     { icon: 'fas fa-user-friends', name: 'Onsite' },
     { icon: 'fab fa-facebook-square', name: 'Facebook' },
-    { icon: 'fab fa-ellipsis-h', name: 'Conference' },
-    { icon: 'fab fa-video', name: 'Other' }
+    { icon: 'fas fa-comments', name: 'Conference' },
+    { icon: 'fas fa-ellipsis-h', name: 'Other' }
   ];
 
   user: any
@@ -114,6 +114,7 @@ export class TicketComponent implements OnInit {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.supporter === true) {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
+        // todo: change check my ticket
         this.getCountByStatusCurrentname()
         this.getCountToltalCurrentname()
         this.status === 'Total' ?
