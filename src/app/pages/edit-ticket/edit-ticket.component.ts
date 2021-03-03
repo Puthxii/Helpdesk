@@ -33,12 +33,13 @@ export class EditTicketComponent implements OnInit {
   statusCurrent: any;
   currentName: string
   Sources = [
-    { name: 'Facebook', },
-    { name: 'Website' },
     { name: 'Line' },
     { name: 'Email' },
     { name: 'Telephone' },
-    { name: 'Onsite' }
+    { name: 'Facebook', },
+    { name: 'Onsite' },
+    { name: 'Conference' },
+    { name: 'Other' },
   ];
 
   Types = [
@@ -262,7 +263,7 @@ export class EditTicketComponent implements OnInit {
     } else if (currentStatus === 'In Progress') {
       this.addStatus('Accepted');
       this.addStatus('Rejected');
-      this.isConsult()
+      this.isAddOns()
       this.removeStatus('Draft');
       this.removeStatus('Informed');
       this.removeStatus('More Info');
@@ -292,7 +293,7 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
-  isConsult() {
+  isAddOns() {
     if (this.editTicket.controls.type.value === 'Add-ons') {
       this.addStatus('Pending');
     } else {
