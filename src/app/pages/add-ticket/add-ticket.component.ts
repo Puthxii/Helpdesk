@@ -310,10 +310,10 @@ export class AddTicketComponent implements OnInit {
   }
 
   displaySelectedStatus(): any {
-    return (this.status.value) ? this.mathStatus(this.status.value) : 'Save as draft';
+    return (this.status.value) ? this.matchStatus(this.status.value) : 'Save as draft';
   }
 
-  mathStatus(status: string): string {
+  matchStatus(status: string): string {
     for (let i = 0; this.Status.length; i++) {
       if (this.Status[i].value === status) {
         return this.Status[i].name
