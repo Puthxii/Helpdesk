@@ -453,9 +453,7 @@ export class TicketService {
   getTrack(id: string): any {
     return this.afs.collection('ticket').doc(id)
       .collection('action', ref => ref
-        // .where('staff', '==', 'Support Test')
-        .orderBy('date', 'desc'))
+        .orderBy('date', 'asc'))
   }
-
 
 }

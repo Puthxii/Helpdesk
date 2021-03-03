@@ -5,10 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { map, tap } from 'rxjs/operators';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { M } from 'angular-mydatepicker';
-
 
 @Component({
   selector: 'detail',
@@ -27,7 +23,6 @@ export class DetailComponent implements OnInit {
     private ticketService: TicketService,
     private route: ActivatedRoute,
     private auth: AuthService,
-    private afs: AngularFirestore
   ) {
     this.route.params.subscribe(params => this.id = params.id);
   }
@@ -35,19 +30,7 @@ export class DetailComponent implements OnInit {
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user)
     this.ticket$ = this.ticketService.getTicketByid(this.id);
-    this.action = this.ticketService.getTrack(this.id).snapshotChanges().subscribe(data => {
-      data.map(items => {
-        const item = items.payload.doc.data();
-        const id = items.payload.doc.id;
-        return { id, ...item };
-      })
-    })
-    this.actions = this.afs.collection('ticket').doc(this.id).collection('action').valueChanges()
-    // .pipe(map((date: any) => {
-    //   return date.map((m: any) => ({
-    //     ...m,
-    //     dateThai: moment(new Date).format('MMMM Do YYYY, h:mm:ss a')}))
-    // }))
+    this.actions = this.ticketService.getTrack(this.id).valueChanges();
   }
 
   getDate(ticket) {
