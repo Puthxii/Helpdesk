@@ -146,6 +146,7 @@ export class AddTicketComponent implements OnInit {
         enableCheckAll: false
       };
     this.setDateDefault()
+    this.setAssign()
   }
 
   getUserValue() {
@@ -223,6 +224,12 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
+  setAssign() {
+    this.addTicketForm.patchValue({
+      assign: ''
+    });
+  }
+
   buildForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.addTicketForm = this.fb.group({
@@ -244,7 +251,8 @@ export class AddTicketComponent implements OnInit {
       resolveDescription: [''],
       status: [''],
       staff: [''],
-      email: ['']
+      email: [''],
+      assign: ['']
     });
   }
 

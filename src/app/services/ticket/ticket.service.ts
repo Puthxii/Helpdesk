@@ -170,7 +170,8 @@ export class TicketService {
         resolveDescription: ticket.resolveDescription,
         status: ticket.status,
         staff: ticket.staff,
-        email: ticket.email
+        email: ticket.email,
+        assign: ticket.assign
       }))
         .collection('action')
         .add({
