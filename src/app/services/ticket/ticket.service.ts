@@ -202,6 +202,7 @@ export class TicketService {
         staff: ticket.staff,
         assign: ticket.assign
       })
+      this.setActionById(id, ticket.status, ticket.staff)
       this.successNotification();
     } catch (error) {
       this.errorNotification();
