@@ -389,7 +389,7 @@ export class AddTicketComponent implements OnInit {
     this.userService.getUserbyName(name).snapshotChanges().subscribe(data => {
       data.map(a => {
         const data = a.payload.doc.data() as User
-        const id = a.payload.doc.id
+        const id = a.payload.doc['id']
         this.setEmail(data)
         return { id, ...data }
       })

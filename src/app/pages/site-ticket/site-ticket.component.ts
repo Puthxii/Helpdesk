@@ -121,7 +121,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -132,7 +132,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -275,7 +275,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -286,7 +286,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -318,7 +318,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -329,7 +329,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -340,7 +340,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -351,7 +351,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -362,7 +362,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -373,7 +373,7 @@ export class SiteTicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )

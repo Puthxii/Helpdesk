@@ -25,7 +25,7 @@ export class StaffComponent implements OnInit {
       this.Staff = [];
       data.map(items => {
         const item = items.payload.doc.data();
-        item['$uid'] = items.payload.doc.id;
+        item['$uid'] = items.payload.doc['id'];
         this.Staff.push(item as User)
       })
     });

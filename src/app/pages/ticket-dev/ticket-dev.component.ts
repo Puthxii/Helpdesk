@@ -120,7 +120,7 @@ export class TicketDevComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -131,7 +131,7 @@ export class TicketDevComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -158,7 +158,7 @@ export class TicketDevComponent implements OnInit {
       this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Developer).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -166,7 +166,7 @@ export class TicketDevComponent implements OnInit {
       this.ticket$ = this.ticketService.getTicketsList(this.Developer).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )

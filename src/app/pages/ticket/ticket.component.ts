@@ -163,7 +163,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -174,7 +174,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -185,7 +185,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -196,7 +196,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -227,7 +227,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -238,7 +238,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -249,7 +249,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -260,7 +260,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -296,7 +296,7 @@ export class TicketComponent implements OnInit {
       this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Supporter).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -304,7 +304,7 @@ export class TicketComponent implements OnInit {
       this.ticket$ = this.ticketService.getTicketsList(this.Supporter).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -380,7 +380,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -391,7 +391,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -402,7 +402,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -413,7 +413,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -424,7 +424,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -435,7 +435,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -446,7 +446,7 @@ export class TicketComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -456,7 +456,7 @@ export class TicketComponent implements OnInit {
     this.ticket$ = this.ticketService.getByDaterange(startDate, endDate, this.Supporter).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Ticket;
-        const id = a.payload.doc.id;
+        const id = a.payload.doc['id'];
         return { id, ...data };
       }))
     )

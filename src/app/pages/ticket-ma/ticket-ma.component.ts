@@ -118,7 +118,7 @@ export class TicketMaComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -129,7 +129,7 @@ export class TicketMaComponent implements OnInit {
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       );
@@ -152,7 +152,7 @@ export class TicketMaComponent implements OnInit {
       this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Maintenance).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
@@ -160,7 +160,7 @@ export class TicketMaComponent implements OnInit {
       this.ticket$ = this.ticketService.getTicketsList(this.Maintenance).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc.id;
+          const id = a.payload.doc['id'];
           return { id, ...data };
         }))
       )
