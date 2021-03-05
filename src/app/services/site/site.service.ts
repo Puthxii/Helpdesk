@@ -1,6 +1,6 @@
 import { Product } from '../../models/product.model';
 import { Site } from '../../models/site.model';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/internal/observable/combineLatest';

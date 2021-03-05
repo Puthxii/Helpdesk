@@ -10,10 +10,6 @@ import { LoginComponent } from './pages/login/login.component'
 import { HomeComponent } from './pages/home/home.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth/auth.service';
@@ -32,6 +28,14 @@ import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { CurrentStatus, Prioritys, Types } from './shared/constant';
 import { DatePipe } from './pipes/date.pipe';
+import { UploadFormComponent } from './components/upload-form/upload-form.component';
+import { UploadDetailsComponent } from './components/upload-details/upload-details.component';
+import { UploadListComponent } from './components/upload-list/upload-list.component';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -53,7 +57,10 @@ import { DatePipe } from './pipes/date.pipe';
     TicketMaComponent,
     TicketSupComponent,
     TicketDevComponent,
-    DatePipe
+    DatePipe,
+    UploadFormComponent,
+    UploadListComponent,
+    UploadDetailsComponent
   ],
   imports: [
     FormsModule,
@@ -65,12 +72,14 @@ import { DatePipe } from './pipes/date.pipe';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     NgMultiSelectDropDownModule.forRoot(),
-    AngularMyDatePickerModule
-
+    AngularMyDatePickerModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   providers: [
     AuthService,
     AngularFireDatabase,
+    AngularFirestore,
     AuthGuard,
     { provide: 'PRIORITY', useValue: Prioritys },
     { provide: 'TYPES', useValue: Types },

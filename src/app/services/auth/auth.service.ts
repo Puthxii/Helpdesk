@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { from, Observable, of } from 'rxjs';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable, of } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { firebase } from '@firebase/app';
-import '@firebase/auth';
 import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@firebase/auth-types';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AlertService } from '../../_alert/alert.service';
 import { Options } from '../../_alert/alert.model';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../../models/user.model';
-@Injectable()
+import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
   options: Options;
   authState: any = null;
@@ -77,7 +79,7 @@ export class AuthService {
   }
   private async socialSignIn(provider: GithubAuthProvider | GoogleAuthProvider | FacebookAuthProvider | TwitterAuthProvider) {
     try {
-      const credential = await this.afAuth.auth.signInWithPopup(provider);
+      const credential = await this.afAuth.signInWithPopup(provider);
       console.log(credential.user);
       this.authState = credential.user;
       this.updateUserDataToDatabase();
@@ -88,7 +90,7 @@ export class AuthService {
   }
   async anonymousLogin() {
     try {
-      const user = await this.afAuth.auth.signInAnonymously();
+      const user = await this.afAuth.signInAnonymously();
       this.authState = user;
       this.router.navigate(['/']);
     } catch (error) {
@@ -97,7 +99,7 @@ export class AuthService {
   }
   async emailSignUp(email: string, password: string) {
     try {
-      const user = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+      const user = await this.afAuth.createUserWithEmailAndPassword(email, password);
       this.authState = user;
       this.updateUserDataToFirestore();
       this.updateUserDataToDatabase();
@@ -108,7 +110,7 @@ export class AuthService {
   }
   async emailLogin(email: string, password: string) {
     try {
-      const user = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+      const user = await this.afAuth.signInWithEmailAndPassword(email, password);
       this.authState = user;
       this.router.navigate(['/']);
       this.alertService.success('Login success', this.options = {
@@ -139,7 +141,7 @@ export class AuthService {
     });
   }
   signOut(): void {
-    this.afAuth.auth.signOut();
+    this.afAuth.signOut();
     this.router.navigate(['/login']);
   }
   private updateUserDataToDatabase(): void {
