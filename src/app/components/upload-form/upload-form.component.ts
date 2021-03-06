@@ -17,7 +17,7 @@ export class UploadFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  selectFile(event): void {
+  selectFile(event: { target: { files: FileList; }; }): void {
     this.selectedFiles = event.target.files;
     this.upload()
   }

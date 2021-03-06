@@ -20,7 +20,7 @@ export class UploadDetailsComponent implements OnInit {
     console.log(this.fileUpload);
   }
 
-  getFileExtension(filename) {
+  getFileExtension(filename: string) {
     const ext = filename.split('.').pop();
     const obj = this.iconAttachFile.filter(row => {
       if (row.type === ext) {
@@ -31,7 +31,7 @@ export class UploadDetailsComponent implements OnInit {
       const icon = obj[0].icon;
       return icon;
     } else {
-      return '';
+      return 'fas fa-file fa-2x';
     }
   }
 
