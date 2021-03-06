@@ -23,3 +23,11 @@ export const CurrentStatus = [
     { name: 'Assigned', icon: 'fas fa-user-check mx-2' },
     { name: 'Resolved', icon: 'fas fa-tasks mx-2' }
 ]
+
+export const iconAttachFile = [
+    { type: 'xlsx', icon: 'fas fa-file-excel fa-lg' },
+    { type: 'pdf', icon: 'fas fa-file-pdf fa-lg' },
+    { type: 'jpg', icon: 'fas fa-file-image fa-lg' },
+    { type: 'png', icon: 'fas fa-file-image fa-lg' },
+    { type: 'docx', icon: 'fas fa-file-word fa-lg' }
+]

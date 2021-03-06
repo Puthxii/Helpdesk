@@ -26,7 +26,7 @@ import { DetailComponent } from './pages/detail/detail.component';
 import { Error404Component } from './error-pages/error404/error404.component';
 import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
-import { CurrentStatus, Prioritys, Types } from './shared/constant';
+import { CurrentStatus, iconAttachFile, Prioritys, Types } from './shared/constant';
 import { DatePipe } from './pipes/date.pipe';
 import { UploadFormComponent } from './components/upload-form/upload-form.component';
 import { UploadDetailsComponent } from './components/upload-details/upload-details.component';
@@ -83,7 +83,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AuthGuard,
     { provide: 'PRIORITY', useValue: Prioritys },
     { provide: 'TYPES', useValue: Types },
-    { provide: 'STATUS', useValue: CurrentStatus }
+    { provide: 'STATUS', useValue: CurrentStatus },
+    { provide: 'ICONATTACHFILE', useValue: iconAttachFile }
+
   ],
   bootstrap: [AppComponent]
 })
