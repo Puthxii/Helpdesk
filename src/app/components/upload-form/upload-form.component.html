@@ -5,7 +5,7 @@
     <input type="file" id="file-input" class="text-nowrap text-truncate" (change)="selectFile($event)" />
 </label>
 <div *ngIf="currentFileUpload" class="progress mt-2">
-    <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ percentage }}"
+    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" attr.aria-valuenow="{{ percentage }}"
         aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: percentage + '%' }">
         {{ percentage }}%
     </div>
