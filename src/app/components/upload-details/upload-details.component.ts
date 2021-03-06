@@ -17,7 +17,6 @@ export class UploadDetailsComponent implements OnInit {
     private uploadService: FileUploadService) { }
 
   ngOnInit() {
-    console.log(this.fileUpload);
   }
 
   getFileExtension(filename: string) {

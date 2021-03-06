@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -11,7 +11,9 @@ import { FileUpload } from 'src/app/models/file-upload.model';
 export class FileUploadService {
     private basePath = `/uploads`;
 
-    constructor(private db: AngularFireDatabase, private storage: AngularFireStorage) { }
+    constructor(
+        private storage: AngularFireStorage,
+        private afs: AngularFirestore) { }
 
     pushFileToStorage(fileUpload: FileUpload): Observable<number> {
         const filePath = `${this.basePath}/${fileUpload.file.name}`;
@@ -23,7 +25,7 @@ export class FileUploadService {
                 storageRef.getDownloadURL().subscribe(downloadURL => {
                     fileUpload.url = downloadURL;
                     fileUpload.name = fileUpload.file.name;
-                    this.saveFileData(fileUpload);
+                    this.saveFile(fileUpload);
                 });
             })
         ).subscribe();
@@ -31,25 +33,32 @@ export class FileUploadService {
         return uploadTask.percentageChanges();
     }
 
-    private saveFileData(fileUpload: FileUpload): void {
-        this.db.list(this.basePath).push(fileUpload);
+    private async saveFile(fileUpload: FileUpload) {
+        try {
+            await this.afs.collection('upload').add({
+                url: fileUpload.url,
+                name: fileUpload.name,
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    getFiles(numberItems): AngularFireList<FileUpload> {
-        return this.db.list(this.basePath, ref =>
-            ref.limitToLast(numberItems));
+    getFiles() {
+        return this.afs.collection('upload');
     }
 
     deleteFile(fileUpload: FileUpload): void {
-        this.deleteFileDatabase(fileUpload.key)
+        console.log(fileUpload);
+        this.deleteFileFireStore(fileUpload.id)
             .then(() => {
                 this.deleteFileStorage(fileUpload.name);
             })
             .catch(error => console.log(error));
     }
 
-    private deleteFileDatabase(key: string): Promise<void> {
-        return this.db.list(this.basePath).remove(key);
+    private deleteFileFireStore(id: string): Promise<void> {
+        return this.afs.collection('upload').doc(id).delete();
     }
 
     private deleteFileStorage(name: string): void {
