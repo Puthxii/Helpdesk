@@ -1,4 +1,7 @@
-<a href="{{ fileUpload.url }}">{{ fileUpload.name }}</a>
-<button (click)="deleteFileUpload(fileUpload)" class="btn btn-danger btn-sm" style="float: right">
+<a href="{{ fileUpload.url }}">
+    <i class="{{getFileExtension(fileUpload.name)}}" aria-hidden="true">
+    </i>
+</a>
+<button type="button" (click)="deleteFileUpload(fileUpload)" class="btn btn-danger btn-sm" style="float: right">
     Delete
 </button>

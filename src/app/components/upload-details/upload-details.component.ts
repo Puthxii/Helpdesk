@@ -1,4 +1,5 @@
 import { Input } from '@angular/core';
+import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FileUpload } from 'src/app/models/file-upload.model';
 import { FileUploadService } from 'src/app/services/file-upload/file-upload.service';
@@ -11,12 +12,30 @@ import { FileUploadService } from 'src/app/services/file-upload/file-upload.serv
 export class UploadDetailsComponent implements OnInit {
   @Input() fileUpload: FileUpload;
 
-  constructor(private uploadService: FileUploadService) { }
+  constructor(
+    @Inject('ICONATTACHFILE') public iconAttachFile: any[],
+    private uploadService: FileUploadService) { }
 
   ngOnInit() {
+    console.log(this.fileUpload);
   }
 
-  deleteFileUpload(fileUpload): void {
+  getFileExtension(filename) {
+    const ext = filename.split('.').pop();
+    const obj = this.iconAttachFile.filter(row => {
+      if (row.type === ext) {
+        return true;
+      }
+    });
+    if (obj.length > 0) {
+      const icon = obj[0].icon;
+      return icon;
+    } else {
+      return '';
+    }
+  }
+
+  deleteFileUpload(fileUpload: FileUpload): void {
     this.uploadService.deleteFile(fileUpload);
   }
 
