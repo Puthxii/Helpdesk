@@ -38,6 +38,7 @@ import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestor
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { UploadEditComponent } from './components/upload-edit/upload-edit.component';
 import { UploadDetailListComponent } from './components/upload-detail-list/upload-detail-list.component';
+import { UploadDetailEditComponent } from './components/upload-detail-edit/upload-detail-edit.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { UploadDetailListComponent } from './components/upload-detail-list/uploa
     UploadListComponent,
     UploadDetailsComponent,
     UploadEditComponent,
-    UploadDetailListComponent
+    UploadDetailListComponent,
+    UploadDetailEditComponent
   ],
   imports: [
     FormsModule,
