@@ -171,7 +171,8 @@ export class TicketService {
         status: ticket.status,
         staff: ticket.staff,
         email: ticket.email,
-        assign: ticket.assign
+        assign: ticket.assign,
+        upload: ticket.upload
       }))
         .collection('action')
         .add({
@@ -179,10 +180,18 @@ export class TicketService {
           status: ticket.status,
           date: new Date(),
         });
+      this.deleteCollection('upload')
       this.successNotification();
     } catch (error) {
       this.errorNotification();
     }
+  }
+
+  private async deleteCollection(path: string) {
+    const batch = this.afs.firestore.batch();
+    const qs = await this.afs.collection(path).ref.get();
+    qs.forEach(doc => batch.delete(doc.ref));
+    return batch.commit();
   }
 
   async editTicket(ticket: Ticket, id: any) {
