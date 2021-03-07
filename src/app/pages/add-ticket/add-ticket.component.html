@@ -156,18 +156,18 @@
             </div>
           </div>
           <div class="row">
-            <div class="form-group col-md-12" *ngIf="hideResolve">
-              <label for="resolve">Resolve Description</label>
-              <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
-                (ngModelChange)="isResolveDescription($event)"></textarea>
-            </div>
-          </div>
-          <div class="row">
             <div class="col-md-12">
               <app-upload-form></app-upload-form>
             </div>
             <div class="col-md-12 my-3">
               <app-upload-list (upload)="onUploadfile($event)"></app-upload-list>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12" *ngIf="hideResolve">
+              <label for="resolve">Resolve Description</label>
+              <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
+                (ngModelChange)="isResolveDescription($event)"></textarea>
             </div>
           </div>
           <div class="form-row">

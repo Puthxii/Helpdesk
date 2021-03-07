@@ -106,7 +106,8 @@ export class EditTicketComponent implements OnInit {
         staff: this.ticket.staff,
         siteName: this.ticket.site.nameEN,
         assign: this.ticket.assign,
-        currentStatus: this.ticket.status
+        currentStatus: this.ticket.status,
+        upload: this.ticket.upload
       });
     })
     this.site$ = this.siteService.getSitesList()
@@ -201,7 +202,8 @@ export class EditTicketComponent implements OnInit {
       siteName: [''],
       maintenancePackage: [''],
       assign: [''],
-      currentStatus: ['']
+      currentStatus: [''],
+      upload: ['']
     });
   }
 
@@ -392,6 +394,11 @@ export class EditTicketComponent implements OnInit {
       }
       return this.Status.push({ name, value })
     }
+  }
+
+  getFileUpload() {
+    console.log(this.editTicket.controls.upload.value)
+    return this.editTicket.controls.upload.value
   }
 
 }
