@@ -10,7 +10,7 @@ import { FileUploadService } from 'src/app/services/file-upload/file-upload.serv
   styleUrls: ['./upload-list.component.css']
 })
 export class UploadListComponent implements OnInit {
-  @Output() onUpload = new EventEmitter<any>();
+  @Output() upload = new EventEmitter<any>();
   fileUploads: any[];
 
   constructor(private uploadService: FileUploadService) { }
@@ -24,12 +24,12 @@ export class UploadListComponent implements OnInit {
       }))
     ).subscribe(fileUploads => {
       this.fileUploads = fileUploads;
-      this.upload(this.fileUploads)
+      this.OnUpload(this.fileUploads)
     });
   }
 
-  public upload(fileUploads: any[]) {
-    this.onUpload.emit(fileUploads);
+  public OnUpload(fileUploads: any[]) {
+    this.upload.emit(fileUploads);
   }
 
 }
