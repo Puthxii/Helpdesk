@@ -36,6 +36,7 @@ import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/da
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { UploadEditComponent } from './components/upload-edit/upload-edit.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     DatePipe,
     UploadFormComponent,
     UploadListComponent,
-    UploadDetailsComponent
+    UploadDetailsComponent,
+    UploadEditComponent
   ],
   imports: [
     FormsModule,

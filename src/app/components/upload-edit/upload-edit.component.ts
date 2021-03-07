@@ -2,18 +2,20 @@ import { Input } from '@angular/core';
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FileUpload } from 'src/app/models/file-upload.model';
+import { FileUploadService } from 'src/app/services/file-upload/file-upload.service';
+
 
 @Component({
-  selector: 'app-upload-details',
-  templateUrl: './upload-details.component.html',
-  styleUrls: ['./upload-details.component.css']
+  selector: 'app-upload-edit',
+  templateUrl: './upload-edit.component.html',
+  styleUrls: ['./upload-edit.component.css']
 })
-export class UploadDetailsComponent implements OnInit {
+export class UploadEditComponent implements OnInit {
   @Input() fileUpload: FileUpload;
 
   constructor(
-    @Inject('ICONATTACHFILE') public iconAttachFile: any[]
-  ) { }
+    @Inject('ICONATTACHFILE') public iconAttachFile: any[],
+    private uploadService: FileUploadService) { }
 
   ngOnInit() {
   }
@@ -32,4 +34,9 @@ export class UploadDetailsComponent implements OnInit {
       return 'fas fa-file fa-2x';
     }
   }
+
+  deleteFileUpload(fileUpload: FileUpload): void {
+    this.uploadService.deleteFile(fileUpload);
+  }
+
 }
