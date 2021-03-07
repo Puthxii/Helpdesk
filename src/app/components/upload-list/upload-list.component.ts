@@ -1,3 +1,4 @@
+import { Output, EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { FileUpload } from 'src/app/models/file-upload.model';
@@ -9,6 +10,8 @@ import { FileUploadService } from 'src/app/services/file-upload/file-upload.serv
   styleUrls: ['./upload-list.component.css']
 })
 export class UploadListComponent implements OnInit {
+  // tslint:disable-next-line: no-output-on-prefix
+  @Output() onUpload = new EventEmitter<any>();
   fileUploads: any[];
 
   constructor(private uploadService: FileUploadService) { }
@@ -22,7 +25,12 @@ export class UploadListComponent implements OnInit {
       }))
     ).subscribe(fileUploads => {
       this.fileUploads = fileUploads;
+      this.upload(this.fileUploads)
     });
+  }
+
+  public upload(fileUploads: any[]) {
+    this.onUpload.emit(fileUploads);
   }
 
 }

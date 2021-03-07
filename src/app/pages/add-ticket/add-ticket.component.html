@@ -122,7 +122,7 @@
             <div class="form-group col-md-12">
               <label class="control-label" for="module">Module</label>
               <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" [data]="moduleList"
-                id=" module" formControlName="module" [settings]="dropdownSettings">
+                id="module" formControlName="module" [settings]="dropdownSettings">
               </ng-multiselect-dropdown>
             </div>
           </div>
@@ -162,12 +162,12 @@
                 (ngModelChange)="isResolveDescription($event)"></textarea>
             </div>
           </div>
-          <div class="form-row">
+          <div class="row">
             <div class="col-md-12">
               <app-upload-form></app-upload-form>
             </div>
             <div class="col-md-12 my-3">
-              <app-upload-list></app-upload-list>
+              <app-upload-list (onUpload)="doSomething($event)"></app-upload-list>
             </div>
           </div>
           <div class="form-row">

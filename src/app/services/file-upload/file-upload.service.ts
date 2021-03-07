@@ -49,7 +49,6 @@ export class FileUploadService {
     }
 
     deleteFile(fileUpload: FileUpload): void {
-        console.log(fileUpload);
         this.deleteFileFireStore(fileUpload.id)
             .then(() => {
                 this.deleteFileStorage(fileUpload.name);

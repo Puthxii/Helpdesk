@@ -416,4 +416,8 @@ export class AddTicketComponent implements OnInit {
       }
     })
   }
+
+  public doSomething(value: any): void {
+    console.log('lover', value);
+  }
 }
