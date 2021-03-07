@@ -10,7 +10,6 @@ import { FileUploadService } from 'src/app/services/file-upload/file-upload.serv
   styleUrls: ['./upload-list.component.css']
 })
 export class UploadListComponent implements OnInit {
-  // tslint:disable-next-line: no-output-on-prefix
   @Output() onUpload = new EventEmitter<any>();
   fileUploads: any[];
 

@@ -252,7 +252,8 @@ export class AddTicketComponent implements OnInit {
       status: [''],
       staff: [''],
       email: [''],
-      assign: ['']
+      assign: [''],
+      upload: [''],
     });
   }
 
@@ -417,7 +418,9 @@ export class AddTicketComponent implements OnInit {
     })
   }
 
-  public doSomething(value: any): void {
-    console.log('lover', value);
+  public onUploadfile(upload: any): void {
+    this.addTicketForm.patchValue({
+      upload
+    });
   }
 }
