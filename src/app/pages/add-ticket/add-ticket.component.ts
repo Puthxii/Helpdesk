@@ -12,8 +12,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/models/user.model';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
-import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-ticket',
@@ -28,7 +27,6 @@ export class AddTicketComponent implements OnInit {
     public productService: ProductService,
     public fb: FormBuilder,
     public userService: UserService,
-    private router: Router,
   ) {
   }
 
@@ -160,10 +158,12 @@ export class AddTicketComponent implements OnInit {
         this.setStatusCustomer();
         this.getSiteCustomer();
         this.getCustomerContact(this.user$.name);
+        this.setActionSentenceCus();
       } else {
         this.setStaff();
         this.setStatus();
         this.site$ = this.siteService.getSitesList();
+        this.setActionSentence()
       }
     });
   }
@@ -229,6 +229,51 @@ export class AddTicketComponent implements OnInit {
       assign: ''
     });
   }
+    // let role action status
+    // check role
+    // check action
+    // check status
+    // patch value
+    // let roles: any
+    // let action: any
+    // let status: any
+  setActionSentence() {
+    if (this.user$.roles.supporter === true) {
+        if (this.status.value === 'Draft') {
+          this.addTicketForm.patchValue({
+          actionSentence: 'Suporter create draft'
+        })
+        } else if (this.status.value === 'Informed') {
+          this.addTicketForm.patchValue({
+            actionSentence: 'Suporter create ticket'
+          })
+        } else if (this.status.value === 'Rejected') {
+          this.addTicketForm.patchValue({
+            actionSentence: 'Suporter rejected ticket'
+          })
+        } else if (this.status.value === 'Closed') {
+          this.addTicketForm.patchValue({
+            actionSentence: 'Suporter closed ticket'
+          })
+        } else if (this.status.value === 'In Progress') {
+          this.addTicketForm.patchValue({
+            actionSentence: 'Suporter set in progress'
+          })
+        }
+      } else {
+        if (this.status.value === 'Informed') {
+          this.addTicketForm.patchValue({
+          actionSentence: 'Suporter create ticket'
+        })
+      }
+    }
+  }
+
+  setActionSentenceCus() {
+    this.addTicketForm.patchValue({
+      actionSentence: 'Customer create ticket'
+    })
+  }
 
   buildForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
@@ -252,7 +297,8 @@ export class AddTicketComponent implements OnInit {
       status: [''],
       staff: [''],
       email: [''],
-      assign: ['']
+      assign: [''],
+      actionSentence: ['']
     });
   }
 
@@ -325,6 +371,7 @@ export class AddTicketComponent implements OnInit {
     this.addTicketForm.patchValue({
       status: value
     });
+    this.setActionSentence()
   }
 
   isSelectedSite() {
@@ -400,20 +447,5 @@ export class AddTicketComponent implements OnInit {
     this.addTicketForm.patchValue({
       email: data.email
     });
-  }
-
-  alertCancelTicket() {
-    Swal.fire({
-      title: 'Do you want to cancel add ticket.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, I do'
-    }).then((result: { isConfirmed: any; }) => {
-      if (result.isConfirmed) {
-        this.router.navigate(['/']);
-      }
-    })
   }
 }

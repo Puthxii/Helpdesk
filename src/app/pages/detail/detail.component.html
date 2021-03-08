@@ -63,9 +63,10 @@
                   <div class="row">
                     <ul>
                       <li *ngFor="let action of actions | async">
+                        Actions: {{ action?.actionSentence }} <br />
                         Staff: {{ action?.staff }} <br />
-                        status: {{ action?.status }} <br />
-                        date: {{ action?.date | datePipe: 'lll' }} <br />
+                        Status: {{ action?.status }} <br />
+                        Date: {{ action?.date | datePipe: 'lll' }} <br />
                       </li>
                     </ul>
                   </div>

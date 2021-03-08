@@ -178,10 +178,13 @@ export class TicketService {
           staff: ticket.staff,
           status: ticket.status,
           date: new Date(),
+          actionSentence: ticket.actionSentence
         });
       this.successNotification();
     } catch (error) {
-      this.errorNotification();
+      console.log(error);
+
+      // this.errorNotification();
     }
   }
 

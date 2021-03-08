@@ -207,6 +207,7 @@ export class EditTicketComponent implements OnInit {
   upadateForm() {
     this.ticketService.editTicket(this.editTicket.value, this.id);
     this.isSubmitAssignDev()
+    console.log( this.ticket.format(this.date), this.ticket.status, this.ticket.assign);
   }
 
   getMaPackage() {
@@ -387,5 +388,13 @@ export class EditTicketComponent implements OnInit {
       return this.Status.push({ name, value })
     }
   }
+
+  // addActionSentence() {
+  //   if (this.staff === 'supervisor' ) {
+  //     console.log('assign to dev');
+  //  } else {
+  //     console.log('error');
+  //  }
+  // }
 
 }
