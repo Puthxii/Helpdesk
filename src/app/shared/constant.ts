@@ -1,9 +1,9 @@
 export const Prioritys = [
     { name: 'Undefined', icon: 'fas fa-times-circle mx-2' },
-    { name: 'Low', icon: 'fas fa-square mx-2' },
-    { name: 'Medium', icon: 'fas fa-circle mx-2' },
-    { name: 'High', icon: 'fas fa-star mx-2' },
-    { name: 'Critical', icon: 'fas fa-fire mx-2' }
+    { name: 'Low', icon: 'far fa-window-minimize mx-2' },
+    { name: 'Medium', icon: 'fas fa-equals mx-2' },
+    { name: 'High', icon: 'fas fa-bars mx-2' },
+    { name: 'Critical', icon: 'fas fa-align-justify mx-2' }
 ]
 
 export const Types = [
