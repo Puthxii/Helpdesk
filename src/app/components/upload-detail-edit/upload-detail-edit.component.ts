@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { Input } from '@angular/core';
 import { Inject } from '@angular/core';
 import { FileUpload } from 'src/app/models/file-upload.model';
@@ -10,7 +11,7 @@ import { FileUpload } from 'src/app/models/file-upload.model';
 })
 export class UploadDetailEditComponent implements OnInit {
   @Input() fileUpload: FileUpload;
-
+  @Output() fileRemove = new EventEmitter<any>();
   constructor(
     @Inject('ICONATTACHFILE') public iconAttachFile: any[],
   ) { }
@@ -32,6 +33,5 @@ export class UploadDetailEditComponent implements OnInit {
       return 'fas fa-file fa-2x';
     }
   }
-
 }
 
