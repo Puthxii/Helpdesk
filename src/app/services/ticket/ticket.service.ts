@@ -182,9 +182,7 @@ export class TicketService {
         });
       this.successNotification();
     } catch (error) {
-      console.log(error);
-
-      // this.errorNotification();
+      this.errorNotification();
     }
   }
 
