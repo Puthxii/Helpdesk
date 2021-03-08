@@ -67,6 +67,7 @@ export class EditTicketComponent implements OnInit {
   ];
 
   ticket: any;
+  Upload: any;
 
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
@@ -78,7 +79,6 @@ export class EditTicketComponent implements OnInit {
     private route: ActivatedRoute,
     private siteService: SiteService,
     public fb: FormBuilder,
-    private actRoute: ActivatedRoute,
     private auth: AuthService,
     public userService: UserService,
   ) {
@@ -89,7 +89,7 @@ export class EditTicketComponent implements OnInit {
     this.auth.user$.subscribe(user => this.user = user)
     this.upadateTicketForm()
     this.ticketService.getTicketByid(this.id).subscribe(data => {
-      this.ticket = data
+      this.ticket = data as Ticket
       this.editTicket.patchValue({
         date: this.ticket.date,
         source: this.ticket.source,
@@ -175,6 +175,10 @@ export class EditTicketComponent implements OnInit {
 
   get assign() {
     return this.editTicket.get('assign');
+  }
+
+  get upload() {
+    return this.editTicket.get('upload');
   }
 
   upadateTicketForm() {
@@ -397,12 +401,16 @@ export class EditTicketComponent implements OnInit {
   }
 
   getFileUpload() {
-    console.log(this.editTicket.controls.upload.value)
-    return this.editTicket.controls.upload.value
+    this.Upload = this.upload.value
+    return this.Upload
   }
 
-  public onFileRemove(value: any): void {
-    console.log('1', value);
+  public onFileRemove(value: any) {
+    this.Upload = this.Upload.filter(item => item.id !== value.id)
+    this.editTicket.patchValue({
+      upload: this.Upload
+    });
   }
+
 
 }
