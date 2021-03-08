@@ -66,7 +66,7 @@ export class TicketComponent implements OnInit {
     { icon: 'fas fa-user-friends', name: 'Onsite' },
     { icon: 'fab fa-facebook-square', name: 'Facebook' },
     { icon: 'fas fa-comments', name: 'Conference' },
-    { icon: 'fas fa-ellipsis-h', name: 'Other' }
+    { icon: 'fas fa-ellipsis-v', name: 'Other' }
   ];
 
   user: any
