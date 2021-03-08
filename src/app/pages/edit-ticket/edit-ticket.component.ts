@@ -401,4 +401,8 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.controls.upload.value
   }
 
+  public onFileRemove(value: any): void {
+    console.log('1', value);
+  }
+
 }

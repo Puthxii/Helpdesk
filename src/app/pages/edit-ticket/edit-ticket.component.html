@@ -143,7 +143,7 @@
               <app-upload-form></app-upload-form>
             </div>
             <div class="col-md-12 my-3">
-              <app-upload-detail-list [fileUpload]="getFileUpload()" (upload)="onUploadfile($event)">
+              <app-upload-detail-list [fileUpload]="getFileUpload()" (fileRemove)="onFileRemove($event)">
               </app-upload-detail-list>
             </div>
           </div>

@@ -33,5 +33,9 @@ export class UploadDetailEditComponent implements OnInit {
       return 'fas fa-file fa-2x';
     }
   }
+
+  deleteFileUpload(fileUpload: FileUpload): void {
+    this.fileRemove.emit(fileUpload);
+  }
 }
 
