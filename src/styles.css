@@ -163,3 +163,68 @@
     padding: 0.5em 0.6em;
     background-color: white;
 }
+
+.total {
+    background:white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.total.active {
+    background:cadetblue;
+    border: none;
+    color: white;
+}
+
+.in-progress {
+    background:white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.in-progress.active {
+    background:#3399CC;
+    border: none;
+    color: white;
+}
+
+.accepted {
+    background: white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.accepted.active {
+    background: rgb(255, 202, 103);
+    border: none;
+    color: white;
+}
+
+.assigned{
+    background: white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.assigned.active {
+    background:#20c997;
+    border: none;
+    color: white;
+}
+
+.resolved {
+    background:white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.resolved.active {
+    background:turquoise;
+    border: none;
+    color: white;
+}

@@ -296,7 +296,7 @@ export class SiteTicketComponent implements OnInit {
     return ticket.status === 'Informed';
   }
 
-  isInformedMoreInfo(ticket: { status: string; }) {
+  isInformedmoreinfo(ticket: { status: string; }) {
     return ticket.status === 'Informed' || ticket.status === 'More Info';
   }
 

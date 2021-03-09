@@ -13,6 +13,9 @@ import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
+import { FileUploadService } from 'src/app/services/file-upload/file-upload.service';
+import { FileUpload } from 'src/app/models/file-upload.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-ticket',
@@ -67,12 +70,13 @@ export class EditTicketComponent implements OnInit {
   ];
 
   ticket: any;
-  Upload: any;
+  Upload = []
 
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'dd/mm/yyyy'
   };
+  NewUpload: { id: string; name: string; url: string; file: File; }[];
 
   constructor(
     private ticketService: TicketService,
@@ -81,6 +85,7 @@ export class EditTicketComponent implements OnInit {
     public fb: FormBuilder,
     private auth: AuthService,
     public userService: UserService,
+    private uploadService: FileUploadService
   ) {
     this.route.params.subscribe(params => this.id = params.id)
   }
@@ -406,11 +411,26 @@ export class EditTicketComponent implements OnInit {
   }
 
   public onFileRemove(value: any) {
-    this.Upload = this.Upload.filter(item => item.id !== value.id)
+    this.Upload = this.upload.value.filter(item => item.id !== value.id)
     this.editTicket.patchValue({
       upload: this.Upload
     });
   }
 
+  getNewUpload() {
+    this.uploadService.getFiles().snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as FileUpload;
+        const id = a.payload.doc['id'];
+        return { id, ...data };
+      }))
+    ).subscribe(fileUploads => {
+      return this.NewUpload = fileUploads;
+      // this.Upload.push(upload)
+      // this.editTicket.patchValue({
+      //   upload: this.Upload
+      // });
+    });
+  }
 
 }

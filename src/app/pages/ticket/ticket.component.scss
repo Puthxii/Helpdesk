@@ -1,48 +1,36 @@
 .draft{
-    background: slategray;
+    background:white;
     border: none;
     border-radius: 5px;
-    color: white;
+    color: black;
 }
 
 .draft.active {
-    background: rgb(165, 174, 184);
+    background: slategray;
     color: white;
 }
 
-.pending {
-    background: orange;
+.inform {
+    background:white;
     border: none;
     border-radius: 5px;
-    color: white;
+    color: black;
 }
 
-.pending.active {
+.inform.active {
     background: rgb(255, 202, 103);
     color: white;
 }
 
-.in-progress {
-    background: #3399CC;
+.moreinfo {
+    background:white;
     border: none;
     border-radius: 5px;
-    color: white;
+    color: black;
 }
 
-.in-progress.active {
-    background: #75a5bd;
-    color: white;
-}
-
-.resolved {
-    background:turquoise;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.resolved.active {
-    background: rgb(138, 212, 205);
+.moreinfo.active {
+    background-color: #FFBE96;
     color: white;
 }
 
@@ -55,18 +43,6 @@
 
 .closed.active {
     background: rgb(145, 138, 187);
-    color: white;
-}
-
-.total {
-    background:cadetblue;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.total.active {
-    background: rgb(142, 174, 175);
     color: white;
 }
 

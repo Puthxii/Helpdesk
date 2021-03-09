@@ -30,5 +30,6 @@ export const iconAttachFile = [
     { type: 'jpg', icon: 'fas fa-file-image fa-lg' },
     { type: 'png', icon: 'fas fa-file-image fa-lg' },
     { type: 'docx', icon: 'fas fa-file-word fa-lg' },
-    { type: 'pptx', icon: 'fas fa-file-powerpoint fa-lg' }
+    { type: 'pptx', icon: 'fas fa-file-powerpoint fa-lg' },
+    { type: 'mp4', icon: 'fas fa-file-video fa-lg' }
 ]

@@ -140,9 +140,9 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <app-upload-form></app-upload-form>
+              <app-upload-form (change)="getNewUpload()"></app-upload-form>
             </div>
-            <div class="col-md-12 my-3">
+            <div class=" col-md-12 my-3">
               <app-upload-detail-list [fileUpload]="getFileUpload()" (fileRemove)="onFileRemove($event)">
               </app-upload-detail-list>
             </div>

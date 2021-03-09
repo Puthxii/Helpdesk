@@ -1,38 +1,3 @@
-.inprogress{
-    background: slategray;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.inprogress.active {
-    background: rgb(165, 174, 184);
-    color: white;
-}
-
-.accepted {
-    background: orange;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.total {
-    background:cadetblue;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.total.active {
-    background: rgb(142, 174, 175);
-    color: white;
-}
-
-.accepted.active {
-    background: rgb(255, 202, 103);
-    color: white;
-}
 .dd {
     margin-bottom: 5px;
 }
