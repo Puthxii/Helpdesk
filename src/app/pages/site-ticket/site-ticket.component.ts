@@ -231,31 +231,31 @@ export class SiteTicketComponent implements OnInit {
     let classBackground = ''
     switch (status) {
       case 'Informed': {
-        classBackground = 'informed'
+        classBackground = 'informed-badge'
         break
       }
       case 'More Info': {
-        classBackground = 'moreinfo'
+        classBackground = 'moreinfo-badge'
         break
       }
       case 'In Progress': {
-        classBackground = 'accept'
+        classBackground = 'accept-badge'
         break
       }
       case 'Accepted': {
-        classBackground = 'accept'
+        classBackground = 'accept-badge'
         break
       }
       case 'Assigned': {
-        classBackground = 'accept'
+        classBackground = 'accept-badge'
         break
       }
       case 'Resolved': {
-        classBackground = 'done'
+        classBackground = 'done-badge'
         break;
       }
       case 'Rejected': {
-        classBackground = 'reject'
+        classBackground = 'reject-badge'
         break;
       }
     }

@@ -18,7 +18,7 @@
                 <i class="fas fa-ticket-alt"></i>
                 <span class="menu-title"> Supporter</span>
             </a>
-            <a [routerLink]="['/site-ticket']" class=" list-group-item list-group-item-action bg-whitec customer"
+            <a [routerLink]="['/site-ticket']" class=" list-group-item list-group-item-action bg-white customer"
                 (click)="setMenu('Customer')" [class.active]="'Customer' === activeState" *ngIf="auth.isCustomer(user)">
                 <i class="fas fa-ticket-alt"></i>
                 <span class="menu-title"> Ticket</span>

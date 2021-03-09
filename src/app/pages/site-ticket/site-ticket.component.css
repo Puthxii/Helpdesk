@@ -1,4 +1,11 @@
 .informed {
+    background-color: white;;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.informed-badge {
     background-image: linear-gradient(to right, #3096E7 20%,  #FFBE96 100%);
     border: none;
     border-radius: 5px;
@@ -6,11 +13,18 @@
 }
 
 .informed.active {
-    background-image: linear-gradient(to right, #69ade6  20%, #ffd5bb 100%);
+    background-image: linear-gradient(to right, #3096E7 20%,  #FFBE96 100%);
     color: white;
 }
 
 .moreinfo {
+    background-color: white;;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.moreinfo-badge {
     background-color:  #FFBE96;
     border: none;
     border-radius: 5px;
@@ -18,11 +32,18 @@
 }
 
 .moreinfo.active {
-    background-color:  #ffd5bb;    
+    background-color:  #FFBE96;
     color: white;
 }
 
 .accept {
+    background-color: white;;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.accept-badge {
     background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
     border: none;
     border-radius: 5px;
@@ -31,11 +52,18 @@
 
 
 .accept.active {
-    background-image: linear-gradient(to right, #69ade6 30%, #6fcec0 70%);
+    background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
     color: #ffff;
 }
 
 .done {
+    background-color: white;;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.done-badge {
     background-color: #2ED0B9;
     border: none;
     border-radius: 5px;
@@ -43,11 +71,18 @@
 }
 
 .done.active {
-    background-color: #6fcec0;
+    background-color:#2ED0B9;
     color: #ffff;
 }
 
 .reject {
+    background-color: white;;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.reject-badge {
     background-color:  #FE8896;
     border: none;
     border-radius: 5px;
@@ -55,7 +90,7 @@
 }
 
 .reject.active {
-    background-color:  #ffbcc4;
+    background-color:  #FE8896;
     color: #ffff;
 }
 

@@ -66,6 +66,10 @@ body {
       color: var(--primary-color);
     }
 
+    .customer.active {
+    color: var(--primary-color);
+    }
+    
     .supporter.active {
       color: var(--primary-color);
     }
