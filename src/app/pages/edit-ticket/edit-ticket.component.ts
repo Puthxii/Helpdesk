@@ -180,9 +180,9 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('assign');
   }
 
-  // get upload() {
-  //   return this.editTicket.get('upload');
-  // }
+  get upload() {
+    return this.editTicket.get('upload');
+  }
 
   upadateTicketForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
