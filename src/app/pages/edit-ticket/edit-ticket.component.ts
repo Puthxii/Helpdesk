@@ -13,9 +13,6 @@ import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
-import { FileUploadService } from 'src/app/services/file-upload/file-upload.service';
-import { FileUpload } from 'src/app/models/file-upload.model';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-ticket',
@@ -86,7 +83,6 @@ export class EditTicketComponent implements OnInit {
     public fb: FormBuilder,
     private auth: AuthService,
     public userService: UserService,
-    private uploadService: FileUploadService
   ) {
     this.route.params.subscribe(params => this.id = params.id)
   }
