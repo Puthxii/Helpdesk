@@ -39,6 +39,7 @@ export class EditTicketComponent implements OnInit {
     { name: 'Line' },
     { name: 'Email' },
     { name: 'Telephone' },
+    { name: 'Website' },
     { name: 'Facebook', },
     { name: 'Onsite' },
     { name: 'Conference' },
