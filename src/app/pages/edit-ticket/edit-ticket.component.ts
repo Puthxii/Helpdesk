@@ -418,20 +418,4 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
-  getNewUpload() {
-    this.uploadService.getFiles().snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as FileUpload;
-        const id = a.payload.doc['id'];
-        return { id, ...data };
-      }))
-    ).subscribe(fileUploads => {
-      return this.NewUpload = fileUploads;
-      // this.Upload.push(upload)
-      // this.editTicket.patchValue({
-      //   upload: this.Upload
-      // });
-    });
-  }
-
 }
