@@ -209,7 +209,8 @@ export class TicketService {
         resolveDescription: ticket.resolveDescription,
         status: ticket.status,
         staff: ticket.staff,
-        assign: ticket.assign
+        assign: ticket.assign,
+        upload: ticket.upload
       })
       this.setActionById(id, ticket.status, ticket.staff)
       this.successNotification();

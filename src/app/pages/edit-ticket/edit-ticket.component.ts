@@ -115,6 +115,7 @@ export class EditTicketComponent implements OnInit {
         currentStatus: this.ticket.status,
         upload: this.ticket.upload
       });
+      this.getFileUpload()
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
@@ -183,9 +184,9 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('assign');
   }
 
-  get upload() {
-    return this.editTicket.get('upload');
-  }
+  // get upload() {
+  //   return this.editTicket.get('upload');
+  // }
 
   upadateTicketForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
@@ -407,12 +408,12 @@ export class EditTicketComponent implements OnInit {
   }
 
   getFileUpload() {
-    this.Upload = this.upload.value
+    this.Upload = this.editTicket.controls.upload.value
     return this.Upload
   }
 
   public onFileRemove(value: any) {
-    this.Upload = this.upload.value.filter(item => item.id !== value.id)
+    this.Upload = this.editTicket.controls.upload.value.filter(item => item.id !== value.id)
     this.editTicket.patchValue({
       upload: this.Upload
     });
