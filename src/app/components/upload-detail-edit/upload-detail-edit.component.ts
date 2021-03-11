@@ -3,6 +3,7 @@ import { EventEmitter } from '@angular/core';
 import { Input } from '@angular/core';
 import { Inject } from '@angular/core';
 import { FileUpload } from 'src/app/models/file-upload.model';
+import { FileUploadService } from 'src/app/services/file-upload/file-upload.service';
 
 @Component({
   selector: 'app-upload-detail-edit',
@@ -14,7 +15,7 @@ export class UploadDetailEditComponent implements OnInit {
   @Output() fileRemove = new EventEmitter<any>();
   constructor(
     @Inject('ICONATTACHFILE') public iconAttachFile: any[],
-  ) { }
+    private uploadService: FileUploadService) { }
 
   ngOnInit() {
   }
@@ -36,6 +37,7 @@ export class UploadDetailEditComponent implements OnInit {
 
   deleteFileUpload(fileUpload: FileUpload): void {
     this.fileRemove.emit(fileUpload);
+    this.uploadService.deleteFile(fileUpload);
   }
 }
 

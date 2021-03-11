@@ -140,7 +140,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <app-upload-form></app-upload-form>
+              <app-upload-detail-form (editeUpload)="doSomething($event)"></app-upload-detail-form>
             </div>
             <div class=" col-md-12 my-3">
               <app-upload-detail-list [fileUpload]="Upload" (fileRemove)="onFileRemove($event)"
