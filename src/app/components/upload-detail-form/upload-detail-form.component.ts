@@ -50,6 +50,8 @@ export class UploadDetailFormComponent implements OnInit {
   }
 
   public OnUpload(fileUploads: any[]) {
-    this.editeUpload.emit(fileUploads);
+    if (fileUploads.length !== 0) {
+      this.editeUpload.emit(fileUploads)
+    }
   }
 }
