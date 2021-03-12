@@ -212,6 +212,7 @@ export class TicketService {
         assign: ticket.assign,
         upload: ticket.upload
       })
+      this.deleteCollection('upload')
       this.setActionById(id, ticket.status, ticket.staff)
       this.successNotification();
     } catch (error) {

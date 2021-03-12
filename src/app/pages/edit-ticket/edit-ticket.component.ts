@@ -405,13 +405,11 @@ export class EditTicketComponent implements OnInit {
 
   getFileUpload() {
     this.Upload = this.editTicket.controls.upload.value
-    console.log('get', this.Upload);
     return this.Upload
   }
 
   public onFileRemove(value: any) {
     this.Upload = this.editTicket.controls.upload.value.filter((item: { id: any; }) => item.id !== value.id)
-    console.log('value', value);
     this.editTicket.patchValue({
       upload: this.Upload
     });
