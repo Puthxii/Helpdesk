@@ -60,7 +60,8 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item">
                         <a class="nav-link new" [routerLink]="['/add-ticket']" [title]="'New Ticket'"
-                            (click)="setMenu('New')" [class.active]="'New' === activeState">
+                            (click)="clearCollectionUpload()" (click)="setMenu('New')"
+                            [class.active]="'New' === activeState">
                             <i class="fas fa-plus-square fa-lg"></i>
                         </a>
                     </li>
