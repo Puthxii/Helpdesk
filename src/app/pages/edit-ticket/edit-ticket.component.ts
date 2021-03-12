@@ -433,4 +433,7 @@ export class EditTicketComponent implements OnInit {
     })
   }
 
+  deleteCollection() {
+    this.ticketService.deleteCollection('upload')
+  }
 }

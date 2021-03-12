@@ -188,9 +188,9 @@
                 </div>
               </div>
               <a [routerLink]="['/ticket']"><button class="btn btn-light btn-cancel" type="button"
-                  *ngIf="auth.isStaff(user)">Cancel</button></a>
+                  (click)="deleteCollection()" *ngIf="auth.isStaff(user)">Cancel</button></a>
               <a [routerLink]=" ['/site-ticket']"><button class="btn btn-light btn-cancel" type="button"
-                  *ngIf="auth.isCustomer(user)">Cancel</button></a>
+                  (click)="deleteCollection()" *ngIf=" auth.isCustomer(user)">Cancel</button></a>
             </div>
           </div>
         </form>

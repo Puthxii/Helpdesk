@@ -187,7 +187,7 @@ export class TicketService {
     }
   }
 
-  private async deleteCollection(path: string) {
+  async deleteCollection(path: string) {
     const batch = this.afs.firestore.batch();
     const qs = await this.afs.collection(path).ref.get();
     qs.forEach(doc => batch.delete(doc.ref));
