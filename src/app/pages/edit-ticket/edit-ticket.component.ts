@@ -27,7 +27,7 @@ export class EditTicketComponent implements OnInit {
   public editTicket: FormGroup;
   moduleList: any[];
   Site: Site[];
-  user
+  user: User
   Staff: User[];
   staff: any;
   statusCurrent: any;
@@ -405,11 +405,12 @@ export class EditTicketComponent implements OnInit {
 
   getFileUpload() {
     this.Upload = this.editTicket.controls.upload.value
+    console.log('get', this.Upload);
     return this.Upload
   }
 
   public onFileRemove(value: any) {
-    this.Upload = this.editTicket.controls.upload.value.filter(item => item.id !== value.id)
+    this.Upload = this.editTicket.controls.upload.value.filter((item: { id: any; }) => item.id !== value.id)
     console.log('value', value);
     this.editTicket.patchValue({
       upload: this.Upload
@@ -417,12 +418,21 @@ export class EditTicketComponent implements OnInit {
     this.getFileUpload()
   }
 
-  public doSomething(upload: any): void {
-    const uploadConcat = this.Upload.concat(upload);
-    console.log(uploadConcat);
+  public mergeFileUpload(upload: any): void {
+    this.mergeByProperty(upload, this.Upload, 'id');
     this.editTicket.patchValue({
-      upload: uploadConcat
+      upload
     });
     this.getFileUpload()
   }
+
+  mergeByProperty(newUpload: any[], oldUpload: any[], prop: string) {
+    oldUpload.forEach((sourceElement: { [x: string]: any; }) => {
+      const targetElement = newUpload.find((targetElement: { [x: string]: any; }) => {
+        return sourceElement[prop] === targetElement[prop];
+      })
+      targetElement ? Object.assign(targetElement, sourceElement) : newUpload.push(sourceElement);
+    })
+  }
+
 }
