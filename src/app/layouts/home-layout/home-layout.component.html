@@ -1,93 +1,90 @@
 <div class="d-flex sidebar-offcanvas" id="wrapper" *ngIf="user$">
-    <div class="bg-white border-right" id="sidebar-wrapper">
-        <a class="header content" routerLink="/">
-            <img class="logo-img-navbar" src="../../../assets/images/logo.png">
-            <h3 class="bg-white primary-color">
-                Helpdesk
-            </h3>
-        </a>
-        <div class="list-group list-group-flush">
-            <a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white dashboard"
-                (click)="setMenu('Dashboard')" [class.active]="'Dashboard' === activeState">
-                <i class="fas fa-chart-pie"></i>
-                <span class="menu-title"> Dashboard</span>
-            </a>
-            <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white supporter"
-                (click)="setMenu('Supporter')" [class.active]="'Supporter' === activeState"
-                *ngIf="auth.isSupporter(user)">
-                <i class="fas fa-ticket-alt"></i>
-                <span class="menu-title"> Supporter</span>
-            </a>
-            <a [routerLink]="['/site-ticket']" class=" list-group-item list-group-item-action bg-white customer"
-                (click)="setMenu('Customer')" [class.active]="'Customer' === activeState" *ngIf="auth.isCustomer(user)">
-                <i class="fas fa-ticket-alt"></i>
-                <span class="menu-title"> Ticket</span>
-            </a>
-            <a [routerLink]=" ['/ticket-ma']" class=" list-group-item list-group-item-action bg-white ma"
-                (click)="setMenu('Ma')" [class.active]="'Ma' === activeState" *ngIf="auth.isMaintenance(user)">
-                <i class="fas fa-ticket-alt"></i>
-                <span class="menu-title"> MA</span>
-            </a>
-            <a [routerLink]=" ['/ticket-sup']" class=" list-group-item list-group-item-action bg-white supervisor"
-                (click)="setMenu('Supervisor')" [class.active]="'Supervisor' === activeState"
-                *ngIf="auth.isSupervisor(user)">
-                <i class="fas fa-ticket-alt"></i>
-                <span class="menu-title"> Supervisor</span>
-            </a>
-            <a [routerLink]=" ['/ticket-dev']" class=" list-group-item list-group-item-action bg-white dev"
-                (click)="setMenu('Dev')" [class.active]="'Dev' === activeState" *ngIf="auth.isDeveloper(user)">
-                <i class="fas fa-ticket-alt"></i>
-                <span class="menu-title"> Developer</span>
-            </a>
-            <a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white staff"
-                (click)="setMenu('Staff')" [class.active]="'Staff' === activeState" *ngIf="auth.isStaff(user)">
-                <i class="fas fa-user-tie"></i>
-                <span class="menu-title"> Staff</span>
-            </a>
-        </div>
-    </div>
-    <div id="page-content-wrapper">
-        <nav
-            class="navbar navbar-expand navbar-expand-lg navbar-expand-md navbar-expand-sm navbar-light bg-white border-bottom">
-            <button class="btn btn-light" id="menu-toggle" (click)="toggleOffcanvas()">
-                <i class="fas fa-bars fa-lg"></i>
-            </button>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link new" [routerLink]="['/add-ticket']" [title]="'New Ticket'"
-                            (click)="clearCollectionUpload()" (click)="setMenu('New')"
-                            [class.active]="'New' === activeState">
-                            <i class="fas fa-plus-square fa-lg"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-bell fa-lg"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown profile">
-                        <a class="btn-user dropdown-toggle media align-items-center" data-toggle="dropdown"
-                            data-sidebar="true" aria-haspopup="true" aria-expanded="false">
-                            <img class="mr-2 img" src="{{user$.photoURL}}" width="40" height="40" alt="avatar">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" [routerLink]="['/profile']">Edit</a>
-                            <a class=" dropdown-item" (click)="this.auth.signOut()">Logout</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <main>
-            <div class="container-fluid">
-                <app-alert></app-alert>
-                <router-outlet></router-outlet>
-            </div>
-        </main>
-    </div>
+	<div class="bg-white border-right" id="sidebar-wrapper">
+		<a class="header content" routerLink="/">
+			<img class="logo-img-navbar" src="../../../assets/images/logo.png">
+			<h3 class="bg-white primary-color">
+				Helpdesk
+			</h3>
+		</a>
+		<div class="list-group list-group-flush">
+			<a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white dashboard"
+				(click)="setMenu('Dashboard')" [class.active]="'Dashboard' === activeState">
+				<i class="fas fa-chart-pie"></i>
+				<span class="menu-title"> Dashboard</span>
+			</a>
+			<a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white supporter"
+				(click)="setMenu('Supporter')" [class.active]="'Supporter' === activeState" *ngIf="auth.isSupporter(user)">
+				<i class="fas fa-ticket-alt"></i>
+				<span class="menu-title"> Supporter</span>
+			</a>
+			<a [routerLink]="['/site-ticket']" class=" list-group-item list-group-item-action bg-white customer"
+				(click)="setMenu('Customer')" [class.active]="'Customer' === activeState" *ngIf="auth.isCustomer(user)">
+				<i class="fas fa-ticket-alt"></i>
+				<span class="menu-title"> Ticket</span>
+			</a>
+			<a [routerLink]=" ['/ticket-ma']" class=" list-group-item list-group-item-action bg-white ma"
+				(click)="setMenu('Ma')" [class.active]="'Ma' === activeState" *ngIf="auth.isMaintenance(user)">
+				<i class="fas fa-ticket-alt"></i>
+				<span class="menu-title"> MA</span>
+			</a>
+			<a [routerLink]=" ['/ticket-sup']" class=" list-group-item list-group-item-action bg-white supervisor"
+				(click)="setMenu('Supervisor')" [class.active]="'Supervisor' === activeState" *ngIf="auth.isSupervisor(user)">
+				<i class="fas fa-ticket-alt"></i>
+				<span class="menu-title"> Supervisor</span>
+			</a>
+			<a [routerLink]=" ['/ticket-dev']" class=" list-group-item list-group-item-action bg-white dev"
+				(click)="setMenu('Dev')" [class.active]="'Dev' === activeState" *ngIf="auth.isDeveloper(user)">
+				<i class="fas fa-ticket-alt"></i>
+				<span class="menu-title"> Developer</span>
+			</a>
+			<a [routerLink]=" ['/staff']" class=" list-group-item list-group-item-action bg-white staff"
+				(click)="setMenu('Staff')" [class.active]="'Staff' === activeState" *ngIf="auth.isStaff(user)">
+				<i class="fas fa-user-tie"></i>
+				<span class="menu-title"> Staff</span>
+			</a>
+		</div>
+	</div>
+	<div id="page-content-wrapper">
+		<nav
+			class="navbar navbar-expand navbar-expand-lg navbar-expand-md navbar-expand-sm navbar-light bg-white border-bottom">
+			<button class="btn btn-light" id="menu-toggle" (click)="toggleOffcanvas()">
+				<i class="fas fa-bars fa-lg"></i>
+			</button>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+					<li class="nav-item">
+						<a class="nav-link new" [routerLink]="['/add-ticket']" [title]="'New Ticket'"
+							(click)="clearCollectionUpload()" (click)="setMenu('New')" [class.active]="'New' === activeState">
+							<i class="fas fa-plus-square fa-lg"></i>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fas fa-bell fa-lg"></i>
+						</a>
+					</li>
+					<li class="nav-item dropdown profile">
+						<a class="btn-user dropdown-toggle media align-items-center" data-toggle="dropdown" data-sidebar="true"
+							aria-haspopup="true" aria-expanded="false">
+							<img class="mr-2 img" src="{{user$.photoURL}}" width="40" height="40" alt="avatar">
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" [routerLink]="['/profile']">Edit</a>
+							<a class=" dropdown-item" (click)="this.auth.signOut()">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<main>
+			<div class="container-fluid">
+				<app-alert></app-alert>
+				<router-outlet></router-outlet>
+			</div>
+		</main>
+	</div>
 </div>
