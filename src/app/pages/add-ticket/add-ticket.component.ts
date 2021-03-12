@@ -413,6 +413,7 @@ export class AddTicketComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
+        this.ticketService.deleteCollection('upload')
         this.router.navigate(['/']);
       }
     })
