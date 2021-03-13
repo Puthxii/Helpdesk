@@ -1,6 +1,5 @@
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -19,7 +18,6 @@ export class HomeLayoutComponent implements OnInit {
   menu: any;
 
   constructor(
-    private router: Router,
     private auth: AuthService,
     public userService: UserService,
     public ticketService: TicketService
@@ -48,10 +46,6 @@ export class HomeLayoutComponent implements OnInit {
   setMenu(menu: any) {
     this.setMenuState(menu)
     this.menu = menu
-  }
-
-  clearCollectionUpload() {
-    this.ticketService.deleteCollection('upload')
   }
 
 }
