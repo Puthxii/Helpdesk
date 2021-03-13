@@ -68,7 +68,7 @@ export class EditTicketComponent implements OnInit {
   ];
 
   ticket: any;
-  Upload = []
+  depositFiles = []
 
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
@@ -404,21 +404,21 @@ export class EditTicketComponent implements OnInit {
   }
 
   getFileUpload() {
-    this.Upload = this.editTicket.controls.upload.value
-    return this.Upload
+    this.depositFiles = this.editTicket.controls.upload.value
+    return this.depositFiles
   }
 
   public onFileRemove(value: any) {
-    this.Upload = this.editTicket.controls.upload.value.filter((item: { id: any; }) => item.id !== value.id)
+    this.depositFiles = this.editTicket.controls.upload.value.filter((item: { id: any; }) => item.id !== value.id)
     this.editTicket.patchValue({
-      upload: this.Upload
+      upload: this.depositFiles
     });
     this.getFileUpload()
   }
 
   public mergeFileUpload(upload: any): void {
-    if (this.Upload !== undefined) {
-      this.mergeByProperty(upload, this.Upload, 'id');
+    if (this.depositFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositFiles, 'id');
     }
     this.editTicket.patchValue({
       upload
@@ -426,8 +426,8 @@ export class EditTicketComponent implements OnInit {
     this.getFileUpload()
   }
 
-  mergeByProperty(newUpload: any[], oldUpload: any[], prop: string) {
-    oldUpload.forEach((sourceElement: { [x: string]: any; }) => {
+  mergeByProperty(newUpload: any[], depositFiles: any[], prop: string) {
+    depositFiles.forEach((sourceElement: { [x: string]: any; }) => {
       const targetElement = newUpload.find((targetElement: { [x: string]: any; }) => {
         return sourceElement[prop] === targetElement[prop];
       })
