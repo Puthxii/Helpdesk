@@ -167,9 +167,6 @@ export class AuthService {
       uid: this.authState.user.uid,
       email: this.authState.user.email,
       photoURL: this.authState.user.photoURL,
-      roles: {
-        customer: true
-      }
     };
     userRef.update(data)
       .catch(error => console.log(error));
@@ -182,9 +179,6 @@ export class AuthService {
       uid: this.authState.user.uid,
       email: this.authState.user.email,
       photoURL: this.authState.user.photoURL,
-      roles: {
-        customer: true
-      }
     };
     return userRef.set(data, { merge: true });
   }
