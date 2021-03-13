@@ -145,6 +145,7 @@ export class AddTicketComponent implements OnInit {
       };
     this.setDateDefault()
     this.setAssign()
+    this.getActionSentence()
   }
 
   getUserValue() {
@@ -229,6 +230,13 @@ export class AddTicketComponent implements OnInit {
       assign: ''
     });
   }
+
+  getActionSentence() {
+    this.addTicketForm.patchValue({
+      actionSentence : ''
+    });
+  }
+
     // let role action status
     // check role
     // check action
@@ -260,12 +268,6 @@ export class AddTicketComponent implements OnInit {
             actionSentence: 'Suporter set in progress'
           })
         }
-      } else {
-        if (this.status.value === 'Informed') {
-          this.addTicketForm.patchValue({
-          actionSentence: 'Suporter create ticket'
-        })
-      }
     }
   }
 
