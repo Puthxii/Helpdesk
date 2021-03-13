@@ -18,6 +18,7 @@ export interface Ticket {
     email?: string;
     assign?: string;
     upload?: any;
+    actionSentence?: string;
 }
 export interface Actions {
     data: any,

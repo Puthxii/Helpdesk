@@ -2,7 +2,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { Product } from '../../models/product.model';
 import { ProductService } from './../../services/product/product.service';
 import { SiteService } from './../../services/site/site.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import * as moment from 'moment';
@@ -12,7 +12,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/models/user.model';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
 @Component({
@@ -147,6 +147,7 @@ export class AddTicketComponent implements OnInit {
       };
     this.setDateDefault()
     this.setAssign()
+    this.getActionSentence()
   }
 
   getUserValue() {
@@ -160,10 +161,12 @@ export class AddTicketComponent implements OnInit {
         this.setStatusCustomer();
         this.getSiteCustomer();
         this.getCustomerContact(this.user$.name);
+        this.setActionSentenceCus();
       } else {
         this.setStaff();
         this.setStatus();
         this.site$ = this.siteService.getSitesList();
+        this.setActionSentence()
       }
     });
   }
@@ -230,6 +233,44 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
+  getActionSentence() {
+    this.addTicketForm.patchValue({
+      actionSentence : ''
+    });
+  }
+
+  setActionSentence() {
+    if (this.user$.roles.supporter === true) {
+        if (this.status.value === 'Draft') {
+          this.addTicketForm.patchValue({
+          actionSentence: 'Suporter create draft'
+        })
+        } else if (this.status.value === 'Informed') {
+          this.addTicketForm.patchValue({
+            actionSentence: 'Suporter create ticket'
+          })
+        } else if (this.status.value === 'Rejected') {
+          this.addTicketForm.patchValue({
+            actionSentence: 'Suporter rejected ticket'
+          })
+        } else if (this.status.value === 'Closed') {
+          this.addTicketForm.patchValue({
+            actionSentence: 'Suporter closed ticket'
+          })
+        } else if (this.status.value === 'In Progress') {
+          this.addTicketForm.patchValue({
+            actionSentence: 'Suporter set in progress'
+          })
+        }
+    }
+  }
+
+  setActionSentenceCus() {
+    this.addTicketForm.patchValue({
+      actionSentence: 'Customer create ticket'
+    })
+  }
+
   buildForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.addTicketForm = this.fb.group({
@@ -254,6 +295,7 @@ export class AddTicketComponent implements OnInit {
       email: [''],
       assign: [''],
       upload: [''],
+      actionSentence: ['']
     });
   }
 
@@ -326,6 +368,7 @@ export class AddTicketComponent implements OnInit {
     this.addTicketForm.patchValue({
       status: value
     });
+    this.setActionSentence()
   }
 
   isSelectedSite() {

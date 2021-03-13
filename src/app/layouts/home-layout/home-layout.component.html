@@ -1,36 +1,39 @@
 <div class="d-flex sidebar-offcanvas" id="wrapper" *ngIf="user$">
   <div class="bg-white border-right" id="sidebar-wrapper">
     <a class="header content" routerLink="/">
-      <img class="logo-img-navbar" src="../../../assets/images/logo.png">
-      <h3 class="bg-white primary-color">
-        Helpdesk
-      </h3>
+        <img class="logo-img-navbar" src="../../../assets/images/logo.png">
+        <h3 class="bg-white primary-color">
+            Helpdesk
+        </h3>
     </a>
     <div class="list-group list-group-flush">
       <a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white dashboard"
-        (click)="setMenu('Dashboard')" [class.active]="'Dashboard' === activeState">
-        <i class="fas fa-chart-pie"></i>
-        <span class="menu-title"> Dashboard</span>
+          (click)="setMenu('Dashboard')" [class.active]="'Dashboard' === activeState">
+          <i class="fas fa-chart-pie"></i>
+          <span class="menu-title"> Dashboard</span>
       </a>
       <a [routerLink]="['/ticket']" class=" list-group-item list-group-item-action bg-white supporter"
-        (click)="setMenu('Supporter')" [class.active]="'Supporter' === activeState" *ngIf="auth.isSupporter(user)">
-        <i class="fas fa-ticket-alt"></i>
-        <span class="menu-title"> Supporter</span>
+          (click)="setMenu('Supporter')" [class.active]="'Supporter' === activeState"
+          *ngIf="auth.isSupporter(user)">
+          <i class="fas fa-ticket-alt"></i>
+          <span class="menu-title"> Supporter</span>
       </a>
       <a [routerLink]="['/site-ticket']" class=" list-group-item list-group-item-action bg-white customer"
-        (click)="setMenu('Customer')" [class.active]="'Customer' === activeState" *ngIf="auth.isCustomer(user)">
-        <i class="fas fa-ticket-alt"></i>
-        <span class="menu-title"> Ticket</span>
+          (click)="setMenu('Customer')" [class.active]="'Customer' === activeState" 
+          *ngIf="auth.isCustomer(user)">
+          <i class="fas fa-ticket-alt"></i>
+          <span class="menu-title"> Ticket</span>
       </a>
       <a [routerLink]=" ['/ticket-ma']" class=" list-group-item list-group-item-action bg-white ma"
-        (click)="setMenu('Ma')" [class.active]="'Ma' === activeState" *ngIf="auth.isMaintenance(user)">
-        <i class="fas fa-ticket-alt"></i>
-        <span class="menu-title"> MA</span>
+          (click)="setMenu('Ma')" [class.active]="'Ma' === activeState" *ngIf="auth.isMaintenance(user)">
+          <i class="fas fa-ticket-alt"></i>
+          <span class="menu-title"> MA</span>
       </a>
       <a [routerLink]=" ['/ticket-sup']" class=" list-group-item list-group-item-action bg-white supervisor"
-        (click)="setMenu('Supervisor')" [class.active]="'Supervisor' === activeState" *ngIf="auth.isSupervisor(user)">
-        <i class="fas fa-ticket-alt"></i>
-        <span class="menu-title"> Supervisor</span>
+          (click)="setMenu('Supervisor')" [class.active]="'Supervisor' === activeState"
+          *ngIf="auth.isSupervisor(user)">
+          <i class="fas fa-ticket-alt"></i>
+          <span class="menu-title"> Supervisor</span>
       </a>
       <a [routerLink]=" ['/ticket-dev']" class=" list-group-item list-group-item-action bg-white dev"
         (click)="setMenu('Dev')" [class.active]="'Dev' === activeState" *ngIf="auth.isDeveloper(user)">
@@ -88,3 +91,4 @@
     </main>
   </div>
 </div>
+

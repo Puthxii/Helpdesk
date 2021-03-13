@@ -32,6 +32,8 @@ export class EditTicketComponent implements OnInit {
   staff: any;
   statusCurrent: any;
   currentName: string
+  user$: any
+
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -109,7 +111,9 @@ export class EditTicketComponent implements OnInit {
         siteName: this.ticket.site.nameEN,
         assign: this.ticket.assign,
         currentStatus: this.ticket.status,
-        upload: this.ticket.upload
+        upload: this.ticket.upload,
+        actionSentence: this.ticket.actionSentence,
+        dev: this.ticket.dev
       });
       this.getFileUpload()
     })
@@ -210,13 +214,15 @@ export class EditTicketComponent implements OnInit {
       maintenancePackage: [''],
       assign: [''],
       currentStatus: [''],
-      upload: ['']
+      upload: [''],
+      actionSentence: [''],
+      dev: ['']
     });
   }
 
   upadateForm() {
     this.ticketService.editTicket(this.editTicket.value, this.id);
-    this.isSubmitAssignDev()
+    this.saveAction()
   }
 
   getMaPackage() {
@@ -224,6 +230,11 @@ export class EditTicketComponent implements OnInit {
     const maEndDate = moment(this.editTicket.controls.site.value.maEndDate).format('DD/MM/YYYY');
     return maStartDate + ' - ' + maEndDate;
   }
+
+  getCurrentStaff() {
+    return this.user.firstName + ' ' + this.user.lastName
+  }
+
 
   displaySelectedStatus(): any {
     return (this.status.value) ? this.matchStatus(this.status.value) : 'Save as draft';
@@ -241,6 +252,7 @@ export class EditTicketComponent implements OnInit {
     this.editTicket.patchValue({
       status: value
     });
+    this.setActionSentence()
   }
 
   filterAction() {
@@ -324,10 +336,14 @@ export class EditTicketComponent implements OnInit {
     (this.editTicket.controls.assign.value) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
-  isSubmitAssignDev() {
-    if (this.editTicket.controls.assign.value) {
-      this.ticketService.setActionById(this.id, this.editTicket.controls.status.value, this.editTicket.controls.assign.value)
-    }
+  saveAction() {
+      this.ticketService
+      .setActionById(
+        this.id,
+        this.editTicket.controls.status.value,
+        this.editTicket.controls.staff.value, //todo : staff.fullname
+        this.editTicket.controls.assign.value,
+        this.editTicket.controls.actionSentence.value)
   }
 
   isAcceptedAssigned() {
@@ -438,4 +454,46 @@ export class EditTicketComponent implements OnInit {
   deleteCollection() {
     this.ticketService.deleteCollection('upload')
   }
+  setActionSentence() {
+    const staffCurrent = this.getCurrentStaff()
+    let sentence: string
+    const assignDev = this.editTicket.controls.assign.value
+    if (this.user.roles.customer === true) {
+      if (this.status.value === 'Informed') {
+        sentence = `Customer create ticket`
+      } else if (this.status.value === 'Rejected') {
+        sentence = 'Customer rejected ticket'
+      }
+    } else {
+      if (this.status.value === 'Draft') {
+        this.editTicket.patchValue({
+          actionSentence: 'Support create draft'
+        })
+      } else if (this.status.value === 'Informed') {
+        sentence = `${staffCurrent}  create ticket`
+      } else if (this.status.value === 'Rejected') {
+        sentence = `${staffCurrent}  rejected ticket`
+      } else if (this.status.value === 'More Info') {
+          sentence = `${staffCurrent}  remark more info`
+      } else if (this.status.value === 'Close') {
+        sentence = `${staffCurrent}  close ticket`
+      } else if (this.status.value === 'In Progress') {
+        sentence = `${staffCurrent}  set in progress`
+      } else if (this.status.value === 'Accepted') {
+        sentence = `${staffCurrent}  accepted ticket`
+      } else if (this.status.value === 'Rejected') {
+        sentence = `${staffCurrent}  rejected ticket`
+      } else if (this.status.value === 'Pending') {
+        sentence = `${staffCurrent} set pending`
+      } else if (this.status.value === 'Assigned') {
+        sentence = `${staffCurrent} assigned ticket to ${assignDev}`
+      } else if (this.status.value === 'Resolved') {
+        sentence = `${staffCurrent} resolved task`
+      }
+    }
+    this.editTicket.patchValue({
+      actionSentence: sentence
+    })
+  }
+
 }

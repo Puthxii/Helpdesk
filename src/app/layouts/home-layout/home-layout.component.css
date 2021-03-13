@@ -74,6 +74,10 @@ body {
       color: var(--primary-color);
     }
 
+    .customer.active {
+      color: var(--primary-color);
+    }
+
     .ma.active {
       color: var(--primary-color);
     }

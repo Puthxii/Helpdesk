@@ -128,7 +128,6 @@ export class TicketService {
       this.afs.collection('ticket').doc(id).update({
         status
       })
-      this.setActionById(id, status, staff)
       this.successCancel();
     } catch (error) {
       this.errorCancel();
@@ -179,6 +178,7 @@ export class TicketService {
           staff: ticket.staff,
           status: ticket.status,
           date: new Date(),
+          actionSentence: ticket.actionSentence
         });
       this.deleteCollection('upload')
       this.successNotification();
@@ -220,10 +220,12 @@ export class TicketService {
     }
   }
 
-  setActionById(id: any, status: any, staff: any) {
+  setActionById(id: any, status: any, staff: any, dev: any, actionSentence: any) {
     this.afs.collection('ticket').doc(id)
       .collection('action')
       .add({
+        actionSentence,
+        dev,
         staff,
         status,
         date: new Date(),
