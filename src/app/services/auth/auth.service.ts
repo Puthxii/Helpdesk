@@ -80,8 +80,8 @@ export class AuthService {
   private async socialSignIn(provider: GithubAuthProvider | GoogleAuthProvider | FacebookAuthProvider | TwitterAuthProvider) {
     try {
       const credential = await this.afAuth.signInWithPopup(provider);
-      console.log(credential.user);
-      this.authState = credential.user;
+      this.authState = credential;
+      this.updateUserDataToFirestore();
       this.updateUserDataToDatabase();
       this.router.navigate(['/']);
     } catch (error) {
