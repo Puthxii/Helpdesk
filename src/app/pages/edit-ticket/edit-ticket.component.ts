@@ -417,7 +417,9 @@ export class EditTicketComponent implements OnInit {
   }
 
   public mergeFileUpload(upload: any): void {
-    this.mergeByProperty(upload, this.Upload, 'id');
+    if (this.Upload !== undefined) {
+      this.mergeByProperty(upload, this.Upload, 'id');
+    }
     this.editTicket.patchValue({
       upload
     });
