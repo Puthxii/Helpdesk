@@ -14,7 +14,12 @@ export class StaffGuard implements CanActivate {
         state: RouterStateSnapshot): Observable<boolean> {
         return this.auth.user$.pipe(
             take(1),
-            map(user => user && user.roles.supporter || user.roles.maintenance || user.roles.developer || user.roles.supporter ? true : false),
+            map(
+                user => user && user.roles.supporter ||
+                    user.roles.maintenance ||
+                    user.roles.developer ||
+                    user.roles.supervisor ? true : false
+            ),
             tap(isStaff => {
                 if (!isStaff) {
                     this.router.navigate(['/error-pages/404']);
