@@ -9,7 +9,8 @@ export class UserService {
 
   getStaffsList() {
     return this.afs.collection('users', ref => ref
-      .where('roles.customer', '==', false));
+      .where('roles.customer', '==', false)
+      .orderBy('firstName', 'desc'));
   }
 
   getUserbyId(uid: string) {
