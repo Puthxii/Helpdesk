@@ -213,7 +213,7 @@ export class TicketService {
         upload: ticket.upload
       })
       this.deleteCollection('upload')
-      this.setActionById(id, ticket.status, ticket.staff)
+      // this.setActionById(id, ticket.status, ticket.staff)
       this.successNotification();
     } catch (error) {
       this.errorNotification();
