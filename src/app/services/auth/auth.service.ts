@@ -37,21 +37,27 @@ export class AuthService {
       }
     }));
   }
+
   get authenticated(): boolean {
     return this.authState !== null;
   }
+
   get currentUser(): any {
     return this.authenticated ? this.authState : null;
   }
+
   get currentUserObservable(): any {
     return this.afAuth.authState;
   }
+
   get currentUserId(): string {
     return this.authenticated ? this.authState.user.uid : '';
   }
+
   get currentUserAnonymous(): boolean {
     return this.authenticated ? this.authState.isAnonymous : false;
   }
+
   get currentUserDisplayName(): string {
     if (!this.authState) {
       return 'Guest';
@@ -61,33 +67,38 @@ export class AuthService {
       return this.authState.displayName || 'User without a Name';
     }
   }
+
   githubLogin() {
     const provider = new firebase.auth.GithubAuthProvider();
     return this.socialSignIn(provider);
   }
+
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.socialSignIn(provider);
   }
+
   facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
     return this.socialSignIn(provider);
   }
+
   twitterLogin() {
     const provider = new firebase.auth.TwitterAuthProvider();
     return this.socialSignIn(provider);
   }
+
   private async socialSignIn(provider: GithubAuthProvider | GoogleAuthProvider | FacebookAuthProvider | TwitterAuthProvider) {
     try {
       const credential = await this.afAuth.signInWithPopup(provider);
       this.authState = credential;
       this.updateUserDataToFirestore();
-      this.updateUserDataToDatabase();
       this.router.navigate(['/']);
     } catch (error) {
       return console.log(error);
     }
   }
+
   async anonymousLogin() {
     try {
       const user = await this.afAuth.signInAnonymously();
@@ -97,17 +108,18 @@ export class AuthService {
       return console.log(error);
     }
   }
+
   async emailSignUp(email: string, password: string) {
     try {
       const user = await this.afAuth.createUserWithEmailAndPassword(email, password);
       this.authState = user;
       this.updateUserDataToFirestore();
-      this.updateUserDataToDatabase();
       this.router.navigate(['/']);
     } catch (error) {
       return console.log(error);
     }
   }
+
   async emailLogin(email: string, password: string) {
     try {
       const user = await this.afAuth.signInWithEmailAndPassword(email, password);
@@ -124,6 +136,7 @@ export class AuthService {
       });
     }
   }
+
   async resetPassword(email: string) {
     const fbAuth = firebase.auth();
     try {
@@ -133,6 +146,7 @@ export class AuthService {
       return console.log(error);
     }
   }
+
   getCurrentLoggedIn() {
     this.afAuth.authState.subscribe(auth => {
       if (auth) {
@@ -140,10 +154,12 @@ export class AuthService {
       }
     });
   }
+
   signOut(): void {
     this.afAuth.signOut();
     this.router.navigate(['/login']);
   }
+
   private updateUserDataToDatabase(): void {
     const path = `users/${this.currentUserId}`;
     const userRef: AngularFireObject<any> = this.db.object(path);
