@@ -1,11 +1,230 @@
-/* You can add global styles to this file, and also import other style files */
 @import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
 
 :root{
     --background-color: #F2EDF3;
     --primary-color: #3399CC;
+    --purple-color: #533380;
+    --secondary-color: #9C9FA6;
+    --info-color: #3096E7;
+    --info-fade-color: #8FC9F9;
+    --danger-color: #FE8896;
+    --success-color: #2ED0B9;
+    --success-fade-color: #81D8D1;
+    --warning-color: #FFBE96;
+    --label-color: #000000;
 }
 
-.googleBtn {
-    background: #eb5e4c;
+* {
+    font-family: 'Nunito', sans-serif;
+}
+
+.logo-img{
+    vertical-align: top;
+    width: 30px;
+}
+
+.background-color {
+    color: var(--background-color);
+}
+
+.primary-color{
+    color: var(--primary-color);
+}
+
+.purple-color{
+    color: var(--purple-color);
+}
+
+.secondary-color{
+    color: var(--secondary-color);
+}
+
+.info-color{
+    color: var(--info-color);
+}
+
+.info-fade-color{
+    color: var(--primary-fade-color);
+}
+
+.danger-color{
+    color: var(--danger-color);
+}
+
+.success-color{
+    color: var(--success-color);
+}
+
+.success-fade-color{
+    color: var(--success-fade-color);
+}
+
+.warning-color{
+    color: var(--warning-color);
+}
+
+.label-info-color{
+    color: var(--label-color);
+}
+.btn-login{
+    background-image: linear-gradient(to right, #3399CC 0%, #533380 50%, #3399CC 100%);
+}
+.logo-img-login{
+    vertical-align: top;
+    width: 50px;
+}
+.logo-img-navbar{
+    vertical-align: top;
+    width: 50px;
+    padding: 3px;
+}
+
+.container .multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret:before {
+    display: inline-block !important;
+    border-style: none !important;
+   
+}
+
+.container .multiselect-dropdown .dropdown-btn {
+    margin-top: initial !important;
+    /* margin-bottom:  !important; */ 
+}
+
+.undefined {
+    width: 144px;
+    background-color: slategray;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+}
+.low{
+    width: 144px;
+    background-color: #2ED0B9;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+}
+
+.medium{
+    width: 144px;
+    background-color: #FFBE96;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+}
+
+.high{
+    width: 144px;
+    background-color: #FE8896;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+}
+
+.critical{
+    width: 144px;
+    background-color: #533380;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+}
+
+.type {
+    width: 144px;
+    background-color: #3096E7;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+}
+
+.status {
+    width: 144px;
+    background-color: #6ba3b4;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+}
+
+.action{
+    padding-top: 35px;
+}
+
+.icon {
+    display: inline-block;
+    border-radius: 60px;
+    box-shadow: 0px 0px 2px white;
+    padding: 0.5em 0.6em;
+    background-color: white;
+}
+
+.total {
+    background:white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.total.active {
+    background:cadetblue;
+    border: none;
+    color: white;
+}
+
+.in-progress {
+    background:white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.in-progress.active {
+    background:#3399CC;
+    border: none;
+    color: white;
+}
+
+.accepted {
+    background: white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.accepted.active {
+    background: rgb(255, 202, 103);
+    border: none;
+    color: white;
+}
+
+.assigned{
+    background: white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.assigned.active {
+    background:#20c997;
+    border: none;
+    color: white;
+}
+
+.resolved {
+    background:white;
+    border: none;
+    border-radius: 5px;
+    color: black;
+}
+
+.resolved.active {
+    background:turquoise;
+    border: none;
+    color: white;
 }

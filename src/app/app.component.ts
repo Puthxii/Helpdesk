@@ -1,3 +1,5 @@
+import { User } from './models/user.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Component, ElementRef } from '@angular/core';
 @Component({
   selector: 'app-root',
@@ -6,11 +8,15 @@ import { Component, ElementRef } from '@angular/core';
 })
 export class AppComponent {
   title = 'Helpdesk';
+  user: User;
 
-  constructor(private elementRef: ElementRef) {
-
+  constructor(private elementRef: ElementRef, public auth: AuthService) {
+    this.auth.user$.subscribe(user => this.user = user)
   }
-  // tslint:disable-next-line: use-lifecycle-interface
+
+  ngOnInit() {
+  }
+
   ngAfterViewInit() {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#F2EDF3';
   }

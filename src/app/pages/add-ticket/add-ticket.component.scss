@@ -1,0 +1,54 @@
+.card-header{
+    border: none;
+}
+.card-body{
+    padding-top: none;
+
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.img{
+    margin-bottom: 10px;
+    width: 50px;
+}
+.header.content > img,
+    .header.content > h3 {
+        display: inline-block;
+    }
+
+h3{
+    padding: 10px 10px 10px 10px;
+}
+
+.btn-save {
+    margin-left: 40px;
+    float:  right;
+}
+.btn-cancel {
+    float:  right;
+
+}
+
+.dropdownModule {
+    margin-top: -1.3rem;
+}
+
+.control-label::after {
+    content: " *";
+    color: #FE8896;
+}
+
+textarea{
+    height: 150px;
+}
+
+.siteName{
+    width: 100%;
+    background-color: #f8f9fa;
+    border-color: #bcbdc0;
+    color: #343a40;
+}

@@ -20,27 +20,15 @@
     border-radius: 10px;
 }
 .btn:hover {
-    background-position: right center; /* change the direction of the change here */
-}
-.btn-3{
-    background-image: linear-gradient(to right, #3399CC 0%, #533380 50%, #3399CC 100%);
-}
-.primary-color{
-    color: var(--primary-color);
-}
-.img{
-    margin-bottom: 10px;
-    width: 50px;
+    background-position: right center;
 }
 .header.content > img,
     .header.content > h3 {
         display: inline-block;
     }
-
 h3{
     padding: 10px 10px 10px 10px;
 }
-
 .new-member{
     margin-bottom: .5rem;
 }

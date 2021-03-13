@@ -25,7 +25,8 @@
             ],
             "styles": [
               "src/styles.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/sweetalert2/src/sweetalert2.scss"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.slim.min.js",
@@ -127,5 +128,10 @@
       }
     }
   },
-  "defaultProject": "Helpdesk"
+  "defaultProject": "Helpdesk",
+  "cli": {
+    "analytics": "79236571-9bef-41d6-87a0-e19493f838bf"
+  }
+
+  
 }

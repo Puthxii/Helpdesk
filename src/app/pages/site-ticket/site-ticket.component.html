@@ -1,0 +1,210 @@
+<div class="container-fluid">
+  <section id="minimal-statistics">
+    <div class="row">
+      <div class="col-12 mt-3 mb-1 searchbar">
+        <h5 class="primary-color">
+          <i class="fas fa-ticket-alt"></i>
+          Tickets
+        </h5>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
+              (change)="checkValue(isChecked?'ture':'false')">
+            My Tickets<i class="input-helper"></i>
+          </label>
+        </div>
+        <div class="form-control-sm">
+          <div class="form-group has-search mb-2">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
+              (keyup)="search()" placeholder="Search Subject">
+          </div>
+        </div>
+        <form [formGroup]="filterTicketForm">
+          <div class="form-control-sm">
+            <div class="input-group mb-2">
+              <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="date"
+                formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
+                (dateChanged)="onDateChanged($event)">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="dp.clearDate()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class=" input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                  <i class="fas fa-calendar"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Informed')">
+        <div class="card informed mt-2" [class.active]="'Informed' === activeState">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-pen float-left"></i>
+                </div>
+                <div class="media-body text-right ml-2">
+                  <span>Sent</span>
+                </div>
+                <div class="media-body text-right">
+                  <span>
+                    {{ CountStatus[0] }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-sm-6 col-12" (click)="setStatus('More Info')">
+        <div class="card moreinfo mt-2" [class.active]="'More Info' === activeState">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-file float-left mx-1"></i>
+                </div>
+                <div class="media-body text-right">
+                  <span>More Info</span>
+                </div>
+                <div class="media-body text-right">
+                  <span>{{ CountStatus[1] }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Accepted')">
+        <div class="card accept mt-2" [class.active]="'Accepted' === activeState">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-clock float-left mr-2"></i>
+                </div>
+                <div class="media-body text-right mr-2">
+                  <span>Accepted</span>
+                </div>
+                <div class="media-body text-right">
+                  <span>
+                    {{ getSum() }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Resolved')">
+        <div class="card done mt-2" [class.active]="'Resolved' === activeState">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-check-circle float-left mr-2"></i>
+                </div>
+                <div class="media-body text-right">
+                  <span>Done</span>
+                </div>
+                <div class="media-body text-right">
+                  <span>
+                    {{ CountStatus[5] }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Rejected')">
+        <div class="card reject mt-2" [class.active]="'Rejected' === activeState">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="fas fa-times-circle float-left mr-2"></i>
+                </div>
+                <div class="media-body text-right mr-2">
+                  <span>Rejected</span>
+                </div>
+                <div class="media-body text-right">
+                  <span>
+                    {{ CountStatus[6] }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="container-fluid">
+  <div class="card mt-3">
+    <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; index as i">
+      <div class="card mt-2" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
+        <div class="card-header" style="background-color: #F2EDF3;">
+          <div class="row">
+            <div class="col-6">
+              <div class="col">
+                <span>{{ticket.subject}}</span>
+              </div>
+              <div class="col">
+                <i class="fas fa-globe-asia" style="color: gray;"></i>
+                <span class="mx-1" style="color: black;">{{ticket.creator}}</span>
+              </div>
+              <div class="col">
+                <span for="">{{ticket.site.product.name}}</span>
+              </div>
+              <div class="col">
+                <span style="color: gray;">
+                  Created
+                  {{ ticket.date.singleDate?.formatted?
+                  ticket.date.singleDate.formatted
+                  : ''}}
+                </span>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="col">
+                <div class="row">
+                  <div class="col-md-4 text-lg-left mt-4">
+                    <span class="{{ getBackgroundColor(ticket.status) }}">
+                      <i class="{{ getPriorityIcon(ticket.status) }}"></i>
+                      {{ getStatusName(ticket.status) }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3 action">
+              <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
+                (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
+              <a [routerLink]="['/edit-ticket', ticket.id]">
+                <i *ngIf="isInformedmoreinfo(ticket)" class="fas fa-pen mx-1 secondary-color icon"
+                  title="Edit Ticket"></i>
+              </a>
+              <a [routerLink]="['/detail', ticket.id]">
+                <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(ticket$| async)?.length === 0">
+      <div class="alert alert-warning" role="alert">
+        <strong>Not found ticket</strong>
+      </div>
+    </div>
+  </div>
+</div>

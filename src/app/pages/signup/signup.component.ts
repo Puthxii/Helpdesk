@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -41,9 +41,5 @@ export class SignupComponent implements OnInit {
 
   signup(): void {
     this.auth.emailSignUp(this.userForm.value.emailSignup, this.userForm.value.passwordSignup)
-  }
-
-  googleLogin(): void {
-    this.auth.googleLogin();
   }
 }

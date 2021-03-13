@@ -1,0 +1,10 @@
+.icon-upload > input
+{
+    display: none;
+}
+
+.icon-upload i
+{
+    width: 80px;
+    cursor: pointer;
+}
