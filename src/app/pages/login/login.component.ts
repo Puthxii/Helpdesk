@@ -16,10 +16,10 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private router: Router
   ) {
-    auth.getCurrentLoggedIn();
+    auth.getCurrentLoggedIn()
   }
   ngOnInit() {
-    this.buildForm();
+    this.buildForm()
   }
   buildForm(): void {
     this.loginForm = new FormGroup({
@@ -37,14 +37,18 @@ export class LoginComponent implements OnInit {
   }
 
   get email() {
-    return this.loginForm.get('email');
+    return this.loginForm.get('email')
   }
 
   get password() {
-    return this.loginForm.get('password');
+    return this.loginForm.get('password')
   }
 
   login(): void {
     this.auth.emailLogin(this.loginForm.value.email, this.loginForm.value.password)
+  }
+
+  googleLogin(): void {
+    this.auth.googleLogin()
   }
 }
