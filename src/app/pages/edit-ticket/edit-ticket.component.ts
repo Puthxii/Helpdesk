@@ -337,7 +337,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   saveAction() {
-      this.ticketService
+    this.ticketService
       .setActionById(
         this.id,
         this.editTicket.controls.status.value,
@@ -454,6 +454,7 @@ export class EditTicketComponent implements OnInit {
   deleteCollection() {
     this.ticketService.deleteCollection('upload')
   }
+
   setActionSentence() {
     const staffCurrent = this.getCurrentStaff()
     let sentence: string
@@ -466,15 +467,13 @@ export class EditTicketComponent implements OnInit {
       }
     } else {
       if (this.status.value === 'Draft') {
-        this.editTicket.patchValue({
-          actionSentence: 'Support create draft'
-        })
+        sentence = `${staffCurrent} create draft`
       } else if (this.status.value === 'Informed') {
         sentence = `${staffCurrent}  create ticket`
       } else if (this.status.value === 'Rejected') {
         sentence = `${staffCurrent}  rejected ticket`
       } else if (this.status.value === 'More Info') {
-          sentence = `${staffCurrent}  remark more info`
+        sentence = `${staffCurrent}  remark more info`
       } else if (this.status.value === 'Close') {
         sentence = `${staffCurrent}  close ticket`
       } else if (this.status.value === 'In Progress') {
