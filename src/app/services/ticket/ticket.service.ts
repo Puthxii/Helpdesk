@@ -469,4 +469,13 @@ export class TicketService {
         .orderBy('date', 'asc'))
   }
 
+  getMyTicket() {
+    const data = this.afs.collection('ticket', ref => ref
+      .where('status', 'in', ['Resolved', 'Assigned'])
+      .where('staffList', 'array-contains', 'Apple')).valueChanges()
+    data.subscribe(val => {
+      console.log(val);
+    })
+  }
+
 }

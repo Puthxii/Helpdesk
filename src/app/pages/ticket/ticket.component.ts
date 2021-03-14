@@ -86,6 +86,7 @@ export class TicketComponent implements OnInit {
     this.User = this.auth.authState;
     this.buildForm()
     this.isFilter()
+    this.ticketService.getMyTicket()
   }
 
   isFilter() {
