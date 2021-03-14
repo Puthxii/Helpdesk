@@ -231,7 +231,7 @@ export class EditTicketComponent implements OnInit {
     return maStartDate + ' - ' + maEndDate;
   }
 
-  getCurrentStaff() {
+  getCurrentUser() {
     return this.user.firstName + ' ' + this.user.lastName
   }
 
@@ -454,15 +454,16 @@ export class EditTicketComponent implements OnInit {
   deleteCollection() {
     this.ticketService.deleteCollection('upload')
   }
+
   setActionSentence() {
-    const staffCurrent = this.getCurrentStaff()
     let sentence: string
+    const userCurrent = this.getCurrentUser()
     const assignDev = this.editTicket.controls.assign.value
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
-        sentence = `Customer create ticket`
+        sentence = `${userCurrent} create ticket`
       } else if (this.status.value === 'Rejected') {
-        sentence = 'Customer rejected ticket'
+        sentence = `${userCurrent} rejected ticket`
       }
     } else {
       if (this.status.value === 'Draft') {
@@ -470,30 +471,29 @@ export class EditTicketComponent implements OnInit {
           actionSentence: 'Support create draft'
         })
       } else if (this.status.value === 'Informed') {
-        sentence = `${staffCurrent}  create ticket`
+        sentence = `${userCurrent} create ticket`
       } else if (this.status.value === 'Rejected') {
-        sentence = `${staffCurrent}  rejected ticket`
+        sentence = `${userCurrent} rejected ticket`
       } else if (this.status.value === 'More Info') {
-          sentence = `${staffCurrent}  remark more info`
+          sentence = `${userCurrent} remark more info`
       } else if (this.status.value === 'Close') {
-        sentence = `${staffCurrent}  close ticket`
+        sentence = `${userCurrent} close ticket`
       } else if (this.status.value === 'In Progress') {
-        sentence = `${staffCurrent}  set in progress`
+        sentence = `${userCurrent} set in progress`
       } else if (this.status.value === 'Accepted') {
-        sentence = `${staffCurrent}  accepted ticket`
+        sentence = `${userCurrent} accepted ticket`
       } else if (this.status.value === 'Rejected') {
-        sentence = `${staffCurrent}  rejected ticket`
+        sentence = `${userCurrent} rejected ticket`
       } else if (this.status.value === 'Pending') {
-        sentence = `${staffCurrent} set pending`
+        sentence = `${userCurrent} set pending`
       } else if (this.status.value === 'Assigned') {
-        sentence = `${staffCurrent} assigned ticket to ${assignDev}`
+        sentence = `${userCurrent}  assigned ticket to ${assignDev}`
       } else if (this.status.value === 'Resolved') {
-        sentence = `${staffCurrent} resolved task`
+        sentence = `${userCurrent} resolved task`
       }
     }
     this.editTicket.patchValue({
       actionSentence: sentence
     })
   }
-
 }

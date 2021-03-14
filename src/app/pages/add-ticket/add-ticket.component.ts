@@ -240,34 +240,30 @@ export class AddTicketComponent implements OnInit {
   }
 
   setActionSentence() {
+    let sentence: string
+    const userCurrent = this.getCurrentUser()
     if (this.user$.roles.supporter === true) {
         if (this.status.value === 'Draft') {
-          this.addTicketForm.patchValue({
-          actionSentence: 'Suporter create draft'
-        })
+          sentence = `${userCurrent} create draft`
         } else if (this.status.value === 'Informed') {
-          this.addTicketForm.patchValue({
-            actionSentence: 'Suporter create ticket'
-          })
+          sentence = `${userCurrent} create ticket`
         } else if (this.status.value === 'Rejected') {
-          this.addTicketForm.patchValue({
-            actionSentence: 'Suporter rejected ticket'
-          })
+          sentence = `${userCurrent} rejected ticket`
         } else if (this.status.value === 'Closed') {
-          this.addTicketForm.patchValue({
-            actionSentence: 'Suporter closed ticket'
-          })
+          sentence = `${userCurrent} closed ticket`
         } else if (this.status.value === 'In Progress') {
-          this.addTicketForm.patchValue({
-            actionSentence: 'Suporter set in progress'
-          })
+          sentence = `${userCurrent} set in progress`
         }
     }
+    this.addTicketForm.patchValue({
+      actionSentence: sentence
+    })
   }
 
   setActionSentenceCus() {
+    const userCurrent = this.getCurrentUser()
     this.addTicketForm.patchValue({
-      actionSentence: 'Customer create ticket'
+      actionSentence: `${userCurrent} create ticket`
     })
   }
 
@@ -405,6 +401,11 @@ export class AddTicketComponent implements OnInit {
   getDev() {
     return this.addTicketForm.controls.staff.value.firstName;
   }
+
+  getCurrentUser() {
+    return this.user$.firstName + ' ' + this.user$.lastName
+  }
+
 
   getCreate() {
     return this.addTicketForm.controls.site.value.users;
