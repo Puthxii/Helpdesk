@@ -337,11 +337,12 @@ export class EditTicketComponent implements OnInit {
   }
 
   saveAction() {
-      this.ticketService
+    const staffCurrent = this.getCurrentUser()
+    this.ticketService
       .setActionById(
         this.id,
         this.editTicket.controls.status.value,
-        this.editTicket.controls.staff.value, //todo : staff.fullname
+        staffCurrent,
         this.editTicket.controls.assign.value,
         this.editTicket.controls.actionSentence.value)
   }
@@ -467,9 +468,7 @@ export class EditTicketComponent implements OnInit {
       }
     } else {
       if (this.status.value === 'Draft') {
-        this.editTicket.patchValue({
-          actionSentence: 'Support create draft'
-        })
+        sentence = `${userCurrent} create draft`
       } else if (this.status.value === 'Informed') {
         sentence = `${userCurrent} create ticket`
       } else if (this.status.value === 'Rejected') {
@@ -487,7 +486,7 @@ export class EditTicketComponent implements OnInit {
       } else if (this.status.value === 'Pending') {
         sentence = `${userCurrent} set pending`
       } else if (this.status.value === 'Assigned') {
-        sentence = `${userCurrent}  assigned ticket to ${assignDev}`
+        sentence = `${userCurrent } assigned ticket to ${assignDev}`
       } else if (this.status.value === 'Resolved') {
         sentence = `${userCurrent} resolved task`
       }

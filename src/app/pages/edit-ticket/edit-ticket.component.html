@@ -168,7 +168,7 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <div class="btn-group btn-save" style="float: right;">
-                <button type="submit" class="btn btn-success" *ngIf="auth.isStaff(user)">
+                <button type="submit" class="btn btn-success" *ngIf="auth.isStaff(user)" (click)="setActionSentence()">
                   {{ displaySelectedStatus() }}
                 </button>
                 <button type="submit" class="btn btn-success" *ngIf="auth.isCustomer(user)">
