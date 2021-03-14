@@ -474,7 +474,7 @@ export class EditTicketComponent implements OnInit {
       } else if (this.status.value === 'Rejected') {
         sentence = `${userCurrent} rejected ticket`
       } else if (this.status.value === 'More Info') {
-          sentence = `${userCurrent} remark more info`
+        sentence = `${userCurrent}  remark more info`
       } else if (this.status.value === 'Close') {
         sentence = `${userCurrent} close ticket`
       } else if (this.status.value === 'In Progress') {
@@ -486,7 +486,7 @@ export class EditTicketComponent implements OnInit {
       } else if (this.status.value === 'Pending') {
         sentence = `${userCurrent} set pending`
       } else if (this.status.value === 'Assigned') {
-        sentence = `${userCurrent } assigned ticket to ${assignDev}`
+        sentence = `${userCurrent} assigned ticket to ${assignDev}`
       } else if (this.status.value === 'Resolved') {
         sentence = `${userCurrent} resolved task`
       }

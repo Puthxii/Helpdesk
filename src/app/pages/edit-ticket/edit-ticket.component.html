@@ -186,7 +186,7 @@
                   </button>
                 </div>
               </div>
-              <a [routerLink]="['/ticket']"><button class="btn btn-light btn-cancel" type="button"
+              <a [routerLink]="['/']"><button class="btn btn-light btn-cancel" type="button"
                   (click)="deleteCollection()" *ngIf="auth.isStaff(user)">Cancel</button></a>
               <a [routerLink]=" ['/site-ticket']"><button class="btn btn-light btn-cancel" type="button"
                   (click)="deleteCollection()" *ngIf=" auth.isCustomer(user)">Cancel</button></a>
