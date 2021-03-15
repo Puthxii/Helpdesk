@@ -227,7 +227,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   upadateForm() {
-    this.ticketService.editTicket(this.editTicket.value, this.id);
+    this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
     this.saveAction()
   }
 

@@ -353,7 +353,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   addTicketData() {
-    this.ticketService.addTicket(this.addTicketForm.value);
+    this.ticketService.addTicket(this.addTicketForm.value, this.user.roles);
   }
 
   displaySelectedStatus(): any {

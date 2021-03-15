@@ -13,12 +13,22 @@ export class TicketService {
     private router: Router,
   ) { }
 
-  successNotification() {
+  successNotification(role) {
     Swal.fire({
       text: 'Your ticket has been saved',
       icon: 'success',
     }).then((result: any) => {
-      this.router.navigate(['/']);
+      if (role.customer === true) {
+        this.router.navigate(['/site-ticket']);
+      } else if (role.supporter === true) {
+        this.router.navigate(['/ticket']);
+      } else if (role.maintenance === true) {
+        this.router.navigate(['/ticket-ma']);
+      } else if (role.supervisor === true) {
+        this.router.navigate(['/ticket-sup']);
+      } else if (role.developer === true) {
+        this.router.navigate(['/ticket-dev']);
+      }
     });
   }
 
@@ -154,7 +164,7 @@ export class TicketService {
     }
   }
 
-  async addTicket(ticket: Ticket) {
+  async addTicket(ticket: Ticket, role) {
     try {
       (await this.afs.collection('ticket').add({
         date: ticket.date,
@@ -182,7 +192,7 @@ export class TicketService {
           actionSentence: ticket.actionSentence
         });
       this.deleteCollection('upload')
-      this.successNotification();
+      this.successNotification(role);
     } catch (error) {
       this.errorNotification();
     }
@@ -195,7 +205,7 @@ export class TicketService {
     return batch.commit();
   }
 
-  async editTicket(ticket: Ticket, id: any) {
+  async editTicket(ticket: Ticket, id: any, role) {
     try {
       this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
@@ -215,7 +225,7 @@ export class TicketService {
         participant: ticket.participant
       })
       this.deleteCollection('upload')
-      this.successNotification();
+      this.successNotification(role);
     } catch (error) {
       this.errorNotification();
     }
