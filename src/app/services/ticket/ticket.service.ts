@@ -83,15 +83,15 @@ export class TicketService {
   getTicketsListByCreatorSpecialStatus(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', status)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .orderBy('date', 'desc')
     )
   }
 
   getTicketsListByFilter(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
+      .where('participant', 'array-contains', creator)
       .where('status', '==', status)
-      .where('staff', '==', creator)
       .orderBy('date', 'desc')
     )
   }
@@ -171,7 +171,8 @@ export class TicketService {
         staff: ticket.staff,
         email: ticket.email,
         assign: ticket.assign,
-        upload: ticket.upload
+        upload: ticket.upload,
+        participant: ticket.participant
       }))
         .collection('action')
         .add({
@@ -210,7 +211,8 @@ export class TicketService {
         status: ticket.status,
         staff: ticket.staff,
         assign: ticket.assign,
-        upload: ticket.upload
+        upload: ticket.upload,
+        participant: ticket.participant
       })
       this.deleteCollection('upload')
       this.successNotification();
@@ -275,7 +277,7 @@ export class TicketService {
   getCountByStatusCurrentname(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
     ).valueChanges();
   }
 
@@ -289,7 +291,7 @@ export class TicketService {
   getTicketsListCurrentname(creator: string, role: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', role)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .orderBy('date', 'desc')
     );
   }
@@ -374,6 +376,7 @@ export class TicketService {
     );
   }
 
+  // todo : customer get ticket by status
   getTicketByCreatorStatus(creator: any, status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('creator', '==', creator)

@@ -71,6 +71,7 @@ export class EditTicketComponent implements OnInit {
 
   ticket: any;
   depositFiles = []
+  stateParticipant = []
 
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
@@ -117,8 +118,10 @@ export class EditTicketComponent implements OnInit {
         subjectTask: this.ticket.subjectTask,
         assignDev: this.ticket.assignDev,
         deadline: this.ticket.deadline,
+        participant: this.ticket.participant
       });
       this.getFileUpload()
+      this.getParticipant()
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
@@ -225,7 +228,8 @@ export class EditTicketComponent implements OnInit {
       ]),
       subjectTask: [],
       assignDev: [],
-      deadline: []
+      deadline: [],
+      participant: ['']
     });
   }
 
@@ -241,9 +245,8 @@ export class EditTicketComponent implements OnInit {
   }
 
   getCurrentUser() {
-    return this.user.firstName + ' ' + this.user.lastName
+    return this.user.fullName
   }
-
 
   displaySelectedStatus(): any {
     return (this.status.value) ? this.matchStatus(this.status.value) : 'Save as draft';
@@ -434,6 +437,10 @@ export class EditTicketComponent implements OnInit {
     return this.depositFiles
   }
 
+  getParticipant() {
+    this.stateParticipant = this.editTicket.controls.participant.value
+  }
+
   public onFileRemove(value: any) {
     this.depositFiles = this.editTicket.controls.upload.value.filter((item: { id: any; }) => item.id !== value.id)
     this.editTicket.patchValue({
@@ -496,6 +503,7 @@ export class EditTicketComponent implements OnInit {
         sentence = `${userCurrent} set pending`
       } else if (this.status.value === 'Assigned') {
         sentence = `${userCurrent} assigned ticket to ${assignDev}`
+        this.setParticaipant(assignDev)
       } else if (this.status.value === 'Resolved') {
         sentence = `${userCurrent} resolved task`
       }
@@ -503,6 +511,23 @@ export class EditTicketComponent implements OnInit {
     this.editTicket.patchValue({
       actionSentence: sentence
     })
+    this.setParticaipant(userCurrent)
+  }
+
+  setParticaipant(currentParticipant: any) {
+    this.mergeParticipant(currentParticipant)
+    this.editTicket.patchValue({
+      participant: this.stateParticipant
+    });
+    console.log(this.editTicket.controls.participant.value);
+  }
+
+  mergeParticipant(name: any) {
+    if (this.stateParticipant.indexOf(name) !== -1) {
+      console.log('Value found inside the array')
+    } else {
+      this.stateParticipant.push(name)
+    }
   }
 
   addTask(): void {

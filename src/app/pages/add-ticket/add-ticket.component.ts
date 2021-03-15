@@ -164,6 +164,7 @@ export class AddTicketComponent implements OnInit {
         this.setActionSentenceCus();
       } else {
         this.setStaff();
+        this.setParticipant()
         this.setStatus();
         this.site$ = this.siteService.getSitesList();
         this.setActionSentence()
@@ -193,7 +194,13 @@ export class AddTicketComponent implements OnInit {
 
   setStaff() {
     this.addTicketForm.patchValue({
-      staff: this.user$.firstName + ' ' + this.user$.lastName
+      staff: this.user$.fullName
+    });
+  }
+
+  setParticipant() {
+    this.addTicketForm.patchValue({
+      participant: [this.user$.fullName]
     });
   }
 
@@ -235,7 +242,7 @@ export class AddTicketComponent implements OnInit {
 
   getActionSentence() {
     this.addTicketForm.patchValue({
-      actionSentence : ''
+      actionSentence: ''
     });
   }
 
@@ -243,17 +250,17 @@ export class AddTicketComponent implements OnInit {
     let sentence: string
     const userCurrent = this.getCurrentUser()
     if (this.user$.roles.supporter === true) {
-        if (this.status.value === 'Draft') {
-          sentence = `${userCurrent} create draft`
-        } else if (this.status.value === 'Informed') {
-          sentence = `${userCurrent} create ticket`
-        } else if (this.status.value === 'Rejected') {
-          sentence = `${userCurrent} rejected ticket`
-        } else if (this.status.value === 'Closed') {
-          sentence = `${userCurrent} closed ticket`
-        } else if (this.status.value === 'In Progress') {
-          sentence = `${userCurrent} set in progress`
-        }
+      if (this.status.value === 'Draft') {
+        sentence = `${userCurrent} create draft`
+      } else if (this.status.value === 'Informed') {
+        sentence = `${userCurrent} create ticket`
+      } else if (this.status.value === 'Rejected') {
+        sentence = `${userCurrent} rejected ticket`
+      } else if (this.status.value === 'Closed') {
+        sentence = `${userCurrent} closed ticket`
+      } else if (this.status.value === 'In Progress') {
+        sentence = `${userCurrent} set in progress`
+      }
     }
     this.addTicketForm.patchValue({
       actionSentence: sentence
@@ -291,7 +298,8 @@ export class AddTicketComponent implements OnInit {
       email: [''],
       assign: [''],
       upload: [''],
-      actionSentence: ['']
+      actionSentence: [''],
+      participant: ['']
     });
   }
 

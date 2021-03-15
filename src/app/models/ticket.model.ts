@@ -19,6 +19,7 @@ export interface Ticket {
     assign?: string;
     upload?: any;
     actionSentence?: string;
+    participant?: any;
 }
 export interface Actions {
     data: any,
