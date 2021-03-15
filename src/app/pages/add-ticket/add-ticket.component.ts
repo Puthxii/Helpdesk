@@ -297,7 +297,7 @@ export class AddTicketComponent implements OnInit {
       staff: [''],
       email: [''],
       assign: [''],
-      upload: [''],
+      descriptionFile: [''],
       actionSentence: [''],
       participant: ['']
     });
@@ -481,7 +481,7 @@ export class AddTicketComponent implements OnInit {
 
   public onUploadfile(upload: any): void {
     this.addTicketForm.patchValue({
-      upload
+      descriptionFile: upload
     });
   }
 }

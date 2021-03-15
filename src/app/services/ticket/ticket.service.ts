@@ -182,7 +182,7 @@ export class TicketService {
         staff: ticket.staff,
         email: ticket.email,
         assign: ticket.assign,
-        upload: ticket.upload,
+        descriptionFile: ticket.descriptionFile,
         participant: ticket.participant
       }))
         .collection('action')
@@ -222,7 +222,7 @@ export class TicketService {
         status: ticket.status,
         staff: ticket.staff,
         assign: ticket.assign,
-        upload: ticket.upload,
+        descriptionFile: ticket.descriptionFile,
         participant: ticket.participant
       })
       this.deleteCollection('upload')

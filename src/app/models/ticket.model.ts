@@ -17,7 +17,7 @@ export interface Ticket {
     action?: Actions[];
     email?: string;
     assign?: string;
-    upload?: any;
+    descriptionFile?: any;
     actionSentence?: string;
     participant?: any;
 }
