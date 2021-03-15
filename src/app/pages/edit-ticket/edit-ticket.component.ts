@@ -514,7 +514,6 @@ export class EditTicketComponent implements OnInit {
     this.editTicket.patchValue({
       participant: this.stateParticipant
     });
-    console.log(this.editTicket.controls.participant.value);
   }
 
   mergeParticipant(name: any) {
