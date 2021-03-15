@@ -173,16 +173,16 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <div class="btn-group btn-save" style="float: right;">
-                <button type="submit" class="btn btn-success" *ngIf="auth.isSupporter(user)"
+                <button type="submit" class="btn saveBtn" *ngIf="auth.isSupporter(user)"
                   [disabled]="!addTicketForm.valid">
                   {{ displaySelectedStatus() }}
                 </button>
-                <button type="submit" class="btn btn-success" *ngIf="auth.isCustomer(user)"
+                <button type="submit" class="btn saveBtn" *ngIf="auth.isCustomer(user)"
                   [disabled]="!addTicketForm.valid">
                   Send
                 </button>
-                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="auth.isSupporter(user)"
+                <button type="button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" *ngIf="auth.isSupporter(user)"
                   [disabled]="!addTicketForm.valid">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
@@ -193,7 +193,7 @@
                   </button>
                 </div>
               </div>
-              <button type="button" class="btn btn-light btn-cancel" (click)="alertCancelTicket()">Cancel</button>
+              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelTicket()">Cancel</button>
             </div>
           </div>
         </form>

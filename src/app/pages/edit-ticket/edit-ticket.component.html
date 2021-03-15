@@ -168,15 +168,14 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <div class="btn-group btn-save" style="float: right;">
-                <button type="submit" class="btn btn-success" *ngIf="auth.isStaff(user)" (click)="setActionSentence()">
+                <button type="submit" class="btn saveBtn" *ngIf="auth.isStaff(user)" (click)="setActionSentence()">
                   {{ displaySelectedStatus() }}
                 </button>
-                <button type="submit" class="btn btn-success" *ngIf="auth.isCustomer(user)">
+                <button type="submit" class="btn saveBtn" *ngIf="auth.isCustomer(user)">
                   Save
                 </button>
-                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="auth.isStaff(user)"
-                  (click)="filterAction()">
+                <button type="button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" *ngIf="auth.isStaff(user)" (click)="filterAction()">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" *ngIf="auth.isStaff(user)">
@@ -186,10 +185,10 @@
                   </button>
                 </div>
               </div>
-              <a [routerLink]="['/']"><button class="btn btn-light btn-cancel" type="button"
-                  (click)="deleteCollection()" *ngIf="auth.isStaff(user)">Cancel</button></a>
-              <a [routerLink]=" ['/site-ticket']"><button class="btn btn-light btn-cancel" type="button"
-                  (click)="deleteCollection()" *ngIf=" auth.isCustomer(user)">Cancel</button></a>
+              <button class="btn cancelBtn btn-cancel" type="button" (click)="alertCancelTicket()"
+                *ngIf="auth.isStaff(user)">Cancel</button>
+              <button class="btn cancelBtn btn-cancel" type="button" (click)="alertCancelTicket()"
+                *ngIf=" auth.isCustomer(user)">Cancel</button>
             </div>
           </div>
         </form>
