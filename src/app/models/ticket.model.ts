@@ -11,13 +11,14 @@ export interface Ticket {
     subject: string;
     priority: string;
     description: string;
-    resolveDescription: string;
+    descriptionFile?: any;
+    resolveDescription?: string;
+    resolveDescriptionFile?: any;
     status: string;
     staff?: string;
     action?: Actions[];
     email?: string;
     assign?: string;
-    descriptionFile?: any;
     actionSentence?: string;
     participant?: any;
 }

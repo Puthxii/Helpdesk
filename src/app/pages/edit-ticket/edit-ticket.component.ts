@@ -66,7 +66,8 @@ export class EditTicketComponent implements OnInit {
     { name: 'Save as Resolve', value: 'Resolved' },
   ];
   ticket: any;
-  depositFiles = []
+  depositDescriptionFiles = []
+  depositResolveDescriptionFiles = []
   stateParticipant = []
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
@@ -111,9 +112,11 @@ export class EditTicketComponent implements OnInit {
         descriptionFile: this.ticket.descriptionFile,
         actionSentence: this.ticket.actionSentence,
         dev: this.ticket.dev,
-        participant: this.ticket.participant
+        participant: this.ticket.participant,
+        resolveDescriptionFile: this.ticket.resolveDescriptionFile
       });
-      this.getFileUpload()
+      this.getDescriptionFileUpload()
+      this.getResolvedDescriptionFileUpload()
       this.getParticipant()
     })
     this.site$ = this.siteService.getSitesList()
@@ -216,7 +219,8 @@ export class EditTicketComponent implements OnInit {
       descriptionFile: [''],
       actionSentence: [''],
       dev: [''],
-      participant: ['']
+      participant: [''],
+      resolveDescriptionFile: ['']
     });
   }
 
@@ -423,9 +427,14 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
-  getFileUpload() {
-    this.depositFiles = this.editTicket.controls.descriptionFile.value
-    return this.depositFiles
+  getDescriptionFileUpload() {
+    this.depositDescriptionFiles = this.editTicket.controls.descriptionFile.value
+    return this.depositDescriptionFiles
+  }
+
+  getResolvedDescriptionFileUpload() {
+    this.depositResolveDescriptionFiles = this.editTicket.controls.resolveDescriptionFile.value
+    return this.depositResolveDescriptionFiles
   }
 
   getParticipant() {
@@ -433,21 +442,21 @@ export class EditTicketComponent implements OnInit {
   }
 
   public onFileRemove(value: any) {
-    this.depositFiles = this.editTicket.controls.descriptionFile.value.filter((item: { id: any; }) => item.id !== value.id)
+    this.depositDescriptionFiles = this.editTicket.controls.descriptionFile.value.filter((item: { id: any; }) => item.id !== value.id)
     this.editTicket.patchValue({
-      descriptionFile: this.depositFiles
+      descriptionFile: this.depositDescriptionFiles
     });
-    this.getFileUpload()
+    this.getDescriptionFileUpload()
   }
 
   public mergeFileUpload(upload: any): void {
-    if (this.depositFiles !== undefined) {
-      this.mergeByProperty(upload, this.depositFiles, 'id');
+    if (this.depositDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositDescriptionFiles, 'id');
     }
     this.editTicket.patchValue({
       descriptionFile: upload
     });
-    this.getFileUpload()
+    this.getDescriptionFileUpload()
   }
 
   mergeByProperty(newUpload: any[], depositFiles: any[], prop: string) {
