@@ -55,7 +55,7 @@
                   <p>{{ getdescription(ticket) }}</p>
                 </div>
                 <div class="form-group col-md-12">
-                  <ul class="list-group list-group-flush" *ngFor="let file of ticket.upload">
+                  <ul class="list-group list-group-flush" *ngFor="let file of ticket.descriptionFile">
                     <li class="list-group-item">
                       <app-upload-details [fileUpload]='file'></app-upload-details>
                     </li>
@@ -70,9 +70,9 @@
                   <div class="row">
                     <ul>
                       <li *ngFor="let action of actions | async">
-                        Actions: {{ action?.actionSentence }} <br /> 
+                        Actions: {{ action?.actionSentence }} <br />
                         Staff: {{ action?.staff ? action?.staff: '-' }} <br />
-                        Dev: {{ action?.dev ?  action?.dev: 'Not Assigned'}} <br/>
+                        Dev: {{ action?.dev ? action?.dev: 'Not Assigned'}} <br />
                         Status: {{ action?.status }} <br />
                         Date: {{ action?.date | datePipe: 'lll' }} <br /> <br />
                       </li>
