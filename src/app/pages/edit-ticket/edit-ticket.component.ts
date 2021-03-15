@@ -34,7 +34,6 @@ export class EditTicketComponent implements OnInit {
   statusCurrent: any;
   currentName: string
   user$: any
-
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -45,21 +44,18 @@ export class EditTicketComponent implements OnInit {
     { name: 'Conference' },
     { name: 'Other' },
   ];
-
   Types = [
     { name: 'Info' },
     { name: 'Consult' },
     { name: 'Problem' },
     { name: 'Add-ons' }
   ];
-
   Prioritys = [
     { name: 'Low' },
     { name: 'Medium' },
     { name: 'High' },
     { name: 'Critical' }
   ];
-
   Status = [
     { name: 'Save as Draft', value: 'Draft' },
     { name: 'Save as Inform', value: 'Informed' },
@@ -69,11 +65,9 @@ export class EditTicketComponent implements OnInit {
     { name: 'Save as Assign', value: 'Assigned' },
     { name: 'Save as Resolve', value: 'Resolved' },
   ];
-
   ticket: any;
   depositFiles = []
   stateParticipant = []
-
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'dd/mm/yyyy'
@@ -114,7 +108,7 @@ export class EditTicketComponent implements OnInit {
         siteName: this.ticket.site.nameEN,
         assign: this.ticket.assign,
         currentStatus: this.ticket.status,
-        upload: this.ticket.upload,
+        descriptionFile: this.ticket.descriptionFile,
         actionSentence: this.ticket.actionSentence,
         dev: this.ticket.dev,
         participant: this.ticket.participant
@@ -189,8 +183,8 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('assign');
   }
 
-  get upload() {
-    return this.editTicket.get('upload');
+  get upldescriptionFileoad() {
+    return this.editTicket.get('descriptionFile');
   }
 
   upadateTicketForm() {
@@ -219,7 +213,7 @@ export class EditTicketComponent implements OnInit {
       maintenancePackage: [''],
       assign: [''],
       currentStatus: [''],
-      upload: [''],
+      descriptionFile: [''],
       actionSentence: [''],
       dev: [''],
       participant: ['']
@@ -430,7 +424,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   getFileUpload() {
-    this.depositFiles = this.editTicket.controls.upload.value
+    this.depositFiles = this.editTicket.controls.descriptionFile.value
     return this.depositFiles
   }
 
@@ -439,9 +433,9 @@ export class EditTicketComponent implements OnInit {
   }
 
   public onFileRemove(value: any) {
-    this.depositFiles = this.editTicket.controls.upload.value.filter((item: { id: any; }) => item.id !== value.id)
+    this.depositFiles = this.editTicket.controls.descriptionFile.value.filter((item: { id: any; }) => item.id !== value.id)
     this.editTicket.patchValue({
-      upload: this.depositFiles
+      descriptionFile: this.depositFiles
     });
     this.getFileUpload()
   }
@@ -451,7 +445,7 @@ export class EditTicketComponent implements OnInit {
       this.mergeByProperty(upload, this.depositFiles, 'id');
     }
     this.editTicket.patchValue({
-      upload
+      descriptionFile: upload
     });
     this.getFileUpload()
   }
