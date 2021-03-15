@@ -351,7 +351,7 @@ export class EditTicketComponent implements OnInit {
       .setActionById(
         this.id,
         this.editTicket.controls.status.value,
-        staffCurrent,
+        staffCurrent ? staffCurrent : '',
         this.editTicket.controls.assign.value,
         this.editTicket.controls.actionSentence.value)
   }
@@ -475,7 +475,7 @@ export class EditTicketComponent implements OnInit {
     const assignDev = this.editTicket.controls.assign.value
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
-        sentence = `${userCurrent} create ticket`
+        sentence = `${userCurrent} edit ticket`
       } else if (this.status.value === 'Rejected') {
         sentence = `${userCurrent} rejected ticket`
       }
@@ -504,11 +504,11 @@ export class EditTicketComponent implements OnInit {
       } else if (this.status.value === 'Resolved') {
         sentence = `${userCurrent} resolved task`
       }
+      this.setParticaipant(userCurrent)
     }
     this.editTicket.patchValue({
       actionSentence: sentence
     })
-    this.setParticaipant(userCurrent)
   }
 
   setParticaipant(currentParticipant: any) {

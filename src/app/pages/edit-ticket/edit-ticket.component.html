@@ -171,10 +171,10 @@
                 <button type="submit" class="btn saveBtn" *ngIf="auth.isStaff(user)" (click)="setActionSentence()">
                   {{ displaySelectedStatus() }}
                 </button>
-                <button type="submit" class="btn saveBtn" *ngIf="auth.isCustomer(user)">
+                <button type="submit" class="btn saveBtn" *ngIf="auth.isCustomer(user)" (click)="setActionSentence()">
                   Save
                 </button>
-                <button type="button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                <button type=" button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false" *ngIf="auth.isStaff(user)" (click)="filterAction()">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
