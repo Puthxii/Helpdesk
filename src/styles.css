@@ -242,6 +242,16 @@
     background: #eb5e4c;
 }
 
+.saveBtn {
+    color: white;
+    background: #2ED0B9;
+}
+
+.cancelBtn {
+    color: white;
+    background: #9C9FA6;
+}
+
 .word-color {
     color: var(--word-color);
 }
