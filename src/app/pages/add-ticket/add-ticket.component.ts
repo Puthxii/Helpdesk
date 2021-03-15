@@ -460,15 +460,23 @@ export class AddTicketComponent implements OnInit {
       title: 'Do you want to cancel add ticket.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#2ED0B9',
+      cancelButtonColor: '#9C9FA6',
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        this.ticketService.deleteCollection('upload')
-        this.router.navigate(['/']);
+        this.deleteCollection()
+        if (this.user.roles.customer === true) {
+          this.router.navigate(['/site-ticket']);
+        } else if (this.user.roles.supporter === true) {
+          this.router.navigate(['/ticket']);
+        }
       }
     })
+  }
+
+  deleteCollection() {
+    this.ticketService.deleteCollection('upload')
   }
 
   public onUploadfile(upload: any): void {

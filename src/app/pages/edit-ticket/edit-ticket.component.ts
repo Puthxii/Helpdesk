@@ -2,7 +2,7 @@ import { SiteService } from './../../services/site/site.service';
 import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
 import { Ticket } from 'src/app/models/ticket.model';
@@ -13,6 +13,7 @@ import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-ticket',
@@ -86,6 +87,7 @@ export class EditTicketComponent implements OnInit {
     public fb: FormBuilder,
     private auth: AuthService,
     public userService: UserService,
+    private router: Router,
   ) {
     this.route.params.subscribe(params => this.id = params.id)
   }
@@ -522,5 +524,31 @@ export class EditTicketComponent implements OnInit {
     } else {
       this.stateParticipant.push(name)
     }
+  }
+
+  alertCancelTicket() {
+    Swal.fire({
+      title: 'Do you want to cancel edit ticket.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2ED0B9',
+      cancelButtonColor: '#9C9FA6',
+      confirmButtonText: 'Yes, I do'
+    }).then((result: { isConfirmed: any; }) => {
+      if (result.isConfirmed) {
+        this.deleteCollection()
+        if (this.user.roles.customer === true) {
+          this.router.navigate(['/site-ticket']);
+        } else if (this.user.roles.supporter === true) {
+          this.router.navigate(['/ticket']);
+        } else if (this.user.roles.maintenance === true) {
+          this.router.navigate(['/ticket-ma']);
+        } else if (this.user.roles.supervisor === true) {
+          this.router.navigate(['/ticket-sup']);
+        } else if (this.user.roles.developer === true) {
+          this.router.navigate(['/ticket-dev']);
+        }
+      }
+    })
   }
 }
