@@ -86,7 +86,6 @@ export class TicketComponent implements OnInit {
     this.User = this.auth.authState;
     this.buildForm()
     this.isFilter()
-    this.ticketService.getMyTicket()
   }
 
   isFilter() {
@@ -114,8 +113,7 @@ export class TicketComponent implements OnInit {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.supporter === true) {
-        this.currentName = this.user$.firstName + ' ' + this.user$.lastName
-        // todo: change check my ticket
+        this.currentName = this.user$.fullName
         this.getCountByStatusCurrentname()
         this.getCountToltalCurrentname()
         this.status === 'Total' ?

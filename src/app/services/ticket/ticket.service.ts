@@ -83,16 +83,15 @@ export class TicketService {
   getTicketsListByCreatorSpecialStatus(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', status)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .orderBy('date', 'desc')
     )
   }
 
-  // todo : get my ticket by status
   getTicketsListByFilter(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
+      .where('participant', 'array-contains', creator)
       .where('status', '==', status)
-      .where('staff', '==', creator)
       .orderBy('date', 'desc')
     )
   }
@@ -278,7 +277,7 @@ export class TicketService {
   getCountByStatusCurrentname(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
     ).valueChanges();
   }
 
@@ -292,7 +291,7 @@ export class TicketService {
   getTicketsListCurrentname(creator: string, role: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', role)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .orderBy('date', 'desc')
     );
   }
@@ -471,15 +470,6 @@ export class TicketService {
     return this.afs.collection('ticket').doc(id)
       .collection('action', ref => ref
         .orderBy('date', 'asc'))
-  }
-
-  getMyTicket() {
-    const data = this.afs.collection('ticket', ref => ref
-      .where('status', 'in', ['Resolved', 'Assigned'])
-      .where('staffList', 'array-contains', 'Apple')).valueChanges()
-    data.subscribe(val => {
-      console.log(val);
-    })
   }
 
 }
