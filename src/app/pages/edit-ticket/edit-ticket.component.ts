@@ -33,7 +33,7 @@ export class EditTicketComponent implements OnInit {
   statusCurrent: any;
   currentName: string
   user$: any
-
+  saveTask = false;
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -531,6 +531,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   addTask(): void {
+    this.saveTask = true;
     (this.editTicket.get('tasks') as FormArray).push(this.fb.control(null));
   }
 
