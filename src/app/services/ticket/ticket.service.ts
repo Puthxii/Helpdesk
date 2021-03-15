@@ -3,6 +3,7 @@ import { Ticket } from '../../models/ticket.model';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
+import { Roles } from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class TicketService {
     private router: Router,
   ) { }
 
-  successNotification(role) {
+  successNotification(role: Roles) {
     Swal.fire({
       text: 'Your ticket has been saved',
       icon: 'success',
@@ -205,7 +206,7 @@ export class TicketService {
     return batch.commit();
   }
 
-  async editTicket(ticket: Ticket, id: any, role) {
+  async editTicket(ticket: Ticket, id: any, role: Roles) {
     try {
       this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
