@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-lg-6 col-md-12 col-sm-12">
+  <div class="col-lg-12 col-md-12 col-sm-12">
     <div class="card">
       <div class="card-header text-left primary-color bg-white">
         <div class="header content">
@@ -11,192 +11,205 @@
       </div>
       <div class="card-body">
         <form [formGroup]="editTicket" (ngSubmit)="upadateForm()" *ngIf="site$ | async; else loading; let Site">
-          <div class="form-row" *ngIf="auth.isSupporter(user)">
-            <div class="form-group col-md-6">
-              <label class="control-label" for="date">Date</label>
-              <div class="input-group">
-                <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
-                  formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
-                    <i class="fas fa-calendar"></i>
-                  </button>
+          <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-row" *ngIf="auth.isSupporter(user)">
+                <div class="form-group col-md-6">
+                  <label class="control-label" for="date">Date</label>
+                  <div class="input-group">
+                    <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
+                      formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                        <i class="fas fa-calendar"></i>
+                      </button>
+                    </div>
+                    <div *ngIf="date.invalid && (date.dirty || date.touched)" class="danger-color">
+                      <div *ngIf="date.errors.required">
+                        Date is required.
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div *ngIf="date.invalid && (date.dirty || date.touched)" class="danger-color">
-                  <div *ngIf="date.errors.required">
-                    Date is required.
+                <div class="form-group col-md-6">
+                  <label class="control-label" for="source">Source</label>
+                  <select name="source" formControlName="source" class="form-control" id="source">
+                    <option *ngFor="let source of Sources" [ngValue]="source.name">
+                      {{ source.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="source.invalid && (source.dirty || source.touched)" class="danger-color">
+                    <div *ngIf="source.errors.required">
+                      Source is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="auth.isSupporter(user)">
+                <div class="form-group col-md-6">
+                  <label for="site">Site Name</label>
+                  <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="creator" class="control-label">Creator</label>
+                  <select name="creator" formControlName="creator" class="form-control" id="creator">
+                    <option *ngFor="let user of getCreate()" [ngValue]="user">
+                      {{ user }}
+                    </option>
+                  </select>
+                  <div *ngIf="creator.invalid && (creator.dirty || creator.touched)" class="danger-color">
+                    <div *ngIf="creator.errors.required">
+                      Creator is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="auth.isSupporter(user)">
+                <div class="form-group col-md-6">
+                  <label for="maintenancePackage">Maintenance Package</label>
+                  <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
+                    value="{{ getMaPackage() }}" placeholder="Maintenance Package" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="product">Product</label>
+                  <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="auth.isSupporter(user)">
+                <div class="form-group col-md-6">
+                  <label class="control-label" for="Type">Type</label>
+                  <select name="Type" formControlName="type" class="form-control" id="type">
+                    <option *ngFor="let type of Types" [ngValue]="type.name">
+                      {{ type.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="type.invalid && (type.dirty || type.touched)" class="danger-color">
+                    <div *ngIf="type.errors.required">
+                      Type is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="control-label" for="priority">Priority</label>
+                  <select name="priority" formControlName="priority" class="form-control" id="priority">
+                    <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
+                      {{ priority.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="danger-color">
+                    <div *ngIf="priority.errors.required">
+                      Priority is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="module" class="control-label">Module</label>
+                  <ng-multiselect-dropdown class="container" [data]="moduleList" id="module" formControlName="module"
+                    [settings]="dropdownSettings">
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="form-row dropdownModule">
+                <div class="form-group col-md-12">
+                  <label for="subject" class="control-label">Subject</label>
+                  <input formControlName="subject" type="text" class="form-control" id="subject" placeholder="Subject"
+                    required>
+                  <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
+                    <div *ngIf="subject.errors.required">
+                      Subject is required.
+                    </div>
+                    <div *ngIf="subject.errors.maxlength">
+                      Subject is less than 50 characters
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="description" class="control-label">Description</label>
+                  <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
+                  <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
+                    <div *ngIf="description.errors.required">
+                      Description is required.
+                    </div>
+                    <div *ngIf="description.errors.maxlength">
+                      Description is less than 500 characters
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <app-upload-detail-form (editeUpload)="mergeFileUpload($event)"></app-upload-detail-form>
+                </div>
+                <div class=" col-md-12 my-3">
+                  <app-upload-detail-list [fileUpload]="depositFiles" (fileRemove)="onFileRemove($event)">
+                  </app-upload-detail-list>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12" *ngIf="isSelectedType()">
+                  <label for="resolve">Resolve Description</label>
+                  <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
+                    (ngModelChange)="isResolveDescription($event)"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12" *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
+                  <label class="control-label" for="assign">Assign task to dev</label>
+                  <select formControlName="assign" name="assign" class="form-control" id="assign"
+                    (ngModelChange)="isAssignDev($event)">
+                    <option value="">choose dev...</option>
+                    <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
+                      {{staff.firstName}} {{staff.lastName}}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Add task -->
+            <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="auth.isSupervisor(user)">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label class="control-label" for="assign">Add Tasks</label>
+                  <div class="row">
+                    <button type="button" class="btn btn-success mb-2" (click)="addTask()"> <i class="fas fa-plus-square"></i> Add Task</button>
+                  </div>
+                  <div class="form-group" *ngIf="saveTask">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="subjectTask" class="control-label">Subject Task</label>
+                        <input formControlName="subjectTask" type="text" class="form-control" id="subjectTask" placeholder="Subject Task">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="assignDev" class="control-label">Assign Dev</label>
+                        <input formControlName="assignDev" type="text" class="form-control" id="assignDev" placeholder="Assign Dev">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="deadline" class="control-label">Deadline</label>
+                        <input formControlName="deadline" type="number" class="form-control" id="deadline" placeholder="Deadline">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <button type="button" class="btn btn-success">Save Tasks</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-6">
-              <label class="control-label" for="source">Source</label>
-              <select name="source" formControlName="source" class="form-control" id="source">
-                <option *ngFor="let source of Sources" [ngValue]="source.name">
-                  {{ source.name }}
-                </option>
-              </select>
-              <div *ngIf="source.invalid && (source.dirty || source.touched)" class="danger-color">
-                <div *ngIf="source.errors.required">
-                  Source is required.
-                </div>
-              </div>
-            </div>
+            <!-- End add tasks -->
           </div>
-          <div class="form-row" *ngIf="auth.isSupporter(user)">
-            <div class="form-group col-md-6">
-              <label for="site">Site Name</label>
-              <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="creator" class="control-label">Creator</label>
-              <select name="creator" formControlName="creator" class="form-control" id="creator">
-                <option *ngFor="let user of getCreate()" [ngValue]="user">
-                  {{ user }}
-                </option>
-              </select>
-              <div *ngIf="creator.invalid && (creator.dirty || creator.touched)" class="danger-color">
-                <div *ngIf="creator.errors.required">
-                  Creator is required.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-row" *ngIf="auth.isSupporter(user)">
-            <div class="form-group col-md-6">
-              <label for="maintenancePackage">Maintenance Package</label>
-              <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
-                value="{{ getMaPackage() }}" placeholder="Maintenance Package" readonly>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="product">Product</label>
-              <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
-            </div>
-          </div>
-          <div class="form-row" *ngIf="auth.isSupporter(user)">
-            <div class="form-group col-md-6">
-              <label class="control-label" for="Type">Type</label>
-              <select name="Type" formControlName="type" class="form-control" id="type">
-                <option *ngFor="let type of Types" [ngValue]="type.name">
-                  {{ type.name }}
-                </option>
-              </select>
-              <div *ngIf="type.invalid && (type.dirty || type.touched)" class="danger-color">
-                <div *ngIf="type.errors.required">
-                  Type is required.
-                </div>
-              </div>
-            </div>
-            <div class="form-group col-md-6">
-              <label class="control-label" for="priority">Priority</label>
-              <select name="priority" formControlName="priority" class="form-control" id="priority">
-                <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
-                  {{ priority.name }}
-                </option>
-              </select>
-              <div *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="danger-color">
-                <div *ngIf="priority.errors.required">
-                  Priority is required.
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="module" class="control-label">Module</label>
-              <ng-multiselect-dropdown class="container" [data]="moduleList" id="module" formControlName="module"
-                [settings]="dropdownSettings">
-              </ng-multiselect-dropdown>
-            </div>
-          </div>
-          <div class="form-row dropdownModule">
-            <div class="form-group col-md-12">
-              <label for="subject" class="control-label">Subject</label>
-              <input formControlName="subject" type="text" class="form-control" id="subject" placeholder="Subject"
-                required>
-              <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
-                <div *ngIf="subject.errors.required">
-                  Subject is required.
-                </div>
-                <div *ngIf="subject.errors.maxlength">
-                  Subject is less than 50 characters
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="description" class="control-label">Description</label>
-              <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
-              <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
-                <div *ngIf="description.errors.required">
-                  Description is required.
-                </div>
-                <div *ngIf="description.errors.maxlength">
-                  Description is less than 500 characters
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <app-upload-detail-form (editeUpload)="mergeFileUpload($event)"></app-upload-detail-form>
-            </div>
-            <div class=" col-md-12 my-3">
-              <app-upload-detail-list [fileUpload]="depositFiles" (fileRemove)="onFileRemove($event)">
-              </app-upload-detail-list>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col-md-12 my-3">
-              <button type="button" class="btn btn-success task" (click)="addTask()"> <i class="fas fa-plus-square"></i> Add Task</button>
-            </div>
-          </div>
-          <div class="form-group" *ngIf="saveTask">
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label for="subjectTask" class="control-label">Subject Task</label>
-                <input formControlName="subjectTask" type="text" class="form-control" id="subjectTask" placeholder="Subject Task">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label for="assignDev" class="control-label">Assign Dev</label>
-                <input formControlName="assignDev" type="text" class="form-control" id="assignDev" placeholder="Assign Dev">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label for="deadline" class="control-label">Deadline</label>
-                <input formControlName="deadline" type="number" class="form-control" id="deadline" placeholder="Deadline">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <button type="button" class="btn btn-success">Save Tasks</button>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-12" *ngIf="isSelectedType()">
-              <label for="resolve">Resolve Description</label>
-              <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
-                (ngModelChange)="isResolveDescription($event)"></textarea>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-12" *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
-              <label class="control-label" for="assign">Assign task to dev</label>
-              <select formControlName="assign" name="assign" class="form-control" id="assign"
-                (ngModelChange)="isAssignDev($event)">
-                <option value="">choose dev...</option>
-                <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
-                  {{staff.firstName}} {{staff.lastName}}
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
               <div class="btn-group btn-save" style="float: right;">
                 <button type="submit" class="btn btn-success" *ngIf="auth.isStaff(user)" (click)="setActionSentence()">
                   {{ displaySelectedStatus() }}
