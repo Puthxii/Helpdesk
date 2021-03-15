@@ -1,7 +1,7 @@
 import { SiteService } from './../../services/site/site.service';
 import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
@@ -113,7 +113,10 @@ export class EditTicketComponent implements OnInit {
         currentStatus: this.ticket.status,
         upload: this.ticket.upload,
         actionSentence: this.ticket.actionSentence,
-        dev: this.ticket.dev
+        dev: this.ticket.dev,
+        subjectTask: this.ticket.subjectTask,
+        assignDev: this.ticket.assignDev,
+        deadline: this.ticket.deadline,
       });
       this.getFileUpload()
     })
@@ -216,7 +219,13 @@ export class EditTicketComponent implements OnInit {
       currentStatus: [''],
       upload: [''],
       actionSentence: [''],
-      dev: ['']
+      dev: [''],
+      tasks: this.fb.array([
+        this.fb.control(null)
+      ]),
+      subjectTask: [],
+      assignDev: [],
+      deadline: []
     });
   }
 
@@ -495,4 +504,13 @@ export class EditTicketComponent implements OnInit {
       actionSentence: sentence
     })
   }
+
+  addTask(): void {
+    (this.editTicket.get('tasks') as FormArray).push(this.fb.control(null));
+  }
+
+  getTasksFormControls(): AbstractControl[] {
+    return (this.editTicket.get('tasks') as FormArray).controls
+  }
+
 }
