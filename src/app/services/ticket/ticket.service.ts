@@ -88,6 +88,7 @@ export class TicketService {
     )
   }
 
+  // todo : get my ticket by status
   getTicketsListByFilter(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
@@ -171,7 +172,8 @@ export class TicketService {
         staff: ticket.staff,
         email: ticket.email,
         assign: ticket.assign,
-        upload: ticket.upload
+        upload: ticket.upload,
+        participant: ticket.participant
       }))
         .collection('action')
         .add({
@@ -210,7 +212,8 @@ export class TicketService {
         status: ticket.status,
         staff: ticket.staff,
         assign: ticket.assign,
-        upload: ticket.upload
+        upload: ticket.upload,
+        participant: ticket.participant
       })
       this.deleteCollection('upload')
       this.successNotification();
@@ -374,6 +377,7 @@ export class TicketService {
     );
   }
 
+  // todo : customer get ticket by status
   getTicketByCreatorStatus(creator: any, status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('creator', '==', creator)
