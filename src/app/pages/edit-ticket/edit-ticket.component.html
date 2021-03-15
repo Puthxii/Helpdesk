@@ -147,8 +147,8 @@
               </app-upload-detail-list>
             </div>
           </div>
-          <div class="row">
-            <div class="form-group col-md-12" *ngIf="isSelectedType()">
+          <div class="row" *ngIf="isSelectedType()">
+            <div class="form-group col-md-12">
               <label for="resolve">Resolve Description</label>
               <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
                 (ngModelChange)="isResolveDescription($event)"></textarea>
