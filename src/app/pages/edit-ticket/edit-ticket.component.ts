@@ -141,6 +141,7 @@ export class EditTicketComponent implements OnInit {
       this.setDefaultSuggestDescriptionFile()
       this.setDefaultResponDescription()
       this.setDefaultResponDescriptionFile()
+      this.getModule();
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getDeveloper().snapshotChanges().subscribe(data => {
@@ -151,6 +152,16 @@ export class EditTicketComponent implements OnInit {
         this.Staff.push(item as User)
       })
     });
+  }
+
+  getModule() {
+    if (this.editTicket.controls.site.value.module) {
+      this.moduleList = this.editTicket.controls.site.value.module;
+      this.moduleList.sort((a, b) => a.localeCompare(b));
+    } else {
+      this.moduleList = [];
+    }
+    return this.moduleList;
   }
 
   setDefaultMaDescription() {

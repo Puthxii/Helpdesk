@@ -111,7 +111,7 @@
             <div class="form-group col-md-12">
               <label for="module" class="control-label">Module</label>
               <ng-multiselect-dropdown class="container" [data]="moduleList" id="module" formControlName="module"
-                [settings]="dropdownSettings" [disabled]="!auth.isSupporter(user)">
+                [settings]="dropdownSettings" [disabled]="!auth.isSupporter(user)&&!auth.isCustomer(user)">
               </ng-multiselect-dropdown>
             </div>
           </div>
@@ -119,7 +119,7 @@
             <div class="form-group col-md-12">
               <label for="subject" class="control-label">Subject</label>
               <input formControlName="subject" type="text" class="form-control" id="subject" placeholder="Subject"
-                [readonly]="!auth.isSupporter(user)">
+                [readonly]="!auth.isSupporter(user)&&!auth.isCustomer(user)">
               <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
                 <div *ngIf="subject.errors.required">
                   Subject is required.
@@ -134,7 +134,7 @@
             <div class="form-group col-md-12">
               <label for="description" class="control-label">Description</label>
               <textarea formControlName="description" class="form-control" id="description" rows="3"
-                [readonly]="!auth.isSupporter(user)"></textarea>
+                [readonly]="!auth.isSupporter(user)&&!auth.isCustomer(user)"></textarea>
               <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
                 <div *ngIf="description.errors.required">
                   Description is required.
