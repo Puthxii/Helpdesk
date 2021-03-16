@@ -473,7 +473,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   deleteCollection() {
-    this.ticketService.deleteCollection('upload')
+    this.ticketService.deleteCollection('uploadDesciption')
   }
 
   public onUploadfile(upload: any): void {
@@ -481,4 +481,5 @@ export class AddTicketComponent implements OnInit {
       descriptionFile: upload
     });
   }
+
 }
