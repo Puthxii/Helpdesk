@@ -160,6 +160,7 @@ export class AddTicketComponent implements OnInit {
         this.getSiteCustomer();
         this.getCustomerContact(this.user$.name);
         this.setActionSentenceCus();
+        this.setParticipantCustomer()
       } else {
         this.setStaff();
         this.setParticipant()
@@ -193,6 +194,12 @@ export class AddTicketComponent implements OnInit {
   setStaff() {
     this.addTicketForm.patchValue({
       staff: this.user$.fullName
+    });
+  }
+
+  setParticipantCustomer() {
+    this.addTicketForm.patchValue({
+      participant: []
     });
   }
 
