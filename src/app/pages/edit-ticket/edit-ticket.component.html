@@ -140,7 +140,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <app-upload-detail-form (editeUpload)="mergeFileUpload($event)"></app-upload-detail-form>
+              <app-upload-detail-form (editeUpload)="mergeDescriptionFileUpload($event)"></app-upload-detail-form>
             </div>
             <div class=" col-md-12">
               <app-upload-detail-list [fileUpload]="depositDescriptionFiles"
@@ -157,7 +157,8 @@
           </div>
           <div class="row" *ngIf="isSelectedType()">
             <div class="col-md-12">
-              <app-upload-detail-form></app-upload-detail-form>
+              <app-upload-detail-form (editeResolveDescriptionFileUpload)="mergeResolveDescriptionFileUpload($event)">
+              </app-upload-detail-form>
             </div>
             <div class=" col-md-12">
               <app-upload-detail-list [fileUpload]="depositResolveDescriptionFiles"

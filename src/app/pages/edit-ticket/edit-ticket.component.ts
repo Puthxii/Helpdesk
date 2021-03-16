@@ -458,7 +458,7 @@ export class EditTicketComponent implements OnInit {
     this.getResolvedDescriptionFileUpload()
   }
 
-  public mergeFileUpload(upload: any): void {
+  public mergeDescriptionFileUpload(upload: any): void {
     if (this.depositDescriptionFiles !== undefined) {
       this.mergeByProperty(upload, this.depositDescriptionFiles, 'id');
     }
@@ -466,6 +466,16 @@ export class EditTicketComponent implements OnInit {
       descriptionFile: upload
     });
     this.getDescriptionFileUpload()
+  }
+
+  public mergeResolveDescriptionFileUpload(upload: any): void {
+    if (this.depositResolveDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositResolveDescriptionFiles, 'id');
+    }
+    this.editTicket.patchValue({
+      resolveDescriptionFile: upload
+    });
+    this.getResolvedDescriptionFileUpload()
   }
 
   mergeByProperty(newUpload: any[], depositFiles: any[], prop: string) {
