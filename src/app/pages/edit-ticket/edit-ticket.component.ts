@@ -241,6 +241,12 @@ export class EditTicketComponent implements OnInit {
     return this.user.fullName
   }
 
+  getCurrentStaff() {
+    if (this.user.roles.customer != true) {
+      return this.user.fullName
+    }
+  }
+
   displaySelectedStatus(): any {
     return (this.status.value) ? this.matchStatus(this.status.value) : 'Save as draft';
   }
@@ -346,7 +352,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   saveAction() {
-    const staffCurrent = this.getCurrentUser()
+    const staffCurrent = this.getCurrentStaff()
     this.ticketService
       .setActionById(
         this.id,
