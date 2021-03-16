@@ -75,6 +75,7 @@ export class EditTicketComponent implements OnInit {
   depositFiles = []
   stateParticipant = []
   depositTasks = []
+  newTask = []
   subjectTasks: any;
   assignTasks: any;
   deadlineDate: any;
@@ -243,8 +244,8 @@ export class EditTicketComponent implements OnInit {
   }
 
   upadateForm() {
-    this.ticketService.editTicket(this.editTicket.value, this.id);
-    this.saveAction()
+    // this.ticketService.editTicket(this.editTicket.value, this.id);
+    // this.saveAction()
     this.saveTasks()
   }
 
@@ -545,41 +546,38 @@ export class EditTicketComponent implements OnInit {
     (this.editTicket.get('tasks') as FormArray).push(this.fb.control(null));
   }
 
-
-  getTasksFormControls(): AbstractControl[] {
-    return (this.editTicket.get('tasks') as FormArray).controls
-  }
-
   onTasksSubmit() {
-    let tt = []
-    this.depositTasks = [
-      this.editTicket.controls.subjectTask.value,
-      this.editTicket.controls.assignTasks.value,
-      this.editTicket.controls.deadlineDate.value
-    ]
-    tt.push(this.depositTasks)
-    console.log('tt', tt);
-    
-    // this.depositTasks = this.editTicket.controls.addTasks.value.push(this.depositTasks)
-    // this.editTicket.patchValue({
-    //   addTasks: this.depositTasks
-    // });
-    console.log(this.depositTasks);
+    const subject = this.editTicket.controls.subjectTask.value
+    const assignTasks = this.editTicket.controls.assignTasks.value
+    const deadlineDate = this.editTicket.controls.deadlineDate.value
+    this.newTask = [{
+      subject, assignTasks, deadlineDate
+    }]
+    this.depositTasks.push(this.newTask)
+    this.clearTask()
+    this.saveTask = false;
   }
-  assignDev(id: string, Value: any, assignDev: any, deadline: any) {
-    throw new Error('Method not implemented.');
-  }
-  deadline(id: string, Value: any, assignDev: any, deadline: any) {
-    throw new Error('Method not implemented.');
+
+  clearTask() {
+    this.editTicket.patchValue({
+      subjectTask: '',
+      assignTasks: '',
+      deadlineDate: ''
+    })
   }
 
   saveTasks() {
-    console.log(this.editTicket.controls.addTasks.value)
-    this.ticketService.setAddTasks(
-      this.id,
-      this.editTicket.controls.addTasks.value
-    )
+    if (this.depositTasks.length != 0) {
+      console.log('do');
+      for (let i = 0; this.depositTasks.length > i; i++) {
+        this.ticketService.setAddTasks(
+          this.id,
+          this.depositTasks[i]
+        )
+      }
+    }
   }
+
 }
 
 
