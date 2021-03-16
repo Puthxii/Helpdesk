@@ -401,7 +401,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
-      if (this.user.roles.supervisor === true) {
+      if (this.user.roles.supervisor === true && this.editTicket.controls.assign.value) {
         this.addStatus('Assigned');
       } else {
         this.removeStatus('Assigned');
@@ -416,7 +416,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('More Info');
       this.removeStatus('In Progress');
       this.removeStatus('Accepted');
-      this.addStatus('Resolved');
+      this.removeStatus('Resolved');
+      this.isResponDescription(Event)
     } else if (currentStatus === 'Resolved') {
       this.removeStatus('Draft');
       this.removeStatus('Informed');
@@ -424,7 +425,11 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('In Progress');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
-      this.addStatus('Closed');
+      if (this.user.roles.supporter) {
+        this.addStatus('Closed');
+      } else {
+        this.removeStatus('Closed');
+      }
     }
   }
 
@@ -447,6 +452,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   isAssignDev() {
+    this.addStatus('Assigned');
     (this.editTicket.controls.assign.value) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
@@ -476,6 +482,12 @@ export class EditTicketComponent implements OnInit {
 
   isResolveDescription(event: any) {
     (this.editTicket.controls.resolveDescription.value) ? this.addStatus('Closed') : this.removeStatus('Closed')
+  }
+
+  isResponDescription(event: any) {
+    console.log(this.editTicket.controls.responDescription.value);
+
+    (this.editTicket.controls.responDescription.value) ? this.addStatus('Resolved') : this.removeStatus('Resolved')
   }
 
   removeStatus(status: string) {
@@ -756,6 +768,10 @@ export class EditTicketComponent implements OnInit {
         }
       }
     })
+  }
+
+  isAssignedResolved() {
+    return this.editTicket.controls.currentStatus.value === 'Assigned' || this.editTicket.controls.currentStatus.value === 'Resolved'
   }
 
 }
