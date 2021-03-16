@@ -234,6 +234,9 @@ export class TicketService {
       })
       this.deleteCollection('uploadDesciption')
       this.deleteCollection('uploadResolveDescription')
+      this.deleteCollection('uploadMaDescription')
+      this.deleteCollection('uploadSuggestDescription')
+      this.deleteCollection('uploadResponDescription')
       this.successNotification(role);
     } catch (error) {
       this.errorNotification();
