@@ -167,6 +167,24 @@
                 (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
             </div>
           </div>
+          <div class="form-row" *ngIf="auth.isMaintenance(user)">
+            <div class="form-group col-md-12">
+              <label for="resolve">Maintenance Description</label>
+              <textarea formControlName="maDescription" class="form-control" id="resolveDescription"
+                rows="3"></textarea>
+            </div>
+          </div>
+          <div class="row" *ngIf="auth.isMaintenance(user)">
+            <div class="col-md-12">
+              <app-upload-detail-form [flag]="forResolveDescription"
+                (editeUpload)="mergeResolveDescriptionFileUpload($event)">
+              </app-upload-detail-form>
+            </div>
+            <div class=" col-md-12">
+              <app-upload-detail-list [flag]="forResolveDescription" [fileUpload]="depositResolveDescriptionFiles"
+                (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
+            </div>
+          </div>
           <div class="row">
             <div class="form-group col-md-12" *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
               <label class="control-label" for="assign">Assign task to dev</label>

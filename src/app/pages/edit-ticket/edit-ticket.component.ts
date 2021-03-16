@@ -115,11 +115,13 @@ export class EditTicketComponent implements OnInit {
         actionSentence: this.ticket.actionSentence,
         dev: this.ticket.dev,
         participant: this.ticket.participant,
-        resolveDescriptionFile: this.ticket.resolveDescriptionFile
+        resolveDescriptionFile: this.ticket.resolveDescriptionFile,
+        maDescription: this.ticket.maDescription
       });
       this.getDescriptionFileUpload()
       this.getResolvedDescriptionFileUpload()
       this.getParticipant()
+      this.setDefaultMaDescription()
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
@@ -129,6 +131,18 @@ export class EditTicketComponent implements OnInit {
         item['$uid'] = items.payload.doc['id'];
         this.Staff.push(item as User)
       })
+    });
+  }
+
+  setDefaultMaDescription() {
+    let maDescription: string
+    if (this.editTicket.controls.maDescription.value === undefined) {
+      maDescription = 'ตรงตามเงื่อนไขสัญญา'
+    } else {
+      maDescription = this.editTicket.controls.maDescription.value
+    }
+    this.editTicket.patchValue({
+      maDescription
     });
   }
 
@@ -222,7 +236,8 @@ export class EditTicketComponent implements OnInit {
       actionSentence: [''],
       dev: [''],
       participant: [''],
-      resolveDescriptionFile: ['']
+      resolveDescriptionFile: [''],
+      maDescription: ['']
     });
   }
 
