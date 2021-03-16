@@ -143,7 +143,8 @@
               <app-upload-detail-form (editeUpload)="mergeFileUpload($event)"></app-upload-detail-form>
             </div>
             <div class=" col-md-12">
-              <app-upload-detail-list [fileUpload]="depositDescriptionFiles" (fileRemove)="onFileRemove($event)">
+              <app-upload-detail-list [fileUpload]="depositDescriptionFiles"
+                (fileRemove)="onDepositDescriptionFileRemove($event)">
               </app-upload-detail-list>
             </div>
           </div>
@@ -159,7 +160,8 @@
               <app-upload-detail-form></app-upload-detail-form>
             </div>
             <div class=" col-md-12">
-              <app-upload-detail-list [fileUpload]="depositResolveDescriptionFiles"></app-upload-detail-list>
+              <app-upload-detail-list [fileUpload]="depositResolveDescriptionFiles"
+                (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
             </div>
           </div>
           <div class="row">

@@ -441,12 +441,21 @@ export class EditTicketComponent implements OnInit {
     this.stateParticipant = this.editTicket.controls.participant.value
   }
 
-  public onFileRemove(value: any) {
+  public onDepositDescriptionFileRemove(value: any) {
     this.depositDescriptionFiles = this.editTicket.controls.descriptionFile.value.filter((item: { id: any; }) => item.id !== value.id)
     this.editTicket.patchValue({
       descriptionFile: this.depositDescriptionFiles
     });
     this.getDescriptionFileUpload()
+  }
+
+  public onDepositResolveDescriptionFileRemove(value: any) {
+    this.depositResolveDescriptionFiles = this.editTicket.controls.resolveDescriptionFile.value
+      .filter((item: { id: any; }) => item.id !== value.id)
+    this.editTicket.patchValue({
+      resolveDescriptionFile: this.depositResolveDescriptionFiles
+    });
+    this.getResolvedDescriptionFileUpload()
   }
 
   public mergeFileUpload(upload: any): void {
