@@ -243,8 +243,7 @@ export class TicketService {
       this.deleteCollection('uploadResponDescription')
       this.successNotification(role);
     } catch (error) {
-      console.log(error);
-      // this.errorNotification();
+      this.errorNotification();
     }
   }
 
@@ -325,16 +324,16 @@ export class TicketService {
 
   getByDaterange(startDate: any, endDate: any, role: any) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
     );
   }
 
   getByCurrentnameStatusKewordDateRange(keword: any, creator: string, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('staff', '==', creator)
       .where('status', '==', status)
       .where('subject', '==', keword)
@@ -343,8 +342,8 @@ export class TicketService {
 
   getByCurrentnameStatusDateRange(creator: string, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('staff', '==', creator)
       .where('status', '==', status)
     );
@@ -352,8 +351,8 @@ export class TicketService {
 
   getByStatusKewordDateRange(keword: any, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', '==', status)
       .where('subject', '==', keword)
     );
@@ -361,8 +360,8 @@ export class TicketService {
 
   getByCurrentnameKewordDateRange(keword: any, creator: string, startDate: Date, endDate: Date, role: any) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
       .where('staff', '==', creator)
       .where('subject', '==', keword)
@@ -371,8 +370,8 @@ export class TicketService {
 
   getByCurrentnameDateRange(creator: string, startDate: Date, endDate: Date, role: any) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
       .where('staff', '==', creator)
     );
@@ -380,8 +379,8 @@ export class TicketService {
 
   getByKewordDaterange(keword: any, startDate: Date, endDate: Date, role: any) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
       .where('subject', '==', keword)
     );
@@ -389,8 +388,8 @@ export class TicketService {
 
   getByStatusDateRange(status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', '==', status)
     );
   }
@@ -457,8 +456,8 @@ export class TicketService {
 
   getByCreatorStatusKeword(creator: any, status: any, keword: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('creator', '==', creator)
       .where('status', '==', status)
       .where('subject', '==', keword)
@@ -467,8 +466,8 @@ export class TicketService {
 
   getByCreatorStatus(creator: any, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('creator', '==', creator)
       .where('status', '==', status)
     )
@@ -476,8 +475,8 @@ export class TicketService {
 
   getBySiteStatusKeword(siteState: any, status: any, keword: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('site.initials', '==', siteState)
       .where('status', '==', status)
       .where('subject', '==', keword)
@@ -486,8 +485,8 @@ export class TicketService {
 
   getBySiteStatus(siteState: any, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('site.initials', '==', siteState)
       .where('status', '==', status)
     )
