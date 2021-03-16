@@ -135,6 +135,8 @@ export class EditTicketComponent implements OnInit {
       this.getResponDescriptionFileUpload()
       this.getParticipant()
       this.setDefaultMaDescription()
+      this.setDefaultSuggestDescription()
+      this.setDefaultResponDescription()
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
@@ -156,6 +158,30 @@ export class EditTicketComponent implements OnInit {
     }
     this.editTicket.patchValue({
       maDescription
+    });
+  }
+
+  setDefaultSuggestDescription() {
+    let suggestDescription: string
+    if (this.editTicket.controls.suggestDescription.value === undefined) {
+      suggestDescription = ''
+    } else {
+      suggestDescription = this.editTicket.controls.suggestDescription.value
+    }
+    this.editTicket.patchValue({
+      suggestDescription
+    });
+  }
+
+  setDefaultResponDescription() {
+    let responDescription: string
+    if (this.editTicket.controls.responDescription.value === undefined) {
+      responDescription = ''
+    } else {
+      responDescription = this.editTicket.controls.responDescription.value
+    }
+    this.editTicket.patchValue({
+      responDescription
     });
   }
 
@@ -679,10 +705,13 @@ export class EditTicketComponent implements OnInit {
           this.deleteCollection('uploadResolveDescription')
           this.router.navigate(['/ticket']);
         } else if (this.user.roles.maintenance === true) {
+          this.deleteCollection('uploadMaDescription')
           this.router.navigate(['/ticket-ma']);
         } else if (this.user.roles.supervisor === true) {
+          this.deleteCollection('uploadSuggestDescription')
           this.router.navigate(['/ticket-sup']);
         } else if (this.user.roles.developer === true) {
+          this.deleteCollection('uploadResponDescription')
           this.router.navigate(['/ticket-dev']);
         }
       }
