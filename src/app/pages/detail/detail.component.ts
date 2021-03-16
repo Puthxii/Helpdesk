@@ -16,7 +16,6 @@ export class DetailComponent implements OnInit {
   id: string;
   addTicketForm: any;
   user
-  action: Observable<any>
   actions: Observable<any>
   dateThai: any
   constructor(

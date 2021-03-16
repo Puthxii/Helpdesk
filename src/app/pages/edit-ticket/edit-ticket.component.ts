@@ -1,8 +1,7 @@
-import { map } from 'rxjs/operators';
 import { SiteService } from './../../services/site/site.service';
 import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
@@ -35,7 +34,6 @@ export class EditTicketComponent implements OnInit {
   currentName: string
   user$: any
   saveTask = false;
-
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -46,21 +44,18 @@ export class EditTicketComponent implements OnInit {
     { name: 'Conference' },
     { name: 'Other' },
   ];
-
   Types = [
     { name: 'Info' },
     { name: 'Consult' },
     { name: 'Problem' },
     { name: 'Add-ons' }
   ];
-
   Prioritys = [
     { name: 'Low' },
     { name: 'Medium' },
     { name: 'High' },
     { name: 'Critical' }
   ];
-
   Status = [
     { name: 'Save as Draft', value: 'Draft' },
     { name: 'Save as Inform', value: 'Informed' },
@@ -70,12 +65,11 @@ export class EditTicketComponent implements OnInit {
     { name: 'Save as Assign', value: 'Assigned' },
     { name: 'Save as Resolve', value: 'Resolved' },
   ];
-
   ticket: any;
   depositFiles = []
   stateParticipant = []
   depositTasks = []
-  newTask = []
+  newTask: any
   subjectTasks: any;
   assignTasks: any;
   deadlineDate: any;
@@ -84,8 +78,7 @@ export class EditTicketComponent implements OnInit {
     dateFormat: 'dd/mm/yyyy'
   };
   NewUpload: { id: string; name: string; url: string; file: File; }[];
-
-
+  tasks: Observable<any>
 
   constructor(
     private ticketService: TicketService,
@@ -133,6 +126,11 @@ export class EditTicketComponent implements OnInit {
       this.getParticipant()
     })
     this.site$ = this.siteService.getSitesList()
+    this.getDeveloper()
+    this.tasks = this.ticketService.getTask(this.id).valueChanges();
+  }
+
+  getDeveloper() {
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
       this.Staff = []
       data.map(items => {
@@ -550,9 +548,9 @@ export class EditTicketComponent implements OnInit {
     const subject = this.editTicket.controls.subjectTask.value
     const assignTasks = this.editTicket.controls.assignTasks.value
     const deadlineDate = this.editTicket.controls.deadlineDate.value
-    this.newTask = [{
+    this.newTask = {
       subject, assignTasks, deadlineDate
-    }]
+    }
     this.depositTasks.push(this.newTask)
     this.clearTask()
     this.saveTask = false;
@@ -570,6 +568,7 @@ export class EditTicketComponent implements OnInit {
     if (this.depositTasks.length != 0) {
       console.log('do');
       for (let i = 0; this.depositTasks.length > i; i++) {
+        console.log(this.depositTasks);
         this.ticketService.setAddTasks(
           this.id,
           this.depositTasks[i]

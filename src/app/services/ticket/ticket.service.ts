@@ -237,7 +237,9 @@ export class TicketService {
     this.afs.collection('ticket').doc(id)
       .collection('tasks')
       .add({
-        tasks
+        subject: tasks.subject,
+        assignTasks: tasks.assignTasks,
+        deadlineDate: tasks.deadlineDate
       })
   }
 
@@ -478,5 +480,10 @@ export class TicketService {
     return this.afs.collection('ticket').doc(id)
       .collection('action', ref => ref
         .orderBy('date', 'asc'))
+  }
+
+  getTask(id: string): any {
+    return this.afs.collection('ticket').doc(id)
+      .collection('tasks')
   }
 }
