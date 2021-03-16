@@ -229,7 +229,8 @@ export class TicketService {
         participant: ticket.participant,
         resolveDescriptionFile: ticket.resolveDescriptionFile
       })
-      this.deleteCollection('upload')
+      this.deleteCollection('uploadDesciption')
+      this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
       this.errorNotification();
