@@ -69,6 +69,7 @@ export class EditTicketComponent implements OnInit {
   depositDescriptionFiles = []
   depositResolveDescriptionFiles = []
   forDescription = 'forDescription'
+  forResolveDescription = 'forResolveDescription'
   stateParticipant = []
   myOptions: IAngularMyDpOptions = {
     dateRange: false,

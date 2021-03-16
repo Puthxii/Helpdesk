@@ -12,15 +12,7 @@ import { Input } from '@angular/core';
 export class UploadDetailFormComponent implements OnInit {
   @Input() flag: any
   @Output() editeUpload = new EventEmitter<any>();
-  @Output() editeResolveDescriptionFileUpload = new EventEmitter<any>();
   fileUploads: any[];
-  resolveDescriptionfileUploads = [
-    {
-      id: 'test',
-      name: 'test.png',
-      url: 'google.com'
-    }
-  ]
   selectedFiles: FileList;
   currentFileUpload: FileUpload;
   percentage: number;
@@ -82,7 +74,5 @@ export class UploadDetailFormComponent implements OnInit {
     if (fileUploads.length !== 0) {
       this.editeUpload.emit(fileUploads)
     }
-    console.log(this.resolveDescriptionfileUploads);
-    this.editeResolveDescriptionFileUpload.emit(this.resolveDescriptionfileUploads)
   }
 }
