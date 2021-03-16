@@ -230,7 +230,9 @@ export class TicketService {
         resolveDescriptionFile: ticket.resolveDescriptionFile,
         maDescription: ticket.maDescription,
         suggestDescription: ticket.suggestDescription,
-        responDescription: ticket.responDescription
+        suggestDescriptionFile: ticket.suggestDescriptionFile,
+        responDescription: ticket.responDescription,
+        responDescriptionFile: ticket.responDescriptionFile
       })
       this.deleteCollection('uploadDesciption')
       this.deleteCollection('uploadResolveDescription')
