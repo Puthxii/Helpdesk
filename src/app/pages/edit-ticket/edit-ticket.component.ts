@@ -144,6 +144,10 @@ export class EditTicketComponent implements OnInit {
       this.getModule();
     })
     this.site$ = this.siteService.getSitesList()
+    this.getDeveloper()
+  }
+
+  getDeveloper() {
     this.userService.getDeveloper().snapshotChanges().subscribe(data => {
       this.Staff = []
       data.map(items => {
