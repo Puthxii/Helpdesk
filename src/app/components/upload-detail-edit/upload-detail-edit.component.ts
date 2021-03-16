@@ -37,7 +37,6 @@ export class UploadDetailEditComponent implements OnInit {
 
   deleteFileUpload(fileUpload: FileUpload): void {
     this.fileRemove.emit(fileUpload);
-    this.uploadService.deleteFile(fileUpload);
   }
 }
 
