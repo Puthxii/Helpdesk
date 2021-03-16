@@ -1,3 +1,4 @@
+import { Input } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -10,13 +11,32 @@ import { FileUploadService } from 'src/app/services/file-upload/file-upload.serv
   styleUrls: ['./upload-list.component.css']
 })
 export class UploadListComponent implements OnInit {
+  @Input() flag: any
   @Output() upload = new EventEmitter<any>();
   fileUploads: any[];
 
   constructor(private uploadService: FileUploadService) { }
-
   ngOnInit() {
-    this.uploadService.getFiles().snapshotChanges().pipe(
+    this.getFile(this.flag)
+  }
+
+  getFile(flag: string) {
+    let coll: string
+    switch (flag) {
+      case 'forDescription': {
+        coll = 'uploadDesciption'
+        break
+      }
+      case 'forResolveDescription': {
+        coll = 'uploadResolveDescription'
+        break
+      }
+    }
+    this.getByCollection(coll)
+  }
+
+  getByCollection(coll: any) {
+    this.uploadService.getFiles(coll).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as FileUpload;
         const id = a.payload.doc['id'];

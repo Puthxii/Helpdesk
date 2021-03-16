@@ -140,15 +140,16 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <app-upload-detail-form (editeUpload)="mergeDescriptionFileUpload($event)"></app-upload-detail-form>
+              <app-upload-detail-form [flag]="forDescription" (editeUpload)="mergeDescriptionFileUpload($event)">
+              </app-upload-detail-form>
             </div>
             <div class=" col-md-12">
-              <app-upload-detail-list [fileUpload]="depositDescriptionFiles"
+              <app-upload-detail-list [flag]="forDescription" [fileUpload]="depositDescriptionFiles"
                 (fileRemove)="onDepositDescriptionFileRemove($event)">
               </app-upload-detail-list>
             </div>
           </div>
-          <div class="form-row" *ngIf="isSelectedType()">
+          <!-- <div class="form-row" *ngIf="isSelectedType()">
             <div class="form-group col-md-12">
               <label for="resolve">Resolve Description</label>
               <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
@@ -164,7 +165,7 @@
               <app-upload-detail-list [fileUpload]="depositResolveDescriptionFiles"
                 (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <div class="form-group col-md-12" *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
               <label class="control-label" for="assign">Assign task to dev</label>

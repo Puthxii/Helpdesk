@@ -10,6 +10,7 @@ import { FileUpload } from 'src/app/models/file-upload.model';
   styleUrls: ['./upload-detail-list.component.css']
 })
 export class UploadDetailListComponent implements OnInit {
+  @Input() flag: any
   @Input() fileUpload: FileUpload;
   @Output() fileRemove = new EventEmitter<any>();
 

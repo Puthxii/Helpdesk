@@ -3,12 +3,14 @@ import { FileUpload } from 'src/app/models/file-upload.model';
 import { FileUploadService } from 'src/app/services/file-upload/file-upload.service';
 import { Output, EventEmitter } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { Input } from '@angular/core';
 @Component({
   selector: 'app-upload-detail-form',
   templateUrl: './upload-detail-form.component.html',
   styleUrls: ['./upload-detail-form.component.css']
 })
 export class UploadDetailFormComponent implements OnInit {
+  @Input() flag: any
   @Output() editeUpload = new EventEmitter<any>();
   @Output() editeResolveDescriptionFileUpload = new EventEmitter<any>();
   fileUploads: any[];
@@ -26,7 +28,26 @@ export class UploadDetailFormComponent implements OnInit {
   constructor(private uploadService: FileUploadService) { }
 
   ngOnInit() {
-    this.uploadService.getFiles().snapshotChanges().pipe(
+    this.getFile(this.flag)
+  }
+
+  getFile(flag: string) {
+    let coll: string
+    switch (flag) {
+      case 'forDescription': {
+        coll = 'uploadDesciption'
+        break
+      }
+      case 'forResolveDescription': {
+        coll = 'uploadResolveDescription'
+        break
+      }
+    }
+    this.getByCollection(coll)
+  }
+
+  getByCollection(coll: any) {
+    this.uploadService.getFiles(coll).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as FileUpload;
         const id = a.payload.doc['id'];
@@ -47,7 +68,7 @@ export class UploadDetailFormComponent implements OnInit {
     const file = this.selectedFiles.item(0);
     this.selectedFiles = undefined;
     this.currentFileUpload = new FileUpload(file);
-    this.uploadService.pushFileToStorage(this.currentFileUpload).subscribe(
+    this.uploadService.pushFileToStorage(this.currentFileUpload, this.flag).subscribe(
       percentage => {
         this.percentage = Math.round(percentage);
       },
@@ -64,6 +85,4 @@ export class UploadDetailFormComponent implements OnInit {
     console.log(this.resolveDescriptionfileUploads);
     this.editeResolveDescriptionFileUpload.emit(this.resolveDescriptionfileUploads)
   }
-
-
 }
