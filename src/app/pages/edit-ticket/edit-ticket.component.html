@@ -11,14 +11,16 @@
       </div>
       <div class="card-body">
         <form [formGroup]="editTicket" (ngSubmit)="upadateForm()" *ngIf="site$ | async; else loading; let Site">
-          <div class="form-row" *ngIf="auth.isSupporter(user)">
+          <div class="form-row" *ngIf="auth.isStaff(user)">
             <div class="form-group col-md-6">
               <label class="control-label" for="date">Date</label>
               <div class="input-group">
                 <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
-                  formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
+                  formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
+                  [readonly]="!auth.isSupporter(user)">
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                  <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()"
+                    [disabled]="!auth.isSupporter(user)">
                     <i class="fas fa-calendar"></i>
                   </button>
                 </div>
@@ -43,7 +45,7 @@
               </div>
             </div>
           </div>
-          <div class="form-row" *ngIf="auth.isSupporter(user)">
+          <div class="form-row" *ngIf="auth.isStaff(user)">
             <div class="form-group col-md-6">
               <label for="site">Site Name</label>
               <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
@@ -62,7 +64,7 @@
               </div>
             </div>
           </div>
-          <div class="form-row" *ngIf="auth.isSupporter(user)">
+          <div class="form-row" *ngIf="auth.isStaff(user)">
             <div class="form-group col-md-6">
               <label for="maintenancePackage">Maintenance Package</label>
               <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
@@ -73,7 +75,7 @@
               <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
             </div>
           </div>
-          <div class="form-row" *ngIf="auth.isSupporter(user)">
+          <div class="form-row" *ngIf="auth.isStaff(user)">
             <div class="form-group col-md-6">
               <label class="control-label" for="Type">Type</label>
               <select name="Type" formControlName="type" class="form-control" id="type">
