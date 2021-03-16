@@ -233,6 +233,14 @@ export class TicketService {
       })
   }
 
+  setAddTasks(id: any, tasks: any) {
+    this.afs.collection('ticket').doc(id)
+      .collection('tasks')
+      .add({
+        tasks
+      })
+  }
+
   getByKeyWord(keword: any, role) {
     return this.afs.collection('ticket', (ref) => ref
       .orderBy('subject')
@@ -471,5 +479,4 @@ export class TicketService {
       .collection('action', ref => ref
         .orderBy('date', 'asc'))
   }
-
 }

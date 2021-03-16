@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { SiteService } from './../../services/site/site.service';
 import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
@@ -34,6 +35,7 @@ export class EditTicketComponent implements OnInit {
   currentName: string
   user$: any
   saveTask = false;
+
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -72,12 +74,17 @@ export class EditTicketComponent implements OnInit {
   ticket: any;
   depositFiles = []
   stateParticipant = []
-
+  depositTasks = []
+  subjectTasks: any;
+  assignTasks: any;
+  deadlineDate: any;
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'dd/mm/yyyy'
   };
   NewUpload: { id: string; name: string; url: string; file: File; }[];
+
+
 
   constructor(
     private ticketService: TicketService,
@@ -116,9 +123,10 @@ export class EditTicketComponent implements OnInit {
         actionSentence: this.ticket.actionSentence,
         dev: this.ticket.dev,
         subjectTask: this.ticket.subjectTask,
-        assignDev: this.ticket.assignDev,
-        deadline: this.ticket.deadline,
-        participant: this.ticket.participant
+        assignTasks: this.ticket.assignTasks,
+        deadlineDate: this.ticket.deadlineDate,
+        participant: this.ticket.participant,
+        addTasks: this.ticket.addTasks
       });
       this.getFileUpload()
       this.getParticipant()
@@ -227,15 +235,17 @@ export class EditTicketComponent implements OnInit {
         this.fb.control(null)
       ]),
       subjectTask: [],
-      assignDev: [],
-      deadline: [],
-      participant: ['']
+      assignTasks: [],
+      deadlineDate: [],
+      participant: [''],
+      addTasks: ['']
     });
   }
 
   upadateForm() {
     this.ticketService.editTicket(this.editTicket.value, this.id);
     this.saveAction()
+    this.saveTasks()
   }
 
   getMaPackage() {
@@ -519,7 +529,7 @@ export class EditTicketComponent implements OnInit {
     this.editTicket.patchValue({
       participant: this.stateParticipant
     });
-    console.log(this.editTicket.controls.participant.value);
+    // console.log(this.editTicket.controls.participant.value);
   }
 
   mergeParticipant(name: any) {
@@ -530,13 +540,46 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
-  addTask(): void {
+  setTask(): void {
     this.saveTask = true;
     (this.editTicket.get('tasks') as FormArray).push(this.fb.control(null));
   }
+
 
   getTasksFormControls(): AbstractControl[] {
     return (this.editTicket.get('tasks') as FormArray).controls
   }
 
+  onTasksSubmit() {
+    let tt = []
+    this.depositTasks = [
+      this.editTicket.controls.subjectTask.value,
+      this.editTicket.controls.assignTasks.value,
+      this.editTicket.controls.deadlineDate.value
+    ]
+    tt.push(this.depositTasks)
+    console.log('tt', tt);
+    
+    // this.depositTasks = this.editTicket.controls.addTasks.value.push(this.depositTasks)
+    // this.editTicket.patchValue({
+    //   addTasks: this.depositTasks
+    // });
+    console.log(this.depositTasks);
+  }
+  assignDev(id: string, Value: any, assignDev: any, deadline: any) {
+    throw new Error('Method not implemented.');
+  }
+  deadline(id: string, Value: any, assignDev: any, deadline: any) {
+    throw new Error('Method not implemented.');
+  }
+
+  saveTasks() {
+    console.log(this.editTicket.controls.addTasks.value)
+    this.ticketService.setAddTasks(
+      this.id,
+      this.editTicket.controls.addTasks.value
+    )
+  }
 }
+
+
