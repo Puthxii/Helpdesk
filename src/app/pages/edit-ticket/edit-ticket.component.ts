@@ -143,7 +143,7 @@ export class EditTicketComponent implements OnInit {
       this.setDefaultResponDescriptionFile()
     })
     this.site$ = this.siteService.getSitesList()
-    this.userService.getStaffsList().snapshotChanges().subscribe(data => {
+    this.userService.getDeveloper().snapshotChanges().subscribe(data => {
       this.Staff = []
       data.map(items => {
         const item = items.payload.doc.data();
