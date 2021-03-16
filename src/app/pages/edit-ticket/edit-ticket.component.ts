@@ -132,11 +132,15 @@ export class EditTicketComponent implements OnInit {
       this.getDescriptionFileUpload()
       this.getResolvedDescriptionFileUpload()
       this.getMaDescriptionFileUpload()
+      this.getSuggestDescriptionFileUpload()
       this.getResponDescriptionFileUpload()
       this.getParticipant()
       this.setDefaultMaDescription()
+      this.setDefaultMaDescriptionFile()
       this.setDefaultSuggestDescription()
+      this.setDefaultSuggestDescriptionFile()
       this.setDefaultResponDescription()
+      this.setDefaultResponDescriptionFile()
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
@@ -161,6 +165,18 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
+  setDefaultMaDescriptionFile() {
+    let maDescriptionFile: any
+    if (this.editTicket.controls.maDescriptionFile.value === undefined) {
+      maDescriptionFile = []
+    } else {
+      maDescriptionFile = this.editTicket.controls.maDescriptionFile.value
+    }
+    this.editTicket.patchValue({
+      maDescriptionFile
+    });
+  }
+
   setDefaultSuggestDescription() {
     let suggestDescription: string
     if (this.editTicket.controls.suggestDescription.value === undefined) {
@@ -173,6 +189,18 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
+  setDefaultSuggestDescriptionFile() {
+    let suggestDescriptionFile: any
+    if (this.editTicket.controls.suggestDescriptionFile.value === undefined) {
+      suggestDescriptionFile = []
+    } else {
+      suggestDescriptionFile = this.editTicket.controls.suggestDescriptionFile.value
+    }
+    this.editTicket.patchValue({
+      suggestDescriptionFile
+    });
+  }
+
   setDefaultResponDescription() {
     let responDescription: string
     if (this.editTicket.controls.responDescription.value === undefined) {
@@ -182,6 +210,18 @@ export class EditTicketComponent implements OnInit {
     }
     this.editTicket.patchValue({
       responDescription
+    });
+  }
+
+  setDefaultResponDescriptionFile() {
+    let responDescriptionFile: any
+    if (this.editTicket.controls.responDescriptionFile.value === undefined) {
+      responDescriptionFile = []
+    } else {
+      responDescriptionFile = this.editTicket.controls.responDescriptionFile.value
+    }
+    this.editTicket.patchValue({
+      responDescriptionFile
     });
   }
 

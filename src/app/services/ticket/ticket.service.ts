@@ -177,14 +177,14 @@ export class TicketService {
         subject: ticket.subject,
         priority: ticket.priority,
         description: ticket.description,
+        descriptionFile: ticket.descriptionFile,
         resolveDescription: ticket.resolveDescription,
+        resolveDescriptionFile: ticket.resolveDescriptionFile,
         status: ticket.status,
         staff: ticket.staff,
         email: ticket.email,
         assign: ticket.assign,
-        descriptionFile: ticket.descriptionFile,
         participant: ticket.participant,
-        resolveDescriptionFile: ticket.resolveDescriptionFile
       }))
         .collection('action')
         .add({
@@ -210,6 +210,7 @@ export class TicketService {
   }
 
   async editTicket(ticket: Ticket, id: any, role: Roles) {
+    console.log(ticket);
     try {
       this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
@@ -229,6 +230,7 @@ export class TicketService {
         participant: ticket.participant,
         resolveDescriptionFile: ticket.resolveDescriptionFile,
         maDescription: ticket.maDescription,
+        maDescriptionFile: ticket.maDescriptionFile,
         suggestDescription: ticket.suggestDescription,
         suggestDescriptionFile: ticket.suggestDescriptionFile,
         responDescription: ticket.responDescription,
@@ -241,7 +243,8 @@ export class TicketService {
       this.deleteCollection('uploadResponDescription')
       this.successNotification(role);
     } catch (error) {
-      this.errorNotification();
+      console.log(error);
+      // this.errorNotification();
     }
   }
 
