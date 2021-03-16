@@ -70,6 +70,7 @@ export class EditTicketComponent implements OnInit {
   depositResolveDescriptionFiles = []
   depositMaDescriptionFiles = []
   depositSuggestDescriptionFiles = []
+  depositResponDescriptionFiles = []
   forDescription = 'forDescription'
   forResolveDescription = 'forResolveDescription'
   forMaDescription = 'forMaDescription'
@@ -131,9 +132,9 @@ export class EditTicketComponent implements OnInit {
       this.getDescriptionFileUpload()
       this.getResolvedDescriptionFileUpload()
       this.getMaDescriptionFileUpload()
+      this.getResponDescriptionFileUpload()
       this.getParticipant()
       this.setDefaultMaDescription()
-      this.setDefaultSuggestDescription()
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
@@ -143,18 +144,6 @@ export class EditTicketComponent implements OnInit {
         item['$uid'] = items.payload.doc['id'];
         this.Staff.push(item as User)
       })
-    });
-  }
-
-  setDefaultSuggestDescription() {
-    let suggestDescription: string
-    if (this.editTicket.controls.suggestDescription.value === undefined) {
-      suggestDescription = ''
-    } else {
-      suggestDescription = this.editTicket.controls.maDescription.value
-    }
-    this.editTicket.patchValue({
-      suggestDescription
     });
   }
 
@@ -499,6 +488,11 @@ export class EditTicketComponent implements OnInit {
     return this.depositSuggestDescriptionFiles
   }
 
+  getResponDescriptionFileUpload() {
+    this.depositResponDescriptionFiles = this.editTicket.controls.responDescriptionFile.value
+    return this.depositResponDescriptionFiles
+  }
+
   getParticipant() {
     this.stateParticipant = this.editTicket.controls.participant.value
   }
@@ -536,6 +530,15 @@ export class EditTicketComponent implements OnInit {
       suggestDescriptionFile: this.depositSuggestDescriptionFiles
     });
     this.getSuggestDescriptionFileUpload()
+  }
+
+  public onDepositResponDescriptionFileRemove(value: any) {
+    this.depositResponDescriptionFiles = this.editTicket.controls.responDescriptionFile.value
+      .filter((item: { id: any; }) => item.id !== value.id)
+    this.editTicket.patchValue({
+      responDescriptionFile: this.depositResponDescriptionFiles
+    });
+    this.getResponDescriptionFileUpload()
   }
 
   public mergeDescriptionFileUpload(upload: any): void {
@@ -576,6 +579,16 @@ export class EditTicketComponent implements OnInit {
       suggestDescriptionFile: upload
     });
     this.getSuggestDescriptionFileUpload()
+  }
+
+  public mergeResponDescriptionFileUpload(upload: any): void {
+    if (this.depositResponDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositResponDescriptionFiles, 'id');
+    }
+    this.editTicket.patchValue({
+      responDescriptionFile: upload
+    });
+    this.getResponDescriptionFileUpload()
   }
 
   mergeByProperty(newUpload: any[], depositFiles: any[], prop: string) {

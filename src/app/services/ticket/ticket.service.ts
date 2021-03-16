@@ -228,7 +228,9 @@ export class TicketService {
         descriptionFile: ticket.descriptionFile,
         participant: ticket.participant,
         resolveDescriptionFile: ticket.resolveDescriptionFile,
-        maDescription: ticket.maDescription
+        maDescription: ticket.maDescription,
+        suggestDescription: ticket.suggestDescription,
+        responDescription: ticket.responDescription
       })
       this.deleteCollection('uploadDesciption')
       this.deleteCollection('uploadResolveDescription')
