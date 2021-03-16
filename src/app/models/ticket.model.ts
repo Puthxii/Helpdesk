@@ -21,6 +21,12 @@ export interface Ticket {
     assign?: string;
     actionSentence?: string;
     participant?: any;
+    maDescription: string;
+    maDescriptionFile?: any;
+    suggestDescription: string;
+    suggestDescriptionFile?: any;
+    responDescription: string;
+    responDescriptionFile?: any;
 }
 export interface Actions {
     data: any,
