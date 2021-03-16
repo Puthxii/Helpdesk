@@ -176,12 +176,12 @@
           </div>
           <div class="row" *ngIf="auth.isMaintenance(user)">
             <div class="col-md-12">
-              <app-upload-detail-form [flag]="forResolveDescription"
+              <app-upload-detail-form [flag]="forMaDescription"
                 (editeUpload)="mergeResolveDescriptionFileUpload($event)">
               </app-upload-detail-form>
             </div>
             <div class=" col-md-12">
-              <app-upload-detail-list [flag]="forResolveDescription" [fileUpload]="depositResolveDescriptionFiles"
+              <app-upload-detail-list [flag]="forMaDescription" [fileUpload]="depositResolveDescriptionFiles"
                 (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
             </div>
           </div>

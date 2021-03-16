@@ -34,6 +34,18 @@ export class FileUploadService {
               coll = 'uploadResolveDescription'
               break
             }
+            case 'forMaDescription': {
+              coll = 'uploadMaDescription'
+              break
+            }
+            case 'forSuggestDescription': {
+              coll = 'uploadSuggestDescription'
+              break
+            }
+            case 'forResponDescription': {
+              coll = 'uploadResponDescription'
+              break
+            }
           }
           this.saveFile(fileUpload, coll);
         });
@@ -67,6 +79,18 @@ export class FileUploadService {
       }
       case 'forResolveDescription': {
         coll = 'uploadResolveDescription'
+        break
+      }
+      case 'forMaDescription': {
+        coll = 'uploadMaDescription'
+        break
+      }
+      case 'forSuggestDescription': {
+        coll = 'uploadSuggestDescription'
+        break
+      }
+      case 'forResponDescription': {
+        coll = 'uploadResponDescription'
         break
       }
     }

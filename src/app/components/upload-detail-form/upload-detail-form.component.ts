@@ -34,6 +34,18 @@ export class UploadDetailFormComponent implements OnInit {
         coll = 'uploadResolveDescription'
         break
       }
+      case 'forMaDescription': {
+        coll = 'uploadMaDescription'
+        break
+      }
+      case 'forSuggestDescription': {
+        coll = 'uploadSuggestDescription'
+        break
+      }
+      case 'forResponDescription': {
+        coll = 'uploadResponDescription'
+        break
+      }
     }
     this.getByCollection(coll)
   }
