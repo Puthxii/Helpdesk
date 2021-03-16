@@ -105,27 +105,24 @@ export class AddTicketComponent implements OnInit {
     { name: 'Conference' },
     { name: 'Other' },
   ];
-
   Types = [
     { name: 'Info' },
     { name: 'Consult' },
     { name: 'Problem' },
     { name: 'Add-ons' }
   ];
-
   Prioritys = [
     { name: 'Low' },
     { name: 'Medium' },
     { name: 'High' },
     { name: 'Critical' }
   ];
-
   Status = [
     { name: 'Save as Inform', value: 'Informed' },
     { name: 'Save as Draft', value: 'Draft' },
     { name: 'Save as Reject', value: 'Rejected' },
   ];
-
+  forDescription = 'forDescription'
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'dd/mm/yyyy'

@@ -157,10 +157,10 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <app-upload-form></app-upload-form>
+              <app-upload-form [flag]="forDescription"></app-upload-form>
             </div>
             <div class="col-md-12 my-3">
-              <app-upload-list (upload)="onUploadfile($event)"></app-upload-list>
+              <app-upload-list [flag]="forDescription" (upload)="onUploadfile($event)"></app-upload-list>
             </div>
           </div>
           <div class="row">
