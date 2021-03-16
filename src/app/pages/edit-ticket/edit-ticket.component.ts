@@ -68,6 +68,8 @@ export class EditTicketComponent implements OnInit {
   ticket: any;
   depositDescriptionFiles = []
   depositResolveDescriptionFiles = []
+  depositMaDescriptionFiles = []
+  depositSuggestDescriptionFiles = []
   forDescription = 'forDescription'
   forResolveDescription = 'forResolveDescription'
   forMaDescription = 'forMaDescription'
@@ -119,12 +121,19 @@ export class EditTicketComponent implements OnInit {
         dev: this.ticket.dev,
         participant: this.ticket.participant,
         resolveDescriptionFile: this.ticket.resolveDescriptionFile,
-        maDescription: this.ticket.maDescription
+        maDescription: this.ticket.maDescription,
+        maDescriptionFile: this.ticket.maDescriptionFile,
+        suggestDescription: this.ticket.suggestDescription,
+        suggestDescriptionFile: this.ticket.suggestDescriptionFile,
+        responDescription: this.ticket.responDescription,
+        responDescriptionFile: this.ticket.responDescriptionFile,
       });
       this.getDescriptionFileUpload()
       this.getResolvedDescriptionFileUpload()
+      this.getMaDescriptionFileUpload()
       this.getParticipant()
       this.setDefaultMaDescription()
+      this.setDefaultSuggestDescription()
     })
     this.site$ = this.siteService.getSitesList()
     this.userService.getStaffsList().snapshotChanges().subscribe(data => {
@@ -134,6 +143,18 @@ export class EditTicketComponent implements OnInit {
         item['$uid'] = items.payload.doc['id'];
         this.Staff.push(item as User)
       })
+    });
+  }
+
+  setDefaultSuggestDescription() {
+    let suggestDescription: string
+    if (this.editTicket.controls.suggestDescription.value === undefined) {
+      suggestDescription = ''
+    } else {
+      suggestDescription = this.editTicket.controls.maDescription.value
+    }
+    this.editTicket.patchValue({
+      suggestDescription
     });
   }
 
@@ -240,7 +261,12 @@ export class EditTicketComponent implements OnInit {
       dev: [''],
       participant: [''],
       resolveDescriptionFile: [''],
-      maDescription: ['']
+      maDescription: [''],
+      maDescriptionFile: [''],
+      suggestDescription: [''],
+      suggestDescriptionFile: [''],
+      responDescription: [''],
+      responDescriptionFile: ['']
     });
   }
 
@@ -463,6 +489,16 @@ export class EditTicketComponent implements OnInit {
     return this.depositResolveDescriptionFiles
   }
 
+  getMaDescriptionFileUpload() {
+    this.depositMaDescriptionFiles = this.editTicket.controls.maDescriptionFile.value
+    return this.depositMaDescriptionFiles
+  }
+
+  getSuggestDescriptionFileUpload() {
+    this.depositSuggestDescriptionFiles = this.editTicket.controls.suggestDescriptionFile.value
+    return this.depositSuggestDescriptionFiles
+  }
+
   getParticipant() {
     this.stateParticipant = this.editTicket.controls.participant.value
   }
@@ -484,6 +520,24 @@ export class EditTicketComponent implements OnInit {
     this.getResolvedDescriptionFileUpload()
   }
 
+  public onDepositMaDescriptionFileRemove(value: any) {
+    this.depositMaDescriptionFiles = this.editTicket.controls.maDescriptionFile.value
+      .filter((item: { id: any; }) => item.id !== value.id)
+    this.editTicket.patchValue({
+      maDescriptionFile: this.depositMaDescriptionFiles
+    });
+    this.getMaDescriptionFileUpload()
+  }
+
+  public onDepositSuggestDescriptionFileRemove(value: any) {
+    this.depositSuggestDescriptionFiles = this.editTicket.controls.suggestDescriptionFile.value
+      .filter((item: { id: any; }) => item.id !== value.id)
+    this.editTicket.patchValue({
+      suggestDescriptionFile: this.depositSuggestDescriptionFiles
+    });
+    this.getSuggestDescriptionFileUpload()
+  }
+
   public mergeDescriptionFileUpload(upload: any): void {
     if (this.depositDescriptionFiles !== undefined) {
       this.mergeByProperty(upload, this.depositDescriptionFiles, 'id');
@@ -502,6 +556,26 @@ export class EditTicketComponent implements OnInit {
       resolveDescriptionFile: upload
     });
     this.getResolvedDescriptionFileUpload()
+  }
+
+  public mergeMaDescriptionFileUpload(upload: any): void {
+    if (this.depositMaDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositMaDescriptionFiles, 'id');
+    }
+    this.editTicket.patchValue({
+      maDescriptionFile: upload
+    });
+    this.getMaDescriptionFileUpload()
+  }
+
+  public mergeSuggestDescriptionFileUpload(upload: any): void {
+    if (this.depositSuggestDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositSuggestDescriptionFiles, 'id');
+    }
+    this.editTicket.patchValue({
+      suggestDescriptionFile: upload
+    });
+    this.getSuggestDescriptionFileUpload()
   }
 
   mergeByProperty(newUpload: any[], depositFiles: any[], prop: string) {

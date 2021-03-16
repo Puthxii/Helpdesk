@@ -167,22 +167,21 @@
                 (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
             </div>
           </div>
-          <div class="form-row" *ngIf="auth.isMaintenance(user)">
+          <div class="form-row">
             <div class="form-group col-md-12">
               <label for="resolve">Maintenance Description</label>
               <textarea formControlName="maDescription" class="form-control" id="resolveDescription"
                 rows="3"></textarea>
             </div>
           </div>
-          <div class="row" *ngIf="auth.isMaintenance(user)">
+          <div class="row">
             <div class="col-md-12">
-              <app-upload-detail-form [flag]="forMaDescription"
-                (editeUpload)="mergeResolveDescriptionFileUpload($event)">
+              <app-upload-detail-form [flag]="forMaDescription" (editeUpload)="mergeMaDescriptionFileUpload($event)">
               </app-upload-detail-form>
             </div>
             <div class=" col-md-12">
-              <app-upload-detail-list [flag]="forMaDescription" [fileUpload]="depositResolveDescriptionFiles"
-                (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
+              <app-upload-detail-list [flag]="forMaDescription" [fileUpload]="depositMaDescriptionFiles"
+                (fileRemove)="onDepositMaDescriptionFileRemove($event)"></app-upload-detail-list>
             </div>
           </div>
           <div class="row">
@@ -194,6 +193,23 @@
                 <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
                   {{staff.firstName}} {{staff.lastName}}
               </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="resolve">Suggest Description</label>
+              <textarea formControlName="suggestDescription" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <app-upload-detail-form [flag]="forSuggestDescription"
+                (editeUpload)="mergeSuggestDescriptionFileUpload($event)">
+              </app-upload-detail-form>
+            </div>
+            <div class=" col-md-12">
+              <app-upload-detail-list [flag]="forSuggestDescription" [fileUpload]="depositSuggestDescriptionFiles"
+                (fileRemove)="onDepositSuggestDescriptionFileRemove($event)"></app-upload-detail-list>
             </div>
           </div>
           <div class="form-row">
