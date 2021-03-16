@@ -183,7 +183,8 @@ export class TicketService {
         email: ticket.email,
         assign: ticket.assign,
         descriptionFile: ticket.descriptionFile,
-        participant: ticket.participant
+        participant: ticket.participant,
+        resolveDescriptionFile: ticket.resolveDescriptionFile
       }))
         .collection('action')
         .add({
@@ -192,9 +193,11 @@ export class TicketService {
           date: new Date(),
           actionSentence: ticket.actionSentence
         });
-      this.deleteCollection('upload')
+      this.deleteCollection('uploadDesciption')
+      this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
+      console.log(error);
       this.errorNotification();
     }
   }
@@ -223,7 +226,8 @@ export class TicketService {
         staff: ticket.staff,
         assign: ticket.assign,
         descriptionFile: ticket.descriptionFile,
-        participant: ticket.participant
+        participant: ticket.participant,
+        resolveDescriptionFile: ticket.resolveDescriptionFile
       })
       this.deleteCollection('upload')
       this.successNotification(role);

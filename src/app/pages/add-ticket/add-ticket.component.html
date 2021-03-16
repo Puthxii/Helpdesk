@@ -160,7 +160,7 @@
               <app-upload-form [flag]="forDescription"></app-upload-form>
             </div>
             <div class="col-md-12 my-3">
-              <app-upload-list [flag]="forDescription" (upload)="onUploadfile($event)"></app-upload-list>
+              <app-upload-list [flag]="forDescription" (upload)="onUploadDescriptionFile($event)"></app-upload-list>
             </div>
           </div>
           <div class="row">
@@ -168,6 +168,15 @@
               <label for="resolve">Resolve Description</label>
               <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
                 (ngModelChange)="isResolveDescription($event)"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <app-upload-form [flag]="forResolveDescription"></app-upload-form>
+            </div>
+            <div class="col-md-12 my-3">
+              <app-upload-list [flag]="forResolveDescription" (upload)="onUploadResolveDescriptionFile($event)">
+              </app-upload-list>
             </div>
           </div>
           <div class="form-row">

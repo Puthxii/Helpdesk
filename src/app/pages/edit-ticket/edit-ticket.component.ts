@@ -489,8 +489,8 @@ export class EditTicketComponent implements OnInit {
     })
   }
 
-  deleteCollection() {
-    this.ticketService.deleteCollection('upload')
+  deleteCollection(collection) {
+    this.ticketService.deleteCollection(collection)
   }
 
   setActionSentence() {
@@ -560,10 +560,12 @@ export class EditTicketComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        this.deleteCollection()
         if (this.user.roles.customer === true) {
+          this.deleteCollection('uploadDesciption')
           this.router.navigate(['/site-ticket']);
         } else if (this.user.roles.supporter === true) {
+          this.deleteCollection('uploadDesciption')
+          this.deleteCollection('uploadResolveDescription')
           this.router.navigate(['/ticket']);
         } else if (this.user.roles.maintenance === true) {
           this.router.navigate(['/ticket-ma']);

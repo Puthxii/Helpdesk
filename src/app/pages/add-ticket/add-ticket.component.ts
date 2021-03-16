@@ -123,6 +123,7 @@ export class AddTicketComponent implements OnInit {
     { name: 'Save as Reject', value: 'Rejected' },
   ];
   forDescription = 'forDescription'
+  forResolveDescription = 'forResolveDescription'
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'dd/mm/yyyy'
@@ -296,7 +297,8 @@ export class AddTicketComponent implements OnInit {
       assign: [''],
       descriptionFile: [''],
       actionSentence: [''],
-      participant: ['']
+      participant: [''],
+      resolveDescriptionFile: ['']
     });
   }
 
@@ -462,23 +464,31 @@ export class AddTicketComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        this.deleteCollection()
         if (this.user.roles.customer === true) {
+          this.deleteCollection('uploadDesciption')
           this.router.navigate(['/site-ticket']);
         } else if (this.user.roles.supporter === true) {
+          this.deleteCollection('uploadDesciption')
+          this.deleteCollection('uploadResolveDescription')
           this.router.navigate(['/ticket']);
         }
       }
     })
   }
 
-  deleteCollection() {
-    this.ticketService.deleteCollection('uploadDesciption')
+  deleteCollection(collection) {
+    this.ticketService.deleteCollection(collection)
   }
 
-  public onUploadfile(upload: any): void {
+  public onUploadDescriptionFile(upload: any): void {
     this.addTicketForm.patchValue({
       descriptionFile: upload
+    });
+  }
+
+  public onUploadResolveDescriptionFile(upload: any): void {
+    this.addTicketForm.patchValue({
+      resolveDescriptionFile: upload
     });
   }
 
