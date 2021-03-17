@@ -706,6 +706,9 @@ export class EditTicketComponent implements OnInit {
         sentence = `${userCurrent} edit ticket`
       } else if (this.status.value === 'Rejected') {
         sentence = `${userCurrent} rejected ticket`
+      } else if (this.status.value === 'More Info') {
+        sentence = `${userCurrent} edit ticket`
+        this.onSelectedStatus('Informed')
       }
     } else {
       if (this.status.value === 'Draft') {
