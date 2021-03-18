@@ -12,8 +12,6 @@ export interface Ticket {
     priority: string;
     description: string;
     descriptionFile?: any;
-    resolveDescription?: string;
-    resolveDescriptionFile?: any;
     status: string;
     staff?: string;
     action?: Actions[];
@@ -21,12 +19,14 @@ export interface Ticket {
     assign?: string;
     actionSentence?: string;
     participant?: any;
+    responseDescription: string;
+    responseDescriptionFile?: any;
     maDescription: string;
     maDescriptionFile?: any;
     suggestDescription: string;
     suggestDescriptionFile?: any;
-    responDescription: string;
-    responDescriptionFile?: any;
+    resolveDescription?: string;
+    resolveDescriptionFile?: any;
 }
 export interface Actions {
     data: any,

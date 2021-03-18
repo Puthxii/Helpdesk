@@ -178,8 +178,8 @@ export class TicketService {
         priority: ticket.priority,
         description: ticket.description,
         descriptionFile: ticket.descriptionFile,
-        resolveDescription: ticket.resolveDescription,
-        resolveDescriptionFile: ticket.resolveDescriptionFile,
+        responseDescription: ticket.responseDescription,
+        responseDescriptionFile: ticket.responseDescriptionFile,
         status: ticket.status,
         staff: ticket.staff,
         email: ticket.email,
@@ -222,19 +222,19 @@ export class TicketService {
         subject: ticket.subject,
         priority: ticket.priority,
         description: ticket.description,
-        resolveDescription: ticket.resolveDescription,
+        responseDescription: ticket.responseDescription,
+        responseDescriptionFile: ticket.responseDescriptionFile,
         status: ticket.status,
         staff: ticket.staff,
         assign: ticket.assign,
         descriptionFile: ticket.descriptionFile,
         participant: ticket.participant,
-        resolveDescriptionFile: ticket.resolveDescriptionFile,
         maDescription: ticket.maDescription,
         maDescriptionFile: ticket.maDescriptionFile,
         suggestDescription: ticket.suggestDescription,
         suggestDescriptionFile: ticket.suggestDescriptionFile,
-        responDescription: ticket.responDescription,
-        responDescriptionFile: ticket.responDescriptionFile
+        resolveDescription: ticket.resolveDescription,
+        resolveDescriptionFile: ticket.resolveDescriptionFile
       })
       this.deleteCollection('uploadDesciption')
       this.deleteCollection('uploadResolveDescription')

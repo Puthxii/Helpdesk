@@ -72,8 +72,8 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('description');
   }
 
-  get resolveDescription() {
-    return this.addTicketForm.get('resolveDescription');
+  get responseDescription() {
+    return this.addTicketForm.get('responseDescription');
   }
 
   get status() {
@@ -85,7 +85,7 @@ export class AddTicketComponent implements OnInit {
   site$: Observable<any>;
   user$: any;
   public addTicketForm: FormGroup;
-  hideResolve = false;
+  hideResponse = false;
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings;
@@ -123,7 +123,7 @@ export class AddTicketComponent implements OnInit {
     { name: 'Save as Reject', value: 'Rejected' },
   ];
   forDescription = 'forDescription'
-  forResolveDescription = 'forResolveDescription'
+  forResponseDescription = 'forResponseDescription'
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'dd/mm/yyyy'
@@ -297,32 +297,32 @@ export class AddTicketComponent implements OnInit {
         Validators.required,
         Validators.maxLength(2000)]
       ],
-      resolveDescription: [''],
+      responseDescription: [''],
+      responseDescriptionFile: [''],
       status: [''],
       staff: [''],
       email: [''],
       assign: [''],
       descriptionFile: [''],
       actionSentence: [''],
-      participant: [''],
-      resolveDescriptionFile: ['']
+      participant: ['']
     });
   }
 
   hideTextArea(type: any) {
     if (type === 'Info' || type === 'Consult') {
-      this.hideResolve = true;
+      this.hideResponse = true;
       this.removeStatus('In Progress');
-      this.isResolveDescription(Event)
+      this.isResponseDescription(Event)
     } else if (type === 'Problem' || type === 'Add-ons') {
-      this.hideResolve = false;
+      this.hideResponse = false;
       this.removeStatus('Closed');
       this.addStatus('In Progress');
     }
   }
 
-  isResolveDescription(event: any) {
-    (this.addTicketForm.controls.resolveDescription.value) ? this.addStatus('Closed') : this.removeStatus('Closed')
+  isResponseDescription(event: any) {
+    (this.addTicketForm.controls.responseDescription.value) ? this.addStatus('Closed') : this.removeStatus('Closed')
   }
 
   removeStatus(status: string) {
@@ -476,7 +476,7 @@ export class AddTicketComponent implements OnInit {
           this.router.navigate(['/site-ticket']);
         } else if (this.user.roles.supporter === true) {
           this.deleteCollection('uploadDesciption')
-          this.deleteCollection('uploadResolveDescription')
+          this.deleteCollection('uploadResponseDescription')
           this.router.navigate(['/ticket']);
         }
       }
@@ -493,9 +493,9 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  public onUploadResolveDescriptionFile(upload: any): void {
+  public onUploadResponseDescriptionFile(upload: any): void {
     this.addTicketForm.patchValue({
-      resolveDescriptionFile: upload
+      responseDescriptionFile: upload
     });
   }
 
