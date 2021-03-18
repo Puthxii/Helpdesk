@@ -127,11 +127,17 @@ export class EditTicketComponent implements OnInit {
     })
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
-    this.tasks = this.ticketService.getTask(this.id).valueChanges();
+    this.getTask()
+  }
+
+  getTask() {
+    this.ticketService.getTask(this.id).valueChanges().subscribe(task => {
+      this.depositTasks = task
+    })
   }
 
   getDeveloper() {
-    this.userService.getStaffsList().snapshotChanges().subscribe(data => {
+    this.userService.getDeveloper().snapshotChanges().subscribe(data => {
       this.Staff = []
       data.map(items => {
         const item = items.payload.doc.data();
@@ -242,8 +248,8 @@ export class EditTicketComponent implements OnInit {
   }
 
   upadateForm() {
-    // this.ticketService.editTicket(this.editTicket.value, this.id);
-    // this.saveAction()
+    this.ticketService.editTicket(this.editTicket.value, this.id);
+    this.saveAction()
     this.saveTasks()
   }
 
@@ -553,7 +559,9 @@ export class EditTicketComponent implements OnInit {
     }
     this.depositTasks.push(this.newTask)
     this.clearTask()
-    this.saveTask = false;
+    console.log(this.newTask);
+    console.log(this.depositTasks);
+    // this.saveTask = false;
   }
 
   clearTask() {
@@ -562,6 +570,11 @@ export class EditTicketComponent implements OnInit {
       assignTasks: '',
       deadlineDate: ''
     })
+  }
+
+  removeTasks(i: number): void {
+    this.depositTasks.splice(i, 1);
+    console.log(this.depositTasks)
   }
 
   saveTasks() {

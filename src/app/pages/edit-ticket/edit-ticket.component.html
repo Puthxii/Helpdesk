@@ -223,11 +223,20 @@
                   <div class="form-row">
                     <div class="form-group col-md-12">
                       <div class="row">
-                        <div *ngFor="let task of tasks | async">
-                          <div>subject {{ task.subject }}</div>
-                          <div>assignTasks {{ task?.assignTasks }}</div>
-                          <div>deadlineDate {{ task?.deadlineDate }}</div>
-                        </div>
+                        <ul>
+                          <p *ngFor="let task of depositTasks; let i = index;">
+                            {{task?.subject}} 
+                            {{task?.assignTasks}}
+                            {{task?.deadlineDate}}
+                            <button type="button" (click)="removeTasks(i)" class="btn btn-danger">Delete</button>
+                          </p> 
+
+                          <!-- <li *ngFor="let task of tasks | async">
+                            subject: {{ task.subject }}
+                            assignTasks: {{ task?.assignTasks }}
+                            deadlineDate: {{ task?.deadlineDate }}
+                          </li> -->
+                        </ul>
                       </div>
                     </div>
                   </div>

@@ -217,7 +217,9 @@ export class TicketService {
       this.deleteCollection('upload')
       this.successNotification();
     } catch (error) {
-      this.errorNotification();
+    console.log(error);
+    
+      // this.errorNotification();
     }
   }
 
