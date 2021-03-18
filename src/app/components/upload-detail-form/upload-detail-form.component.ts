@@ -30,8 +30,8 @@ export class UploadDetailFormComponent implements OnInit {
         coll = 'uploadDesciption'
         break
       }
-      case 'forResolveDescription': {
-        coll = 'uploadResolveDescription'
+      case 'forResponseDescription': {
+        coll = 'uploadResponseDescription'
         break
       }
       case 'forMaDescription': {
@@ -42,8 +42,8 @@ export class UploadDetailFormComponent implements OnInit {
         coll = 'uploadSuggestDescription'
         break
       }
-      case 'forResponDescription': {
-        coll = 'uploadResponDescription'
+      case 'forResolveDescription': {
+        coll = 'uploadResolveDescription'
         break
       }
     }

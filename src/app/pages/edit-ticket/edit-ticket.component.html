@@ -156,22 +156,24 @@
               </app-upload-detail-list>
             </div>
           </div>
-          <div class="form-row" *ngIf="isSelectedType()">
-            <div class="form-group col-md-12">
-              <label for="resolve">Resolve Description</label>
-              <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
-                (ngModelChange)="isResolveDescription($event)"></textarea>
+          <div *ngIf="isSelectedType()">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="resolve">Response Description</label>
+                <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="3"
+                  (ngModelChange)="isResponseDescription($event)"></textarea>
+              </div>
             </div>
-          </div>
-          <div class="row" *ngIf="isSelectedType()">
-            <div class="col-md-12">
-              <app-upload-detail-form [flag]="forResolveDescription"
-                (editeUpload)="mergeResolveDescriptionFileUpload($event)">
-              </app-upload-detail-form>
-            </div>
-            <div class=" col-md-12">
-              <app-upload-detail-list [flag]="forResolveDescription" [fileUpload]="depositResolveDescriptionFiles"
-                (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
+            <div class="row">
+              <div class="col-md-12">
+                <app-upload-detail-form [flag]="forResponseDescription"
+                  (editeUpload)="mergeResponseDescriptionFileUpload($event)">
+                </app-upload-detail-form>
+              </div>
+              <div class=" col-md-12">
+                <app-upload-detail-list [flag]="forResponseDescription" [fileUpload]="depositResponseDescriptionFiles"
+                  (fileRemove)="onDepositResponDescriptionFileRemove($event)"></app-upload-detail-list>
+              </div>
             </div>
           </div>
           <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
@@ -223,20 +225,20 @@
           <div *ngIf="isAssignedResolved()&&auth.isDeveloper(user)">
             <div class="form-row">
               <div class="form-group col-md-12">
-                <label for="resolve">Respon Description</label>
-                <textarea formControlName="responDescription" class="form-control" id="resolveDescription" rows="3"
-                  (ngModelChange)="isResponDescription($event)" [readonly]="!auth.isDeveloper(user)"></textarea>
+                <label for="resolve">Resolve Description</label>
+                <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
+                  [readonly]="!auth.isDeveloper(user)"></textarea>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <app-upload-detail-form [flag]="forResponDescription"
-                  (editeUpload)="mergeResponDescriptionFileUpload($event)">
+                <app-upload-detail-form [flag]="forResolveDescription"
+                  (editeUpload)="mergeResolveDescriptionFileUpload($event)">
                 </app-upload-detail-form>
               </div>
               <div class=" col-md-12">
-                <app-upload-detail-list [flag]="forResponDescription" [fileUpload]="depositResponDescriptionFiles"
-                  (fileRemove)="onDepositResponDescriptionFileRemove($event)"></app-upload-detail-list>
+                <app-upload-detail-list [flag]="forResolveDescription" [fileUpload]="depositResolveDescriptionFiles"
+                  (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
               </div>
             </div>
           </div>

@@ -237,10 +237,10 @@ export class TicketService {
         resolveDescriptionFile: ticket.resolveDescriptionFile
       })
       this.deleteCollection('uploadDesciption')
-      this.deleteCollection('uploadResolveDescription')
+      this.deleteCollection('uploadResponseDescription')
       this.deleteCollection('uploadMaDescription')
       this.deleteCollection('uploadSuggestDescription')
-      this.deleteCollection('uploadResponDescription')
+      this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
       this.errorNotification();
