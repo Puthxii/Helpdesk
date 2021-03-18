@@ -27,8 +27,8 @@ export class UploadListComponent implements OnInit {
         coll = 'uploadDesciption'
         break
       }
-      case 'forResolveDescription': {
-        coll = 'uploadResolveDescription'
+      case 'forResponseDescription': {
+        coll = 'uploadResponseDescription'
         break
       }
     }

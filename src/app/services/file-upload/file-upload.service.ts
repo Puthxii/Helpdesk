@@ -15,7 +15,7 @@ export class FileUploadService {
     private storage: AngularFireStorage,
     private afs: AngularFirestore) { }
 
-  pushFileToStorage(fileUpload: FileUpload, flag): Observable<number> {
+  pushFileToStorage(fileUpload: FileUpload, coll): Observable<number> {
     const filePath = `${this.basePath}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
@@ -24,29 +24,6 @@ export class FileUploadService {
         storageRef.getDownloadURL().subscribe(downloadURL => {
           fileUpload.url = downloadURL;
           fileUpload.name = fileUpload.file.name;
-          let coll: string
-          switch (flag) {
-            case 'forDescription': {
-              coll = 'uploadDesciption'
-              break
-            }
-            case 'forResolveDescription': {
-              coll = 'uploadResolveDescription'
-              break
-            }
-            case 'forMaDescription': {
-              coll = 'uploadMaDescription'
-              break
-            }
-            case 'forSuggestDescription': {
-              coll = 'uploadSuggestDescription'
-              break
-            }
-            case 'forResponDescription': {
-              coll = 'uploadResponDescription'
-              break
-            }
-          }
           this.saveFile(fileUpload, coll);
         });
       })
@@ -70,30 +47,7 @@ export class FileUploadService {
     return this.afs.collection(collection);
   }
 
-  deleteFile(fileUpload: FileUpload, flag: any): void {
-    let coll: string
-    switch (flag) {
-      case 'forDescription': {
-        coll = 'uploadDesciption'
-        break
-      }
-      case 'forResolveDescription': {
-        coll = 'uploadResolveDescription'
-        break
-      }
-      case 'forMaDescription': {
-        coll = 'uploadMaDescription'
-        break
-      }
-      case 'forSuggestDescription': {
-        coll = 'uploadSuggestDescription'
-        break
-      }
-      case 'forResponDescription': {
-        coll = 'uploadResponDescription'
-        break
-      }
-    }
+  deleteFile(fileUpload: FileUpload, coll: any): void {
     this.deleteFileFireStore(fileUpload.id, coll)
       .then(() => {
         this.deleteFileStorage(fileUpload.name);
