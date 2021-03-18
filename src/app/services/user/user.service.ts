@@ -21,4 +21,10 @@ export class UserService {
     return this.afs.collection('users', ref => ref
       .where('name', '==', name))
   }
+
+  getDeveloper() {
+    return this.afs.collection('users', ref => ref
+      .where('roles.developer', '==', true)
+      .orderBy('firstName', 'desc'));
+  }
 }
