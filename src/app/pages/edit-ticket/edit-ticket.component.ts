@@ -170,13 +170,12 @@ export class EditTicketComponent implements OnInit {
   }
 
   setDefaultMaDescription() {
-    const maEndDate = this.editTicket.controls.site.value.maEndDate
-    const EndDate = moment(maEndDate.seconds * 1000).format('L');
+    const endDate = moment(this.editTicket.controls.site.value.maEndDate.seconds * 1000).format('L');
     const newDate = new Date()
     const newDateFormat = moment(newDate).format('L');
     let maDescription: string
     if (this.editTicket.controls.maDescription.value === undefined) {
-      if (EndDate < newDateFormat) {
+      if (endDate < newDateFormat) {
         maDescription = 'no'
       } else {
         maDescription = 'yes'
