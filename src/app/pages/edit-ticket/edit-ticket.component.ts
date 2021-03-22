@@ -82,6 +82,7 @@ export class EditTicketComponent implements OnInit {
     dateFormat: 'dd/mm/yyyy'
   };
   NewUpload: { id: string; name: string; url: string; file: File; }[];
+  isEdit = false
 
   constructor(
     private ticketService: TicketService,
@@ -504,9 +505,11 @@ export class EditTicketComponent implements OnInit {
       : (this.removeStatus('Closed'), this.removeStatus('More Info'))
   }
 
-  isResponDescription(event: any) {
-    console.log(this.editTicket.controls.responDescription.value);
+  isEditDescription(event) {
+    this.isEdit = true
+  }
 
+  isResponDescription(event: any) {
     (this.editTicket.controls.responDescription.value) ? this.addStatus('Resolved') : this.removeStatus('Resolved')
   }
 
@@ -713,7 +716,9 @@ export class EditTicketComponent implements OnInit {
         sentence = `${userCurrent} rejected ticket`
       } else if (this.status.value === 'More Info') {
         sentence = `${userCurrent} edit ticket`
-        this.onSelectedStatus('Informed')
+        if (this.isEdit) {
+          this.onSelectedStatus('Informed')
+        }
       }
     } else {
       if (this.status.value === 'Draft') {
