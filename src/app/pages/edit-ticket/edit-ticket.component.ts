@@ -128,6 +128,7 @@ export class EditTicketComponent implements OnInit {
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
     this.getTask()
+    this.getRoleEditPage()
   }
 
   getTask() {
@@ -588,6 +589,22 @@ export class EditTicketComponent implements OnInit {
         )
       }
     }
+  }
+
+  getRoleEditPage() {
+    let title: string
+    if (this.user.roles.customer === true) {
+      title = `Customer's Edit Ticket`
+    } else if (this.user.roles.supporter === true) {
+      title = `Supporter's Edit Ticket`
+    } else if (this.user.roles.maintenance === true) {
+      title = `Maintenance's Edit Ticket`
+    } else if (this.user.roles.supervisor === true) {
+      title = `Supervisor's Edit Ticket`
+    } else if (this.user.roles.developer === true) {
+      title = `Developer's Edit Ticket`
+    }
+    return title
   }
 
 }
