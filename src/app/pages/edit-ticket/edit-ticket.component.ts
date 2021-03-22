@@ -343,7 +343,7 @@ export class EditTicketComponent implements OnInit {
 
   upadateForm() {
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
-    this.saveAction()
+    this.checkAction()
   }
 
   getMaPackage() {
@@ -475,12 +475,21 @@ export class EditTicketComponent implements OnInit {
     (this.editTicket.controls.assign.value) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
-  saveAction() {
+  checkAction() {
     const staffCurrent = this.getCurrentStaff()
+    const currentStatus = this.editTicket.controls.currentStatus.value
+    const newStatus = this.editTicket.controls.status.value
+    if (currentStatus === newStatus) {
+    } else {
+      this.saveAction(staffCurrent, newStatus)
+    }
+  }
+
+  saveAction(staffCurrent: string, newStatus: any) {
     this.ticketService
       .setActionById(
         this.id,
-        this.editTicket.controls.status.value,
+        newStatus,
         staffCurrent ? staffCurrent : '',
         this.editTicket.controls.assign.value,
         this.editTicket.controls.actionSentence.value)
@@ -505,7 +514,7 @@ export class EditTicketComponent implements OnInit {
       : (this.removeStatus('Closed'), this.removeStatus('More Info'))
   }
 
-  isEditDescription(event) {
+  isEditDescription(event: any) {
     this.isEdit = true
   }
 
@@ -701,7 +710,7 @@ export class EditTicketComponent implements OnInit {
     })
   }
 
-  deleteCollection(collection) {
+  deleteCollection(collection: string) {
     this.ticketService.deleteCollection(collection)
   }
 
