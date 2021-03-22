@@ -383,20 +383,21 @@ export class EditTicketComponent implements OnInit {
   filterAction() {
     const currentStatus = this.editTicket.controls.currentStatus.value
     if (currentStatus === 'Draft') {
+      this.removeStatus('More Info');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
       this.removeStatus('Close');
       this.isCloseInProgress()
     } else if (currentStatus === 'Informed') {
-      this.addStatus('More Info');
+      this.removeStatus('More Info');
       this.addStatus('Rejected');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
-      this.isCloseInProgress()
       this.removeStatus('Draft');
       this.removeStatus('Assigned');
+      this.isCloseInProgress()
     } else if (currentStatus === 'More Info') {
       this.addStatus('More Info');
       this.addStatus('Informed');
@@ -457,7 +458,9 @@ export class EditTicketComponent implements OnInit {
   }
 
   isCloseInProgress() {
-    if (this.editTicket.controls.type.value === 'Info' || this.editTicket.controls.type.value === 'Consult') {
+    if (this.editTicket.controls.type.value === 'Info' ||
+      this.editTicket.controls.type.value === 'Consult' ||
+      this.editTicket.controls.type.value === 'Undefined') {
       this.removeStatus('In Progress');
       this.isResponseDescription(Event)
     } else if (this.editTicket.controls.type.value === 'Problem' || this.editTicket.controls.type.value === 'Add-ons') {
@@ -496,7 +499,9 @@ export class EditTicketComponent implements OnInit {
   }
 
   isResponseDescription(event: any) {
-    (this.editTicket.controls.responseDescription.value) ? this.addStatus('Closed') : this.removeStatus('Closed')
+    (this.editTicket.controls.responseDescription.value) ?
+      (this.addStatus('Closed'), this.addStatus('More Info'))
+      : (this.removeStatus('Closed'), this.removeStatus('More Info'))
   }
 
   isResponDescription(event: any) {

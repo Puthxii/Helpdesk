@@ -159,9 +159,9 @@
           <div *ngIf="isSelectedType()">
             <div class="form-row">
               <div class="form-group col-md-12">
-                <label for="resolve">Response Description</label>
+                <label for="response">Response Description</label>
                 <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="3"
-                  (ngModelChange)="isResponseDescription($event)"></textarea>
+                  (ngModelChange)="isResponseDescription($event)" [readonly]="!auth.isSupporter(user)"></textarea>
               </div>
             </div>
             <div class="row">
@@ -178,8 +178,8 @@
           </div>
           <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
             <div class="form-group col-md-12">
-              <label for="resolve">Maintenance Description</label>
-              <textarea formControlName="maDescription" class="form-control" id="resolveDescription" rows="3"
+              <label for="maDescription">Maintenance Description</label>
+              <textarea formControlName="maDescription" class="form-control" id="maDescription" rows="3"
                 [readonly]="!auth.isSupervisor(user)&&!auth.isMaintenance(user)"></textarea>
             </div>
           </div>
@@ -206,7 +206,7 @@
           </div>
           <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
             <div class="form-group col-md-12">
-              <label for="resolve">Suggest Description</label>
+              <label for="suggestDescription">Suggest Description</label>
               <textarea formControlName="suggestDescription" class="form-control" rows="3"
                 [readonly]="!auth.isSupervisor(user)"></textarea>
             </div>
@@ -222,7 +222,7 @@
                 (fileRemove)="onDepositSuggestDescriptionFileRemove($event)"></app-upload-detail-list>
             </div>
           </div>
-          <div *ngIf="isAssignedResolved()&&auth.isDeveloper(user)">
+          <div *ngIf="isAssignedResolved()&&(auth.isDeveloper(user) || auth.isSupporter(user))">
             <div class="form-row">
               <div class="form-group col-md-12">
                 <label for="resolve">Resolve Description</label>
