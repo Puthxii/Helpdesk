@@ -210,7 +210,6 @@ export class TicketService {
   }
 
   async editTicket(ticket: Ticket, id: any, role: Roles) {
-    console.log(ticket);
     try {
       this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
@@ -243,9 +242,7 @@ export class TicketService {
       this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
-      console.log(error);
-
-      // this.errorNotification();
+      this.errorNotification();
     }
   }
 
