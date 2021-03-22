@@ -1,5 +1,6 @@
 <ul class="list-group list-group-flush" *ngFor="let file of fileUpload">
     <li class="list-group-item">
-        <app-upload-detail-edit (fileRemove)="onFileRemove($event)" [fileUpload]='file'></app-upload-detail-edit>
+        <app-upload-detail-edit [flag]='this.flag' (fileRemove)="onFileRemove($event)" [fileUpload]='file'>
+        </app-upload-detail-edit>
     </li>
 </ul>

@@ -10,17 +10,19 @@
         </div>
       </div>
       <div class="card-body">
-        <form [formGroup]="editTicket" (ngSubmit)="upadateForm()" *ngIf="site$ | async; else loading; let Site">
+        <form [formGroup]="editTicket" (ngSubmit)="upadateForm()" *ngIf="site$ | async; else loading; let Site">
           <div class="row">
             <div class="col-lg-6 col-md-12 col-sm-12">
-              <div class="form-row" *ngIf="auth.isSupporter(user)">
+              <div class="form-row" *ngIf="auth.isStaff(user)">
                 <div class="form-group col-md-6">
                   <label class="control-label" for="date">Date</label>
                   <div class="input-group">
                     <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
-                      formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
+                      formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
+                      [readonly]="!auth.isSupporter(user)">
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                      <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()"
+                        [disabled]="!auth.isSupporter(user)">
                         <i class="fas fa-calendar"></i>
                       </button>
                     </div>
@@ -33,7 +35,8 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label class="control-label" for="source">Source</label>
-                  <select name="source" formControlName="source" class="form-control" id="source">
+                  <select name="source" formControlName="source" class="form-control" id="source"
+                    [attr.disabled]="!auth.isSupporter(user)? true : null">
                     <option *ngFor="let source of Sources" [ngValue]="source.name">
                       {{ source.name }}
                     </option>
@@ -45,14 +48,15 @@
                   </div>
                 </div>
               </div>
-              <div class="form-row" *ngIf="auth.isSupporter(user)">
+              <div class="form-row" *ngIf="auth.isStaff(user)">
                 <div class="form-group col-md-6">
                   <label for="site">Site Name</label>
                   <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="creator" class="control-label">Creator</label>
-                  <select name="creator" formControlName="creator" class="form-control" id="creator">
+                  <select name="creator" formControlName="creator" class="form-control" id="creator"
+                    [attr.disabled]="!auth.isSupporter(user)? true : null">
                     <option *ngFor="let user of getCreate()" [ngValue]="user">
                       {{ user }}
                     </option>
@@ -64,7 +68,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-row" *ngIf="auth.isSupporter(user)">
+              <div class="form-row" *ngIf="auth.isStaff(user)">
                 <div class="form-group col-md-6">
                   <label for="maintenancePackage">Maintenance Package</label>
                   <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
@@ -75,10 +79,11 @@
                   <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
                 </div>
               </div>
-              <div class="form-row" *ngIf="auth.isSupporter(user)">
+              <div class="form-row" *ngIf="auth.isStaff(user)">
                 <div class="form-group col-md-6">
                   <label class="control-label" for="Type">Type</label>
-                  <select name="Type" formControlName="type" class="form-control" id="type">
+                  <select name="Type" formControlName="type" class="form-control" id="type"
+                    [attr.disabled]="!auth.isSupporter(user)? true : null">
                     <option *ngFor="let type of Types" [ngValue]="type.name">
                       {{ type.name }}
                     </option>
@@ -91,7 +96,8 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label class="control-label" for="priority">Priority</label>
-                  <select name="priority" formControlName="priority" class="form-control" id="priority">
+                  <select name="priority" formControlName="priority" class="form-control" id="priority"
+                    [attr.disabled]="!auth.isSupporter(user)? true : null">
                     <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
                       {{ priority.name }}
                     </option>
@@ -107,7 +113,7 @@
                 <div class="form-group col-md-12">
                   <label for="module" class="control-label">Module</label>
                   <ng-multiselect-dropdown class="container" [data]="moduleList" id="module" formControlName="module"
-                    [settings]="dropdownSettings">
+                    [settings]="dropdownSettings" [disabled]="!auth.isSupporter(user)&&!auth.isCustomer(user)">
                   </ng-multiselect-dropdown>
                 </div>
               </div>
@@ -115,7 +121,8 @@
                 <div class="form-group col-md-12">
                   <label for="subject" class="control-label">Subject</label>
                   <input formControlName="subject" type="text" class="form-control" id="subject" placeholder="Subject"
-                    required>
+                    [readonly]="!auth.isSupporter(user)&&!auth.isCustomer(user)"
+                    (ngModelChange)="isEditDescription($event)">
                   <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
                     <div *ngIf="subject.errors.required">
                       Subject is required.
@@ -129,7 +136,9 @@
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="description" class="control-label">Description</label>
-                  <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
+                  <textarea formControlName="description" class="form-control" id="description" rows="3"
+                    [readonly]="!auth.isSupporter(user)&&!auth.isCustomer(user)"
+                    (ngModelChange)="isEditDescription($event)"></textarea>
                   <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
                     <div *ngIf="description.errors.required">
                       Description is required.
@@ -142,23 +151,54 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <app-upload-detail-form (editeUpload)="mergeFileUpload($event)"></app-upload-detail-form>
+                  <app-upload-detail-form [flag]="forDescription" (editeUpload)="mergeDescriptionFileUpload($event)">
+                  </app-upload-detail-form>
                 </div>
-                <div class=" col-md-12 my-3">
-                  <app-upload-detail-list [fileUpload]="depositFiles" (fileRemove)="onFileRemove($event)">
+                <div class=" col-md-12">
+                  <app-upload-detail-list [flag]="forDescription" [fileUpload]="depositDescriptionFiles"
+                    (fileRemove)="onDepositDescriptionFileRemove($event)">
                   </app-upload-detail-list>
                 </div>
               </div>
-              <div class="row">
-                <div class="form-group col-md-12" *ngIf="isSelectedType()">
-                  <label for="resolve">Resolve Description</label>
-                  <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
-                    (ngModelChange)="isResolveDescription($event)"></textarea>
+              <div *ngIf="isSelectedType()">
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="response">Response Description</label>
+                    <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="3"
+                      (ngModelChange)="isResponseDescription($event)" [readonly]="!auth.isSupporter(user)"></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <app-upload-detail-form [flag]="forResponseDescription"
+                      (editeUpload)="mergeResponseDescriptionFileUpload($event)">
+                    </app-upload-detail-form>
+                  </div>
+                  <div class=" col-md-12">
+                    <app-upload-detail-list [flag]="forResponseDescription" [fileUpload]="depositResponseDescriptionFiles"
+                      (fileRemove)="onDepositResponDescriptionFileRemove($event)"></app-upload-detail-list>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
+                <div class="form-group col-md-12">
+                  <label for="maDescription">Maintenance Description</label>
+                  <textarea formControlName="maDescription" class="form-control" id="maDescription" rows="3"
+                    [readonly]="!auth.isSupervisor(user)&&!auth.isMaintenance(user)"></textarea>
+                </div>
+              </div>
+              <div class="row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
+                <div class=" col-md-12">
+                  <app-upload-detail-form [flag]="forMaDescription" (editeUpload)="mergeMaDescriptionFileUpload($event)">
+                  </app-upload-detail-form>
+                </div>
+                <div class=" col-md-12">
+                  <app-upload-detail-list [flag]="forMaDescription" [fileUpload]="depositMaDescriptionFiles"
+                    (fileRemove)="onDepositMaDescriptionFileRemove($event)"></app-upload-detail-list>
                 </div>
               </div>
               <div class="row">
-                <div class="form-group col-md-12"
-                  *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
+                <div class="form-group col-md-12" *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
                   <label class="control-label" for="assign">Assign task to dev</label>
                   <select formControlName="assign" name="assign" class="form-control" id="assign"
                     (ngModelChange)="isAssignDev($event)">
@@ -168,8 +208,45 @@
                   </select>
                 </div>
               </div>
+              <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
+                <div class="form-group col-md-12">
+                  <label for="suggestDescription">Suggest Description</label>
+                  <textarea formControlName="suggestDescription" class="form-control" rows="3"
+                    [readonly]="!auth.isSupervisor(user)"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" *ngIf="auth.isSupervisor(user)">
+                  <app-upload-detail-form [flag]="forSuggestDescription"
+                    (editeUpload)="mergeSuggestDescriptionFileUpload($event)">
+                  </app-upload-detail-form>
+                </div>
+                <div class=" col-md-12">
+                  <app-upload-detail-list [flag]="forSuggestDescription" [fileUpload]="depositSuggestDescriptionFiles"
+                    (fileRemove)="onDepositSuggestDescriptionFileRemove($event)"></app-upload-detail-list>
+                </div>
+              </div>
+              <div *ngIf="isAssignedResolved()&&(auth.isDeveloper(user) || auth.isSupporter(user))">
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="resolve">Resolve Description</label>
+                    <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
+                      [readonly]="!auth.isDeveloper(user)"></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <app-upload-detail-form [flag]="forResolveDescription"
+                      (editeUpload)="mergeResolveDescriptionFileUpload($event)">
+                    </app-upload-detail-form>
+                  </div>
+                  <div class=" col-md-12">
+                    <app-upload-detail-list [flag]="forResolveDescription" [fileUpload]="depositResolveDescriptionFiles"
+                      (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
+                  </div>
+                </div>
+              </div>
             </div>
-
             <!-- Add task -->
             <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="auth.isSupervisor(user)">
               <div class="form-row">
@@ -219,7 +296,7 @@
                 </div>
               </div>
               <div class="form-row">
-                <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="form-row">
                     <div class="form-group col-md-12">
                       <div class="row">
@@ -247,17 +324,16 @@
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
               <div class="btn-group btn-save" style="float: right;">
-                <button type="submit" class="btn btn-success" *ngIf="auth.isStaff(user)" (click)="setActionSentence()">
+                <button type="submit" class="btn saveBtn" *ngIf="auth.isStaff(user)" (click)="setActionSentence()">
                   {{ displaySelectedStatus() }}
                 </button>
-                <button type="submit" class="btn btn-success" *ngIf="auth.isCustomer(user)">
+                <button type="submit" class="btn saveBtn" *ngIf="auth.isCustomer(user)" (click)="setActionSentence()">
                   Save
                 </button>
-                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="auth.isStaff(user)"
-                  (click)="filterAction()">
+                <button type=" button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" *ngIf="auth.isStaff(user)" (click)="filterAction()">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" *ngIf="auth.isStaff(user)">
@@ -267,10 +343,10 @@
                   </button>
                 </div>
               </div>
-              <a [routerLink]="['/']"><button class="btn btn-light btn-cancel" type="button"
-                  (click)="deleteCollection()" *ngIf="auth.isStaff(user)">Cancel</button></a>
-              <a [routerLink]=" ['/site-ticket']"><button class="btn btn-light btn-cancel" type="button"
-                  (click)="deleteCollection()" *ngIf=" auth.isCustomer(user)">Cancel</button></a>
+              <button class="btn cancelBtn btn-cancel" type="button" (click)="alertCancelTicket()"
+                *ngIf="auth.isStaff(user)">Cancel</button>
+              <button class="btn cancelBtn btn-cancel" type="button" (click)="alertCancelTicket()"
+                *ngIf=" auth.isCustomer(user)">Cancel</button>
             </div>
           </div>
         </form>

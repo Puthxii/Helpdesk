@@ -12,6 +12,12 @@
     --success-fade-color: #81D8D1;
     --warning-color: #FFBE96;
     --label-color: #000000;
+    --word-color: #2b579a;
+    --excel-clor: #217346;
+    --powerpoint-color: #d24726;
+    --pdf-color: #F40F02;
+    --jpg-color: #3786D1;
+    --png-color: #3ACCC8;
 }
 
 * {
@@ -66,13 +72,16 @@
 .label-info-color{
     color: var(--label-color);
 }
+
 .btn-login{
     background-image: linear-gradient(to right, #3399CC 0%, #533380 50%, #3399CC 100%);
 }
+
 .logo-img-login{
     vertical-align: top;
     width: 50px;
 }
+
 .logo-img-navbar{
     vertical-align: top;
     width: 50px;
@@ -231,4 +240,43 @@
 
 .googleBtn {
     background: #eb5e4c;
+}
+
+.saveBtn {
+    color: white;
+    background: #2ED0B9;
+}
+
+.dangerBtn {
+    color: white;
+    background: #FE8896;
+}
+
+.cancelBtn {
+    color: white;
+    background: #9C9FA6;
+}
+
+.word-color {
+    color: var(--word-color);
+}
+
+.excel-color {
+    color: var(--excel-clor);
+}
+
+.powerpoint-color {
+    color: var(--powerpoint-color);
+}
+
+.pdf-color {
+    color: var(--pdf-color);
+}
+
+.jpg-color {
+    color: var(--jpg-color);
+}
+
+.png-color {
+    color: var(--png-color);
 }

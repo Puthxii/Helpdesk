@@ -72,8 +72,8 @@ export class AddTicketComponent implements OnInit {
     return this.addTicketForm.get('description');
   }
 
-  get resolveDescription() {
-    return this.addTicketForm.get('resolveDescription');
+  get responseDescription() {
+    return this.addTicketForm.get('responseDescription');
   }
 
   get status() {
@@ -85,7 +85,7 @@ export class AddTicketComponent implements OnInit {
   site$: Observable<any>;
   user$: any;
   public addTicketForm: FormGroup;
-  hideResolve = false;
+  hideResponse = false;
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings;
@@ -105,27 +105,25 @@ export class AddTicketComponent implements OnInit {
     { name: 'Conference' },
     { name: 'Other' },
   ];
-
   Types = [
     { name: 'Info' },
     { name: 'Consult' },
     { name: 'Problem' },
     { name: 'Add-ons' }
   ];
-
   Prioritys = [
     { name: 'Low' },
     { name: 'Medium' },
     { name: 'High' },
     { name: 'Critical' }
   ];
-
   Status = [
     { name: 'Save as Inform', value: 'Informed' },
     { name: 'Save as Draft', value: 'Draft' },
     { name: 'Save as Reject', value: 'Rejected' },
   ];
-
+  forDescription = 'forDescription'
+  forResponseDescription = 'forResponseDescription'
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'dd/mm/yyyy'
@@ -162,6 +160,7 @@ export class AddTicketComponent implements OnInit {
         this.getSiteCustomer();
         this.getCustomerContact(this.user$.name);
         this.setActionSentenceCus();
+        this.setParticipantCustomer()
       } else {
         this.setStaff();
         this.setParticipant()
@@ -195,6 +194,12 @@ export class AddTicketComponent implements OnInit {
   setStaff() {
     this.addTicketForm.patchValue({
       staff: this.user$.fullName
+    });
+  }
+
+  setParticipantCustomer() {
+    this.addTicketForm.patchValue({
+      participant: []
     });
   }
 
@@ -292,12 +297,13 @@ export class AddTicketComponent implements OnInit {
         Validators.required,
         Validators.maxLength(2000)]
       ],
-      resolveDescription: [''],
+      responseDescription: [''],
+      responseDescriptionFile: [''],
       status: [''],
       staff: [''],
       email: [''],
       assign: [''],
-      upload: [''],
+      descriptionFile: [''],
       actionSentence: [''],
       participant: ['']
     });
@@ -305,18 +311,18 @@ export class AddTicketComponent implements OnInit {
 
   hideTextArea(type: any) {
     if (type === 'Info' || type === 'Consult') {
-      this.hideResolve = true;
+      this.hideResponse = true;
       this.removeStatus('In Progress');
-      this.isResolveDescription(Event)
+      this.isResponseDescription(Event)
     } else if (type === 'Problem' || type === 'Add-ons') {
-      this.hideResolve = false;
+      this.hideResponse = false;
       this.removeStatus('Closed');
       this.addStatus('In Progress');
     }
   }
 
-  isResolveDescription(event: any) {
-    (this.addTicketForm.controls.resolveDescription.value) ? this.addStatus('Closed') : this.removeStatus('Closed')
+  isResponseDescription(event: any) {
+    (this.addTicketForm.controls.responseDescription.value) ? this.addStatus('Closed') : this.removeStatus('Closed')
   }
 
   removeStatus(status: string) {
@@ -353,7 +359,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   addTicketData() {
-    this.ticketService.addTicket(this.addTicketForm.value);
+    this.ticketService.addTicket(this.addTicketForm.value, this.user.roles);
   }
 
   displaySelectedStatus(): any {
@@ -460,20 +466,37 @@ export class AddTicketComponent implements OnInit {
       title: 'Do you want to cancel add ticket.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#2ED0B9',
+      cancelButtonColor: '#9C9FA6',
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        this.ticketService.deleteCollection('upload')
-        this.router.navigate(['/']);
+        if (this.user.roles.customer === true) {
+          this.deleteCollection('uploadDesciption')
+          this.router.navigate(['/site-ticket']);
+        } else if (this.user.roles.supporter === true) {
+          this.deleteCollection('uploadDesciption')
+          this.deleteCollection('uploadResponseDescription')
+          this.router.navigate(['/ticket']);
+        }
       }
     })
   }
 
-  public onUploadfile(upload: any): void {
+  deleteCollection(collection) {
+    this.ticketService.deleteCollection(collection)
+  }
+
+  public onUploadDescriptionFile(upload: any): void {
     this.addTicketForm.patchValue({
-      upload
+      descriptionFile: upload
     });
   }
+
+  public onUploadResponseDescriptionFile(upload: any): void {
+    this.addTicketForm.patchValue({
+      responseDescriptionFile: upload
+    });
+  }
+
 }

@@ -12,7 +12,7 @@ import { FileUploadService } from 'src/app/services/file-upload/file-upload.serv
 })
 export class UploadEditComponent implements OnInit {
   @Input() fileUpload: FileUpload;
-
+  @Input() flag: any
   constructor(
     @Inject('ICONATTACHFILE') public iconAttachFile: any[],
     private uploadService: FileUploadService) { }
@@ -35,8 +35,31 @@ export class UploadEditComponent implements OnInit {
     }
   }
 
-  deleteFileUpload(fileUpload: FileUpload): void {
-    this.uploadService.deleteFile(fileUpload);
+  deleteFileUpload(fileUpload: FileUpload, flag: any): void {
+    let coll: string
+    switch (flag) {
+      case 'forDescription': {
+        coll = 'uploadDesciption'
+        break
+      }
+      case 'forResponseDescription': {
+        coll = 'uploadResponseDescription'
+        break
+      }
+      case 'forMaDescription': {
+        coll = 'uploadMaDescription'
+        break
+      }
+      case 'forSuggestDescription': {
+        coll = 'uploadSuggestDescription'
+        break
+      }
+      case 'forResolveDescription': {
+        coll = 'uploadResolveDescription'
+        break
+      }
+    }
+    this.uploadService.deleteFile(fileUpload, coll);
   }
 
 }

@@ -65,6 +65,22 @@ export class DetailComponent implements OnInit {
   getdescription(ticket) {
     return ticket.description ? ticket.description : '-';
   }
-}
 
+  getDescriptionMA(ticket) {
+    return ticket.maDescription ? ticket.maDescription : '-';
+  }
+
+  getResolvedDescription(ticket) {
+    return ticket.resolveDescription ? ticket.resolveDescription : '-';
+  }
+
+  getResponDescription(ticket) {
+    return ticket.responDescription ? ticket.responDescription : '-';
+  }
+
+  getSuggestDescription(ticket) {
+    return ticket.suggestDescription ? ticket.suggestDescription : '-';
+  }
+
+}
 

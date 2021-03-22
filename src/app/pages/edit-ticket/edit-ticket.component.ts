@@ -13,6 +13,7 @@ import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-ticket',
@@ -66,7 +67,16 @@ export class EditTicketComponent implements OnInit {
     { name: 'Save as Resolve', value: 'Resolved' },
   ];
   ticket: any;
-  depositFiles = []
+  depositDescriptionFiles = []
+  depositResponseDescriptionFiles = []
+  depositMaDescriptionFiles = []
+  depositSuggestDescriptionFiles = []
+  depositResolveDescriptionFiles = []
+  forDescription = 'forDescription'
+  forResponseDescription = 'forResponseDescription'
+  forMaDescription = 'forMaDescription'
+  forSuggestDescription = 'forSuggestDescription'
+  forResolveDescription = 'forResolveDescription'
   stateParticipant = []
   depositTasks = []
   newTask: any
@@ -79,6 +89,7 @@ export class EditTicketComponent implements OnInit {
   };
   NewUpload: { id: string; name: string; url: string; file: File; }[];
   tasks: Observable<any>
+  isEdit = false
 
   constructor(
     private ticketService: TicketService,
@@ -87,6 +98,7 @@ export class EditTicketComponent implements OnInit {
     public fb: FormBuilder,
     private auth: AuthService,
     public userService: UserService,
+    private router: Router,
   ) {
     this.route.params.subscribe(params => this.id = params.id)
   }
@@ -107,23 +119,41 @@ export class EditTicketComponent implements OnInit {
         subject: this.ticket.subject,
         priority: this.ticket.priority,
         description: this.ticket.description,
-        resolveDescription: this.ticket.resolveDescription,
+        responseDescription: this.ticket.responseDescription,
+        responseDescriptionFile: this.ticket.responseDescriptionFile,
         status: this.ticket.status,
         staff: this.ticket.staff,
         siteName: this.ticket.site.nameEN,
         assign: this.ticket.assign,
         currentStatus: this.ticket.status,
-        upload: this.ticket.upload,
+        descriptionFile: this.ticket.descriptionFile,
         actionSentence: this.ticket.actionSentence,
         dev: this.ticket.dev,
         subjectTask: this.ticket.subjectTask,
         assignTasks: this.ticket.assignTasks,
         deadlineDate: this.ticket.deadlineDate,
         participant: this.ticket.participant,
-        addTasks: this.ticket.addTasks
+        addTasks: this.ticket.addTasks,
+        maDescription: this.ticket.maDescription,
+        maDescriptionFile: this.ticket.maDescriptionFile,
+        suggestDescription: this.ticket.suggestDescription,
+        suggestDescriptionFile: this.ticket.suggestDescriptionFile,
+        resolveDescription: this.ticket.resolveDescription,
+        resolveDescriptionFile: this.ticket.resolveDescriptionFile
       });
-      this.getFileUpload()
+      this.getDescriptionFileUpload()
+      this.getResponseDescriptionFileUpload()
+      this.getMaDescriptionFileUpload()
+      this.getSuggestDescriptionFileUpload()
+      this.getResolvedDescriptionFileUpload()
       this.getParticipant()
+      this.setDefaultMaDescription()
+      this.setDefaultMaDescriptionFile()
+      this.setDefaultSuggestDescription()
+      this.setDefaultSuggestDescriptionFile()
+      this.setDefaultResolveDescription()
+      this.setDefaultResolveDescriptionFile()
+      this.getModule();
     })
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
@@ -145,6 +175,95 @@ export class EditTicketComponent implements OnInit {
         item['$uid'] = items.payload.doc['id'];
         this.Staff.push(item as User)
       })
+    });
+  }
+
+  getModule() {
+    if (this.editTicket.controls.site.value.module) {
+      this.moduleList = this.editTicket.controls.site.value.module;
+      this.moduleList.sort((a, b) => a.localeCompare(b));
+    } else {
+      this.moduleList = [];
+    }
+    return this.moduleList;
+  }
+
+  setDefaultMaDescription() {
+    const endDate = moment(this.editTicket.controls.site.value.maEndDate.seconds * 1000).format('L');
+    const newDate = new Date()
+    const newDateFormat = moment(newDate).format('L');
+    let maDescription: string
+    if (this.editTicket.controls.maDescription.value === undefined) {
+      if (endDate < newDateFormat) {
+        maDescription = 'หมดอายุการบำรุงรักษา ไม่ตรงตามเงื่อนไขสัญญา'
+      } else {
+        maDescription = 'ตรงตามเงื่อนไขสัญญา'
+      }
+    } else {
+      maDescription = this.editTicket.controls.maDescription.value
+    }
+    this.editTicket.patchValue({
+      maDescription
+    });
+  }
+
+  setDefaultMaDescriptionFile() {
+    let maDescriptionFile: any
+    if (this.editTicket.controls.maDescriptionFile.value === undefined) {
+      maDescriptionFile = []
+    } else {
+      maDescriptionFile = this.editTicket.controls.maDescriptionFile.value
+    }
+    this.editTicket.patchValue({
+      maDescriptionFile
+    });
+  }
+
+  setDefaultSuggestDescription() {
+    let suggestDescription: string
+    if (this.editTicket.controls.suggestDescription.value === undefined) {
+      suggestDescription = ''
+    } else {
+      suggestDescription = this.editTicket.controls.suggestDescription.value
+    }
+    this.editTicket.patchValue({
+      suggestDescription
+    });
+  }
+
+  setDefaultSuggestDescriptionFile() {
+    let suggestDescriptionFile: any
+    if (this.editTicket.controls.suggestDescriptionFile.value === undefined) {
+      suggestDescriptionFile = []
+    } else {
+      suggestDescriptionFile = this.editTicket.controls.suggestDescriptionFile.value
+    }
+    this.editTicket.patchValue({
+      suggestDescriptionFile
+    });
+  }
+
+  setDefaultResolveDescription() {
+    let resolveDescription: string
+    if (this.editTicket.controls.resolveDescription.value === undefined) {
+      resolveDescription = ''
+    } else {
+      resolveDescription = this.editTicket.controls.resolveDescription.value
+    }
+    this.editTicket.patchValue({
+      resolveDescription
+    });
+  }
+
+  setDefaultResolveDescriptionFile() {
+    let resolveDescriptionFile: any
+    if (this.editTicket.controls.resolveDescriptionFile.value === undefined) {
+      resolveDescriptionFile = []
+    } else {
+      resolveDescriptionFile = this.editTicket.controls.resolveDescriptionFile.value
+    }
+    this.editTicket.patchValue({
+      resolveDescriptionFile
     });
   }
 
@@ -192,8 +311,8 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('description');
   }
 
-  get resolveDescription() {
-    return this.editTicket.get('resolveDescription');
+  get responseDescription() {
+    return this.editTicket.get('responseDescription');
   }
 
   get status() {
@@ -204,8 +323,8 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('assign');
   }
 
-  get upload() {
-    return this.editTicket.get('upload');
+  get upldescriptionFileoad() {
+    return this.editTicket.get('descriptionFile');
   }
 
   upadateTicketForm() {
@@ -226,7 +345,8 @@ export class EditTicketComponent implements OnInit {
         Validators.required,
         Validators.maxLength(500)]
       ],
-      resolveDescription: [''],
+      responseDescription: [''],
+      responseDescriptionFile: [''],
       status: [''],
       staff: [''],
       product: [''],
@@ -234,7 +354,7 @@ export class EditTicketComponent implements OnInit {
       maintenancePackage: [''],
       assign: [''],
       currentStatus: [''],
-      upload: [''],
+      descriptionFile: [''],
       actionSentence: [''],
       dev: [''],
       tasks: this.fb.array([
@@ -244,24 +364,36 @@ export class EditTicketComponent implements OnInit {
       assignTasks: [],
       deadlineDate: [],
       participant: [''],
-      addTasks: ['']
+      addTasks: [''],
+      maDescription: [''],
+      maDescriptionFile: [''],
+      suggestDescription: [''],
+      suggestDescriptionFile: [''],
+      resolveDescription: [''],
+      resolveDescriptionFile: ['']
     });
   }
 
   upadateForm() {
-    this.ticketService.editTicket(this.editTicket.value, this.id);
-    this.saveAction()
     this.saveTasks()
+    this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
+    this.checkAction()
   }
 
   getMaPackage() {
-    const maStartDate = moment(this.editTicket.controls.site.value.maStartDate).format('DD/MM/YYYY');
-    const maEndDate = moment(this.editTicket.controls.site.value.maEndDate).format('DD/MM/YYYY');
-    return maStartDate + ' - ' + maEndDate;
+    const startDate = moment(this.editTicket.controls.site.value.maStartDate.seconds * 1000).format('L');
+    const endDate = moment(this.editTicket.controls.site.value.maEndDate.seconds * 1000).format('L');
+    return startDate + ' - ' + endDate;
   }
 
   getCurrentUser() {
     return this.user.fullName
+  }
+
+  getCurrentStaff() {
+    if (this.user.roles.customer != true) {
+      return this.user.fullName
+    }
   }
 
   displaySelectedStatus(): any {
@@ -286,20 +418,21 @@ export class EditTicketComponent implements OnInit {
   filterAction() {
     const currentStatus = this.editTicket.controls.currentStatus.value
     if (currentStatus === 'Draft') {
+      this.removeStatus('More Info');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
       this.removeStatus('Close');
       this.isCloseInProgress()
     } else if (currentStatus === 'Informed') {
-      this.addStatus('More Info');
+      this.removeStatus('More Info');
       this.addStatus('Rejected');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
-      this.isCloseInProgress()
       this.removeStatus('Draft');
       this.removeStatus('Assigned');
+      this.isCloseInProgress()
     } else if (currentStatus === 'More Info') {
       this.addStatus('More Info');
       this.addStatus('Informed');
@@ -319,7 +452,11 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
-      this.addStatus('Assigned');
+      if (this.user.roles.supervisor === true && this.editTicket.controls.assign.value) {
+        this.addStatus('Assigned');
+      } else {
+        this.removeStatus('Assigned');
+      }
       this.removeStatus('Draft');
       this.removeStatus('Informed');
       this.removeStatus('More Info');
@@ -330,7 +467,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('More Info');
       this.removeStatus('In Progress');
       this.removeStatus('Accepted');
-      this.addStatus('Resolved');
+      this.removeStatus('Resolved');
+      this.isResponDescription(Event)
     } else if (currentStatus === 'Resolved') {
       this.removeStatus('Draft');
       this.removeStatus('Informed');
@@ -338,7 +476,11 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('In Progress');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
-      this.addStatus('Closed');
+      if (this.user.roles.supporter) {
+        this.addStatus('Closed');
+      } else {
+        this.removeStatus('Closed');
+      }
     }
   }
 
@@ -351,9 +493,11 @@ export class EditTicketComponent implements OnInit {
   }
 
   isCloseInProgress() {
-    if (this.editTicket.controls.type.value === 'Info' || this.editTicket.controls.type.value === 'Consult') {
+    if (this.editTicket.controls.type.value === 'Info' ||
+      this.editTicket.controls.type.value === 'Consult' ||
+      this.editTicket.controls.type.value === 'Undefined') {
       this.removeStatus('In Progress');
-      this.isResolveDescription(Event)
+      this.isResponseDescription(Event)
     } else if (this.editTicket.controls.type.value === 'Problem' || this.editTicket.controls.type.value === 'Add-ons') {
       this.removeStatus('Closed');
       this.addStatus('In Progress');
@@ -361,16 +505,26 @@ export class EditTicketComponent implements OnInit {
   }
 
   isAssignDev() {
+    this.addStatus('Assigned');
     (this.editTicket.controls.assign.value) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
-  saveAction() {
-    const staffCurrent = this.getCurrentUser()
+  checkAction() {
+    const staffCurrent = this.getCurrentStaff()
+    const currentStatus = this.editTicket.controls.currentStatus.value
+    const newStatus = this.editTicket.controls.status.value
+    if (currentStatus === newStatus) {
+    } else {
+      this.saveAction(staffCurrent, newStatus)
+    }
+  }
+
+  saveAction(staffCurrent: string, newStatus: any) {
     this.ticketService
       .setActionById(
         this.id,
-        this.editTicket.controls.status.value,
-        staffCurrent,
+        newStatus,
+        staffCurrent ? staffCurrent : '',
         this.editTicket.controls.assign.value,
         this.editTicket.controls.actionSentence.value)
   }
@@ -388,8 +542,18 @@ export class EditTicketComponent implements OnInit {
     return (this.editTicket.controls.type.value === 'Info' || this.editTicket.controls.type.value === 'Consult')
   }
 
-  isResolveDescription(event: any) {
-    (this.editTicket.controls.resolveDescription.value) ? this.addStatus('Closed') : this.removeStatus('Closed')
+  isResponseDescription(event: any) {
+    (this.editTicket.controls.responseDescription.value) ?
+      (this.addStatus('Closed'), this.addStatus('More Info'))
+      : (this.removeStatus('Closed'), this.removeStatus('More Info'))
+  }
+
+  isEditDescription(event: any) {
+    this.isEdit = true
+  }
+
+  isResponDescription(event: any) {
+    (this.editTicket.controls.responDescription.value) ? this.addStatus('Resolved') : this.removeStatus('Resolved')
   }
 
   removeStatus(status: string) {
@@ -448,31 +612,127 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
-  getFileUpload() {
-    this.depositFiles = this.editTicket.controls.upload.value
-    return this.depositFiles
+  getDescriptionFileUpload() {
+    this.depositDescriptionFiles = this.editTicket.controls.descriptionFile.value
+    return this.depositDescriptionFiles
+  }
+
+  getResponseDescriptionFileUpload() {
+    this.depositResponseDescriptionFiles = this.editTicket.controls.responseDescriptionFile.value
+    return this.depositResponseDescriptionFiles
+  }
+
+  getMaDescriptionFileUpload() {
+    this.depositMaDescriptionFiles = this.editTicket.controls.maDescriptionFile.value
+    return this.depositMaDescriptionFiles
+  }
+
+  getSuggestDescriptionFileUpload() {
+    this.depositSuggestDescriptionFiles = this.editTicket.controls.suggestDescriptionFile.value
+    return this.depositSuggestDescriptionFiles
+  }
+
+  getResolvedDescriptionFileUpload() {
+    this.depositResolveDescriptionFiles = this.editTicket.controls.resolveDescriptionFile.value
+    return this.depositResolveDescriptionFiles
   }
 
   getParticipant() {
     this.stateParticipant = this.editTicket.controls.participant.value
   }
 
-  public onFileRemove(value: any) {
-    this.depositFiles = this.editTicket.controls.upload.value.filter((item: { id: any; }) => item.id !== value.id)
+  public onDepositDescriptionFileRemove(value: any) {
+    this.depositDescriptionFiles = this.editTicket.controls.descriptionFile.value.filter((item: { id: any; }) => item.id !== value.id)
     this.editTicket.patchValue({
-      upload: this.depositFiles
+      descriptionFile: this.depositDescriptionFiles
     });
-    this.getFileUpload()
+    this.getDescriptionFileUpload()
   }
 
-  public mergeFileUpload(upload: any): void {
-    if (this.depositFiles !== undefined) {
-      this.mergeByProperty(upload, this.depositFiles, 'id');
+  public onDepositResponDescriptionFileRemove(value: any) {
+    this.depositResponseDescriptionFiles = this.editTicket.controls.responseDescriptionFile.value
+      .filter((item: { id: any; }) => item.id !== value.id)
+    this.editTicket.patchValue({
+      responseDescriptionFile: this.depositResponseDescriptionFiles
+    });
+    this.getResponseDescriptionFileUpload()
+  }
+
+  public onDepositMaDescriptionFileRemove(value: any) {
+    this.depositMaDescriptionFiles = this.editTicket.controls.maDescriptionFile.value
+      .filter((item: { id: any; }) => item.id !== value.id)
+    this.editTicket.patchValue({
+      maDescriptionFile: this.depositMaDescriptionFiles
+    });
+    this.getMaDescriptionFileUpload()
+  }
+
+  public onDepositSuggestDescriptionFileRemove(value: any) {
+    this.depositSuggestDescriptionFiles = this.editTicket.controls.suggestDescriptionFile.value
+      .filter((item: { id: any; }) => item.id !== value.id)
+    this.editTicket.patchValue({
+      suggestDescriptionFile: this.depositSuggestDescriptionFiles
+    });
+    this.getSuggestDescriptionFileUpload()
+  }
+
+  public onDepositResolveDescriptionFileRemove(value: any) {
+    this.depositResolveDescriptionFiles = this.editTicket.controls.resolveDescriptionFile.value
+      .filter((item: { id: any; }) => item.id !== value.id)
+    this.editTicket.patchValue({
+      resolveDescriptionFile: this.depositResolveDescriptionFiles
+    });
+    this.getResolvedDescriptionFileUpload()
+  }
+
+  public mergeDescriptionFileUpload(upload: any): void {
+    if (this.depositDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositDescriptionFiles, 'id');
     }
     this.editTicket.patchValue({
-      upload
+      descriptionFile: upload
     });
-    this.getFileUpload()
+    this.getDescriptionFileUpload()
+  }
+
+  public mergeResponseDescriptionFileUpload(upload: any): void {
+    if (this.depositResponseDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositResponseDescriptionFiles, 'id');
+    }
+    this.editTicket.patchValue({
+      responseDescriptionFile: upload
+    });
+    this.getResponseDescriptionFileUpload()
+  }
+
+  public mergeMaDescriptionFileUpload(upload: any): void {
+    if (this.depositMaDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositMaDescriptionFiles, 'id');
+    }
+    this.editTicket.patchValue({
+      maDescriptionFile: upload
+    });
+    this.getMaDescriptionFileUpload()
+  }
+
+  public mergeSuggestDescriptionFileUpload(upload: any): void {
+    if (this.depositSuggestDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositSuggestDescriptionFiles, 'id');
+    }
+    this.editTicket.patchValue({
+      suggestDescriptionFile: upload
+    });
+    this.getSuggestDescriptionFileUpload()
+  }
+
+  public mergeResolveDescriptionFileUpload(upload: any): void {
+    if (this.depositResolveDescriptionFiles !== undefined) {
+      this.mergeByProperty(upload, this.depositResolveDescriptionFiles, 'id');
+    }
+    this.editTicket.patchValue({
+      resolveDescriptionFile: upload
+    });
+    this.getResolvedDescriptionFileUpload()
   }
 
   mergeByProperty(newUpload: any[], depositFiles: any[], prop: string) {
@@ -484,8 +744,8 @@ export class EditTicketComponent implements OnInit {
     })
   }
 
-  deleteCollection() {
-    this.ticketService.deleteCollection('upload')
+  deleteCollection(collection: string) {
+    this.ticketService.deleteCollection(collection)
   }
 
   setActionSentence() {
@@ -494,9 +754,14 @@ export class EditTicketComponent implements OnInit {
     const assignDev = this.editTicket.controls.assign.value
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
-        sentence = `${userCurrent} create ticket`
+        sentence = `${userCurrent} edit ticket`
       } else if (this.status.value === 'Rejected') {
         sentence = `${userCurrent} rejected ticket`
+      } else if (this.status.value === 'More Info') {
+        sentence = `${userCurrent} edit ticket`
+        if (this.isEdit) {
+          this.onSelectedStatus('Informed')
+        }
       }
     } else {
       if (this.status.value === 'Draft') {
@@ -507,8 +772,8 @@ export class EditTicketComponent implements OnInit {
         sentence = `${userCurrent} rejected ticket`
       } else if (this.status.value === 'More Info') {
         sentence = `${userCurrent}  remark more info`
-      } else if (this.status.value === 'Close') {
-        sentence = `${userCurrent} close ticket`
+      } else if (this.status.value === 'Closed') {
+        sentence = `${userCurrent} closed ticket`
       } else if (this.status.value === 'In Progress') {
         sentence = `${userCurrent} set in progress`
       } else if (this.status.value === 'Accepted') {
@@ -523,11 +788,11 @@ export class EditTicketComponent implements OnInit {
       } else if (this.status.value === 'Resolved') {
         sentence = `${userCurrent} resolved task`
       }
+      this.setParticaipant(userCurrent)
     }
     this.editTicket.patchValue({
       actionSentence: sentence
     })
-    this.setParticaipant(userCurrent)
   }
 
   setParticaipant(currentParticipant: any) {
@@ -535,7 +800,6 @@ export class EditTicketComponent implements OnInit {
     this.editTicket.patchValue({
       participant: this.stateParticipant
     });
-    // console.log(this.editTicket.controls.participant.value);
   }
 
   mergeParticipant(name: any) {
@@ -607,6 +871,39 @@ export class EditTicketComponent implements OnInit {
     return title
   }
 
+  alertCancelTicket() {
+    Swal.fire({
+      title: 'Do you want to cancel edit ticket.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2ED0B9',
+      cancelButtonColor: '#9C9FA6',
+      confirmButtonText: 'Yes, I do'
+    }).then((result: { isConfirmed: any; }) => {
+      if (result.isConfirmed) {
+        if (this.user.roles.customer === true) {
+          this.deleteCollection('uploadDesciption')
+          this.router.navigate(['/site-ticket']);
+        } else if (this.user.roles.supporter === true) {
+          this.deleteCollection('uploadDesciption')
+          this.deleteCollection('uploadResponseDescription')
+          this.router.navigate(['/ticket']);
+        } else if (this.user.roles.maintenance === true) {
+          this.deleteCollection('uploadMaDescription')
+          this.router.navigate(['/ticket-ma']);
+        } else if (this.user.roles.supervisor === true) {
+          this.deleteCollection('uploadSuggestDescription')
+          this.router.navigate(['/ticket-sup']);
+        } else if (this.user.roles.developer === true) {
+          this.deleteCollection('uploadResolveDescription')
+          this.router.navigate(['/ticket-dev']);
+        }
+      }
+    })
+  }
+
+  isAssignedResolved() {
+    return this.editTicket.controls.currentStatus.value === 'Assigned' || this.editTicket.controls.currentStatus.value === 'Resolved'
+  }
+
 }
-
-

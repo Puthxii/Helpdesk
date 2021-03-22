@@ -52,7 +52,7 @@ export class TicketSupComponent implements OnInit {
   user: any
   User: User
   user$: any
-  isChecked = true
+  isChecked = false
   status = 'Accepted'
   currentName: string
 

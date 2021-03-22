@@ -25,11 +25,11 @@ export const CurrentStatus = [
 ]
 
 export const iconAttachFile = [
-    { type: 'xlsx', icon: 'fas fa-file-excel fa-lg' },
-    { type: 'pdf', icon: 'fas fa-file-pdf fa-lg' },
-    { type: 'jpg', icon: 'fas fa-file-image fa-lg' },
-    { type: 'png', icon: 'fas fa-file-image fa-lg' },
-    { type: 'docx', icon: 'fas fa-file-word fa-lg' },
-    { type: 'pptx', icon: 'fas fa-file-powerpoint fa-lg' },
+    { type: 'xlsx', icon: 'fas fa-file-excel fa-lg excel-color' },
+    { type: 'pdf', icon: 'fas fa-file-pdf fa-lg pdf-color' },
+    { type: 'jpg', icon: 'fas fa-file-image fa-lg jpg-color' },
+    { type: 'png', icon: 'fas fa-file-image fa-lg png-color' },
+    { type: 'docx', icon: 'fas fa-file-word fa-lg word-color' },
+    { type: 'pptx', icon: 'fas fa-file-powerpoint fa-lg powerpoint-color' },
     { type: 'mp4', icon: 'fas fa-file-video fa-lg' }
 ]

@@ -15,17 +15,16 @@ export class FileUploadService {
     private storage: AngularFireStorage,
     private afs: AngularFirestore) { }
 
-  pushFileToStorage(fileUpload: FileUpload): Observable<number> {
+  pushFileToStorage(fileUpload: FileUpload, coll): Observable<number> {
     const filePath = `${this.basePath}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
-
     uploadTask.snapshotChanges().pipe(
       finalize(() => {
         storageRef.getDownloadURL().subscribe(downloadURL => {
           fileUpload.url = downloadURL;
           fileUpload.name = fileUpload.file.name;
-          this.saveFile(fileUpload);
+          this.saveFile(fileUpload, coll);
         });
       })
     ).subscribe();
@@ -33,9 +32,9 @@ export class FileUploadService {
     return uploadTask.percentageChanges();
   }
 
-  private async saveFile(fileUpload: FileUpload) {
+  private async saveFile(fileUpload: FileUpload, collection: any) {
     try {
-      await this.afs.collection('upload').add({
+      await this.afs.collection(collection).add({
         url: fileUpload.url,
         name: fileUpload.name,
       })
@@ -44,20 +43,20 @@ export class FileUploadService {
     }
   }
 
-  getFiles() {
-    return this.afs.collection('upload');
+  getFiles(collection: any) {
+    return this.afs.collection(collection);
   }
 
-  deleteFile(fileUpload: FileUpload): void {
-    this.deleteFileFireStore(fileUpload.id)
+  deleteFile(fileUpload: FileUpload, coll: any): void {
+    this.deleteFileFireStore(fileUpload.id, coll)
       .then(() => {
         this.deleteFileStorage(fileUpload.name);
       })
       .catch(error => console.log(error));
   }
 
-  private deleteFileFireStore(id: string): Promise<void> {
-    return this.afs.collection('upload').doc(id).delete();
+  private deleteFileFireStore(id: string, coll: any): Promise<void> {
+    return this.afs.collection(coll).doc(id).delete();
   }
 
   private deleteFileStorage(name: string): void {

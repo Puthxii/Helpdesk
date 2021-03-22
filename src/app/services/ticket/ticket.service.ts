@@ -3,6 +3,7 @@ import { Ticket } from '../../models/ticket.model';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
+import { Roles } from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,22 @@ export class TicketService {
     private router: Router,
   ) { }
 
-  successNotification() {
+  successNotification(role: Roles) {
     Swal.fire({
       text: 'Your ticket has been saved',
       icon: 'success',
     }).then((result: any) => {
-      this.router.navigate(['/']);
+      if (role.customer === true) {
+        this.router.navigate(['/site-ticket']);
+      } else if (role.supporter === true) {
+        this.router.navigate(['/ticket']);
+      } else if (role.maintenance === true) {
+        this.router.navigate(['/ticket-ma']);
+      } else if (role.supervisor === true) {
+        this.router.navigate(['/ticket-sup']);
+      } else if (role.developer === true) {
+        this.router.navigate(['/ticket-dev']);
+      }
     });
   }
 
@@ -154,7 +165,7 @@ export class TicketService {
     }
   }
 
-  async addTicket(ticket: Ticket) {
+  async addTicket(ticket: Ticket, role) {
     try {
       (await this.afs.collection('ticket').add({
         date: ticket.date,
@@ -166,13 +177,14 @@ export class TicketService {
         subject: ticket.subject,
         priority: ticket.priority,
         description: ticket.description,
-        resolveDescription: ticket.resolveDescription,
+        descriptionFile: ticket.descriptionFile,
+        responseDescription: ticket.responseDescription,
+        responseDescriptionFile: ticket.responseDescriptionFile,
         status: ticket.status,
         staff: ticket.staff,
         email: ticket.email,
         assign: ticket.assign,
-        upload: ticket.upload,
-        participant: ticket.participant
+        participant: ticket.participant,
       }))
         .collection('action')
         .add({
@@ -181,9 +193,11 @@ export class TicketService {
           date: new Date(),
           actionSentence: ticket.actionSentence
         });
-      this.deleteCollection('upload')
-      this.successNotification();
+      this.deleteCollection('uploadDesciption')
+      this.deleteCollection('uploadResolveDescription')
+      this.successNotification(role);
     } catch (error) {
+      console.log(error);
       this.errorNotification();
     }
   }
@@ -191,11 +205,11 @@ export class TicketService {
   async deleteCollection(path: string) {
     const batch = this.afs.firestore.batch();
     const qs = await this.afs.collection(path).ref.get();
-    qs.forEach(doc => batch.delete(doc.ref));
+    qs.forEach((doc: { ref: any; }) => batch.delete(doc.ref));
     return batch.commit();
   }
 
-  async editTicket(ticket: Ticket, id: any) {
+  async editTicket(ticket: Ticket, id: any, role: Roles) {
     try {
       this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
@@ -207,15 +221,26 @@ export class TicketService {
         subject: ticket.subject,
         priority: ticket.priority,
         description: ticket.description,
-        resolveDescription: ticket.resolveDescription,
+        responseDescription: ticket.responseDescription,
+        responseDescriptionFile: ticket.responseDescriptionFile,
         status: ticket.status,
         staff: ticket.staff,
         assign: ticket.assign,
-        upload: ticket.upload,
-        participant: ticket.participant
+        descriptionFile: ticket.descriptionFile,
+        participant: ticket.participant,
+        maDescription: ticket.maDescription,
+        maDescriptionFile: ticket.maDescriptionFile,
+        suggestDescription: ticket.suggestDescription,
+        suggestDescriptionFile: ticket.suggestDescriptionFile,
+        resolveDescription: ticket.resolveDescription,
+        resolveDescriptionFile: ticket.resolveDescriptionFile
       })
-      this.deleteCollection('upload')
-      this.successNotification();
+      this.deleteCollection('uploadDesciption')
+      this.deleteCollection('uploadResponseDescription')
+      this.deleteCollection('uploadMaDescription')
+      this.deleteCollection('uploadSuggestDescription')
+      this.deleteCollection('uploadResolveDescription')
+      this.successNotification(role);
     } catch (error) {
     console.log(error);
     
@@ -310,16 +335,16 @@ export class TicketService {
 
   getByDaterange(startDate: any, endDate: any, role: any) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
     );
   }
 
   getByCurrentnameStatusKewordDateRange(keword: any, creator: string, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('staff', '==', creator)
       .where('status', '==', status)
       .where('subject', '==', keword)
@@ -328,8 +353,8 @@ export class TicketService {
 
   getByCurrentnameStatusDateRange(creator: string, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('staff', '==', creator)
       .where('status', '==', status)
     );
@@ -337,8 +362,8 @@ export class TicketService {
 
   getByStatusKewordDateRange(keword: any, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', '==', status)
       .where('subject', '==', keword)
     );
@@ -346,8 +371,8 @@ export class TicketService {
 
   getByCurrentnameKewordDateRange(keword: any, creator: string, startDate: Date, endDate: Date, role: any) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
       .where('staff', '==', creator)
       .where('subject', '==', keword)
@@ -356,8 +381,8 @@ export class TicketService {
 
   getByCurrentnameDateRange(creator: string, startDate: Date, endDate: Date, role: any) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
       .where('staff', '==', creator)
     );
@@ -365,8 +390,8 @@ export class TicketService {
 
   getByKewordDaterange(keword: any, startDate: Date, endDate: Date, role: any) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
       .where('subject', '==', keword)
     );
@@ -374,8 +399,8 @@ export class TicketService {
 
   getByStatusDateRange(status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', '==', status)
     );
   }
@@ -442,8 +467,8 @@ export class TicketService {
 
   getByCreatorStatusKeword(creator: any, status: any, keword: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('creator', '==', creator)
       .where('status', '==', status)
       .where('subject', '==', keword)
@@ -452,8 +477,8 @@ export class TicketService {
 
   getByCreatorStatus(creator: any, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('creator', '==', creator)
       .where('status', '==', status)
     )
@@ -461,8 +486,8 @@ export class TicketService {
 
   getBySiteStatusKeword(siteState: any, status: any, keword: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('site.initials', '==', siteState)
       .where('status', '==', status)
       .where('subject', '==', keword)
@@ -471,8 +496,8 @@ export class TicketService {
 
   getBySiteStatus(siteState: any, status: any, startDate: Date, endDate: Date) {
     return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>', startDate)
-      .where('date.singleDate.jsDate', '<', endDate)
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
       .where('site.initials', '==', siteState)
       .where('status', '==', status)
     )

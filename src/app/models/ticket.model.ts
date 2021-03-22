@@ -11,15 +11,22 @@ export interface Ticket {
     subject: string;
     priority: string;
     description: string;
-    resolveDescription: string;
+    descriptionFile?: any;
     status: string;
     staff?: string;
     action?: Actions[];
     email?: string;
     assign?: string;
-    upload?: any;
     actionSentence?: string;
     participant?: any;
+    responseDescription: string;
+    responseDescriptionFile?: any;
+    maDescription: string;
+    maDescriptionFile?: any;
+    suggestDescription: string;
+    suggestDescriptionFile?: any;
+    resolveDescription?: string;
+    resolveDescriptionFile?: any;
 }
 export interface Actions {
     data: any,

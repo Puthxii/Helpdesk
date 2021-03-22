@@ -52,7 +52,7 @@ export class TicketMaComponent implements OnInit {
   user: any
   User: User
   user$: any
-  isChecked = true
+  isChecked = false
   status = 'In Progress'
   currentName: string
 

@@ -157,32 +157,41 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <app-upload-form></app-upload-form>
+              <app-upload-form [flag]="forDescription"></app-upload-form>
             </div>
             <div class="col-md-12 my-3">
-              <app-upload-list (upload)="onUploadfile($event)"></app-upload-list>
+              <app-upload-list [flag]="forDescription" (upload)="onUploadDescriptionFile($event)"></app-upload-list>
             </div>
           </div>
           <div class="row">
-            <div class="form-group col-md-12" *ngIf="hideResolve">
-              <label for="resolve">Resolve Description</label>
-              <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
-                (ngModelChange)="isResolveDescription($event)"></textarea>
+            <div class="form-group col-md-12" *ngIf="hideResponse">
+              <label for="respond">Response Description</label>
+              <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="3"
+                (ngModelChange)="isResponseDescription($event)"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" *ngIf="hideResponse">
+              <app-upload-form [flag]="forResponseDescription"></app-upload-form>
+            </div>
+            <div class="col-md-12 my-3">
+              <app-upload-list [flag]="forResponseDescription" (upload)="onUploadResponseDescriptionFile($event)">
+              </app-upload-list>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
               <div class="btn-group btn-save" style="float: right;">
-                <button type="submit" class="btn btn-success" *ngIf="auth.isSupporter(user)"
+                <button type="submit" class="btn saveBtn" *ngIf="auth.isSupporter(user)"
                   [disabled]="!addTicketForm.valid">
                   {{ displaySelectedStatus() }}
                 </button>
-                <button type="submit" class="btn btn-success" *ngIf="auth.isCustomer(user)"
+                <button type="submit" class="btn saveBtn" *ngIf="auth.isCustomer(user)"
                   [disabled]="!addTicketForm.valid">
                   Send
                 </button>
-                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="auth.isSupporter(user)"
+                <button type="button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" *ngIf="auth.isSupporter(user)"
                   [disabled]="!addTicketForm.valid">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
@@ -193,7 +202,7 @@
                   </button>
                 </div>
               </div>
-              <button type="button" class="btn btn-light btn-cancel" (click)="alertCancelTicket()">Cancel</button>
+              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelTicket()">Cancel</button>
             </div>
           </div>
         </form>
