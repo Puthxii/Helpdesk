@@ -441,7 +441,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('In Progress');
       this.removeStatus('Accepted');
       this.removeStatus('Resolved');
-      this.isResponDescription(Event)
+      this.isResolveDescription(Event)
     } else if (currentStatus === 'Resolved') {
       this.removeStatus('Draft');
       this.removeStatus('Informed');
@@ -525,8 +525,8 @@ export class EditTicketComponent implements OnInit {
     this.isEdit = true
   }
 
-  isResponDescription(event: any) {
-    (this.editTicket.controls.responDescription.value) ? this.addStatus('Resolved') : this.removeStatus('Resolved')
+  isResolveDescription(event: any) {
+    (this.editTicket.controls.resolveDescription.value) ? this.addStatus('Resolved') : this.removeStatus('Resolved')
   }
 
   removeStatus(status: string) {
