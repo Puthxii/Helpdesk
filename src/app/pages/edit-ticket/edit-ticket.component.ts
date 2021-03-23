@@ -906,4 +906,17 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.controls.currentStatus.value === 'Assigned' || this.editTicket.controls.currentStatus.value === 'Resolved'
   }
 
+  setexpirationDate(ticket) {
+    let color = ''
+    const endDate = moment(this.editTicket.controls.site.value.maStartDate * 1000).format('L');
+    const currentDate = new Date()
+    const currentDateFormat = moment(currentDate).format('L');
+    if (endDate > currentDateFormat) {
+      color = 'curentDate'
+    } else {
+      color = 'expirationDate'
+    }
+    return color
+  }
+
 }

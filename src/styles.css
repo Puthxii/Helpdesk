@@ -282,9 +282,9 @@
 }
 
 .curentDate {
-    color: rgb(54, 168, 54) !important;
+    color: var( --success-color) !important;
 }
 
 .expirationDate {
-    color:  red !important;
+    color:  var(--danger-color) !important;
 }

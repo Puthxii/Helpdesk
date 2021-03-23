@@ -72,7 +72,7 @@
                 <div class="form-group col-md-6">
                   <label for="maintenancePackage">Maintenance Package</label>
                   <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
-                    value="{{ getMaPackage() }}" placeholder="Maintenance Package" readonly>
+                  [ngClass]="setexpirationDate()"  value="{{ getMaPackage() }}" readonly>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="product">Product</label>
