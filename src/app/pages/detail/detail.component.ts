@@ -53,8 +53,8 @@ export class DetailComponent implements OnInit {
   }
 
   getMaPackage(ticket) {
-    const maStartDate = moment(ticket.site.maStartDate).format('DD/MM/YYYY');
-    const maEndDate = moment(ticket.site.maEndDate).format('DD/MM/YYYY');
+    const maStartDate = moment(ticket.site.maStartDate.seconds * 1000).format('L');
+    const maEndDate = moment(ticket.site.maEndDate.seconds * 1000).format('L');
     return maStartDate + ' - ' + maEndDate;
   }
 
@@ -82,5 +82,17 @@ export class DetailComponent implements OnInit {
     return ticket.suggestDescription ? ticket.suggestDescription : '-';
   }
 
+  setexpirationDate(ticket) {
+    let color = ''
+    const endDate = moment(ticket.site.maEndDate.seconds * 1000).format('L');
+    const currentDate = new Date()
+    const currentDateFormat = moment(currentDate).format('L');
+    if (endDate > currentDateFormat) {
+      color = 'curentDate'
+    } else {
+      color = 'expirationDate'
+    }
+    return color
+  }
 }
 
