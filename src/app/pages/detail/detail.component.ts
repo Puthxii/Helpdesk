@@ -82,7 +82,7 @@ export class DetailComponent implements OnInit {
     return ticket.suggestDescription ? ticket.suggestDescription : '-';
   }
 
-  setexpirationDate(ticket) {
+  setExpirationDate(ticket) {
     let color = ''
     const endDate = moment(ticket.site.maEndDate.seconds * 1000).format('L');
     const currentDate = new Date()
