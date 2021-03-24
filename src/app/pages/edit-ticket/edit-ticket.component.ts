@@ -105,7 +105,10 @@ export class EditTicketComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => this.user = user)
+    this.auth.user$.subscribe(user => {
+      this.user = user;
+      this.getTitleByRoles()
+    })
     this.upadateTicketForm()
     this.ticketService.getTicketByid(this.id).subscribe(data => {
       this.ticket = data as Ticket
@@ -155,7 +158,6 @@ export class EditTicketComponent implements OnInit {
       this.setDefaultResolveDescription()
       this.setDefaultResolveDescriptionFile()
       this.getModule();
-      this.getRoleEditPage()
     })
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
@@ -856,7 +858,7 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
-  getRoleEditPage() {
+  getTitleByRoles() {
     if (this.user.roles === undefined) {
     } else {
       if (this.user.roles.customer === true) {
