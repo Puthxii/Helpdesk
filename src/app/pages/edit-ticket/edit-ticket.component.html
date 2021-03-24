@@ -1,249 +1,328 @@
 <div class="row">
-  <div class="col-lg-6 col-md-12 col-sm-12">
+  <div class="col-lg-12 col-md-12 col-sm-12">
     <div class="card">
       <div class="card-header text-left primary-color bg-white">
         <div class="header content">
-          <h5>
+          <h5 *ngIf="getRoleEditPage() as title">
             <i class="fas fa-edit"></i>
-            Edit ticket
+              {{ title }}
           </h5>
         </div>
       </div>
       <div class="card-body">
-        <form [formGroup]="editTicket" (ngSubmit)="upadateForm()" *ngIf="site$ | async; else loading; let Site">
-          <div class="form-row" *ngIf="auth.isStaff(user)">
-            <div class="form-group col-md-6">
-              <label class="control-label" for="date">Date</label>
-              <div class="input-group">
-                <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
-                  formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
-                  [readonly]="!auth.isSupporter(user)">
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()"
-                    [disabled]="!auth.isSupporter(user)">
-                    <i class="fas fa-calendar"></i>
-                  </button>
+        <form [formGroup]="editTicket" (ngSubmit)="upadateForm()" *ngIf="site$ | async; else loading; let Site">
+          <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-row" *ngIf="auth.isStaff(user)">
+                <div class="form-group col-md-6">
+                  <label class="control-label" for="date">Date</label>
+                  <div class="input-group">
+                    <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
+                      formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
+                      [readonly]="!auth.isSupporter(user)">
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()"
+                        [disabled]="!auth.isSupporter(user)">
+                        <i class="fas fa-calendar"></i>
+                      </button>
+                    </div>
+                    <div *ngIf="date.invalid && (date.dirty || date.touched)" class="danger-color">
+                      <div *ngIf="date.errors.required">
+                        Date is required.
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div *ngIf="date.invalid && (date.dirty || date.touched)" class="danger-color">
-                  <div *ngIf="date.errors.required">
-                    Date is required.
+                <div class="form-group col-md-6">
+                  <label class="control-label" for="source">Source</label>
+                  <select name="source" formControlName="source" class="form-control" id="source"
+                    [attr.disabled]="!auth.isSupporter(user)? true : null">
+                    <option *ngFor="let source of Sources" [ngValue]="source.name">
+                      {{ source.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="source.invalid && (source.dirty || source.touched)" class="danger-color">
+                    <div *ngIf="source.errors.required">
+                      Source is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="auth.isStaff(user)">
+                <div class="form-group col-md-6">
+                  <label for="site">Site Name</label>
+                  <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="creator" class="control-label">Creator</label>
+                  <select name="creator" formControlName="creator" class="form-control" id="creator"
+                    [attr.disabled]="!auth.isSupporter(user)? true : null">
+                    <option *ngFor="let user of getCreate()" [ngValue]="user">
+                      {{ user }}
+                    </option>
+                  </select>
+                  <div *ngIf="creator.invalid && (creator.dirty || creator.touched)" class="danger-color">
+                    <div *ngIf="creator.errors.required">
+                      Creator is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="auth.isStaff(user)">
+                <div class="form-group col-md-6">
+                  <label for="maintenancePackage">Maintenance Package</label>
+                  <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
+                  [ngClass]="setexpirationDate()"  value="{{ getMaPackage() }}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="product">Product</label>
+                  <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="auth.isStaff(user)">
+                <div class="form-group col-md-6">
+                  <label class="control-label" for="Type">Type</label>
+                  <select name="Type" formControlName="type" class="form-control" id="type"
+                    [attr.disabled]="!auth.isSupporter(user)? true : null">
+                    <option *ngFor="let type of Types" [ngValue]="type.name">
+                      {{ type.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="type.invalid && (type.dirty || type.touched)" class="danger-color">
+                    <div *ngIf="type.errors.required">
+                      Type is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="control-label" for="priority">Priority</label>
+                  <select name="priority" formControlName="priority" class="form-control" id="priority"
+                    [attr.disabled]="!auth.isSupporter(user)? true : null">
+                    <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
+                      {{ priority.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="danger-color">
+                    <div *ngIf="priority.errors.required">
+                      Priority is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="module" class="control-label">Module</label>
+                  <ng-multiselect-dropdown class="container" [data]="moduleList" id="module" formControlName="module"
+                    [settings]="dropdownSettings" [disabled]="!auth.isSupporter(user)&&!auth.isCustomer(user)">
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="form-row dropdownModule">
+                <div class="form-group col-md-12">
+                  <label for="subject" class="control-label">Subject</label>
+                  <input formControlName="subject" type="text" class="form-control" id="subject" placeholder="Subject"
+                    [readonly]="!auth.isSupporter(user)&&!auth.isCustomer(user)"
+                    (ngModelChange)="isEditDescription($event)">
+                  <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
+                    <div *ngIf="subject.errors.required">
+                      Subject is required.
+                    </div>
+                    <div *ngIf="subject.errors.maxlength">
+                      Subject is less than 50 characters
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="description" class="control-label">Description</label>
+                  <textarea formControlName="description" class="form-control" id="description" rows="3"
+                    [readonly]="!auth.isSupporter(user)&&!auth.isCustomer(user)"
+                    (ngModelChange)="isEditDescription($event)"></textarea>
+                  <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
+                    <div *ngIf="description.errors.required">
+                      Description is required.
+                    </div>
+                    <div *ngIf="description.errors.maxlength">
+                      Description is less than 500 characters
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <app-upload-detail-form [flag]="forDescription" (editeUpload)="mergeDescriptionFileUpload($event)">
+                  </app-upload-detail-form>
+                </div>
+                <div class=" col-md-12">
+                  <app-upload-detail-list [flag]="forDescription" [fileUpload]="depositDescriptionFiles"
+                    (fileRemove)="onDepositDescriptionFileRemove($event)">
+                  </app-upload-detail-list>
+                </div>
+              </div>
+              <div *ngIf="isSelectedType()">
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="response">Response Description</label>
+                    <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="3"
+                      (ngModelChange)="isResponseDescription($event)" [readonly]="!auth.isSupporter(user)"></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <app-upload-detail-form [flag]="forResponseDescription"
+                      (editeUpload)="mergeResponseDescriptionFileUpload($event)">
+                    </app-upload-detail-form>
+                  </div>
+                  <div class=" col-md-12">
+                    <app-upload-detail-list [flag]="forResponseDescription" [fileUpload]="depositResponseDescriptionFiles"
+                      (fileRemove)="onDepositResponDescriptionFileRemove($event)"></app-upload-detail-list>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
+                <div class="form-group col-md-12">
+                  <label for="maDescription">Maintenance Description</label>
+                  <textarea formControlName="maDescription" class="form-control" id="maDescription" rows="3"
+                    [readonly]="!auth.isSupervisor(user)&&!auth.isMaintenance(user)"></textarea>
+                </div>
+              </div>
+              <div class="row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
+                <div class=" col-md-12">
+                  <app-upload-detail-form [flag]="forMaDescription" (editeUpload)="mergeMaDescriptionFileUpload($event)">
+                  </app-upload-detail-form>
+                </div>
+                <div class=" col-md-12">
+                  <app-upload-detail-list [flag]="forMaDescription" [fileUpload]="depositMaDescriptionFiles"
+                    (fileRemove)="onDepositMaDescriptionFileRemove($event)"></app-upload-detail-list>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12" *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
+                  <label class="control-label" for="assign">Assign task to dev</label>
+                  <select formControlName="assign" name="assign" class="form-control" id="assign"
+                    (ngModelChange)="isAssignDev($event)">
+                    <option value="">choose dev...</option>
+                    <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
+                      {{staff.firstName}} {{staff.lastName}}
+                  </select>
+                </div>
+              </div>
+              <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
+                <div class="form-group col-md-12">
+                  <label for="suggestDescription">Suggest Description</label>
+                  <textarea formControlName="suggestDescription" class="form-control" rows="3"
+                    [readonly]="!auth.isSupervisor(user)"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" *ngIf="auth.isSupervisor(user)">
+                  <app-upload-detail-form [flag]="forSuggestDescription"
+                    (editeUpload)="mergeSuggestDescriptionFileUpload($event)">
+                  </app-upload-detail-form>
+                </div>
+                <div class=" col-md-12">
+                  <app-upload-detail-list [flag]="forSuggestDescription" [fileUpload]="depositSuggestDescriptionFiles"
+                    (fileRemove)="onDepositSuggestDescriptionFileRemove($event)"></app-upload-detail-list>
+                </div>
+              </div>
+              <div *ngIf="isAssignedResolved()&&(auth.isDeveloper(user) || auth.isSupporter(user))">
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="resolve">Resolve Description</label>
+                    <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
+                      [readonly]="!auth.isDeveloper(user)"></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <app-upload-detail-form [flag]="forResolveDescription"
+                      (editeUpload)="mergeResolveDescriptionFileUpload($event)">
+                    </app-upload-detail-form>
+                  </div>
+                  <div class=" col-md-12">
+                    <app-upload-detail-list [flag]="forResolveDescription" [fileUpload]="depositResolveDescriptionFiles"
+                      (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-6">
-              <label class="control-label" for="source">Source</label>
-              <select name="source" formControlName="source" class="form-control" id="source"
-                [attr.disabled]="!auth.isSupporter(user)? true : null">
-                <option *ngFor="let source of Sources" [ngValue]="source.name">
-                  {{ source.name }}
-                </option>
-              </select>
-              <div *ngIf="source.invalid && (source.dirty || source.touched)" class="danger-color">
-                <div *ngIf="source.errors.required">
-                  Source is required.
+            <!-- Add task -->
+            <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="auth.isSupervisor(user)">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label class="control-label" for="assign">Add Tasks</label>
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <button type="button" class="btn btn-success mb-2" (click)="setTask()"> <i
+                          class="fas fa-plus-square"></i> Add Task</button>
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf="saveTask">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="subjectTask" class="control-label">Subject Task</label>
+                        <input formControlName="subjectTask" type="text" class="form-control" id="subjectTask"
+                          placeholder="Subject Task">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="assignDev" class="control-label">Assign Dev</label>
+                        <select formControlName="assignTasks" name="assignTasks" class="form-control" id="assignTasks">
+                          <option value="">choose dev...</option>
+                          <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
+                            {{staff.firstName}} {{staff.lastName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="deadline" class="control-label">Deadline</label>
+                        <input formControlName="deadlineDate" type="number" class="form-control" id="deadlineDate"
+                          placeholder="Deadline">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group mr-5">
+                        <button type="button" class="btn btn-light btn-cancel">Cancel</button>
+                      </div>
+                      <div class="form-group">
+                        <button type="button" class="btn btn-success" (click)="onTasksSubmit()">Save Tasks</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <div class="row">
+                        <ul>
+                          <p *ngFor="let task of depositTasks; let i = index;">
+                            {{task?.subject}} 
+                            {{task?.assignTasks}}
+                            {{task?.deadlineDate}}
+                            <button type="button" (click)="removeTasks(i)" class="btn btn-danger">Delete</button>
+                          </p> 
+
+                          <!-- <li *ngFor="let task of tasks | async">
+                            subject: {{ task.subject }}
+                            assignTasks: {{ task?.assignTasks }}
+                            deadlineDate: {{ task?.deadlineDate }}
+                          </li> -->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <!-- End add tasks -->
           </div>
-          <div class="form-row" *ngIf="auth.isStaff(user)">
-            <div class="form-group col-md-6">
-              <label for="site">Site Name</label>
-              <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="creator" class="control-label">Creator</label>
-              <select name="creator" formControlName="creator" class="form-control" id="creator"
-                [attr.disabled]="!auth.isSupporter(user)? true : null">
-                <option *ngFor="let user of getCreate()" [ngValue]="user">
-                  {{ user }}
-                </option>
-              </select>
-              <div *ngIf="creator.invalid && (creator.dirty || creator.touched)" class="danger-color">
-                <div *ngIf="creator.errors.required">
-                  Creator is required.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-row" *ngIf="auth.isStaff(user)">
-            <div class="form-group col-md-6">
-              <label for="maintenancePackage">Maintenance Package</label>
-              <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
-                value="{{ getMaPackage() }}" placeholder="Maintenance Package" readonly>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="product">Product</label>
-              <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
-            </div>
-          </div>
-          <div class="form-row" *ngIf="auth.isStaff(user)">
-            <div class="form-group col-md-6">
-              <label class="control-label" for="Type">Type</label>
-              <select name="Type" formControlName="type" class="form-control" id="type"
-                [attr.disabled]="!auth.isSupporter(user)? true : null">
-                <option *ngFor="let type of Types" [ngValue]="type.name">
-                  {{ type.name }}
-                </option>
-              </select>
-              <div *ngIf="type.invalid && (type.dirty || type.touched)" class="danger-color">
-                <div *ngIf="type.errors.required">
-                  Type is required.
-                </div>
-              </div>
-            </div>
-            <div class="form-group col-md-6">
-              <label class="control-label" for="priority">Priority</label>
-              <select name="priority" formControlName="priority" class="form-control" id="priority"
-                [attr.disabled]="!auth.isSupporter(user)? true : null">
-                <option *ngFor="let priority of Prioritys" [ngValue]="priority.name">
-                  {{ priority.name }}
-                </option>
-              </select>
-              <div *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="danger-color">
-                <div *ngIf="priority.errors.required">
-                  Priority is required.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="module" class="control-label">Module</label>
-              <ng-multiselect-dropdown class="container" [data]="moduleList" id="module" formControlName="module"
-                [settings]="dropdownSettings" [disabled]="!auth.isSupporter(user)&&!auth.isCustomer(user)">
-              </ng-multiselect-dropdown>
-            </div>
-          </div>
-          <div class="form-row dropdownModule">
-            <div class="form-group col-md-12">
-              <label for="subject" class="control-label">Subject</label>
-              <input formControlName="subject" type="text" class="form-control" id="subject" placeholder="Subject"
-                [readonly]="!auth.isSupporter(user)&&!auth.isCustomer(user)"
-                (ngModelChange)="isEditDescription($event)">
-              <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="danger-color">
-                <div *ngIf="subject.errors.required">
-                  Subject is required.
-                </div>
-                <div *ngIf="subject.errors.maxlength">
-                  Subject is less than 50 characters
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="description" class="control-label">Description</label>
-              <textarea formControlName="description" class="form-control" id="description" rows="3"
-                [readonly]="!auth.isSupporter(user)&&!auth.isCustomer(user)"
-                (ngModelChange)="isEditDescription($event)"></textarea>
-              <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
-                <div *ngIf="description.errors.required">
-                  Description is required.
-                </div>
-                <div *ngIf="description.errors.maxlength">
-                  Description is less than 500 characters
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <app-upload-detail-form [flag]="forDescription" (editeUpload)="mergeDescriptionFileUpload($event)">
-              </app-upload-detail-form>
-            </div>
-            <div class=" col-md-12">
-              <app-upload-detail-list [flag]="forDescription" [fileUpload]="depositDescriptionFiles"
-                (fileRemove)="onDepositDescriptionFileRemove($event)">
-              </app-upload-detail-list>
-            </div>
-          </div>
-          <div *ngIf="isSelectedType()">
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label for="response">Response Description</label>
-                <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="3"
-                  (ngModelChange)="isResponseDescription($event)" [readonly]="!auth.isSupporter(user)"></textarea>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <app-upload-detail-form [flag]="forResponseDescription"
-                  (editeUpload)="mergeResponseDescriptionFileUpload($event)">
-                </app-upload-detail-form>
-              </div>
-              <div class=" col-md-12">
-                <app-upload-detail-list [flag]="forResponseDescription" [fileUpload]="depositResponseDescriptionFiles"
-                  (fileRemove)="onDepositResponDescriptionFileRemove($event)"></app-upload-detail-list>
-              </div>
-            </div>
-          </div>
-          <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
-            <div class="form-group col-md-12">
-              <label for="maDescription">Maintenance Description</label>
-              <textarea formControlName="maDescription" class="form-control" id="maDescription" rows="3"
-                [readonly]="!auth.isSupervisor(user)&&!auth.isMaintenance(user)"></textarea>
-            </div>
-          </div>
-          <div class="row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
-            <div class=" col-md-12">
-              <app-upload-detail-form [flag]="forMaDescription" (editeUpload)="mergeMaDescriptionFileUpload($event)">
-              </app-upload-detail-form>
-            </div>
-            <div class=" col-md-12">
-              <app-upload-detail-list [flag]="forMaDescription" [fileUpload]="depositMaDescriptionFiles"
-                (fileRemove)="onDepositMaDescriptionFileRemove($event)"></app-upload-detail-list>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-12" *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
-              <label class="control-label" for="assign">Assign task to dev</label>
-              <select formControlName="assign" name="assign" class="form-control" id="assign"
-                (ngModelChange)="isAssignDev($event)">
-                <option value="">choose dev...</option>
-                <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
-                  {{staff.firstName}} {{staff.lastName}}
-              </select>
-            </div>
-          </div>
-          <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
-            <div class="form-group col-md-12">
-              <label for="suggestDescription">Suggest Description</label>
-              <textarea formControlName="suggestDescription" class="form-control" rows="3"
-                [readonly]="!auth.isSupervisor(user)"></textarea>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12" *ngIf="auth.isSupervisor(user)">
-              <app-upload-detail-form [flag]="forSuggestDescription"
-                (editeUpload)="mergeSuggestDescriptionFileUpload($event)">
-              </app-upload-detail-form>
-            </div>
-            <div class=" col-md-12">
-              <app-upload-detail-list [flag]="forSuggestDescription" [fileUpload]="depositSuggestDescriptionFiles"
-                (fileRemove)="onDepositSuggestDescriptionFileRemove($event)"></app-upload-detail-list>
-            </div>
-          </div>
-          <div *ngIf="isAssignedResolved()&&(auth.isDeveloper(user) || auth.isSupporter(user))">
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label for="resolve">Resolve Description</label>
-                <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
-                  [readonly]="!auth.isDeveloper(user)"></textarea>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <app-upload-detail-form [flag]="forResolveDescription"
-                  (editeUpload)="mergeResolveDescriptionFileUpload($event)">
-                </app-upload-detail-form>
-              </div>
-              <div class=" col-md-12">
-                <app-upload-detail-list [flag]="forResolveDescription" [fileUpload]="depositResolveDescriptionFiles"
-                  (fileRemove)="onDepositResolveDescriptionFileRemove($event)"></app-upload-detail-list>
-              </div>
-            </div>
-          </div>
+
           <div class="form-row">
             <div class="form-group col-md-12">
               <div class="btn-group btn-save" style="float: right;">

@@ -27,4 +27,5 @@ export class UserService {
     return this.afs.collection('users', ref => ref
       .where('name', '==', name))
   }
+
 }

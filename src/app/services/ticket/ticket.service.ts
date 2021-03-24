@@ -242,7 +242,9 @@ export class TicketService {
       this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
-      this.errorNotification();
+    console.log(error);
+    
+      // this.errorNotification();
     }
   }
 
@@ -255,6 +257,16 @@ export class TicketService {
         staff,
         status,
         date: new Date(),
+      })
+  }
+
+  setAddTasks(id: any, tasks: any) {
+    this.afs.collection('ticket').doc(id)
+      .collection('tasks')
+      .add({
+        subject: tasks.subject,
+        assignTasks: tasks.assignTasks,
+        deadlineDate: tasks.deadlineDate
       })
   }
 
@@ -497,4 +509,8 @@ export class TicketService {
         .orderBy('date', 'asc'))
   }
 
+  getTask(id: string): any {
+    return this.afs.collection('ticket').doc(id)
+      .collection('tasks')
+  }
 }

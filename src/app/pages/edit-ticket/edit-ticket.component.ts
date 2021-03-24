@@ -1,7 +1,7 @@
 import { SiteService } from './../../services/site/site.service';
 import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
@@ -34,6 +34,7 @@ export class EditTicketComponent implements OnInit {
   statusCurrent: any;
   currentName: string
   user$: any
+  saveTask = false;
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -77,11 +78,17 @@ export class EditTicketComponent implements OnInit {
   forSuggestDescription = 'forSuggestDescription'
   forResolveDescription = 'forResolveDescription'
   stateParticipant = []
+  depositTasks = []
+  newTask: any
+  subjectTasks: any;
+  assignTasks: any;
+  deadlineDate: any;
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'dd/mm/yyyy'
   };
   NewUpload: { id: string; name: string; url: string; file: File; }[];
+  tasks: Observable<any>
   isEdit = false
 
   constructor(
@@ -122,7 +129,11 @@ export class EditTicketComponent implements OnInit {
         descriptionFile: this.ticket.descriptionFile,
         actionSentence: this.ticket.actionSentence,
         dev: this.ticket.dev,
+        subjectTask: this.ticket.subjectTask,
+        assignTasks: this.ticket.assignTasks,
+        deadlineDate: this.ticket.deadlineDate,
         participant: this.ticket.participant,
+        addTasks: this.ticket.addTasks,
         maDescription: this.ticket.maDescription,
         maDescriptionFile: this.ticket.maDescriptionFile,
         suggestDescription: this.ticket.suggestDescription,
@@ -146,6 +157,14 @@ export class EditTicketComponent implements OnInit {
     })
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
+    this.getTask()
+    this.getRoleEditPage()
+  }
+
+  getTask() {
+    this.ticketService.getTask(this.id).valueChanges().subscribe(task => {
+      this.depositTasks = task
+    })
   }
 
   getDeveloper() {
@@ -338,7 +357,14 @@ export class EditTicketComponent implements OnInit {
       descriptionFile: [''],
       actionSentence: [''],
       dev: [''],
+      tasks: this.fb.array([
+        this.fb.control(null)
+      ]),
+      subjectTask: [],
+      assignTasks: [],
+      deadlineDate: [],
       participant: [''],
+      addTasks: [''],
       maDescription: [''],
       maDescriptionFile: [''],
       suggestDescription: [''],
@@ -349,6 +375,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   upadateForm() {
+    this.saveTasks()
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
     this.checkAction()
   }
@@ -783,6 +810,67 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
+  setTask(): void {
+    this.saveTask = true;
+    (this.editTicket.get('tasks') as FormArray).push(this.fb.control(null));
+  }
+
+  onTasksSubmit() {
+    const subject = this.editTicket.controls.subjectTask.value
+    const assignTasks = this.editTicket.controls.assignTasks.value
+    const deadlineDate = this.editTicket.controls.deadlineDate.value
+    this.newTask = {
+      subject, assignTasks, deadlineDate
+    }
+    this.depositTasks.push(this.newTask)
+    this.clearTask()
+    console.log(this.newTask);
+    console.log(this.depositTasks);
+    // this.saveTask = false;
+  }
+
+  clearTask() {
+    this.editTicket.patchValue({
+      subjectTask: '',
+      assignTasks: '',
+      deadlineDate: ''
+    })
+  }
+
+  removeTasks(i: number): void {
+    this.depositTasks.splice(i, 1);
+    console.log(this.depositTasks)
+  }
+
+  saveTasks() {
+    if (this.depositTasks.length != 0) {
+      console.log('do');
+      for (let i = 0; this.depositTasks.length > i; i++) {
+        console.log(this.depositTasks);
+        this.ticketService.setAddTasks(
+          this.id,
+          this.depositTasks[i]
+        )
+      }
+    }
+  }
+
+  getRoleEditPage() {
+    let title: string
+    if (this.user.roles.customer === true) {
+      title = `Customer's Edit Ticket`
+    } else if (this.user.roles.supporter === true) {
+      title = `Supporter's Edit Ticket`
+    } else if (this.user.roles.maintenance === true) {
+      title = `Maintenance's Edit Ticket`
+    } else if (this.user.roles.supervisor === true) {
+      title = `Supervisor's Edit Ticket`
+    } else if (this.user.roles.developer === true) {
+      title = `Developer's Edit Ticket`
+    }
+    return title
+  }
+
   alertCancelTicket() {
     Swal.fire({
       title: 'Do you want to cancel edit ticket.',
@@ -816,6 +904,19 @@ export class EditTicketComponent implements OnInit {
 
   isAssignedResolved() {
     return this.editTicket.controls.currentStatus.value === 'Assigned' || this.editTicket.controls.currentStatus.value === 'Resolved'
+  }
+
+  setexpirationDate(ticket) {
+    let color = ''
+    const endDate = moment(this.editTicket.controls.site.value.maStartDate * 1000).format('L');
+    const currentDate = new Date()
+    const currentDateFormat = moment(currentDate).format('L');
+    if (endDate > currentDateFormat) {
+      color = 'curentDate'
+    } else {
+      color = 'expirationDate'
+    }
+    return color
   }
 
 }

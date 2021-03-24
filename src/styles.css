@@ -280,3 +280,11 @@
 .png-color {
     color: var(--png-color);
 }
+
+.curentDate {
+    color: var( --success-color) !important;
+}
+
+.expirationDate {
+    color:  var(--danger-color) !important;
+}
