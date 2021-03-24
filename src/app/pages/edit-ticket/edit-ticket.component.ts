@@ -90,6 +90,7 @@ export class EditTicketComponent implements OnInit {
   NewUpload: { id: string; name: string; url: string; file: File; }[];
   tasks: Observable<any>
   isEdit = false
+  title: string
 
   constructor(
     private ticketService: TicketService,
@@ -154,11 +155,11 @@ export class EditTicketComponent implements OnInit {
       this.setDefaultResolveDescription()
       this.setDefaultResolveDescriptionFile()
       this.getModule();
+      this.getRoleEditPage()
     })
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
     this.getTask()
-    this.getRoleEditPage()
   }
 
   getTask() {
@@ -856,19 +857,21 @@ export class EditTicketComponent implements OnInit {
   }
 
   getRoleEditPage() {
-    let title: string
-    if (this.user.roles.customer === true) {
-      title = `Customer's Edit Ticket`
-    } else if (this.user.roles.supporter === true) {
-      title = `Supporter's Edit Ticket`
-    } else if (this.user.roles.maintenance === true) {
-      title = `Maintenance's Edit Ticket`
-    } else if (this.user.roles.supervisor === true) {
-      title = `Supervisor's Edit Ticket`
-    } else if (this.user.roles.developer === true) {
-      title = `Developer's Edit Ticket`
+    if (this.user.roles === undefined) {
+    } else {
+      if (this.user.roles.customer === true) {
+        this.title = `Customer's Edit Ticket`
+      } else if (this.user.roles.supporter === true) {
+        this.title = `Supporter's Edit Ticket`
+      } else if (this.user.roles.maintenance === true) {
+        this.title = `Maintenance's Edit Ticket`
+      } else if (this.user.roles.supervisor === true) {
+        this.title = `Supervisor's Edit Ticket`
+      } else if (this.user.roles.developer === true) {
+        this.title = `Developer's Edit Ticket`
+      }
     }
-    return title
+    return this.title
   }
 
   alertCancelTicket() {

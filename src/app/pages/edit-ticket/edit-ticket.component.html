@@ -3,9 +3,9 @@
     <div class="card">
       <div class="card-header text-left primary-color bg-white">
         <div class="header content">
-          <h5 *ngIf="getRoleEditPage() as title">
+          <h5>
             <i class="fas fa-edit"></i>
-              {{ title }}
+            {{ title }}
           </h5>
         </div>
       </div>
@@ -22,7 +22,7 @@
                       [readonly]="!auth.isSupporter(user)">
                     <div class="input-group-append">
                       <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()"
-                        [disabled]="!auth.isSupporter(user)">
+                        [attr.disabled]="!auth.isSupporter(user)">
                         <i class="fas fa-calendar"></i>
                       </button>
                     </div>
@@ -72,7 +72,7 @@
                 <div class="form-group col-md-6">
                   <label for="maintenancePackage">Maintenance Package</label>
                   <input formControlName="maintenancePackage" type=text class="form-control" id="maintenancePackage"
-                  [ngClass]="setexpirationDate()"  value="{{ getMaPackage() }}" readonly>
+                    [ngClass]="setexpirationDate()" value="{{ getMaPackage() }}" readonly>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="product">Product</label>
@@ -113,7 +113,7 @@
                 <div class="form-group col-md-12">
                   <label for="module" class="control-label">Module</label>
                   <ng-multiselect-dropdown class="container" [data]="moduleList" id="module" formControlName="module"
-                    [settings]="dropdownSettings" [disabled]="!auth.isSupporter(user)&&!auth.isCustomer(user)">
+                    [settings]="dropdownSettings" [attr.disabled]="!auth.isSupporter(user)&&!auth.isCustomer(user)">
                   </ng-multiselect-dropdown>
                 </div>
               </div>
@@ -164,8 +164,9 @@
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label for="response">Response Description</label>
-                    <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="3"
-                      (ngModelChange)="isResponseDescription($event)" [readonly]="!auth.isSupporter(user)"></textarea>
+                    <textarea formControlName="responseDescription" class="form-control" id="responseDescription"
+                      rows="3" (ngModelChange)="isResponseDescription($event)"
+                      [readonly]="!auth.isSupporter(user)"></textarea>
                   </div>
                 </div>
                 <div class="row">
@@ -175,7 +176,8 @@
                     </app-upload-detail-form>
                   </div>
                   <div class=" col-md-12">
-                    <app-upload-detail-list [flag]="forResponseDescription" [fileUpload]="depositResponseDescriptionFiles"
+                    <app-upload-detail-list [flag]="forResponseDescription"
+                      [fileUpload]="depositResponseDescriptionFiles"
                       (fileRemove)="onDepositResponDescriptionFileRemove($event)"></app-upload-detail-list>
                   </div>
                 </div>
@@ -189,7 +191,8 @@
               </div>
               <div class="row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
                 <div class=" col-md-12">
-                  <app-upload-detail-form [flag]="forMaDescription" (editeUpload)="mergeMaDescriptionFileUpload($event)">
+                  <app-upload-detail-form [flag]="forMaDescription"
+                    (editeUpload)="mergeMaDescriptionFileUpload($event)">
                   </app-upload-detail-form>
                 </div>
                 <div class=" col-md-12">
@@ -198,7 +201,8 @@
                 </div>
               </div>
               <div class="row">
-                <div class="form-group col-md-12" *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
+                <div class="form-group col-md-12"
+                  *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
                   <label class="control-label" for="assign">Assign task to dev</label>
                   <select formControlName="assign" name="assign" class="form-control" id="assign"
                     (ngModelChange)="isAssignDev($event)">
@@ -302,11 +306,11 @@
                       <div class="row">
                         <ul>
                           <p *ngFor="let task of depositTasks; let i = index;">
-                            {{task?.subject}} 
+                            {{task?.subject}}
                             {{task?.assignTasks}}
                             {{task?.deadlineDate}}
                             <button type="button" (click)="removeTasks(i)" class="btn btn-danger">Delete</button>
-                          </p> 
+                          </p>
 
                           <!-- <li *ngFor="let task of tasks | async">
                             subject: {{ task.subject }}
