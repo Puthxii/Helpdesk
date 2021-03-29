@@ -136,7 +136,7 @@
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="description" class="control-label">Description</label>
-                  <textarea formControlName="description" class="form-control" id="description" rows="3"
+                  <textarea formControlName="description" class="form-control" id="description" rows="7"
                     [readonly]="!auth.isSupporter(user)&&!auth.isCustomer(user)"
                     (ngModelChange)="isEditDescription($event)"></textarea>
                   <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
@@ -165,7 +165,7 @@
                   <div class="form-group col-md-12">
                     <label for="response">Response Description</label>
                     <textarea formControlName="responseDescription" class="form-control" id="responseDescription"
-                      rows="3" (ngModelChange)="isResponseDescription($event)"
+                      rows="7" (ngModelChange)="isResponseDescription($event)"
                       [readonly]="!auth.isSupporter(user)"></textarea>
                     <div class="danger-color">
                       Please fill out a description for More Info/Close
@@ -188,7 +188,7 @@
               <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
                 <div class="form-group col-md-12">
                   <label for="maDescription">Maintenance Description</label>
-                  <textarea formControlName="maDescription" class="form-control" id="maDescription" rows="3"
+                  <textarea formControlName="maDescription" class="form-control" id="maDescription" rows="7"
                     [readonly]="!auth.isSupervisor(user)&&!auth.isMaintenance(user)"></textarea>
                 </div>
               </div>
@@ -218,7 +218,7 @@
               <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
                 <div class="form-group col-md-12">
                   <label for="suggestDescription">Suggest Description</label>
-                  <textarea formControlName="suggestDescription" class="form-control" rows="3"
+                  <textarea formControlName="suggestDescription" class="form-control" rows="7"
                     [readonly]="!auth.isSupervisor(user)"></textarea>
                 </div>
               </div>
@@ -237,7 +237,7 @@
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label for="resolve">Resolve Description</label>
-                    <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="3"
+                    <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="7"
                       [readonly]="!auth.isDeveloper(user)"></textarea>
                   </div>
                 </div>
