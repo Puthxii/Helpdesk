@@ -163,6 +163,7 @@
               <div *ngIf="isSelectedType()">
                 <div class="form-row">
                   <div class="form-group col-md-12">
+                    <hr>
                     <label for="response">Response Description</label>
                     <textarea formControlName="responseDescription" class="form-control" id="responseDescription"
                       rows="7" (ngModelChange)="isResponseDescription($event)"
@@ -187,6 +188,7 @@
               </div>
               <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
                 <div class="form-group col-md-12">
+                  <hr>
                   <label for="maDescription">Maintenance Description</label>
                   <textarea formControlName="maDescription" class="form-control" id="maDescription" rows="7"
                     [readonly]="!auth.isSupervisor(user)&&!auth.isMaintenance(user)"></textarea>
@@ -217,6 +219,7 @@
               </div>
               <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
                 <div class="form-group col-md-12">
+                  <hr>
                   <label for="suggestDescription">Suggest Description</label>
                   <textarea formControlName="suggestDescription" class="form-control" rows="7"
                     [readonly]="!auth.isSupervisor(user)"></textarea>
