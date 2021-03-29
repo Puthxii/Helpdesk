@@ -198,9 +198,9 @@ export class EditTicketComponent implements OnInit {
     let maDescription: string
     if (this.editTicket.controls.maDescription.value === undefined) {
       if (endDate < newDateFormat) {
-        maDescription = 'หมดอายุการบำรุงรักษา ไม่ตรงตามเงื่อนไขสัญญา'
+        maDescription = 'ไม่อยู่ในระยะเวลา Maintenance Package'
       } else {
-        maDescription = 'ตรงตามเงื่อนไขสัญญา'
+        maDescription = 'อยู่ในระยะเวลา Maintenance Package'
       }
     } else {
       maDescription = this.editTicket.controls.maDescription.value
