@@ -167,6 +167,9 @@
                     <textarea formControlName="responseDescription" class="form-control" id="responseDescription"
                       rows="3" (ngModelChange)="isResponseDescription($event)"
                       [readonly]="!auth.isSupporter(user)"></textarea>
+                    <div class="danger-color">
+                      Please fill out a description for More Info/Close
+                    </div>
                   </div>
                 </div>
                 <div class="row">
