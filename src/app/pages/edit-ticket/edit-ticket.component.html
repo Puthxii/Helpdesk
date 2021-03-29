@@ -113,7 +113,7 @@
                 <div class="form-group col-md-12">
                   <label for="module" class="control-label">Module</label>
                   <ng-multiselect-dropdown class="container" [data]="moduleList" id="module" formControlName="module"
-                    [settings]="dropdownSettings" [attr.disabled]="!auth.isSupporter(user)&&!auth.isCustomer(user)">
+                    [settings]="dropdownSettings" [disabled]="!auth.isSupporter(user)&&!auth.isCustomer(user)">
                   </ng-multiselect-dropdown>
                 </div>
               </div>
