@@ -444,11 +444,10 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  private formatDate(date) {
-    const d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    const year = d.getFullYear();
+  private formatDate(date: Date) {
+    let month = '' + (date.getMonth() + 1);
+    let day = '' + date.getDate();
+    const year = date.getFullYear();
     if (month.length < 2) {
       month = '0' + month;
     }
