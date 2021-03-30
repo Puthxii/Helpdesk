@@ -27,9 +27,18 @@ export interface Ticket {
     suggestDescriptionFile?: any;
     resolveDescription?: string;
     resolveDescriptionFile?: any;
+    task?: Tasks[]
 }
 export interface Actions {
     data: any,
     status: string,
     staff: string
+}
+
+export interface Tasks {
+    id: any
+    subjectTask: string
+    developer: any,
+    point: number,
+    dueDate: any
 }

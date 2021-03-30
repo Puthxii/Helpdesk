@@ -360,12 +360,12 @@ export class EditTicketComponent implements OnInit {
       descriptionFile: [''],
       actionSentence: [''],
       dev: [''],
-      tasks: this.fb.array([
-        this.fb.control(null)
-      ]),
-      subjectTask: [],
-      assignTasks: [],
-      deadlineDate: [],
+      tasks: this.fb.group({
+        subjectTask: [''],
+        developer: [''],
+        point: [''],
+        dueDate: [''],
+      }),
       participant: [''],
       addTasks: [''],
       maDescription: [''],
@@ -815,20 +815,22 @@ export class EditTicketComponent implements OnInit {
 
   setTask(): void {
     this.saveTask = true;
-    (this.editTicket.get('tasks') as FormArray).push(this.fb.control(null));
   }
 
   onTasksSubmit() {
-    const subject = this.editTicket.controls.subjectTask.value
-    const assignTasks = this.editTicket.controls.assignTasks.value
-    const deadlineDate = this.editTicket.controls.deadlineDate.value
+    const subjectTask = this.editTicket.controls.tasks.value.subjectTask
+    const developer = this.editTicket.controls.tasks.value.developer
+    const point = this.editTicket.controls.tasks.value.point
+    const dueDate = this.editTicket.controls.tasks.value.dueDate
+
+
     this.newTask = {
-      subject, assignTasks, deadlineDate
+      subjectTask, developer, point, dueDate
     }
     this.depositTasks.push(this.newTask)
-    this.clearTask()
-    console.log(this.newTask);
-    console.log(this.depositTasks);
+    // this.clearTask()
+    console.log('new task', this.newTask);
+    console.log('deposit', this.depositTasks);
     // this.saveTask = false;
   }
 

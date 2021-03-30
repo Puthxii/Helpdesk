@@ -1,5 +1,5 @@
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Ticket } from '../../models/ticket.model';
+import { Ticket, Tasks } from '../../models/ticket.model';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
@@ -258,13 +258,14 @@ export class TicketService {
       })
   }
 
-  setAddTasks(id: any, tasks: any) {
+  setAddTasks(id: any, tasks: Tasks) {
     this.afs.collection('ticket').doc(id)
       .collection('tasks')
       .add({
-        subject: tasks.subject,
-        assignTasks: tasks.assignTasks,
-        deadlineDate: tasks.deadlineDate
+        subject: tasks.subjectTask,
+        developer: tasks.developer,
+        point: tasks.point,
+        dueDate: tasks.dueDate
       })
   }
 

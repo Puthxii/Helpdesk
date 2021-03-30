@@ -268,7 +268,7 @@
                           class="fas fa-plus-square"></i> Add Task</button>
                     </div>
                   </div>
-                  <div class="form-group" *ngIf="saveTask">
+                  <div formGroupName="tasks" class="form-group" *ngIf="saveTask">
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label for="subjectTask" class="control-label">Subject Task</label>
@@ -278,8 +278,8 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-12">
-                        <label for="assignDev" class="control-label">Assign Dev</label>
-                        <select formControlName="assignTasks" name="assignTasks" class="form-control" id="assignTasks">
+                        <label for="developer" class="control-label">Assign Dev</label>
+                        <select formControlName="developer" name="assignTasks" class="form-control" id="assignTasks">
                           <option value="">choose dev...</option>
                           <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
                             {{staff.firstName}} {{staff.lastName}}
@@ -289,9 +289,16 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-12">
-                        <label for="deadline" class="control-label">Deadline</label>
-                        <input formControlName="deadlineDate" type="number" class="form-control" id="deadlineDate"
-                          placeholder="Deadline">
+                        <label for="point" class="control-label">point</label>
+                        <input formControlName="point" type="number" class="form-control" id="deadlineDate"
+                          placeholder="Point">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="deadline" class="control-label">due date</label>
+                        <input formControlName="dueDate" type="number" class="form-control" id="deadlineDate"
+                          placeholder="Due Date">
                       </div>
                     </div>
                     <div class="form-row">
@@ -312,9 +319,10 @@
                       <div class="row">
                         <ul>
                           <p *ngFor="let task of depositTasks; let i = index;">
-                            {{task?.subject}}
-                            {{task?.assignTasks}}
-                            {{task?.deadlineDate}}
+                            {{task?.subjectTask}}
+                            {{task?.developer}}
+                            {{task?.point}}
+                            {{task?.dueDate}}
                             <button type="button" (click)="removeTasks(i)" class="btn btn-danger">Delete</button>
                           </p>
 
