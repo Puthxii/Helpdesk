@@ -287,7 +287,7 @@ export class TicketService {
   getByCurrentnameStatus(keword: string, currentName: string, status: any) {
     return this.afs.collection('ticket', (ref) => ref
       .where('status', '==', status)
-      .where('staff', '==', currentName)
+      .where('participant', 'array-contains', currentName)
       .orderBy('subject')
       .startAt(keword)
       .endAt(keword + '\uf8ff'));
@@ -295,7 +295,7 @@ export class TicketService {
 
   getByCurrentname(keword: string, currentName: string) {
     return this.afs.collection('ticket', (ref) => ref
-      .where('staff', '==', currentName)
+      .where('participant', 'array-contains', currentName)
       .orderBy('subject')
       .startAt(keword)
       .endAt(keword + '\uf8ff'));
@@ -343,7 +343,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .where('status', '==', status)
       .where('subject', '==', keword)
     );
@@ -353,7 +353,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .where('status', '==', status)
     );
   }
@@ -372,7 +372,7 @@ export class TicketService {
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .where('subject', '==', keword)
     );
   }
@@ -382,7 +382,7 @@ export class TicketService {
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
     );
   }
 
