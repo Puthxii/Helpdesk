@@ -822,8 +822,6 @@ export class EditTicketComponent implements OnInit {
     }
     this.depositTasks.push(this.newTask)
     this.clearTask()
-    console.log(this.newTask);
-    console.log(this.depositTasks);
   }
 
   clearTask() {
@@ -922,10 +920,8 @@ export class EditTicketComponent implements OnInit {
     this.show = !this.show
     if (this.show) {
       this.buttonName = 'Show'
-      console.log('show')
     } else {
       this.buttonName = 'Hide'
-      console.log('hide');
     }
   }
 
