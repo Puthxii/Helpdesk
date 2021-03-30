@@ -437,11 +437,25 @@ export class AddTicketComponent implements OnInit {
             month: date.getMonth() + 1,
             day: date.getDate()
           },
-          formatted: date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear(),
+          formatted: this.formatDate(date),
           jsDate: new Date()
         }
       }
     });
+  }
+
+  private formatDate(date) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+    return [day, month, year].join('/');
   }
 
   getCustomerContact(name: string) {
