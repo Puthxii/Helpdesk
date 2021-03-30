@@ -34,6 +34,9 @@ export class EditTicketComponent implements OnInit {
   statusCurrent: any;
   currentName: string
   user$: any
+  show = false;
+  buttonName = 'Show';
+  hide: any;
   saveTask = false;
   Sources = [
     { name: 'Line' },
@@ -455,11 +458,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
-      if (this.user.roles.supervisor === true && this.editTicket.controls.assign.value) {
-        this.addStatus('Assigned');
-      } else {
-        this.removeStatus('Assigned');
-      }
+      this.addStatus('Assigned');
+      // this.removeStatus('Assigned');
       this.removeStatus('Draft');
       this.removeStatus('Informed');
       this.removeStatus('More Info');
@@ -813,11 +813,6 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
-  setTask(): void {
-    this.saveTask = true;
-    (this.editTicket.get('tasks') as FormArray).push(this.fb.control(null));
-  }
-
   onTasksSubmit() {
     const subject = this.editTicket.controls.subjectTask.value
     const assignTasks = this.editTicket.controls.assignTasks.value
@@ -829,7 +824,6 @@ export class EditTicketComponent implements OnInit {
     this.clearTask()
     console.log(this.newTask);
     console.log(this.depositTasks);
-    // this.saveTask = false;
   }
 
   clearTask() {
@@ -840,7 +834,7 @@ export class EditTicketComponent implements OnInit {
     })
   }
 
-  removeTasks(i: number): void {
+  removeTask(i: number): void {
     this.depositTasks.splice(i, 1);
     console.log(this.depositTasks)
   }
@@ -922,6 +916,17 @@ export class EditTicketComponent implements OnInit {
       color = 'expirationDate'
     }
     return color
+  }
+
+  showHide() {
+    this.show = !this.show
+    if (this.show) {
+      this.buttonName = 'Show'
+      console.log('show')
+    } else {
+      this.buttonName = 'Hide'
+      console.log('hide');
+    }
   }
 
 }

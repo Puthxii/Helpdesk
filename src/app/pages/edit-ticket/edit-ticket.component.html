@@ -200,7 +200,7 @@
                     (fileRemove)="onDepositMaDescriptionFileRemove($event)"></app-upload-detail-list>
                 </div>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="form-group col-md-12"
                   *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
                   <label class="control-label" for="assign">Assign task to dev</label>
@@ -211,7 +211,7 @@
                       {{staff.firstName}} {{staff.lastName}}
                   </select>
                 </div>
-              </div>
+              </div> -->
               <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
                 <div class="form-group col-md-12">
                   <label for="suggestDescription">Suggest Description</label>
@@ -258,11 +258,11 @@
                   <label class="control-label" for="assign">Add Tasks</label>
                   <div class="row">
                     <div class="form-group col-md-12">
-                      <button type="button" class="btn btn-success mb-2" (click)="setTask()"> <i
-                          class="fas fa-plus-square"></i> Add Task</button>
+                      <button type="button" class="btn btn-success mb-2" id="addTask" (click)="showHide()"> 
+                        <i class="fas fa-plus-square"></i> Add Task</button>
                     </div>
                   </div>
-                  <div class="form-group" *ngIf="saveTask">
+                  <div class="form-group" *ngIf="show">
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label for="subjectTask" class="control-label">Subject Task</label>
@@ -272,25 +272,24 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-12">
-                        <label for="assignDev" class="control-label">Assign Dev</label>
+                        <label class="control-label" for="assign">Assign task to dev</label>
                         <select formControlName="assignTasks" name="assignTasks" class="form-control" id="assignTasks">
                           <option value="">choose dev...</option>
                           <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
                             {{staff.firstName}} {{staff.lastName}}
-                          </option>
                         </select>
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label for="deadline" class="control-label">Deadline</label>
-                        <input formControlName="deadlineDate" type="number" class="form-control" id="deadlineDate"
+                        <input formControlName="deadlineDate" type="date" class="form-control" id="deadlineDate"
                           placeholder="Deadline">
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="form-group mr-5">
-                        <button type="button" class="btn btn-light btn-cancel">Cancel</button>
+                        <button type="button" class="btn btn-light btn-cancel" (click)="showHide()">Cancel</button>
                       </div>
                       <div class="form-group">
                         <button type="button" class="btn btn-success" (click)="onTasksSubmit()">Save Tasks</button>
@@ -305,11 +304,11 @@
                     <div class="form-group col-md-12">
                       <div class="row">
                         <ul>
-                          <p *ngFor="let task of depositTasks; let i = index;">
-                            {{task?.subject}}
-                            {{task?.assignTasks}}
-                            {{task?.deadlineDate}}
-                            <button type="button" (click)="removeTasks(i)" class="btn btn-danger">Delete</button>
+                          <p *ngFor="let task of depositTasks; let i = index;" (ngModelChange)="isAssignDev()">
+                            subject: {{ task.subject }} <br>
+                            assignTasks: {{ task?.assignTasks }} <br>
+                            deadlineDate: {{task?.deadlineDate | date: "dd/MM/yyyy"}} <br>
+                            <button type="button" (click)="removeTask(i)" class="btn btn-danger">Delete</button>
                           </p>
 
                           <!-- <li *ngFor="let task of tasks | async">
@@ -326,7 +325,6 @@
             </div>
             <!-- End add tasks -->
           </div>
-
           <div class="form-row">
             <div class="form-group col-md-12">
               <div class="btn-group btn-save" style="float: right;">
