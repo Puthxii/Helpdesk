@@ -1,11 +1,11 @@
 import { SiteService } from './../../services/site/site.service';
 import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
-import { Ticket } from 'src/app/models/ticket.model';
+import { Ticket, Tasks } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
@@ -91,6 +91,7 @@ export class EditTicketComponent implements OnInit {
   tasks: Observable<any>
   isEdit = false
   title: string
+  Tasks: Tasks[];
 
   constructor(
     private ticketService: TicketService,
@@ -165,8 +166,14 @@ export class EditTicketComponent implements OnInit {
   }
 
   getTask() {
-    this.ticketService.getTask(this.id).valueChanges().subscribe(task => {
-      this.depositTasks = task
+    this.ticketService.getTask(this.id).snapshotChanges().subscribe(data => {
+      this.Tasks = []
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['id'] = items.payload.doc['id'];
+        this.Tasks.push(item as Tasks)
+        this.depositTasks = this.Tasks
+      })
     })
   }
 
@@ -822,23 +829,34 @@ export class EditTicketComponent implements OnInit {
     const developer = this.editTicket.controls.tasks.value.developer
     const point = this.editTicket.controls.tasks.value.point
     const dueDate = this.editTicket.controls.tasks.value.dueDate
-
-
     this.newTask = {
       subjectTask, developer, point, dueDate
     }
-    this.depositTasks.push(this.newTask)
-    // this.clearTask()
+    this.depositTasks.push(this.newTask);
+    this.mergeTasks()
+    this.clearTask()
     console.log('new task', this.newTask);
     console.log('deposit', this.depositTasks);
     // this.saveTask = false;
   }
 
+  mergeTasks() {
+    console.log('main tasks', this.Tasks);
+    // if (this.depositTasks !== undefined) {
+    //   this.mergeByProperty(this.Tasks, this.depositTasks, 'subjectTask');
+    // }
+    // console.log('main tasks2', this.Tasks);
+
+  }
+
   clearTask() {
     this.editTicket.patchValue({
-      subjectTask: '',
-      assignTasks: '',
-      deadlineDate: ''
+      tasks: {
+        subjectTask: '',
+        developer: '',
+        point: '',
+        dueDate: ''
+      }
     })
   }
 
