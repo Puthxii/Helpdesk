@@ -839,7 +839,7 @@ export class EditTicketComponent implements OnInit {
     this.clearTask()
     console.log('new task', this.newTask);
     console.log('deposit', this.depositTasks);
-    // this.saveTask = false;
+    this.saveTask = false;
   }
 
   isTasksExit(depositTasks: any[]) {
