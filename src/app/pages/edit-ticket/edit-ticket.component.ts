@@ -92,6 +92,7 @@ export class EditTicketComponent implements OnInit {
   isEdit = false
   title: string
   Tasks: Tasks[];
+  TasksToSave: Tasks[] = [];
 
   constructor(
     private ticketService: TicketService,
@@ -833,20 +834,22 @@ export class EditTicketComponent implements OnInit {
       subjectTask, developer, point, dueDate
     }
     this.depositTasks.push(this.newTask);
-    this.mergeTasks()
+    this.isTasksExit(this.depositTasks)
+    console.log(this.TasksToSave);
     this.clearTask()
     console.log('new task', this.newTask);
     console.log('deposit', this.depositTasks);
     // this.saveTask = false;
   }
 
-  mergeTasks() {
-    console.log('main tasks', this.Tasks);
-    // if (this.depositTasks !== undefined) {
-    //   this.mergeByProperty(this.Tasks, this.depositTasks, 'subjectTask');
-    // }
-    // console.log('main tasks2', this.Tasks);
-
+  isTasksExit(depositTasks: any[]) {
+    console.log(depositTasks);
+    this.TasksToSave = []
+    depositTasks.forEach(task => {
+      if (typeof task.id === 'undefined') {
+        return this.TasksToSave.push(task)
+      }
+    })
   }
 
   clearTask() {
