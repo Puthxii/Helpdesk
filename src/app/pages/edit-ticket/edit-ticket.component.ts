@@ -92,7 +92,7 @@ export class EditTicketComponent implements OnInit {
   isEdit = false
   title: string
   Tasks: Tasks[];
-  TasksToSave: Tasks[] = [];
+  TasksToSave: Tasks[];
 
   constructor(
     private ticketService: TicketService,
@@ -869,13 +869,13 @@ export class EditTicketComponent implements OnInit {
   }
 
   saveTasks() {
-    if (this.depositTasks.length != 0) {
+    if (this.TasksToSave.length != 0) {
       console.log('do');
-      for (let i = 0; this.depositTasks.length > i; i++) {
-        console.log(this.depositTasks);
+      for (let i = 0; this.TasksToSave.length > i; i++) {
+        console.log(this.TasksToSave);
         this.ticketService.setAddTasks(
           this.id,
-          this.depositTasks[i]
+          this.TasksToSave[i]
         )
       }
     }

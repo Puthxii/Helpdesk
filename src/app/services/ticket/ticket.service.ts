@@ -262,7 +262,7 @@ export class TicketService {
     this.afs.collection('ticket').doc(id)
       .collection('tasks')
       .add({
-        subject: tasks.subjectTask,
+        subjectTask: tasks.subjectTask,
         developer: tasks.developer,
         point: tasks.point,
         dueDate: tasks.dueDate
