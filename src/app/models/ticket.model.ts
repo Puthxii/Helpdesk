@@ -33,3 +33,10 @@ export interface Actions {
     status: string,
     staff: string
 }
+
+export interface Tasks {
+    id: any,
+    subjectTask: string,
+    assignTask: any,
+    deadlineDate: string,
+}

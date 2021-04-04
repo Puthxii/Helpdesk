@@ -5,7 +5,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
-import { Ticket } from 'src/app/models/ticket.model';
+import { Tasks, Ticket } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-edit-ticket',
@@ -30,6 +31,7 @@ export class EditTicketComponent implements OnInit {
   Site: Site[];
   user: User
   Staff: User[];
+  Task: Tasks[];
   staff: any;
   statusCurrent: any;
   currentName: string
@@ -82,9 +84,10 @@ export class EditTicketComponent implements OnInit {
   forResolveDescription = 'forResolveDescription'
   stateParticipant = []
   depositTasks = []
+  entryTask = []
   newTask: any
   subjectTasks: any;
-  assignTasks: any;
+  assignTask: any;
   deadlineDate: any;
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
@@ -137,7 +140,7 @@ export class EditTicketComponent implements OnInit {
         actionSentence: this.ticket.actionSentence,
         dev: this.ticket.dev,
         subjectTask: this.ticket.subjectTask,
-        assignTasks: this.ticket.assignTasks,
+        assignTask: this.ticket.assignTask,
         deadlineDate: this.ticket.deadlineDate,
         participant: this.ticket.participant,
         addTasks: this.ticket.addTasks,
@@ -167,9 +170,23 @@ export class EditTicketComponent implements OnInit {
     this.getTask()
   }
 
+
+  // getTask() {
+  //   this.ticketService.getTask(this.id).valueChanges().subscribe(task => {
+  //     this.depositTasks = task
+  //   })
+  // }
+
   getTask() {
-    this.ticketService.getTask(this.id).valueChanges().subscribe(task => {
+    this.ticketService.getTask(this.id).valueChanges({ idField: 'id' }).subscribe(task => {
       this.depositTasks = task
+      task.map(items => {
+        for (let i = 0; this.depositTasks.length < i; i++) {
+          const item = items.payload.doc.data()
+          item.$uid = items.payload.doc.id;
+          this.depositTasks.push(item as Tasks)
+        }
+      })
     })
   }
 
@@ -367,7 +384,7 @@ export class EditTicketComponent implements OnInit {
         this.fb.control(null)
       ]),
       subjectTask: [],
-      assignTasks: [],
+      assignTask: [],
       deadlineDate: [],
       participant: [''],
       addTasks: [''],
@@ -814,11 +831,11 @@ export class EditTicketComponent implements OnInit {
   }
 
   onTasksSubmit() {
-    const subject = this.editTicket.controls.subjectTask.value
-    const assignTasks = this.editTicket.controls.assignTasks.value
+    const subjectTask = this.editTicket.controls.subjectTask.value
+    const assignTask = this.editTicket.controls.assignTask.value
     const deadlineDate = this.editTicket.controls.deadlineDate.value
     this.newTask = {
-      subject, assignTasks, deadlineDate
+      subjectTask, assignTask, deadlineDate
     }
     this.depositTasks.push(this.newTask)
     this.clearTask()
@@ -827,21 +844,18 @@ export class EditTicketComponent implements OnInit {
   clearTask() {
     this.editTicket.patchValue({
       subjectTask: '',
-      assignTasks: '',
+      assignTask: '',
       deadlineDate: ''
     })
   }
 
   removeTask(i: number): void {
     this.depositTasks.splice(i, 1);
-    console.log(this.depositTasks)
   }
 
   saveTasks() {
-    if (this.depositTasks.length != 0) {
-      console.log('do');
+    if (this.depositTasks.length !== 0) {
       for (let i = 0; this.depositTasks.length > i; i++) {
-        console.log(this.depositTasks);
         this.ticketService.setAddTasks(
           this.id,
           this.depositTasks[i]
@@ -849,6 +863,13 @@ export class EditTicketComponent implements OnInit {
       }
     }
   }
+
+
+// todo
+// oldData
+// newData
+//  if find oldData == have oldData
+// -> save newData and merge oldData
 
   getTitleByRoles() {
     if (this.user.roles === undefined) {

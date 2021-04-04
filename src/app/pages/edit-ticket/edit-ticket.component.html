@@ -273,7 +273,7 @@
                     <div class="form-row">
                       <div class="form-group col-md-12">
                         <label class="control-label" for="assign">Assign task to dev</label>
-                        <select formControlName="assignTasks" name="assignTasks" class="form-control" id="assignTasks">
+                        <select formControlName="assignTask" name="assignTask" class="form-control" id="assignTask">
                           <option value="">choose dev...</option>
                           <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
                             {{staff.firstName}} {{staff.lastName}}
@@ -304,9 +304,9 @@
                     <div class="form-group col-md-12">
                       <div class="row">
                         <ul>
-                          <p *ngFor="let task of depositTasks; let i = index;" (ngModelChange)="isAssignDev()">
-                            subject: {{ task.subject }} <br>
-                            assignTasks: {{ task?.assignTasks }} <br>
+                          <p *ngFor="let task of depositTasks; let i = index;" (ngModelChange)="isAssignDev()">                           
+                            subjectTask: {{ task?.subjectTask }} <br>
+                            assignTask: {{ task?.assignTask }} <br>
                             deadlineDate: {{task?.deadlineDate | date: "dd/MM/yyyy"}} <br>
                             <button type="button" (click)="removeTask(i)" class="btn btn-danger">Delete</button>
                           </p>
@@ -329,7 +329,7 @@
             <div class="form-group col-md-12">
               <div class="btn-group btn-save" style="float: right;">
                 <button type="submit" class="btn saveBtn" *ngIf="auth.isStaff(user)" (click)="setActionSentence()">
-                  {{ displaySelectedStatus() }}
+                  {{ displaySelectedStatus()}}
                 </button>
                 <button type="submit" class="btn saveBtn" *ngIf="auth.isCustomer(user)" (click)="setActionSentence()">
                   Save

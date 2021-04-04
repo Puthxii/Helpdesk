@@ -243,7 +243,6 @@ export class TicketService {
       this.successNotification(role);
     } catch (error) {
     console.log(error);
-    
       // this.errorNotification();
     }
   }
@@ -260,14 +259,15 @@ export class TicketService {
       })
   }
 
-  setAddTasks(id: any, tasks: any) {
+  setAddTasks(id: any, subjectTask: any, assignTask: any, deadlineDate: any) {
     this.afs.collection('ticket').doc(id)
-      .collection('tasks')
-      .add({
-        subject: tasks.subject,
-        assignTasks: tasks.assignTasks,
-        deadlineDate: tasks.deadlineDate
-      })
+      .collection('tasks', ref => ref
+        .doc(id)
+        .update (
+          subjectTask,
+          assignTask,
+          deadlineDate
+      ))
   }
 
   getByKeyWord(keword: any, role) {
