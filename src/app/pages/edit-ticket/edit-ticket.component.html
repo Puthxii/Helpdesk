@@ -268,7 +268,7 @@
                         <ul>
                           <div *ngFor="let task of depositTasks; let i = index;">
                             <div>
-                              <div>
+                              <div *ngIf="taskIdx!==i">
                                 {{task?.subjectTask}}
                                 {{task?.developer}}
                                 {{task?.point}}

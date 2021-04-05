@@ -37,6 +37,7 @@ export class EditTicketComponent implements OnInit {
   addTask = false;
   updateTask = false;
   taskIdx: number;
+  showTask = false
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -876,6 +877,7 @@ export class EditTicketComponent implements OnInit {
     console.log(task, i);
     this.updateTask = true;
     this.taskIdx = i;
+    this.showTask = !this.showTask;
     console.log(this.taskIdx);
 
     if (typeof task.id === 'undefined') {
