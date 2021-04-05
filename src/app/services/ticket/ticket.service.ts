@@ -269,6 +269,18 @@ export class TicketService {
       })
   }
 
+  updateTasks(id: any, tasks: Tasks) {
+    this.afs.collection('ticket').doc(id)
+      .collection('tasks', ref => ref
+        .doc(tasks.id)
+        .update({
+          subjectTask: tasks.subjectTask,
+          developer: tasks.developer,
+          point: tasks.point,
+          dueDate: tasks.dueDate
+        }))
+  }
+
   removeTasks(id: any, tasks: Tasks) {
     this.afs.collection('ticket').doc(id).collection('tasks').doc(tasks.id).delete();
   }
