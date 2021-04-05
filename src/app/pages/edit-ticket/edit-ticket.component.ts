@@ -92,7 +92,8 @@ export class EditTicketComponent implements OnInit {
   isEdit = false
   title: string
   Tasks: Tasks[];
-  TasksToSave: Tasks[];
+  tasksToSave: Tasks[] = [];
+  tasksToDelete: Tasks[] = [];
 
   constructor(
     private ticketService: TicketService,
@@ -835,19 +836,14 @@ export class EditTicketComponent implements OnInit {
     }
     this.depositTasks.push(this.newTask);
     this.isTasksExit(this.depositTasks)
-    console.log(this.TasksToSave);
     this.clearTask()
-    console.log('new task', this.newTask);
-    console.log('deposit', this.depositTasks);
     this.saveTask = false;
   }
 
   isTasksExit(depositTasks: any[]) {
-    console.log(depositTasks);
-    this.TasksToSave = []
     depositTasks.forEach(task => {
       if (typeof task.id === 'undefined') {
-        return this.TasksToSave.push(task)
+        return this.tasksToSave.push(task)
       }
     })
   }
@@ -863,19 +859,31 @@ export class EditTicketComponent implements OnInit {
     })
   }
 
-  removeTasks(i: number): void {
-    this.depositTasks.splice(i, 1);
-    console.log(this.depositTasks)
+  removeTasks(i: number): any {
+    if (typeof this.depositTasks[i].id === 'undefined') {
+      this.depositTasks.splice(i, 1);
+      this.isTasksExit(this.depositTasks)
+    } else {
+      this.tasksToDelete.push(this.depositTasks[i])
+      this.depositTasks.splice(i, 1);
+    }
   }
 
   saveTasks() {
-    if (this.TasksToSave.length != 0) {
-      console.log('do');
-      for (let i = 0; this.TasksToSave.length > i; i++) {
-        console.log(this.TasksToSave);
+    if (this.tasksToSave.length != 0) {
+      for (let i = 0; this.tasksToSave.length > i; i++) {
         this.ticketService.setAddTasks(
           this.id,
-          this.TasksToSave[i]
+          this.tasksToSave[i]
+        )
+      }
+    }
+
+    if (this.tasksToDelete.length != 0) {
+      for (let i = 0; this.tasksToDelete.length > i; i++) {
+        this.ticketService.removeTasks(
+          this.id,
+          this.tasksToDelete[i]
         )
       }
     }

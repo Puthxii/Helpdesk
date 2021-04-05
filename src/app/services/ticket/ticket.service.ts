@@ -269,6 +269,10 @@ export class TicketService {
       })
   }
 
+  removeTasks(id: any, tasks: Tasks) {
+    this.afs.collection('ticket').doc(id).collection('tasks').doc(tasks.id).delete();
+  }
+
   getByKeyWord(keword: any, role) {
     return this.afs.collection('ticket', (ref) => ref
       .orderBy('subject')
