@@ -36,7 +36,7 @@ export interface Actions {
 }
 
 export interface Tasks {
-    id: any
+    id?: any
     subjectTask: string
     developer: any,
     point: number,

@@ -34,7 +34,9 @@ export class EditTicketComponent implements OnInit {
   statusCurrent: any;
   currentName: string
   user$: any
-  saveTask = false;
+  addTask = false;
+  updateTask = false;
+  taskIdx: number;
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -93,6 +95,7 @@ export class EditTicketComponent implements OnInit {
   title: string
   Tasks: Tasks[];
   tasksToSave: Tasks[] = [];
+  tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
 
   constructor(
@@ -823,7 +826,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   setTask(): void {
-    this.saveTask = true;
+    this.addTask = true;
   }
 
   onTasksSubmit() {
@@ -837,7 +840,7 @@ export class EditTicketComponent implements OnInit {
     this.depositTasks.push(this.newTask);
     this.isTasksExit(this.depositTasks)
     this.clearTask()
-    this.saveTask = false;
+    this.addTask = false;
   }
 
   isTasksExit(depositTasks: any[]) {
@@ -869,6 +872,29 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
+  formUpdateTasks(task: Tasks, i: number) {
+    console.log(task, i);
+    this.updateTask = true;
+    this.taskIdx = i;
+    console.log(this.taskIdx);
+
+    if (typeof task.id === 'undefined') {
+      this.isTasksExit(this.depositTasks)
+    } else {
+      this.editTicket.patchValue({
+        tasks: {
+          id: task.id,
+          subjectTask: task.subjectTask,
+          developer: task.developer,
+          point: task.point,
+          dueDate: task.dueDate
+        }
+      })
+      this.isTasksExit(this.depositTasks)
+    }
+  }
+
+
   saveTasks() {
     if (this.tasksToSave.length != 0) {
       for (let i = 0; this.tasksToSave.length > i; i++) {
@@ -878,6 +904,15 @@ export class EditTicketComponent implements OnInit {
         )
       }
     }
+
+    // if (this.tasksToUpdate.length != 0) {
+    //   for (let i = 0; this.tasksToUpdate.length > i; i++) {
+    //     this.ticketService.updateTasks(
+    //       this.id,
+    //       this.tasksToUpdate[i]
+    //     )
+    //   }
+    // }
 
     if (this.tasksToDelete.length != 0) {
       for (let i = 0; this.tasksToDelete.length > i; i++) {
