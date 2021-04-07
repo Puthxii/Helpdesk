@@ -171,21 +171,13 @@ export class EditTicketComponent implements OnInit {
   }
 
 
-  // getTask() {
-  //   this.ticketService.getTask(this.id).valueChanges().subscribe(task => {
-  //     this.depositTasks = task
-  //   })
-  // }
-
   getTask() {
-    this.ticketService.getTask(this.id).valueChanges({ idField: 'id' }).subscribe(task => {
-      this.depositTasks = task
+    this.ticketService.getTask(this.id).snapshotChanges().subscribe(task => {
+      this.depositTasks = []
       task.map(items => {
-        for (let i = 0; this.depositTasks.length < i; i++) {
           const item = items.payload.doc.data()
           item.$uid = items.payload.doc.id;
           this.depositTasks.push(item as Tasks)
-        }
       })
     })
   }
@@ -856,10 +848,12 @@ export class EditTicketComponent implements OnInit {
   saveTasks() {
     if (this.depositTasks.length !== 0) {
       for (let i = 0; this.depositTasks.length > i; i++) {
-        this.ticketService.setAddTasks(
-          this.id,
-          this.depositTasks[i]
-        )
+        if (this.depositTasks[i].$uid === undefined) {
+          this.ticketService.setAddTasks(
+            this.id,
+            this.depositTasks[i]
+          )
+        }
       }
     }
   }

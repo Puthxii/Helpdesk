@@ -259,15 +259,14 @@ export class TicketService {
       })
   }
 
-  setAddTasks(id: any, subjectTask: any, assignTask: any, deadlineDate: any) {
+  setAddTasks(id: any, task: any) {
     this.afs.collection('ticket').doc(id)
-      .collection('tasks', ref => ref
-        .doc(id)
-        .update (
-          subjectTask,
-          assignTask,
-          deadlineDate
-      ))
+      .collection('tasks')
+        .add ({
+          subjectTask: task.subjectTask,
+          assignTask: task.assignTask,
+          deadlineDate: task.deadlineDate
+        })
   }
 
   getByKeyWord(keword: any, role) {
