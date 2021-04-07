@@ -845,6 +845,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   isTasksExit(depositTasks: any[]) {
+    this.tasksToSave = []
     depositTasks.forEach(task => {
       if (typeof task.id === 'undefined') {
         return this.tasksToSave.push(task)
@@ -878,7 +879,6 @@ export class EditTicketComponent implements OnInit {
     this.updateTask = true;
     this.taskIdx = i;
     this.showTask = !this.showTask;
-    console.log(this.taskIdx);
 
     if (typeof task.id === 'undefined') {
       this.isTasksExit(this.depositTasks)
