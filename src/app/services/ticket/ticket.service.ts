@@ -242,12 +242,7 @@ export class TicketService {
       this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
-<<<<<<< HEAD
-    console.log(error);
-      // this.errorNotification();
-=======
       this.errorNotification();
->>>>>>> 11fff1d7fbf8ac10566687667ba6a90c81893700
     }
   }
 
