@@ -43,6 +43,9 @@ h3{
     color: #FE8896;
 }
 
-/* .task {
-    margin-bottom: 10px;
-} */
+.taskdetail {
+    background: var(--background-color);
+    border: none;
+    color: black;
+    height: 70px;
+}

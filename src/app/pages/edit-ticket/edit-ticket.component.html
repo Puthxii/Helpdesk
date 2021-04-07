@@ -268,18 +268,33 @@
                         <ul>
                           <div *ngFor="let task of depositTasks; let i = index;">
                             <div>
-                              <div *ngIf="taskIdx!==i">
-                                {{task?.subjectTask}}
-                                {{task?.developer}}
-                                {{task?.point}}
-                                {{task?.dueDate}}
-                                <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn">
-                                  <i class="fas fa-pen"></i>
-                                </button>
-                                <button type="button" (click)="removeTasks(i)" class="btn dangerBtn">
-                                  <i class="fas fa-trash"></i>
-                                </button>
+                              <div class="col-xl-12 col-sm-6 col-12" *ngIf="taskIdx!==i">
+                                <div class="card taskdetail mt-2">
+                                  <div class="card-content">
+                                    <div class="card-body">
+                                      <div class="media d-flex">
+                                        <div class="align-self-center">
+                                          <!-- detail -->
+                                          <div>
+                                            {{task?.subjectTask}}
+                                            {{task?.developer}}
+                                            {{task?.point}}
+                                            {{task?.dueDate}}
+                                            <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn">
+                                              <i class="fas fa-pen"></i>
+                                            </button>
+                                            <button type="button" (click)="removeTasks(i)" class="btn dangerBtn">
+                                              <i class="fas fa-trash"></i>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
+  
+
                               <div class="form-group col-md-12">
                                 <div formGroupName="tasks" class="form-group" *ngIf="updateTask&&taskIdx===i">
                                   <div class="form-row">
