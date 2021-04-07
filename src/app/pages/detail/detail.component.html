@@ -121,7 +121,7 @@
                       <li *ngFor="let action of actions | async">
                         Actions: {{ action?.actionSentence }} <br />
                         Staff: {{ action?.staff ? action?.staff: '-' }} <br />
-                        Dev: {{ action?.dev ? action?.dev: 'Not Assigned'}} <br />
+                        Dev: {{ action?.dev ? action?.dev: '-'}} <br />
                         Status: {{ action?.status }} <br />
                         Date: {{ action?.date | datePipe: 'lll' }} <br /> <br />
                       </li>

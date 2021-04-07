@@ -96,7 +96,6 @@
 
 .container .multiselect-dropdown .dropdown-btn {
     margin-top: initial !important;
-    /* margin-bottom:  !important; */ 
 }
 
 .undefined {
@@ -250,6 +249,11 @@
 .dangerBtn {
     color: white;
     background: #FE8896;
+}
+
+.warningBtn {
+    color: white;
+    background: #FFBE96;
 }
 
 .cancelBtn {

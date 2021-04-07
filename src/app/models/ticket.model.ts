@@ -27,6 +27,7 @@ export interface Ticket {
     suggestDescriptionFile?: any;
     resolveDescription?: string;
     resolveDescriptionFile?: any;
+    task?: Tasks[]
 }
 export interface Actions {
     data: any,
@@ -35,8 +36,9 @@ export interface Actions {
 }
 
 export interface Tasks {
-    id: any,
-    subjectTask: string,
-    assignTask: any,
-    deadlineDate: string,
+    id?: any
+    subjectTask: string
+    developer: any,
+    point: number,
+    dueDate: any
 }

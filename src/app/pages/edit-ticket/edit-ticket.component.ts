@@ -1,11 +1,11 @@
 import { SiteService } from './../../services/site/site.service';
 import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
-import { Tasks, Ticket } from 'src/app/models/ticket.model';
+import { Ticket, Tasks } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
@@ -14,7 +14,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-edit-ticket',
@@ -36,10 +35,10 @@ export class EditTicketComponent implements OnInit {
   statusCurrent: any;
   currentName: string
   user$: any
-  show = false;
-  buttonName = 'Show';
-  hide: any;
-  saveTask = false;
+  addTask = false;
+  updateTask = false;
+  taskIdx: number;
+  showTask = false
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -97,6 +96,10 @@ export class EditTicketComponent implements OnInit {
   tasks: Observable<any>
   isEdit = false
   title: string
+  Tasks: Tasks[];
+  tasksToSave: Tasks[] = [];
+  tasksToUpdate: Tasks[] = [];
+  tasksToDelete: Tasks[] = [];
 
   constructor(
     private ticketService: TicketService,
@@ -172,12 +175,13 @@ export class EditTicketComponent implements OnInit {
 
 
   getTask() {
-    this.ticketService.getTask(this.id).snapshotChanges().subscribe(task => {
-      this.depositTasks = []
-      task.map(items => {
-          const item = items.payload.doc.data()
-          item.$uid = items.payload.doc.id;
-          this.depositTasks.push(item as Tasks)
+    this.ticketService.getTask(this.id).snapshotChanges().subscribe(data => {
+      this.Tasks = []
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['id'] = items.payload.doc['id'];
+        this.Tasks.push(item as Tasks)
+        this.depositTasks = this.Tasks
       })
     })
   }
@@ -210,9 +214,9 @@ export class EditTicketComponent implements OnInit {
     let maDescription: string
     if (this.editTicket.controls.maDescription.value === undefined) {
       if (endDate < newDateFormat) {
-        maDescription = 'หมดอายุการบำรุงรักษา ไม่ตรงตามเงื่อนไขสัญญา'
+        maDescription = 'ไม่อยู่ในระยะเวลา Maintenance Package'
       } else {
-        maDescription = 'ตรงตามเงื่อนไขสัญญา'
+        maDescription = 'อยู่ในระยะเวลา Maintenance Package'
       }
     } else {
       maDescription = this.editTicket.controls.maDescription.value
@@ -372,12 +376,12 @@ export class EditTicketComponent implements OnInit {
       descriptionFile: [''],
       actionSentence: [''],
       dev: [''],
-      tasks: this.fb.array([
-        this.fb.control(null)
-      ]),
-      subjectTask: [],
-      assignTask: [],
-      deadlineDate: [],
+      tasks: this.fb.group({
+        subjectTask: [''],
+        developer: [''],
+        point: [''],
+        dueDate: [''],
+      }),
       participant: [''],
       addTasks: [''],
       maDescription: [''],
@@ -822,48 +826,105 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
+  setTask(): void {
+    this.addTask = true;
+  }
+
   onTasksSubmit() {
-    const subjectTask = this.editTicket.controls.subjectTask.value
-    const assignTask = this.editTicket.controls.assignTask.value
-    const deadlineDate = this.editTicket.controls.deadlineDate.value
+    const subjectTask = this.editTicket.controls.tasks.value.subjectTask
+    const developer = this.editTicket.controls.tasks.value.developer
+    const point = this.editTicket.controls.tasks.value.point
+    const dueDate = this.editTicket.controls.tasks.value.dueDate
     this.newTask = {
-      subjectTask, assignTask, deadlineDate
+      subjectTask, developer, point, dueDate
     }
-    this.depositTasks.push(this.newTask)
+    this.depositTasks.push(this.newTask);
+    this.isTasksExit(this.depositTasks)
     this.clearTask()
+    this.addTask = false;
+  }
+
+  isTasksExit(depositTasks: any[]) {
+    depositTasks.forEach(task => {
+      if (typeof task.id === 'undefined') {
+        return this.tasksToSave.push(task)
+      }
+    })
   }
 
   clearTask() {
     this.editTicket.patchValue({
-      subjectTask: '',
-      assignTask: '',
-      deadlineDate: ''
+      tasks: {
+        subjectTask: '',
+        developer: '',
+        point: '',
+        dueDate: ''
+      }
     })
   }
 
-  removeTask(i: number): void {
-    this.depositTasks.splice(i, 1);
+  removeTasks(i: number): any {
+    if (typeof this.depositTasks[i].id === 'undefined') {
+      this.depositTasks.splice(i, 1);
+      this.isTasksExit(this.depositTasks)
+    } else {
+      this.tasksToDelete.push(this.depositTasks[i])
+      this.depositTasks.splice(i, 1);
+    }
   }
 
-  saveTasks() {
-    if (this.depositTasks.length !== 0) {
-      for (let i = 0; this.depositTasks.length > i; i++) {
-        if (this.depositTasks[i].$uid === undefined) {
-          this.ticketService.setAddTasks(
-            this.id,
-            this.depositTasks[i]
-          )
+  formUpdateTasks(task: Tasks, i: number) {
+    console.log(task, i);
+    this.updateTask = true;
+    this.taskIdx = i;
+    this.showTask = !this.showTask;
+    console.log(this.taskIdx);
+
+    if (typeof task.id === 'undefined') {
+      this.isTasksExit(this.depositTasks)
+    } else {
+      this.editTicket.patchValue({
+        tasks: {
+          id: task.id,
+          subjectTask: task.subjectTask,
+          developer: task.developer,
+          point: task.point,
+          dueDate: task.dueDate
         }
-      }
+      })
+      this.isTasksExit(this.depositTasks)
     }
   }
 
 
-// todo
-// oldData
-// newData
-//  if find oldData == have oldData
-// -> save newData and merge oldData
+  saveTasks() {
+    if (this.tasksToSave.length != 0) {
+      for (let i = 0; this.tasksToSave.length > i; i++) {
+        this.ticketService.setAddTasks(
+          this.id,
+          this.tasksToSave[i]
+        )
+      }
+    }
+
+    // if (this.tasksToUpdate.length != 0) {
+    //   for (let i = 0; this.tasksToUpdate.length > i; i++) {
+    //     this.ticketService.updateTasks(
+    //       this.id,
+    //       this.tasksToUpdate[i]
+    //     )
+    //   }
+    // }
+
+    if (this.tasksToDelete.length != 0) {
+      for (let i = 0; this.tasksToDelete.length > i; i++) {
+        this.ticketService.removeTasks(
+          this.id,
+          this.tasksToDelete[i]
+        )
+      }
+    }
+  }
 
   getTitleByRoles() {
     if (this.user.roles === undefined) {
@@ -929,15 +990,6 @@ export class EditTicketComponent implements OnInit {
       color = 'expirationDate'
     }
     return color
-  }
-
-  showHide() {
-    this.show = !this.show
-    if (this.show) {
-      this.buttonName = 'Show'
-    } else {
-      this.buttonName = 'Hide'
-    }
   }
 
 }

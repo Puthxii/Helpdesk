@@ -98,6 +98,9 @@ export class UploadDetailFormComponent implements OnInit {
     this.uploadService.pushFileToStorage(this.currentFileUpload, coll).subscribe(
       percentage => {
         this.percentage = Math.round(percentage);
+        setTimeout(() => {
+          this.currentFileUpload = null;
+        }, 2000);
       },
       error => {
         console.log(error);

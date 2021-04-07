@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/models/user.model';
-import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
+import { IAngularMyDpOptions, IMyDate, IMyDateModel } from 'angular-mydatepicker';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -89,8 +89,6 @@ export class AddTicketComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings;
-  maxDate = moment(new Date()).format('YYYY-MM-DD');
-  minDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
   User: User;
   Site: Site[];
   moduleList: any[];
@@ -126,8 +124,26 @@ export class AddTicketComponent implements OnInit {
   forResponseDescription = 'forResponseDescription'
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
-    dateFormat: 'dd/mm/yyyy'
+    dateFormat: 'dd/mm/yyyy',
+    disableUntil: this.minDate(),
+    disableSince: this.maxDate()
   };
+
+  minDate(): IMyDate {
+    const date = new Date()
+    const day = date.getDate()
+    const month = date.getMonth()
+    const year = date.getFullYear()
+    return { year, month, day }
+  }
+
+  maxDate(): IMyDate {
+    const date = new Date()
+    const day = date.getDate() + 1
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+    return { year, month, day }
+  }
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
@@ -437,11 +453,20 @@ export class AddTicketComponent implements OnInit {
             month: date.getMonth() + 1,
             day: date.getDate()
           },
-          formatted: date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear(),
+          formatted: this.formatDate(date),
           jsDate: new Date()
         }
       }
     });
+  }
+
+  private formatDate(date: Date) {
+    let month = '' + (date.getMonth() + 1);
+    let day = '' + date.getDate();
+    const year = date.getFullYear();
+    if (month.length < 2) { month = '0' + month; }
+    if (day.length < 2) { day = '0' + day; }
+    return [day, month, year].join('/');
   }
 
   getCustomerContact(name: string) {

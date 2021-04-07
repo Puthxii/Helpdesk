@@ -1,5 +1,5 @@
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Ticket } from '../../models/ticket.model';
+import { Ticket, Tasks } from '../../models/ticket.model';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
@@ -242,8 +242,12 @@ export class TicketService {
       this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
+<<<<<<< HEAD
     console.log(error);
       // this.errorNotification();
+=======
+      this.errorNotification();
+>>>>>>> 11fff1d7fbf8ac10566687667ba6a90c81893700
     }
   }
 
@@ -259,14 +263,31 @@ export class TicketService {
       })
   }
 
-  setAddTasks(id: any, task: any) {
+  setAddTasks(id: any, tasks: Tasks) {
     this.afs.collection('ticket').doc(id)
       .collection('tasks')
-        .add ({
-          subjectTask: task.subjectTask,
-          assignTask: task.assignTask,
-          deadlineDate: task.deadlineDate
-        })
+      .add({
+        subjectTask: tasks.subjectTask,
+        developer: tasks.developer,
+        point: tasks.point,
+        dueDate: tasks.dueDate
+      })
+  }
+
+  updateTasks(id: any, tasks: Tasks) {
+    this.afs.collection('ticket').doc(id)
+      .collection('tasks', ref => ref
+        .doc(tasks.id)
+        .update({
+          subjectTask: tasks.subjectTask,
+          developer: tasks.developer,
+          point: tasks.point,
+          dueDate: tasks.dueDate
+        }))
+  }
+
+  removeTasks(id: any, tasks: Tasks) {
+    this.afs.collection('ticket').doc(id).collection('tasks').doc(tasks.id).delete();
   }
 
   getByKeyWord(keword: any, role) {
@@ -288,7 +309,7 @@ export class TicketService {
   getByCurrentnameStatus(keword: string, currentName: string, status: any) {
     return this.afs.collection('ticket', (ref) => ref
       .where('status', '==', status)
-      .where('staff', '==', currentName)
+      .where('participant', 'array-contains', currentName)
       .orderBy('subject')
       .startAt(keword)
       .endAt(keword + '\uf8ff'));
@@ -296,7 +317,7 @@ export class TicketService {
 
   getByCurrentname(keword: string, currentName: string) {
     return this.afs.collection('ticket', (ref) => ref
-      .where('staff', '==', currentName)
+      .where('participant', 'array-contains', currentName)
       .orderBy('subject')
       .startAt(keword)
       .endAt(keword + '\uf8ff'));
@@ -344,7 +365,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .where('status', '==', status)
       .where('subject', '==', keword)
     );
@@ -354,7 +375,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .where('status', '==', status)
     );
   }
@@ -373,7 +394,7 @@ export class TicketService {
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
       .where('subject', '==', keword)
     );
   }
@@ -383,7 +404,7 @@ export class TicketService {
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
-      .where('staff', '==', creator)
+      .where('participant', 'array-contains', creator)
     );
   }
 

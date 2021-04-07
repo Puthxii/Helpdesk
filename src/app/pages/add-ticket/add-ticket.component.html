@@ -144,7 +144,7 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label class="control-label" for="description">Description</label>
-              <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
+              <textarea formControlName="description" class="form-control" id="description" rows="7"></textarea>
               <div *ngIf="description.invalid && (description.dirty || description.touched)" class="danger-color">
                 <div *ngIf="description.errors.required">
                   Description is required.
@@ -166,7 +166,7 @@
           <div class="row">
             <div class="form-group col-md-12" *ngIf="hideResponse">
               <label for="respond">Response Description</label>
-              <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="3"
+              <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="7"
                 (ngModelChange)="isResponseDescription($event)"></textarea>
             </div>
           </div>

@@ -36,8 +36,31 @@ export class UploadDetailEditComponent implements OnInit {
     }
   }
 
-  deleteFileUpload(fileUpload: FileUpload, flag): void {
-    this.uploadService.deleteFile(fileUpload, flag);
+  deleteFileUpload(fileUpload: FileUpload, flag: any): void {
+    let coll: string
+    switch (flag) {
+      case 'forDescription': {
+        coll = 'uploadDesciption'
+        break
+      }
+      case 'forResponseDescription': {
+        coll = 'uploadResponseDescription'
+        break
+      }
+      case 'forMaDescription': {
+        coll = 'uploadMaDescription'
+        break
+      }
+      case 'forSuggestDescription': {
+        coll = 'uploadSuggestDescription'
+        break
+      }
+      case 'forResolveDescription': {
+        coll = 'uploadResolveDescription'
+        break
+      }
+    }
+    this.uploadService.deleteFile(fileUpload, coll);
     this.fileRemove.emit(fileUpload);
   }
 }
