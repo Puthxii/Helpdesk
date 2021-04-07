@@ -374,6 +374,7 @@ export class EditTicketComponent implements OnInit {
       actionSentence: [''],
       dev: [''],
       tasks: this.fb.group({
+        id: [''],
         subjectTask: [''],
         developer: [''],
         point: [''],
@@ -879,21 +880,30 @@ export class EditTicketComponent implements OnInit {
     this.updateTask = true;
     this.taskIdx = i;
     this.showTask = !this.showTask;
+    this.editTicket.patchValue({
+      tasks: {
+        id: task.id,
+        subjectTask: task.subjectTask,
+        developer: task.developer,
+        point: task.point,
+        dueDate: task.dueDate
+      }
+    })
+  }
 
-    if (typeof task.id === 'undefined') {
+  onUpdateTask(i: number) {
+    const updateTask = this.editTicket.controls.tasks.value
+    if (typeof updateTask.id === 'undefined') {
+      this.depositTasks[i] = updateTask
+      this.depositTasks.push();
       this.isTasksExit(this.depositTasks)
     } else {
-      this.editTicket.patchValue({
-        tasks: {
-          id: task.id,
-          subjectTask: task.subjectTask,
-          developer: task.developer,
-          point: task.point,
-          dueDate: task.dueDate
-        }
-      })
-      this.isTasksExit(this.depositTasks)
+      this.depositTasks[i] = updateTask
+      this.tasksToUpdate.push(updateTask)
     }
+    this.updateTask = false;
+    this.taskIdx = null;
+    this.showTask = !this.showTask;
   }
 
 
@@ -907,14 +917,14 @@ export class EditTicketComponent implements OnInit {
       }
     }
 
-    // if (this.tasksToUpdate.length != 0) {
-    //   for (let i = 0; this.tasksToUpdate.length > i; i++) {
-    //     this.ticketService.updateTasks(
-    //       this.id,
-    //       this.tasksToUpdate[i]
-    //     )
-    //   }
-    // }
+    if (this.tasksToUpdate.length != 0) {
+      for (let i = 0; this.tasksToUpdate.length > i; i++) {
+        this.ticketService.updateTasks(
+          this.id,
+          this.tasksToUpdate[i]
+        )
+      }
+    }
 
     if (this.tasksToDelete.length != 0) {
       for (let i = 0; this.tasksToDelete.length > i; i++) {
