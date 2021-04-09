@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
-import { Ticket, Tasks } from 'src/app/models/ticket.model';
+import { Ticket, Actions, Tasks } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
@@ -95,6 +95,7 @@ export class EditTicketComponent implements OnInit {
   isEdit = false
   title: string
   Tasks: Tasks[];
+  Actions: Actions[]
   tasksToSave: Tasks[] = [];
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
@@ -392,9 +393,9 @@ export class EditTicketComponent implements OnInit {
   }
 
   upadateForm() {
-    this.saveTasks()
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
     this.checkAction()
+    this.saveTasks()
   }
 
   getMaPackage() {
@@ -469,6 +470,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
+      // TODO : assgin -> task.length
       if (this.user.roles.supervisor === true && this.editTicket.controls.assign.value) {
         this.addStatus('Assigned');
       } else {
@@ -523,6 +525,7 @@ export class EditTicketComponent implements OnInit {
 
   isAssignDev() {
     this.addStatus('Assigned');
+    // TODO : assgin -> task.length
     (this.editTicket.controls.assign.value) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
@@ -537,13 +540,11 @@ export class EditTicketComponent implements OnInit {
   }
 
   saveAction(staffCurrent: string, newStatus: any) {
-    this.ticketService
-      .setActionById(
-        this.id,
-        newStatus,
-        staffCurrent ? staffCurrent : '',
-        this.editTicket.controls.assign.value,
-        this.editTicket.controls.actionSentence.value)
+    this.Actions = []
+    this.ticketService.setActionById(
+      this.id,
+      this.Actions[0]
+    )
   }
 
   isAcceptedAssigned() {

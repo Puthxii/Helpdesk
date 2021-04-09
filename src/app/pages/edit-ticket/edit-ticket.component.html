@@ -205,18 +205,6 @@
                     (fileRemove)="onDepositMaDescriptionFileRemove($event)"></app-upload-detail-list>
                 </div>
               </div>
-              <div class="row">
-                <div class="form-group col-md-12"
-                  *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
-                  <label class="control-label" for="assign">Assign task to dev</label>
-                  <select formControlName="assign" name="assign" class="form-control" id="assign"
-                    (ngModelChange)="isAssignDev($event)">
-                    <option value="">choose dev...</option>
-                    <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
-                      {{staff.firstName}} {{staff.lastName}}
-                  </select>
-                </div>
-              </div>
               <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
                 <div class="form-group col-md-12">
                   <hr>
@@ -258,8 +246,9 @@
               </div>
             </div>
             <!-- Add task -->
-            <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="auth.isSupervisor(user)">
-              <label class="" for="task">Tasks</label>
+            <div class="col-lg-6 col-md-12 col-sm-12"
+              *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
+              <label class="" for=" task">Tasks</label>
               <div class="form-row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="form-row">
