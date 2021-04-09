@@ -769,6 +769,7 @@ export class EditTicketComponent implements OnInit {
   setActionSentence() {
     let sentence: string
     const userCurrent = this.getCurrentUser()
+    // todo : array's dev
     const assignDev = this.editTicket.controls.assign.value
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
