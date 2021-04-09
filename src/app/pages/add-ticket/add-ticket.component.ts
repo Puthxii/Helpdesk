@@ -160,7 +160,6 @@ export class AddTicketComponent implements OnInit {
         enableCheckAll: false
       };
     this.setDateDefault()
-    this.setAssign()
     this.getActionSentence()
   }
 
@@ -255,12 +254,6 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  setAssign() {
-    this.addTicketForm.patchValue({
-      assign: ''
-    });
-  }
-
   getActionSentence() {
     this.addTicketForm.patchValue({
       actionSentence: ''
@@ -318,7 +311,6 @@ export class AddTicketComponent implements OnInit {
       status: [''],
       staff: [''],
       email: [''],
-      assign: [''],
       descriptionFile: [''],
       actionSentence: [''],
       participant: ['']
