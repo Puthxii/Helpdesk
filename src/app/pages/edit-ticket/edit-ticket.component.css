@@ -49,3 +49,7 @@ h3{
     color: black;
     height: 70px;
 }
+
+.update-task {
+    background: var(--background-color);
+}
