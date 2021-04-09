@@ -828,7 +828,15 @@ export class EditTicketComponent implements OnInit {
   }
 
   setTask(): void {
+    this.clearTask()
     this.addTask = true;
+    this.updateTask = false;
+    this.taskIdx = null;
+    this.showTask = !this.showTask;
+  }
+
+  onCancelAddTaks() {
+    this.addTask = false;
   }
 
   onTasksSubmit() {
@@ -875,8 +883,14 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
+  onCancelUpdateTaks() {
+    this.updateTask = false;
+    this.taskIdx = null;
+    this.showTask = !this.showTask;
+  }
+
   formUpdateTasks(task: Tasks, i: number) {
-    console.log(task, i);
+    this.addTask = false
     this.updateTask = true;
     this.taskIdx = i;
     this.showTask = !this.showTask;
