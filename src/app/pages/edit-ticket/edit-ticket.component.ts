@@ -1038,4 +1038,15 @@ export class EditTicketComponent implements OnInit {
     return color
   }
 
+  getDev(task) {
+    let name = []
+    if (typeof task.developer === 'object') {
+      for (let i = 0; task.developer.length > i; i++) {
+        name.push(task.developer[i].fullName)
+      }
+    } else {
+      name = task.developer
+    }
+    return name
+  }
 }

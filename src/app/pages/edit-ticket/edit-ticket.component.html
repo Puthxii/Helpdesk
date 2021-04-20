@@ -270,7 +270,7 @@
                             <div>
                               <div *ngIf="taskIdx!==i">
                                 {{task?.subjectTask}}
-                                {{task?.developer}}
+                                {{getDev(task)}}
                                 {{task?.point}}
                                 {{task?.dueDate}}
                                 <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn">
