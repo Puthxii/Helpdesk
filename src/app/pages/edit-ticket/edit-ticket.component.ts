@@ -22,6 +22,7 @@ import Swal from 'sweetalert2';
 })
 export class EditTicketComponent implements OnInit {
   site$: Observable<any>;
+  devSettings: IDropdownSettings;
   dropdownSettings: IDropdownSettings;
   id: string;
   ticket$: Observable<Ticket>;
@@ -166,6 +167,26 @@ export class EditTicketComponent implements OnInit {
       this.setDefaultResolveDescriptionFile()
       this.getModule();
     })
+    this.dropdownSettings = {
+      singleSelection: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      noDataAvailablePlaceholderText: 'Please choose site or site does not have module',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
+    this.devSettings = {
+      singleSelection: false,
+      idField: '$uid',
+      textField: 'fullName',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      noDataAvailablePlaceholderText: 'No developer',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
     this.getTask()
@@ -191,6 +212,7 @@ export class EditTicketComponent implements OnInit {
         item['$uid'] = items.payload.doc['id'];
         this.Staff.push(item as User)
       })
+      console.log(this.Staff);
     });
   }
 
