@@ -213,7 +213,6 @@ export class EditTicketComponent implements OnInit {
         item['$uid'] = items.payload.doc['id'];
         this.Staff.push(item as User)
       })
-      console.log(this.Staff);
     });
   }
 
