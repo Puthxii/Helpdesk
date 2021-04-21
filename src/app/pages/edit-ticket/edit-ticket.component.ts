@@ -33,6 +33,7 @@ export class EditTicketComponent implements OnInit {
   Task: Tasks[];
   staff: any;
   sumPoint: any;
+  total: any;
   statusCurrent: any;
   currentName: string
   user$: any
@@ -155,7 +156,7 @@ export class EditTicketComponent implements OnInit {
         suggestDescriptionFile: this.ticket.suggestDescriptionFile,
         resolveDescription: this.ticket.resolveDescription,
         resolveDescriptionFile: this.ticket.resolveDescriptionFile,
-        sumPoint:this.ticket.sumPOint
+        sumPoint: this.ticket.sumPoint
       });
       this.getDescriptionFileUpload()
       this.getResponseDescriptionFileUpload()
@@ -189,6 +190,7 @@ export class EditTicketComponent implements OnInit {
         this.depositTasks = this.Tasks
       })
     })
+    this.totalPoint()
   }
 
   getDeveloper() {
@@ -402,10 +404,8 @@ export class EditTicketComponent implements OnInit {
 
   upadateForm() {
     this.saveTasks()
-    // this.totalPoint()
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
     this.checkAction()  
-    console.log(this.sumPoint);
   }
 
   getMaPackage() {
@@ -1015,11 +1015,14 @@ export class EditTicketComponent implements OnInit {
 
   totalPoint() {
     this.sumPoint = 0
-    if (this.tasksToSave.length != undefined) {
-      for (let i=0; i < this.tasksToSave.length; i++) {
-        this.sumPoint = this.sumPoint + this.tasksToSave[i].point
-      } 
-    }    
-  //  console.log(this.sumPoint);
+    if (this.depositTasks.length != undefined) {
+      alert('aa')
+      for (let i=0; i < this.depositTasks.length; i++) {
+        this.sumPoint = this.sumPoint + this.depositTasks[i].point
+        this.editTicket.patchValue({
+          sumPoint: this.sumPoint
+        }); 
+      }
+    }
   }
 }
