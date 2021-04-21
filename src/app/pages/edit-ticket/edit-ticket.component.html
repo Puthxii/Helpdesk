@@ -245,7 +245,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="auth.isSupervisor(user)">
+            <div class="col-lg-6 col-md-12 col-sm-12"
+              *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
               <label class="" for="task">Tasks</label>
               <div class="form-row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -278,8 +279,8 @@
                                     <div class="form-group col-md-6">
                                       <label for="developer" class="control-label">Assign Dev</label>
                                       <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'"
-                                        [data]="Staff" id="developer" formControlName="developer"
-                                        [settings]="devSettings">
+                                        (ngModelChange)="isAssignDev($event)" [data]="Staff" id="developer"
+                                        formControlName="developer" [settings]="devSettings">
                                       </ng-multiselect-dropdown>
                                     </div>
                                   </div>
@@ -334,7 +335,8 @@
                       <div class="form-group col-md-6">
                         <label for="developer" class="control-label">Assign Dev</label>
                         <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'" [data]="Staff"
-                          id="developer" formControlName="developer" [settings]="devSettings">
+                          (ngModelChange)="isAssignDev($event)" id="developer" formControlName="developer"
+                          [settings]="devSettings">
                         </ng-multiselect-dropdown>
                       </div>
                     </div>

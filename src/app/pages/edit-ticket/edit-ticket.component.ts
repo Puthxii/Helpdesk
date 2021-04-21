@@ -492,7 +492,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
       // TODO : assgin -> task.length
-      if (this.user.roles.supervisor === true && this.editTicket.controls.assign.value) {
+      if (this.user.roles.supervisor === true && this.editTicket.controls.tasks.value.developer) {
         this.addStatus('Assigned');
       } else {
         this.removeStatus('Assigned');
@@ -547,7 +547,7 @@ export class EditTicketComponent implements OnInit {
   isAssignDev() {
     this.addStatus('Assigned');
     // TODO : assgin -> task.length
-    (this.editTicket.controls.assign.value) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
+    (this.editTicket.controls.tasks.value.developer) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
   checkAction() {
