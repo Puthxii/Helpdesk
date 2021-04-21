@@ -233,7 +233,8 @@ export class TicketService {
         suggestDescription: ticket.suggestDescription,
         suggestDescriptionFile: ticket.suggestDescriptionFile,
         resolveDescription: ticket.resolveDescription,
-        resolveDescriptionFile: ticket.resolveDescriptionFile
+        resolveDescriptionFile: ticket.resolveDescriptionFile,
+        sumPoint: ticket.sumPoint
       })
       this.deleteCollection('uploadDesciption')
       this.deleteCollection('uploadResponseDescription')
@@ -242,7 +243,9 @@ export class TicketService {
       this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
-      this.errorNotification();
+    console.error(error);
+    
+      // this.errorNotification();
     }
   }
 

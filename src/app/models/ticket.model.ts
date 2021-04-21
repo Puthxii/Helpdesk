@@ -28,6 +28,7 @@ export interface Ticket {
     resolveDescription?: string;
     resolveDescriptionFile?: any;
     task?: Tasks[]
+    sumPoint: string;
 }
 export interface Actions {
     data: any,

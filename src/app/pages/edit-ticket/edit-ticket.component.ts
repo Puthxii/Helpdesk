@@ -32,6 +32,7 @@ export class EditTicketComponent implements OnInit {
   Staff: User[];
   Task: Tasks[];
   staff: any;
+  sumPoint: any;
   statusCurrent: any;
   currentName: string
   user$: any
@@ -101,6 +102,7 @@ export class EditTicketComponent implements OnInit {
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
 
+
   constructor(
     private ticketService: TicketService,
     private route: ActivatedRoute,
@@ -152,7 +154,8 @@ export class EditTicketComponent implements OnInit {
         suggestDescription: this.ticket.suggestDescription,
         suggestDescriptionFile: this.ticket.suggestDescriptionFile,
         resolveDescription: this.ticket.resolveDescription,
-        resolveDescriptionFile: this.ticket.resolveDescriptionFile
+        resolveDescriptionFile: this.ticket.resolveDescriptionFile,
+        sumPoint:this.ticket.sumPOint
       });
       this.getDescriptionFileUpload()
       this.getResponseDescriptionFileUpload()
@@ -171,6 +174,8 @@ export class EditTicketComponent implements OnInit {
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
     this.getTask()
+    this.totalPoint()
+    // console.log(this.sumPoint());
   }
 
 
@@ -390,14 +395,17 @@ export class EditTicketComponent implements OnInit {
       suggestDescription: [''],
       suggestDescriptionFile: [''],
       resolveDescription: [''],
-      resolveDescriptionFile: ['']
+      resolveDescriptionFile: [''],
+      sumPoint: ['']
     });
   }
 
   upadateForm() {
     this.saveTasks()
+    // this.totalPoint()
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
-    this.checkAction()
+    this.checkAction()  
+    console.log(this.sumPoint);
   }
 
   getMaPackage() {
@@ -432,7 +440,7 @@ export class EditTicketComponent implements OnInit {
     this.editTicket.patchValue({
       status: value
     });
-    this.setActionSentence()
+    this.setActionSentence() 
   }
 
   filterAction() {
@@ -633,7 +641,7 @@ export class EditTicketComponent implements OnInit {
     this.depositDescriptionFiles = this.editTicket.controls.descriptionFile.value
     return this.depositDescriptionFiles
   }
-
+  
   getResponseDescriptionFileUpload() {
     this.depositResponseDescriptionFiles = this.editTicket.controls.responseDescriptionFile.value
     return this.depositResponseDescriptionFiles
@@ -842,7 +850,9 @@ export class EditTicketComponent implements OnInit {
     this.depositTasks.push(this.newTask);
     this.isTasksExit(this.depositTasks)
     this.clearTask()
-    this.addTask = false;
+    this.addTask = false;  
+    this.totalPoint()
+    // console.error(Error);
   }
 
   isTasksExit(depositTasks: any[]) {
@@ -914,6 +924,7 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToSave[i]
         )
+
       }
     }
 
@@ -1002,4 +1013,13 @@ export class EditTicketComponent implements OnInit {
     return color
   }
 
+  totalPoint() {
+    this.sumPoint = 0
+    if (this.tasksToSave.length != undefined) {
+      for (let i=0; i < this.tasksToSave.length; i++) {
+        this.sumPoint = this.sumPoint + this.tasksToSave[i].point
+      } 
+    }    
+  //  console.log(this.sumPoint);
+  }
 }
