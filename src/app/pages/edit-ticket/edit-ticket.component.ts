@@ -103,7 +103,6 @@ export class EditTicketComponent implements OnInit {
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
 
-
   constructor(
     private ticketService: TicketService,
     private route: ActivatedRoute,
@@ -175,10 +174,7 @@ export class EditTicketComponent implements OnInit {
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
     this.getTask()
-    this.totalPoint()
-    // console.log(this.sumPoint());
   }
-
 
   getTask() {
     this.ticketService.getTask(this.id).snapshotChanges().subscribe(data => {
@@ -189,8 +185,8 @@ export class EditTicketComponent implements OnInit {
         this.Tasks.push(item as Tasks)
         this.depositTasks = this.Tasks
       })
+      this.totalPoint()
     })
-    this.totalPoint()
   }
 
   getDeveloper() {
@@ -405,7 +401,7 @@ export class EditTicketComponent implements OnInit {
   upadateForm() {
     this.saveTasks()
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
-    this.checkAction()  
+    this.checkAction()
   }
 
   getMaPackage() {
@@ -440,7 +436,7 @@ export class EditTicketComponent implements OnInit {
     this.editTicket.patchValue({
       status: value
     });
-    this.setActionSentence() 
+    this.setActionSentence()
   }
 
   filterAction() {
@@ -641,7 +637,7 @@ export class EditTicketComponent implements OnInit {
     this.depositDescriptionFiles = this.editTicket.controls.descriptionFile.value
     return this.depositDescriptionFiles
   }
-  
+
   getResponseDescriptionFileUpload() {
     this.depositResponseDescriptionFiles = this.editTicket.controls.responseDescriptionFile.value
     return this.depositResponseDescriptionFiles
@@ -850,7 +846,7 @@ export class EditTicketComponent implements OnInit {
     this.depositTasks.push(this.newTask);
     this.isTasksExit(this.depositTasks)
     this.clearTask()
-    this.addTask = false;  
+    this.addTask = false;
     this.totalPoint()
     // console.error(Error);
   }
@@ -1016,13 +1012,18 @@ export class EditTicketComponent implements OnInit {
   totalPoint() {
     this.sumPoint = 0
     if (this.depositTasks.length != undefined) {
-      alert('aa')
-      for (let i=0; i < this.depositTasks.length; i++) {
+      for (let i = 0; this.depositTasks.length > i; i++) {
+        console.log(this.depositTasks[i]);
         this.sumPoint = this.sumPoint + this.depositTasks[i].point
-        this.editTicket.patchValue({
-          sumPoint: this.sumPoint
-        }); 
       }
     }
+    this.setSumPoint(this.sumPoint)
   }
+
+  setSumPoint(sumPoint: any) {
+    this.editTicket.patchValue({
+      sumPoint
+    });
+  }
+
 }

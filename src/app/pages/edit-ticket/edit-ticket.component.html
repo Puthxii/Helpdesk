@@ -279,7 +279,8 @@
                                             {{task?.developer}}
                                             {{task?.point}}
                                             {{task?.dueDate}}
-                                            <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn">
+                                            <button type="button" (click)="formUpdateTasks(task, i)"
+                                              class="btn warningBtn">
                                               <i class="fas fa-pen"></i>
                                             </button>
                                             <button type="button" (click)="removeTasks(i)" class="btn dangerBtn">
@@ -343,7 +344,7 @@
                   </div>
                 </div>
               </div>
-              <p formControlName="sumPoint">total = {{sumPoint}}</p>
+              <p>total = {{ this.sumPoint }}</p>
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <div class="row" *ngIf="!addTask">
