@@ -880,7 +880,6 @@ export class EditTicketComponent implements OnInit {
       this.depositTasks.splice(i, 1);
       this.totalPoint()
     }
-    this.totalPoint()
   }
 
   formUpdateTasks(task: Tasks, i: number) {
