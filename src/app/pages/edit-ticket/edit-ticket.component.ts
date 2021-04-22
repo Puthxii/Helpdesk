@@ -879,6 +879,7 @@ export class EditTicketComponent implements OnInit {
       this.tasksToDelete.push(this.depositTasks[i])
       this.depositTasks.splice(i, 1);
     }
+    this.totalPoint()
   }
 
   formUpdateTasks(task: Tasks, i: number) {
@@ -910,6 +911,7 @@ export class EditTicketComponent implements OnInit {
     this.updateTask = false;
     this.taskIdx = null;
     this.showTask = !this.showTask;
+    this.totalPoint()
   }
 
 
