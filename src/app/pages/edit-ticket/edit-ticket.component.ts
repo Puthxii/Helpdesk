@@ -874,12 +874,11 @@ export class EditTicketComponent implements OnInit {
     if (typeof this.depositTasks[i].id === 'undefined') {
       this.depositTasks.splice(i, 1);
       this.isTasksExit(this.depositTasks)
-      this.totalPoint()
     } else {
       this.tasksToDelete.push(this.depositTasks[i])
       this.depositTasks.splice(i, 1);
-      this.totalPoint()
     }
+    this.totalPoint()
   }
 
   formUpdateTasks(task: Tasks, i: number) {
