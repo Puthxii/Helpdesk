@@ -553,7 +553,7 @@ export class EditTicketComponent implements OnInit {
     const staff = this.getCurrentStaff()
     const currentStatus = this.editTicket.controls.currentStatus.value
     const status = this.editTicket.controls.status.value
-    const dev = 'teenapat'
+    const dev = ''
     const actionSentence = this.editTicket.controls.actionSentence.value
     if (currentStatus === status) {
     } else {
@@ -563,11 +563,23 @@ export class EditTicketComponent implements OnInit {
 
   saveAction(actionSentence: any, dev: any, staff: any, status: any) {
     this.Actions = []
-    const action = { actionSentence, dev, staff, status }
-    this.Actions.push(action)
+    if (this.tasksToSave.length != 0) {
+      for (let i = 0; this.tasksToSave.length > i; i++) {
+        const dev = this.tasksToSave[i].developer
+        const action = { actionSentence, dev, staff, status }
+        this.Actions.push(action)
+      }
+    } else {
+      const action = { actionSentence, dev, staff, status }
+      this.Actions.push(action)
+    }
+    this.setActionById(this.Actions)
+  }
+
+  setActionById(Actions: Actions[]) {
     this.ticketService.setActionById(
       this.id,
-      this.Actions[0]
+      Actions[0]
     )
   }
 
