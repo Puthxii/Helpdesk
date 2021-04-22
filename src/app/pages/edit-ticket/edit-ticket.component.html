@@ -279,8 +279,8 @@
                                     <div class="form-group col-md-6">
                                       <label for="developer" class="control-label">Assign Dev</label>
                                       <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'"
-                                        (ngModelChange)="isAssignDev($event)" [data]="Staff" id="developer"
-                                        formControlName="developer" [settings]="devSettings">
+                                        [data]="Staff" id="developer" formControlName="developer"
+                                        [settings]="devSettings">
                                       </ng-multiselect-dropdown>
                                     </div>
                                   </div>
@@ -335,8 +335,7 @@
                       <div class="form-group col-md-6">
                         <label for="developer" class="control-label">Assign Dev</label>
                         <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'" [data]="Staff"
-                          (ngModelChange)="isAssignDev($event)" id="developer" formControlName="developer"
-                          [settings]="devSettings">
+                          id="developer" formControlName="developer" [settings]="devSettings">
                         </ng-multiselect-dropdown>
                       </div>
                     </div>

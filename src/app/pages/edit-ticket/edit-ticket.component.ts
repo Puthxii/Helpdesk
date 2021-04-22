@@ -491,8 +491,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
-      // TODO : assgin -> task.length
-      if (this.user.roles.supervisor === true && this.editTicket.controls.tasks.value.developer) {
+      if (this.user.roles.supervisor === true && this.depositTasks.length != 0) {
+        alert('do')
         this.addStatus('Assigned');
       } else {
         this.removeStatus('Assigned');
@@ -546,8 +546,7 @@ export class EditTicketComponent implements OnInit {
 
   isAssignDev() {
     this.addStatus('Assigned');
-    // TODO : assgin -> task.length
-    (this.editTicket.controls.tasks.value.developer) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
+    (this.depositTasks.length != 0) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
   checkAction() {
@@ -874,6 +873,7 @@ export class EditTicketComponent implements OnInit {
     this.isTasksExit(this.depositTasks)
     this.clearTask()
     this.addTask = false;
+    this.isAssignDev()
   }
 
   isTasksExit(depositTasks: any[]) {
@@ -904,6 +904,7 @@ export class EditTicketComponent implements OnInit {
       this.tasksToDelete.push(this.depositTasks[i])
       this.depositTasks.splice(i, 1);
     }
+    this.isAssignDev()
   }
 
   onCancelUpdateTaks() {
@@ -941,6 +942,7 @@ export class EditTicketComponent implements OnInit {
     this.updateTask = false;
     this.taskIdx = null;
     this.showTask = !this.showTask;
+    this.isAssignDev()
   }
 
 
