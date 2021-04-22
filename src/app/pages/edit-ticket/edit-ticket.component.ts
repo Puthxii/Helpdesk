@@ -848,7 +848,6 @@ export class EditTicketComponent implements OnInit {
     this.clearTask()
     this.addTask = false;
     this.totalPoint()
-    // console.error(Error);
   }
 
   isTasksExit(depositTasks: any[]) {
@@ -875,9 +874,11 @@ export class EditTicketComponent implements OnInit {
     if (typeof this.depositTasks[i].id === 'undefined') {
       this.depositTasks.splice(i, 1);
       this.isTasksExit(this.depositTasks)
+      this.totalPoint()
     } else {
       this.tasksToDelete.push(this.depositTasks[i])
       this.depositTasks.splice(i, 1);
+      this.totalPoint()
     }
   }
 
@@ -910,6 +911,7 @@ export class EditTicketComponent implements OnInit {
     this.updateTask = false;
     this.taskIdx = null;
     this.showTask = !this.showTask;
+    this.totalPoint()
   }
 
 
@@ -1011,7 +1013,7 @@ export class EditTicketComponent implements OnInit {
 
   totalPoint() {
     this.sumPoint = 0
-    if (this.depositTasks.length != undefined) {
+    if (this.depositTasks.length !== undefined) {
       for (let i = 0; this.depositTasks.length > i; i++) {
         console.log(this.depositTasks[i]);
         this.sumPoint = this.sumPoint + this.depositTasks[i].point
