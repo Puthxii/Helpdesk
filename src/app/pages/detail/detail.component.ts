@@ -94,5 +94,14 @@ export class DetailComponent implements OnInit {
     }
     return color
   }
+
+  getDev(action: { dev: string | any[]; }) {
+    const name = []
+    for (let i = 0; action.dev.length > i; i++) {
+      name.push(action.dev[i].fullName)
+    }
+    return (name.length != 0) ? name : '-'
+  }
+
 }
 

@@ -1062,6 +1062,6 @@ export class EditTicketComponent implements OnInit {
     for (let i = 0; task.developer.length > i; i++) {
       name.push(task.developer[i].fullName)
     }
-    return name
+    return (name.length != 0) ? name : '-'
   }
 }
