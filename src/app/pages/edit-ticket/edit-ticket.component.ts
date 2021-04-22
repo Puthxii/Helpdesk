@@ -550,17 +550,21 @@ export class EditTicketComponent implements OnInit {
   }
 
   checkAction() {
-    const staffCurrent = this.getCurrentStaff()
+    const staff = this.getCurrentStaff()
     const currentStatus = this.editTicket.controls.currentStatus.value
-    const newStatus = this.editTicket.controls.status.value
-    if (currentStatus === newStatus) {
+    const status = this.editTicket.controls.status.value
+    const dev = 'teenapat'
+    const actionSentence = this.editTicket.controls.actionSentence.value
+    if (currentStatus === status) {
     } else {
-      this.saveAction(staffCurrent, newStatus)
+      this.saveAction(actionSentence, dev, staff, status)
     }
   }
 
-  saveAction(staffCurrent: string, newStatus: any) {
+  saveAction(actionSentence: any, dev: any, staff: any, status: any) {
     this.Actions = []
+    const action = { actionSentence, dev, staff, status }
+    this.Actions.push(action)
     this.ticketService.setActionById(
       this.id,
       this.Actions[0]
