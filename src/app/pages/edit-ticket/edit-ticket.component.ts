@@ -790,7 +790,7 @@ export class EditTicketComponent implements OnInit {
     let sentence: string
     const userCurrent = this.getCurrentUser()
     // todo : array's dev
-    const assignDev = this.editTicket.controls.assign.value
+    const assignDev = this.editTicket.controls.tasks.value.developer
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
         sentence = `${userCurrent} edit ticket`
