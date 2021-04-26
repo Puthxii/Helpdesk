@@ -97,8 +97,10 @@ export class DetailComponent implements OnInit {
 
   getDev(action: { dev: string | any[]; }) {
     const name = []
-    for (let i = 0; action.dev.length > i; i++) {
-      name.push(action.dev[i].fullName)
+    if (typeof action.dev === 'object') {
+      for (let i = 0; action.dev.length > i; i++) {
+        name.push(action.dev[i].fullName)
+      }
     }
     return (name.length != 0) ? name : '-'
   }
