@@ -96,7 +96,7 @@ export class EditTicketComponent implements OnInit {
   isEdit = false
   title: string
   Tasks: Tasks[];
-  Actions: Actions[]
+  Actions: Actions
   tasksToSave: Tasks[] = [];
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
@@ -413,7 +413,7 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
-  upadateForm() {
+  updateForm() {
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
     this.checkAction()
     this.saveTasks()
@@ -554,32 +554,32 @@ export class EditTicketComponent implements OnInit {
     const currentStatus = this.editTicket.controls.currentStatus.value
     const status = this.editTicket.controls.status.value
     const dev = ''
-    const actionSentence = this.editTicket.controls.actionSentence.value
-    if (currentStatus === status) {
+    const actionSentence = this.editTicket.controls.actionSentence.value;
+    (currentStatus != status && this.isSupAcceptedAssigned(status)) ? this.saveAction(actionSentence, dev, staff, status) : ''
+  }
+
+  isSupAcceptedAssigned(status: any) {
+    if (this.user.roles.supervisor === true && (status === 'Assigned' || status === 'Accepted')) {
+      return false
     } else {
-      this.saveAction(actionSentence, dev, staff, status)
+      return true
     }
   }
 
   saveAction(actionSentence: any, dev: any, staff: any, status: any) {
-    this.Actions = []
-    if (this.tasksToSave.length != 0) {
-      for (let i = 0; this.tasksToSave.length > i; i++) {
-        const dev = this.tasksToSave[i].developer
-        const action = { actionSentence, dev, staff, status }
-        this.Actions.push(action)
-      }
-    } else {
-      const action = { actionSentence, dev, staff, status }
-      this.Actions.push(action)
+    this.Actions = {
+      actionSentence,
+      dev,
+      staff,
+      status
     }
     this.setActionById(this.Actions)
   }
 
-  setActionById(Actions: Actions[]) {
+  setActionById(Actions: Actions) {
     this.ticketService.setActionById(
       this.id,
-      Actions[0]
+      Actions
     )
   }
 
@@ -927,6 +927,7 @@ export class EditTicketComponent implements OnInit {
     this.updateTask = false;
     this.taskIdx = null;
     this.showTask = !this.showTask;
+    this.clearTask()
   }
 
   formUpdateTasks(task: Tasks, i: number) {
@@ -958,17 +959,23 @@ export class EditTicketComponent implements OnInit {
     this.updateTask = false;
     this.taskIdx = null;
     this.showTask = !this.showTask;
+    this.clearTask()
     this.isAssignDev()
   }
 
 
   saveTasks() {
+    const staff = this.getCurrentStaff()
+    const status = this.editTicket.controls.status.value
+    const actionSentence = this.editTicket.controls.actionSentence.value;
+
     if (this.tasksToSave.length != 0) {
       for (let i = 0; this.tasksToSave.length > i; i++) {
         this.ticketService.setAddTasks(
           this.id,
           this.tasksToSave[i]
         )
+        this.saveAction(actionSentence, this.tasksToSave[i].developer, staff, status)
       }
     }
 
@@ -978,6 +985,7 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToUpdate[i]
         )
+        this.saveAction(`${staff} edit task`, this.tasksToUpdate[i].developer, staff, status)
       }
     }
 
@@ -987,6 +995,7 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToDelete[i]
         )
+        this.saveAction(`${staff} delete task`, this.tasksToDelete[i].developer, staff, status)
       }
     }
   }

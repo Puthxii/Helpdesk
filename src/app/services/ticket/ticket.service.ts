@@ -245,7 +245,6 @@ export class TicketService {
   }
 
   setActionById(id: any, actions: Actions) {
-    console.log('actions', actions);
     this.afs.collection('ticket').doc(id)
       .collection('action')
       .add({
