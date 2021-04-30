@@ -100,7 +100,7 @@ export class EditTicketComponent implements OnInit {
   isEdit = false
   title: string
   Tasks: Tasks[];
-  Actions: Actions[]
+  Actions: Actions
   tasksToSave: Tasks[] = [];
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
@@ -219,7 +219,6 @@ export class EditTicketComponent implements OnInit {
         item['$uid'] = items.payload.doc['id'];
         this.Staff.push(item as User)
       })
-      console.log(this.Staff);
     });
   }
 
@@ -421,7 +420,7 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
-  upadateForm() {
+  updateForm() {
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
     this.checkAction()
     this.saveTasks()
@@ -499,10 +498,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
-      this.addStatus('Assigned');
-      // this.removeStatus('Assigned');
-      // TODO : assgin -> task.length
-      if (this.user.roles.supervisor === true && this.editTicket.controls.assign.value) {
+      if (this.user.roles.supervisor === true && this.depositTasks.length != 0) {
+        alert('do')
         this.addStatus('Assigned');
       } else {
         this.removeStatus('Assigned');
@@ -556,25 +553,40 @@ export class EditTicketComponent implements OnInit {
 
   isAssignDev() {
     this.addStatus('Assigned');
-    // TODO : assgin -> task.length
-    (this.editTicket.controls.assign.value) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
+    (this.depositTasks.length != 0) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
   checkAction() {
-    const staffCurrent = this.getCurrentStaff()
+    const staff = this.getCurrentStaff()
     const currentStatus = this.editTicket.controls.currentStatus.value
-    const newStatus = this.editTicket.controls.status.value
-    if (currentStatus === newStatus) {
+    const status = this.editTicket.controls.status.value
+    const dev = ''
+    const actionSentence = this.editTicket.controls.actionSentence.value;
+    (currentStatus != status && this.isSupAcceptedAssigned(status)) ? this.saveAction(actionSentence, dev, staff, status) : ''
+  }
+
+  isSupAcceptedAssigned(status: any) {
+    if (this.user.roles.supervisor === true && (status === 'Assigned' || status === 'Accepted')) {
+      return false
     } else {
-      this.saveAction(staffCurrent, newStatus)
+      return true
     }
   }
 
-  saveAction(staffCurrent: string, newStatus: any) {
-    this.Actions = []
+  saveAction(actionSentence: any, dev: any, staff: any, status: any) {
+    this.Actions = {
+      actionSentence,
+      dev,
+      staff,
+      status
+    }
+    this.setActionById(this.Actions)
+  }
+
+  setActionById(Actions: Actions) {
     this.ticketService.setActionById(
       this.id,
-      this.Actions[0]
+      Actions
     )
   }
 
@@ -801,7 +813,7 @@ export class EditTicketComponent implements OnInit {
     let sentence: string
     const userCurrent = this.getCurrentUser()
     // todo : array's dev
-    const assignDev = this.editTicket.controls.assign.value
+    const assignDev = this.editTicket.controls.tasks.value.developer
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
         sentence = `${userCurrent} edit ticket`
@@ -885,6 +897,7 @@ export class EditTicketComponent implements OnInit {
     this.clearTask()
     this.addTask = false;
     this.totalPoint()
+    this.isAssignDev()
   }
 
   isTasksExit(depositTasks: any[]) {
@@ -916,12 +929,14 @@ export class EditTicketComponent implements OnInit {
       this.depositTasks.splice(i, 1);
     }
     this.totalPoint()
+    this.isAssignDev()
   }
 
   onCancelUpdateTaks() {
     this.updateTask = false;
     this.taskIdx = null;
     this.showTask = !this.showTask;
+    this.clearTask()
   }
 
   formUpdateTasks(task: Tasks, i: number) {
@@ -954,17 +969,23 @@ export class EditTicketComponent implements OnInit {
     this.taskIdx = null;
     this.showTask = !this.showTask;
     this.totalPoint()
+    this.clearTask()
+    this.isAssignDev()
   }
 
 
   saveTasks() {
+    const staff = this.getCurrentStaff()
+    const status = this.editTicket.controls.status.value
+    const actionSentence = this.editTicket.controls.actionSentence.value;
+
     if (this.tasksToSave.length != 0) {
       for (let i = 0; this.tasksToSave.length > i; i++) {
         this.ticketService.setAddTasks(
           this.id,
           this.tasksToSave[i]
         )
-
+        this.saveAction(actionSentence, this.tasksToSave[i].developer, staff, status)
       }
     }
 
@@ -974,6 +995,7 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToUpdate[i]
         )
+        this.saveAction(`${staff} edit task`, this.tasksToUpdate[i].developer, staff, status)
       }
     }
 
@@ -983,6 +1005,7 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToDelete[i]
         )
+        this.saveAction(`${staff} delete task`, this.tasksToDelete[i].developer, staff, status)
       }
     }
   }
@@ -1070,15 +1093,12 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
-  getDev(task) {
-    let name = []
-    if (typeof task.developer === 'object') {
-      for (let i = 0; task.developer.length > i; i++) {
-        name.push(task.developer[i].fullName)
-      }
-    } else {
-      name = task.developer
+  getDev(task: { developer: string | any[]; }) {
+    const name = []
+    for (let i = 0; task.developer.length > i; i++) {
+      name.push(task.developer[i].fullName)
     }
-    return name
+    return (name.length != 0) ? name : '-'
   }
+
 }

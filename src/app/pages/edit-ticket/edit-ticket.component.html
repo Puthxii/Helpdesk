@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="card-body">
-        <form [formGroup]="editTicket" (ngSubmit)="upadateForm()" *ngIf="site$ | async; else loading; let Site">
+        <form [formGroup]="editTicket" (ngSubmit)="updateForm()" *ngIf="site$ | async; else loading; let Site">
           <div class="row">
             <div class="col-lg-6 col-md-12 col-sm-12">
               <div class="form-row" *ngIf="auth.isStaff(user)">
@@ -168,7 +168,7 @@
                       rows="7" (ngModelChange)="isResponseDescription($event)"
                       [readonly]="!auth.isSupporter(user)"></textarea>
                     <div class="danger-color">
-                      Please fill out a description for More Info/Close
+                      Please fill out a description for More Info, Close and Reject
                     </div>
                   </div>
                 </div>
@@ -244,7 +244,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="auth.isSupervisor(user)">
+            <div class="col-lg-6 col-md-12 col-sm-12"
+              *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
               <label class="" for="task">Tasks</label>
               <div class="form-row">
                 <div class="col-lg-12 col-md-12 col-sm-12">

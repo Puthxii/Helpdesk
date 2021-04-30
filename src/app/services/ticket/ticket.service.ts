@@ -253,7 +253,7 @@ export class TicketService {
     this.afs.collection('ticket').doc(id)
       .collection('action')
       .add({
-        actions: actions.actionSentence,
+        actionSentence: actions.actionSentence,
         dev: actions.dev,
         staff: actions.staff,
         status: actions.status,

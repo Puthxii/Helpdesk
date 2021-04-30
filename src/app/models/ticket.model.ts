@@ -34,7 +34,7 @@ export interface Actions {
     dev?: any
     staff?: string
     status: string
-    date: any
+    date?: any
 }
 
 export interface Tasks {
