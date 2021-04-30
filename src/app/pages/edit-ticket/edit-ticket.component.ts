@@ -104,6 +104,7 @@ export class EditTicketComponent implements OnInit {
   tasksToSave: Tasks[] = [];
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
+  maxDueDate: any;
 
   constructor(
     private ticketService: TicketService,
@@ -196,6 +197,7 @@ export class EditTicketComponent implements OnInit {
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
     this.getTask()
+    
   }
 
   getTask() {
@@ -208,6 +210,7 @@ export class EditTicketComponent implements OnInit {
         this.depositTasks = this.Tasks
       })
       this.totalPoint()
+      this.checkDueDate()
     })
   }
 
@@ -1099,6 +1102,18 @@ export class EditTicketComponent implements OnInit {
       name.push(task.developer[i].fullName)
     }
     return (name.length != 0) ? name : '-'
+  }
+ 
+  checkDueDate() {
+    this.maxDueDate = this.depositTasks.sort((a,b) => 
+      new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())[0].dueDate;
+    if (this.depositTasks.length !== undefined) {
+      for (let i = 0; this.depositTasks.length > i; i++) {
+        if (this.maxDueDate < this.depositTasks[i].dueDate) {
+          this.maxDueDate = this.depositTasks[i].dueDate
+        }
+      }
+    }
   }
 
 }
