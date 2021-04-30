@@ -232,8 +232,8 @@ export class TicketService {
         suggestDescriptionFile: ticket.suggestDescriptionFile,
         resolveDescription: ticket.resolveDescription,
         resolveDescriptionFile: ticket.resolveDescriptionFile,
-        sumPoint: ticket.sumPoint
-       
+        sumPoint: ticket.sumPoint,
+        maxDueDate: ticket.maxDueDate
       })
       this.deleteCollection('uploadDesciption')
       this.deleteCollection('uploadResponseDescription')

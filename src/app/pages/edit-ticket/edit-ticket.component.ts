@@ -157,8 +157,7 @@ export class EditTicketComponent implements OnInit {
         suggestDescription: this.ticket.suggestDescription,
         suggestDescriptionFile: this.ticket.suggestDescriptionFile,
         resolveDescription: this.ticket.resolveDescription,
-        resolveDescriptionFile: this.ticket.resolveDescriptionFile,
-        sumPoint: this.ticket.sumPoint
+        resolveDescriptionFile: this.ticket.resolveDescriptionFile
       });
       this.getDescriptionFileUpload()
       this.getResponseDescriptionFileUpload()
@@ -419,7 +418,8 @@ export class EditTicketComponent implements OnInit {
       suggestDescriptionFile: [''],
       resolveDescription: [''],
       resolveDescriptionFile: [''],
-      sumPoint: ['']
+      sumPoint: [''],
+      maxDueDate: ['']
     });
   }
 
@@ -900,6 +900,7 @@ export class EditTicketComponent implements OnInit {
     this.clearTask()
     this.addTask = false;
     this.totalPoint()
+    this.checkDueDate()
     this.isAssignDev()
   }
 
@@ -974,6 +975,7 @@ export class EditTicketComponent implements OnInit {
     this.totalPoint()
     this.clearTask()
     this.isAssignDev()
+    this.checkDueDate()
   }
 
 
@@ -1103,17 +1105,16 @@ export class EditTicketComponent implements OnInit {
     }
     return (name.length != 0) ? name : '-'
   }
- 
+
   checkDueDate() {
-    this.maxDueDate = this.depositTasks.sort((a,b) => 
-      new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())[0].dueDate;
-    if (this.depositTasks.length !== undefined) {
-      for (let i = 0; this.depositTasks.length > i; i++) {
-        if (this.maxDueDate < this.depositTasks[i].dueDate) {
-          this.maxDueDate = this.depositTasks[i].dueDate
-        }
-      }
-    }
+    this.maxDueDate = this.depositTasks.sort((a,b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())[0].dueDate;
+    this.setDueDate(this.maxDueDate)
+  }
+
+  setDueDate(maxDueDate: any) {
+    this.editTicket.patchValue({
+      maxDueDate
+    })
   }
 
 }

@@ -27,7 +27,8 @@ export interface Ticket {
     resolveDescription?: string;
     resolveDescriptionFile?: any;
     task?: Tasks[]
-    sumPoint: string;
+    sumPoint: number;
+    maxDueDate: any;
 }
 export interface Actions {
     actionSentence: string
