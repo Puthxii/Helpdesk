@@ -615,7 +615,7 @@ export class EditTicketComponent implements OnInit {
 
   addStatus(status: string) {
     if (this.Status.some(item => item.value === status)) {
-      console.log('Object found inside the array.');
+      console.log('Object found inside the array');
     } else {
       let name: string;
       let value: string;
@@ -804,7 +804,6 @@ export class EditTicketComponent implements OnInit {
   setActionSentence() {
     let sentence: string
     const userCurrent = this.getCurrentUser()
-    // todo : array's dev
     const assignDev = this.editTicket.controls.tasks.value.developer
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
@@ -825,7 +824,7 @@ export class EditTicketComponent implements OnInit {
       } else if (this.status.value === 'Rejected') {
         sentence = `${userCurrent} rejected ticket`
       } else if (this.status.value === 'More Info') {
-        sentence = `${userCurrent}  remark more info`
+        sentence = `${userCurrent} remark more info`
       } else if (this.status.value === 'Closed') {
         sentence = `${userCurrent} closed ticket`
       } else if (this.status.value === 'In Progress') {
@@ -836,8 +835,6 @@ export class EditTicketComponent implements OnInit {
         sentence = `${userCurrent} rejected ticket`
       } else if (this.status.value === 'Pending') {
         sentence = `${userCurrent} set pending`
-      } else if (this.status.value === 'Assigned') {
-        sentence = `${userCurrent} assigned ticket to ${assignDev}`
       } else if (this.status.value === 'Resolved') {
         sentence = `${userCurrent} resolved task`
       }
@@ -965,7 +962,6 @@ export class EditTicketComponent implements OnInit {
   saveTasks() {
     const staff = this.getCurrentStaff()
     const status = this.editTicket.controls.status.value
-    const actionSentence = this.editTicket.controls.actionSentence.value;
 
     if (this.tasksToSave.length != 0) {
       for (let i = 0; this.tasksToSave.length > i; i++) {
@@ -976,7 +972,7 @@ export class EditTicketComponent implements OnInit {
         for (let j = 0; this.tasksToSave[i].developer.length > j; j++) {
           this.setParticaipant(this.tasksToSave[i].developer[j].fullName)
         }
-        this.saveAction(actionSentence, this.tasksToSave[i].developer, staff, status)
+        this.saveAction(`${staff} assigned task to developer`, this.tasksToSave[i].developer, staff, status)
       }
     }
 
@@ -1056,7 +1052,7 @@ export class EditTicketComponent implements OnInit {
 
   setExpirationDate() {
     let color = ''
-    const endDate = moment(this.editTicket.controls.site.value.maStartDate * 1000).format('L');
+    const endDate = moment(this.editTicket.controls.site.value.maStartDate.seconds * 1000).format('L');
     const currentDate = new Date()
     const currentDateFormat = moment(currentDate).format('L');
     if (endDate > currentDateFormat) {
