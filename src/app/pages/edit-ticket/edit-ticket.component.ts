@@ -184,7 +184,7 @@ export class EditTicketComponent implements OnInit {
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       noDataAvailablePlaceholderText: 'No developer',
-      itemsShowLimit: 3,
+      itemsShowLimit: 1,
       allowSearchFilter: true,
       enableCheckAll: false
     };
@@ -414,9 +414,9 @@ export class EditTicketComponent implements OnInit {
   }
 
   updateForm() {
-    this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
     this.checkAction()
     this.saveTasks()
+    this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
   }
 
   getMaPackage() {
@@ -492,7 +492,6 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
       if (this.user.roles.supervisor === true && this.depositTasks.length != 0) {
-        alert('do')
         this.addStatus('Assigned');
       } else {
         this.removeStatus('Assigned');
@@ -585,7 +584,7 @@ export class EditTicketComponent implements OnInit {
 
   isAcceptedAssigned() {
     const currentStatus = this.editTicket.controls.currentStatus.value
-    return currentStatus === 'Accepted' || currentStatus === 'Assigned'
+    return currentStatus === 'Accepted' || currentStatus === 'Assigned' || currentStatus === 'Resolved'
   }
 
   isNotInprogress() {
@@ -839,7 +838,6 @@ export class EditTicketComponent implements OnInit {
         sentence = `${userCurrent} set pending`
       } else if (this.status.value === 'Assigned') {
         sentence = `${userCurrent} assigned ticket to ${assignDev}`
-        this.setParticaipant(assignDev)
       } else if (this.status.value === 'Resolved') {
         sentence = `${userCurrent} resolved task`
       }
@@ -975,6 +973,9 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToSave[i]
         )
+        for (let j = 0; this.tasksToSave[i].developer.length > j; j++) {
+          this.setParticaipant(this.tasksToSave[i].developer[j].fullName)
+        }
         this.saveAction(actionSentence, this.tasksToSave[i].developer, staff, status)
       }
     }
