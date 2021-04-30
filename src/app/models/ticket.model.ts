@@ -16,7 +16,6 @@ export interface Ticket {
     staff?: string;
     action?: Actions[];
     email?: string;
-    assign?: string;
     actionSentence?: string;
     participant?: any;
     responseDescription: string;
@@ -31,15 +30,17 @@ export interface Ticket {
     sumPoint: string;
 }
 export interface Actions {
-    data: any,
-    status: string,
-    staff: string
+    actionSentence: string
+    dev?: any
+    staff?: string
+    status: string
+    date: any
 }
 
 export interface Tasks {
     id?: any
     subjectTask: string
-    developer: any,
-    point: number,
+    developer: any
+    point: number
     dueDate: any
 }

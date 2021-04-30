@@ -204,18 +204,6 @@
                     (fileRemove)="onDepositMaDescriptionFileRemove($event)"></app-upload-detail-list>
                 </div>
               </div>
-              <!-- <div class="row">
-                <div class="form-group col-md-12"
-                  *ngIf="auth.isSupervisor(user)&&isAcceptedAssigned()&&isNotInprogress()">
-                  <label class="control-label" for="assign">Assign task to dev</label>
-                  <select formControlName="assign" name="assign" class="form-control" id="assign"
-                    (ngModelChange)="isAssignDev($event)">
-                    <option value="">choose dev...</option>
-                    <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
-                      {{staff.firstName}} {{staff.lastName}}
-                  </select>
-                </div>
-              </div> -->
               <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
                 <div class="form-group col-md-12">
                   <hr>
@@ -256,7 +244,6 @@
                 </div>
               </div>
             </div>
-            <!-- Add task -->
             <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="auth.isSupervisor(user)">
               <label class="" for="task">Tasks</label>
               <div class="form-row">
@@ -267,31 +254,17 @@
                         <ul>
                           <div *ngFor="let task of depositTasks; let i = index;">
                             <div>
-                              <div class="col-xl-12 col-sm-6 col-12" *ngIf="taskIdx!==i">
-                                <div class="card taskdetail mt-2">
-                                  <div class="card-content">
-                                    <div class="card-body">
-                                      <div class="media d-flex">
-                                        <div class="align-self-center">
-                                          <!-- detail -->
-                                          <div>
-                                            {{task?.subjectTask}}
-                                            {{task?.developer}}
-                                            {{task?.point}}
-                                            {{task?.dueDate}}
-                                            <button type="button" (click)="formUpdateTasks(task, i)"
-                                              class="btn warningBtn">
-                                              <i class="fas fa-pen"></i>
-                                            </button>
-                                            <button type="button" (click)="removeTasks(i)" class="btn dangerBtn">
-                                              <i class="fas fa-trash"></i>
-                                            </button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                              <div *ngIf="taskIdx!==i">
+                                {{task?.subjectTask}}
+                                {{getDev(task)}}
+                                {{task?.point}}
+                                {{task?.dueDate}}
+                                <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn">
+                                  <i class="fas fa-pen"></i>
+                                </button>
+                                <button type="button" (click)="removeTasks(i)" class="btn dangerBtn">
+                                  <i class="fas fa-trash"></i>
+                                </button>
                               </div>
 
                               <div class="form-group col-md-12">
@@ -304,13 +277,10 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                       <label for="developer" class="control-label">Assign Dev</label>
-                                      <select formControlName="developer" name="assignTasks" class="form-control"
-                                        id="assignTasks">
-                                        <option value="">choose dev...</option>
-                                        <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
-                                          {{staff.firstName}} {{staff.lastName}}
-                                        </option>
-                                      </select>
+                                      <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'"
+                                        [data]="Staff" id="developer" formControlName="developer"
+                                        [settings]="devSettings">
+                                      </ng-multiselect-dropdown>
                                     </div>
                                   </div>
                                   <div class="form-row">
@@ -327,7 +297,8 @@
                                   </div>
                                   <div class="form-row">
                                     <div class="form-group mr-5">
-                                      <button type="button" class="btn btn-light btn-cancel">Cancel</button>
+                                      <button type="button" (click)="onCancelUpdateTaks()"
+                                        class="btn btn-light btn-cancel">Cancel</button>
                                     </div>
                                     <div class="form-group">
                                       <button type="button" (click)="onUpdateTask(i)" class="btn btn-success">Update
@@ -362,11 +333,9 @@
                       </div>
                       <div class="form-group col-md-6">
                         <label for="developer" class="control-label">Assign Dev</label>
-                        <select formControlName="developer" name="assignTasks" class="form-control" id="assignTasks">
-                          <option value="">choose dev...</option>
-                          <option *ngFor="let staff of Staff" [ngValue]="staff.fullName">
-                            {{staff.firstName}} {{staff.lastName}}
-                        </select>
+                        <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'" [data]="Staff"
+                          id="developer" formControlName="developer" [settings]="devSettings">
+                        </ng-multiselect-dropdown>
                       </div>
                     </div>
                     <div class="form-row">
@@ -383,7 +352,8 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group mr-5">
-                        <button type="button" class="btn btn-light btn-cancel">Cancel</button>
+                        <button type="button" (click)="onCancelAddTaks()"
+                          class="btn btn-light btn-cancel">Cancel</button>
                       </div>
                       <div class="form-group">
                         <button type="button" class="btn btn-success" (click)="onTasksSubmit()">Save Tasks</button>
@@ -393,7 +363,6 @@
                 </div>
               </div>
             </div>
-            <!-- End add tasks -->
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">

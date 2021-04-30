@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
-import { Ticket, Tasks } from 'src/app/models/ticket.model';
+import { Ticket, Actions, Tasks } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
@@ -22,6 +22,7 @@ import Swal from 'sweetalert2';
 })
 export class EditTicketComponent implements OnInit {
   site$: Observable<any>;
+  devSettings: IDropdownSettings;
   dropdownSettings: IDropdownSettings;
   id: string;
   ticket$: Observable<Ticket>;
@@ -99,6 +100,7 @@ export class EditTicketComponent implements OnInit {
   isEdit = false
   title: string
   Tasks: Tasks[];
+  Actions: Actions[]
   tasksToSave: Tasks[] = [];
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
@@ -171,6 +173,26 @@ export class EditTicketComponent implements OnInit {
       this.setDefaultResolveDescriptionFile()
       this.getModule();
     })
+    this.dropdownSettings = {
+      singleSelection: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      noDataAvailablePlaceholderText: 'Please choose site or site does not have module',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
+    this.devSettings = {
+      singleSelection: false,
+      idField: '$uid',
+      textField: 'fullName',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      noDataAvailablePlaceholderText: 'No developer',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
     this.getTask()
@@ -197,6 +219,7 @@ export class EditTicketComponent implements OnInit {
         item['$uid'] = items.payload.doc['id'];
         this.Staff.push(item as User)
       })
+      console.log(this.Staff);
     });
   }
 
@@ -399,9 +422,9 @@ export class EditTicketComponent implements OnInit {
   }
 
   upadateForm() {
-    this.saveTasks()
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
     this.checkAction()
+    this.saveTasks()
   }
 
   getMaPackage() {
@@ -478,6 +501,12 @@ export class EditTicketComponent implements OnInit {
     } else if (currentStatus === 'Accepted') {
       this.addStatus('Assigned');
       // this.removeStatus('Assigned');
+      // TODO : assgin -> task.length
+      if (this.user.roles.supervisor === true && this.editTicket.controls.assign.value) {
+        this.addStatus('Assigned');
+      } else {
+        this.removeStatus('Assigned');
+      }
       this.removeStatus('Draft');
       this.removeStatus('Informed');
       this.removeStatus('More Info');
@@ -527,6 +556,7 @@ export class EditTicketComponent implements OnInit {
 
   isAssignDev() {
     this.addStatus('Assigned');
+    // TODO : assgin -> task.length
     (this.editTicket.controls.assign.value) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
@@ -541,13 +571,11 @@ export class EditTicketComponent implements OnInit {
   }
 
   saveAction(staffCurrent: string, newStatus: any) {
-    this.ticketService
-      .setActionById(
-        this.id,
-        newStatus,
-        staffCurrent ? staffCurrent : '',
-        this.editTicket.controls.assign.value,
-        this.editTicket.controls.actionSentence.value)
+    this.Actions = []
+    this.ticketService.setActionById(
+      this.id,
+      this.Actions[0]
+    )
   }
 
   isAcceptedAssigned() {
@@ -772,6 +800,7 @@ export class EditTicketComponent implements OnInit {
   setActionSentence() {
     let sentence: string
     const userCurrent = this.getCurrentUser()
+    // todo : array's dev
     const assignDev = this.editTicket.controls.assign.value
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
@@ -832,7 +861,15 @@ export class EditTicketComponent implements OnInit {
   }
 
   setTask(): void {
+    this.clearTask()
     this.addTask = true;
+    this.updateTask = false;
+    this.taskIdx = null;
+    this.showTask = !this.showTask;
+  }
+
+  onCancelAddTaks() {
+    this.addTask = false;
   }
 
   onTasksSubmit() {
@@ -881,8 +918,14 @@ export class EditTicketComponent implements OnInit {
     this.totalPoint()
   }
 
+  onCancelUpdateTaks() {
+    this.updateTask = false;
+    this.taskIdx = null;
+    this.showTask = !this.showTask;
+  }
+
   formUpdateTasks(task: Tasks, i: number) {
-    console.log(task, i);
+    this.addTask = false
     this.updateTask = true;
     this.taskIdx = i;
     this.showTask = !this.showTask;
@@ -1027,4 +1070,15 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
+  getDev(task) {
+    let name = []
+    if (typeof task.developer === 'object') {
+      for (let i = 0; task.developer.length > i; i++) {
+        name.push(task.developer[i].fullName)
+      }
+    } else {
+      name = task.developer
+    }
+    return name
+  }
 }

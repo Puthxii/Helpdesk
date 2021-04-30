@@ -1,5 +1,5 @@
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Ticket, Tasks } from '../../models/ticket.model';
+import { Ticket, Actions, Tasks } from '../../models/ticket.model';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
@@ -183,7 +183,6 @@ export class TicketService {
         status: ticket.status,
         staff: ticket.staff,
         email: ticket.email,
-        assign: ticket.assign,
         participant: ticket.participant,
       }))
         .collection('action')
@@ -225,7 +224,6 @@ export class TicketService {
         responseDescriptionFile: ticket.responseDescriptionFile,
         status: ticket.status,
         staff: ticket.staff,
-        assign: ticket.assign,
         descriptionFile: ticket.descriptionFile,
         participant: ticket.participant,
         maDescription: ticket.maDescription,
@@ -251,14 +249,14 @@ export class TicketService {
     }
   }
 
-  setActionById(id: any, status: any, staff: any, dev: any, actionSentence: any) {
+  setActionById(id: any, actions: Actions) {
     this.afs.collection('ticket').doc(id)
       .collection('action')
       .add({
-        actionSentence,
-        dev,
-        staff,
-        status,
+        actions: actions.actionSentence,
+        dev: actions.dev,
+        staff: actions.staff,
+        status: actions.status,
         date: new Date(),
       })
   }

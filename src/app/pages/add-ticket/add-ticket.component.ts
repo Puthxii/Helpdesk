@@ -149,18 +149,17 @@ export class AddTicketComponent implements OnInit {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
     this.getUserValue();
-    this.buildForm(),
-      this.dropdownSettings = {
-        singleSelection: false,
-        selectAllText: 'Select All',
-        unSelectAllText: 'UnSelect All',
-        noDataAvailablePlaceholderText: 'Please choose site or site does not have module',
-        itemsShowLimit: 3,
-        allowSearchFilter: true,
-        enableCheckAll: false
-      };
+    this.buildForm();
+    this.dropdownSettings = {
+      singleSelection: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      noDataAvailablePlaceholderText: 'Please choose site or site does not have module',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
     this.setDateDefault()
-    this.setAssign()
     this.getActionSentence()
   }
 
@@ -255,12 +254,6 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  setAssign() {
-    this.addTicketForm.patchValue({
-      assign: ''
-    });
-  }
-
   getActionSentence() {
     this.addTicketForm.patchValue({
       actionSentence: ''
@@ -318,7 +311,6 @@ export class AddTicketComponent implements OnInit {
       status: [''],
       staff: [''],
       email: [''],
-      assign: [''],
       descriptionFile: [''],
       actionSentence: [''],
       participant: ['']
