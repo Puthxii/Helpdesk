@@ -1052,7 +1052,7 @@ export class EditTicketComponent implements OnInit {
 
   setExpirationDate() {
     let color = ''
-    const endDate = moment(this.editTicket.controls.site.value.maStartDate.seconds * 1000).format('L');
+    const endDate = moment(this.editTicket.controls.site.value.maEndDate.seconds * 1000).format('L');
     const currentDate = new Date()
     const currentDateFormat = moment(currentDate).format('L');
     if (endDate > currentDateFormat) {
