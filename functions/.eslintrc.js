@@ -14,5 +14,6 @@ module.exports = {
     "eol-last": 0,
     "semi": ["error", "always"],
     "indent": "off",
+    "max-len": ["error", {"code": 250}],
   },
 };
