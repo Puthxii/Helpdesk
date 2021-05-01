@@ -21,7 +21,9 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/firebase-messaging-sw.js",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.css",
@@ -62,7 +64,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             }
           }
         },
@@ -92,7 +96,8 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles.css"
@@ -132,6 +137,4 @@
   "cli": {
     "analytics": "79236571-9bef-41d6-87a0-e19493f838bf"
   }
-
-  
 }

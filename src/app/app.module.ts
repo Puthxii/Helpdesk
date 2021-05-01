@@ -40,6 +40,8 @@ import { UploadEditComponent } from './components/upload-edit/upload-edit.compon
 import { UploadDetailListComponent } from './components/upload-detail-list/upload-detail-list.component';
 import { UploadDetailEditComponent } from './components/upload-detail-edit/upload-detail-edit.component';
 import { UploadDetailFormComponent } from './components/upload-detail-form/upload-detail-form.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { MessagingService } from './services/messaging/messaging.service';
 
 @NgModule({
   declarations: [
@@ -82,13 +84,15 @@ import { UploadDetailFormComponent } from './components/upload-detail-form/uploa
     NgMultiSelectDropDownModule.forRoot(),
     AngularMyDatePickerModule,
     AngularFireDatabaseModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     AuthService,
     AngularFireDatabase,
     AngularFirestore,
     AuthGuard,
+    MessagingService,
     { provide: 'PRIORITY', useValue: Prioritys },
     { provide: 'TYPES', useValue: Types },
     { provide: 'STATUS', useValue: CurrentStatus },
