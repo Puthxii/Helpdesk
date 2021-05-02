@@ -44,4 +44,5 @@ export interface Tasks {
     developer: any
     point: number
     dueDate: any
+    checked: boolean
 }

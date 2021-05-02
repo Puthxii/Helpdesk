@@ -253,13 +253,16 @@
                     <div class="form-group col-md-12">
                       <div class="row">
                         <ul>
-                          <div *ngFor="let task of depositTasks; let i = index;">
+                          <div *ngFor="let task of depositTasks; let i = index">
                             <div>
                               <div *ngIf="taskIdx!==i">
+                                <input type="checkbox" [(ngModel)]="task.checked" (click)="changChecked(task.checked)"
+                                [ngModelOptions]="{standalone: true}">
                                 {{task?.subjectTask}}
                                 {{getDev(task)}}
                                 {{task?.point}}
                                 {{task?.dueDate | date: 'dd/MM/yyyy'}}
+                                {{task?.checked}}
                                 <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn">
                                   <i class="fas fa-pen"></i>
                                 </button>
@@ -267,7 +270,6 @@
                                   <i class="fas fa-trash"></i>
                                 </button>
                               </div>
-
                               <div class="form-group col-md-12">
                                 <div formGroupName="tasks" class="form-group" *ngIf="updateTask&&taskIdx===i">
                                   <div class="form-row ">
@@ -318,6 +320,7 @@
               </div>
               <p>total = {{ this.sumPoint }}</p>
               <p>Due date = {{this.maxDueDate | date: 'dd/MM/yyyy'}}</p>
+              
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <div class="row" *ngIf="!addTask">

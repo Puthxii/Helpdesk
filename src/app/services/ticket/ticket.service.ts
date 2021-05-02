@@ -268,7 +268,8 @@ export class TicketService {
         subjectTask: tasks.subjectTask,
         developer: tasks.developer,
         point: tasks.point,
-        dueDate: tasks.dueDate
+        dueDate: tasks.dueDate,
+        checked: tasks.checked
       })
   }
 
@@ -280,8 +281,10 @@ export class TicketService {
           subjectTask: tasks.subjectTask,
           developer: tasks.developer,
           point: tasks.point,
-          dueDate: tasks.dueDate
+          dueDate: tasks.dueDate,
+          checked: tasks.checked
         }))
+    console.log(tasks.checked);
   }
 
   removeTasks(id: any, tasks: Tasks) {

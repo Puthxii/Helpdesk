@@ -105,6 +105,7 @@ export class EditTicketComponent implements OnInit {
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
   maxDueDate: any;
+  checked = false
 
   constructor(
     private ticketService: TicketService,
@@ -196,7 +197,6 @@ export class EditTicketComponent implements OnInit {
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
     this.getTask()
-    
   }
 
   getTask() {
@@ -404,11 +404,12 @@ export class EditTicketComponent implements OnInit {
       actionSentence: [''],
       dev: [''],
       tasks: this.fb.group({
-        id: [''],
-        subjectTask: [''],
-        developer: [''],
-        point: [''],
-        dueDate: [''],
+          id: [''],
+          subjectTask: [''],
+          developer: [''],
+          point: [''],
+          dueDate: [''],
+          checked: ['']
       }),
       participant: [''],
       addTasks: [''],
@@ -954,7 +955,8 @@ export class EditTicketComponent implements OnInit {
         subjectTask: task.subjectTask,
         developer: task.developer,
         point: task.point,
-        dueDate: task.dueDate
+        dueDate: task.dueDate,
+        checked: task.checked
       }
     })
   }
@@ -983,7 +985,6 @@ export class EditTicketComponent implements OnInit {
     const staff = this.getCurrentStaff()
     const status = this.editTicket.controls.status.value
     const actionSentence = this.editTicket.controls.actionSentence.value;
-
     if (this.tasksToSave.length != 0) {
       for (let i = 0; this.tasksToSave.length > i; i++) {
         this.ticketService.setAddTasks(
@@ -1085,7 +1086,6 @@ export class EditTicketComponent implements OnInit {
     this.sumPoint = 0
     if (this.depositTasks.length !== undefined) {
       for (let i = 0; this.depositTasks.length > i; i++) {
-        console.log(this.depositTasks[i]);
         this.sumPoint = this.sumPoint + this.depositTasks[i].point
       }
     }
@@ -1107,7 +1107,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   checkDueDate() {
-    this.maxDueDate = this.depositTasks.sort((a,b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())[0].dueDate;
+    this.maxDueDate = this.depositTasks.sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())[0].dueDate;
     this.setDueDate(this.maxDueDate)
   }
 
@@ -1115,6 +1115,20 @@ export class EditTicketComponent implements OnInit {
     this.editTicket.patchValue({
       maxDueDate
     })
+  }
+
+  changChecked(checked) {
+    checked = !checked
+    // console.log(checked);
+    if (this.depositTasks.length != 0) {
+      for (let i = 0; this.depositTasks.length > i; i++) {
+        console.log('do');
+        this.ticketService.updateTasks(
+          this.id,
+          this.depositTasks[i]
+        )
+      }
+    }
   }
 
 }
