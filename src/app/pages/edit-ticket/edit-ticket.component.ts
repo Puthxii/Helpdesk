@@ -105,7 +105,6 @@ export class EditTicketComponent implements OnInit {
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
   maxDueDate: any;
-  checked = false
 
   constructor(
     private ticketService: TicketService,
@@ -893,8 +892,9 @@ export class EditTicketComponent implements OnInit {
     const developer = this.editTicket.controls.tasks.value.developer
     const point = this.editTicket.controls.tasks.value.point
     const dueDate = this.editTicket.controls.tasks.value.dueDate
+    const checked = false
     this.newTask = {
-      subjectTask, developer, point, dueDate
+      subjectTask, developer, point, dueDate, checked
     }
     this.depositTasks.push(this.newTask);
     this.isTasksExit(this.depositTasks)
@@ -1117,18 +1117,24 @@ export class EditTicketComponent implements OnInit {
     })
   }
 
-  changChecked(checked) {
-    checked = !checked
-    // console.log(checked);
-    if (this.depositTasks.length != 0) {
-      for (let i = 0; this.depositTasks.length > i; i++) {
-        console.log('do');
+  changeChecked(): void {
+  const isChecked = (this.depositTasks.findIndex(task => task.checked === false) === -1)
+  if (this.depositTasks.length !== 0) {
+    for (let i = 0; this.depositTasks.length > i; i++) {
+        if (isChecked === true) {
+        this.onSelectedStatus('Resolved')
         this.ticketService.updateTasks(
           this.id,
           this.depositTasks[i]
         )
+        } else {
+          this.onSelectedStatus('Assigned')
+          this.ticketService.updateTasks(
+            this.id,
+            this.depositTasks[i]
+          )
+        }
       }
     }
   }
-
 }
