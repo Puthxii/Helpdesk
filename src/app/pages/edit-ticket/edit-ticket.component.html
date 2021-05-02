@@ -256,8 +256,10 @@
                           <div *ngFor="let task of depositTasks; let i = index">
                             <div>
                               <div *ngIf="taskIdx!==i">
-                                <input type="checkbox" [(ngModel)]="task.checked" (click)="changChecked(task.checked)"
+                                <input type="checkbox" [(ngModel)]="task.checked" (change)="changeChecked()"
                                 [ngModelOptions]="{standalone: true}">
+                                <!-- <input type="checkbox" [(ngModel)]="task.checked" (click)="changChecked(task.checked)"
+                                [ngModelOptions]="{standalone: true}"> -->
                                 {{task?.subjectTask}}
                                 {{getDev(task)}}
                                 {{task?.point}}
