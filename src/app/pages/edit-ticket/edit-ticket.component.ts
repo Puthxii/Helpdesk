@@ -1117,21 +1117,37 @@ export class EditTicketComponent implements OnInit {
   }
 
   changeChecked(): void {
-  const isChecked = (this.depositTasks.findIndex(task => task.checked === false) === -1)
-  if (this.depositTasks.length !== 0) {
-    for (let i = 0; this.depositTasks.length > i; i++) {
-        if (isChecked === true) {
-        this.onSelectedStatus('Resolved')
-        this.ticketService.updateTasks(
-          this.id,
-          this.depositTasks[i]
-        )
+    const isChecked = (this.depositTasks.findIndex(task => task.checked === false) === -1)
+    if (this.depositTasks.length !== 0) {
+      for (let i = 0; this.depositTasks.length > i; i++) {
+        if (this.depositTasks[i].id) {
+          if (isChecked === true) {
+            this.onSelectedStatus('Resolved')
+            this.ticketService.updateTasks(
+              this.id,
+              this.depositTasks[i]
+            )
+          } else {
+            this.onSelectedStatus('Assigned')
+            this.ticketService.updateTasks(
+              this.id,
+              this.depositTasks[i]
+            )
+          }
         } else {
-          this.onSelectedStatus('Assigned')
-          this.ticketService.updateTasks(
-            this.id,
-            this.depositTasks[i]
-          )
+          if (isChecked === true) {
+            this.onSelectedStatus('Resolved')
+            this.ticketService.setAddTasks(
+              this.id,
+              this.depositTasks[i]
+            )
+          } else {
+            this.onSelectedStatus('Assigned')
+            this.ticketService.setAddTasks(
+              this.id,
+              this.depositTasks[i]
+            )
+          }
         }
       }
     }
