@@ -1104,8 +1104,10 @@ export class EditTicketComponent implements OnInit {
   }
 
   checkDueDate() {
-    this.maxDueDate = this.depositTasks.sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())[0].dueDate;
-    this.setDueDate(this.maxDueDate)
+    if (this.depositTasks.length !== 0) {
+      this.maxDueDate = this.depositTasks.sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())[0].dueDate;
+      this.setDueDate(this.maxDueDate)
+    }
   }
 
   setDueDate(maxDueDate: any) {
