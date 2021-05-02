@@ -8,15 +8,15 @@ export class UserService {
   constructor(private afs: AngularFirestore) { }
 
   getStaffsList() {
-    return this.afs.collection('users', ref => ref
+    return this.afs.collection('users', (ref) => ref
       .where('roles.customer', '==', false)
-      .orderBy('firstName', 'desc'));
+      .orderBy('firstName', 'asc'));
   }
 
   getDeveloper() {
-    return this.afs.collection('users', ref => ref
+    return this.afs.collection('users', (ref) => ref
       .where('roles.developer', '==', true)
-      .orderBy('firstName', 'desc'));
+      .orderBy('firstName', 'asc'));
   }
 
   getUserbyId(uid: string) {
@@ -24,8 +24,15 @@ export class UserService {
   }
 
   getUserbyName(name: string) {
-    return this.afs.collection('users', ref => ref
+    return this.afs.collection('users', (ref) => ref
       .where('name', '==', name))
+  }
+
+  getUserbyNameSort(name: string) {
+    return this.afs.collection('users', (ref) => ref
+      .orderBy('fullName')
+      .startAt(name)
+      .endAt(name + '\uf8ff'));
   }
 
 }

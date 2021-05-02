@@ -25,10 +25,3 @@
     pointer-events: none;
     color: #aaa;
 }
-
-.searchbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-}

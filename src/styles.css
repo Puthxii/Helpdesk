@@ -292,3 +292,10 @@
 .expirationDate {
     color:  var(--danger-color) !important;
 }
+
+.searchbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}

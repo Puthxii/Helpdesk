@@ -14,6 +14,7 @@ export class StaffComponent implements OnInit {
   hideWhenNoStaff = false;
   noData = false;
   preLoader = true;
+  searchValue = '';
 
   constructor(
     private user: UserService
@@ -59,5 +60,23 @@ export class StaffComponent implements OnInit {
     }
     return role
   }
-}
 
+  search() {
+    const searchValue = this.searchValue
+    if (searchValue != 'Total') {
+      this.getUserbyNameSort(searchValue)
+    }
+  }
+
+  getUserbyNameSort(searchValue: any) {
+    this.user.getUserbyNameSort(searchValue).snapshotChanges().subscribe(data => {
+      this.Staff = [];
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['$uid'] = items.payload.doc['id'];
+        this.Staff.push(item as User)
+      })
+    });
+  }
+
+}

@@ -123,13 +123,6 @@
     color: #aaa;
 }
 
-.searchbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-}
-
 .paperclip{
     display: inline-block;
     border-radius: 60px;
