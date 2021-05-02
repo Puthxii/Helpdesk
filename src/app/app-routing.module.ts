@@ -24,6 +24,9 @@ import { MaintenanceGuard } from './guards/ma.guard';
 import { SupervisorGuard } from './guards/suppervisor.guard';
 import { DeveloperGuard } from './guards/developer.guard';
 import { StaffGuard } from './guards/staff.guard';
+import { SiteComponent } from './pages/site/site.component';
+import { SiteCustomerComponent } from './pages/site-customer/site-customer.component';
+import { ProductComponent } from './pages/product/product.component';
 
 const router: Routes = [
   {
@@ -38,6 +41,21 @@ const router: Routes = [
       {
         path: 'staff',
         component: StaffComponent,
+        canActivate: [StaffGuard]
+      },
+      {
+        path: 'site',
+        component: SiteComponent,
+        canActivate: [StaffGuard]
+      },
+      {
+        path: 'site-customer',
+        component: SiteCustomerComponent,
+        canActivate: [StaffGuard]
+      },
+      {
+        path: 'product',
+        component: ProductComponent,
         canActivate: [StaffGuard]
       },
       {

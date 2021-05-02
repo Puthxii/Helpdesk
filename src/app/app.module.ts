@@ -40,6 +40,9 @@ import { UploadEditComponent } from './components/upload-edit/upload-edit.compon
 import { UploadDetailListComponent } from './components/upload-detail-list/upload-detail-list.component';
 import { UploadDetailEditComponent } from './components/upload-detail-edit/upload-detail-edit.component';
 import { UploadDetailFormComponent } from './components/upload-detail-form/upload-detail-form.component';
+import { SiteComponent } from './pages/site/site.component';
+import { SiteCustomerComponent } from './pages/site-customer/site-customer.component';
+import { ProductComponent } from './pages/product/product.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +71,10 @@ import { UploadDetailFormComponent } from './components/upload-detail-form/uploa
     UploadEditComponent,
     UploadDetailListComponent,
     UploadDetailEditComponent,
-    UploadDetailFormComponent
+    UploadDetailFormComponent,
+    SiteComponent,
+    SiteCustomerComponent,
+    ProductComponent
   ],
   imports: [
     FormsModule,
