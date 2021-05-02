@@ -31,7 +31,10 @@ export class EditTicketComponent implements OnInit {
   Site: Site[];
   user: User
   Staff: User[];
+  Task: Tasks[];
   staff: any;
+  sumPoint: any;
+  total: any;
   statusCurrent: any;
   currentName: string
   user$: any
@@ -83,9 +86,10 @@ export class EditTicketComponent implements OnInit {
   forResolveDescription = 'forResolveDescription'
   stateParticipant = []
   depositTasks = []
+  entryTask = []
   newTask: any
   subjectTasks: any;
-  assignTasks: any;
+  assignTask: any;
   deadlineDate: any;
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
@@ -100,6 +104,8 @@ export class EditTicketComponent implements OnInit {
   tasksToSave: Tasks[] = [];
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
+  maxDueDate: any;
+  checked = false
 
   constructor(
     private ticketService: TicketService,
@@ -143,7 +149,7 @@ export class EditTicketComponent implements OnInit {
         actionSentence: this.ticket.actionSentence,
         dev: this.ticket.dev,
         subjectTask: this.ticket.subjectTask,
-        assignTasks: this.ticket.assignTasks,
+        assignTask: this.ticket.assignTask,
         deadlineDate: this.ticket.deadlineDate,
         participant: this.ticket.participant,
         addTasks: this.ticket.addTasks,
@@ -202,6 +208,8 @@ export class EditTicketComponent implements OnInit {
         this.Tasks.push(item as Tasks)
         this.depositTasks = this.Tasks
       })
+      this.totalPoint()
+      this.checkDueDate()
     })
   }
 
@@ -401,6 +409,7 @@ export class EditTicketComponent implements OnInit {
         developer: [''],
         point: [''],
         dueDate: [''],
+        checked: ['']
       }),
       participant: [''],
       addTasks: [''],
@@ -409,7 +418,9 @@ export class EditTicketComponent implements OnInit {
       suggestDescription: [''],
       suggestDescriptionFile: [''],
       resolveDescription: [''],
-      resolveDescriptionFile: ['']
+      resolveDescriptionFile: [''],
+      sumPoint: [''],
+      maxDueDate: ['']
     });
   }
 
@@ -884,6 +895,8 @@ export class EditTicketComponent implements OnInit {
     this.isTasksExit(this.depositTasks)
     this.clearTask()
     this.addTask = false;
+    this.totalPoint()
+    this.checkDueDate()
     this.isAssignDev()
   }
 
@@ -915,6 +928,7 @@ export class EditTicketComponent implements OnInit {
       this.tasksToDelete.push(this.depositTasks[i])
       this.depositTasks.splice(i, 1);
     }
+    this.totalPoint()
     this.isAssignDev()
   }
 
@@ -936,7 +950,8 @@ export class EditTicketComponent implements OnInit {
         subjectTask: task.subjectTask,
         developer: task.developer,
         point: task.point,
-        dueDate: task.dueDate
+        dueDate: task.dueDate,
+        checked: task.checked
       }
     })
   }
@@ -954,15 +969,16 @@ export class EditTicketComponent implements OnInit {
     this.updateTask = false;
     this.taskIdx = null;
     this.showTask = !this.showTask;
+    this.totalPoint()
     this.clearTask()
     this.isAssignDev()
+    this.checkDueDate()
   }
 
 
   saveTasks() {
     const staff = this.getCurrentStaff()
     const status = this.editTicket.controls.status.value
-
     if (this.tasksToSave.length != 0) {
       for (let i = 0; this.tasksToSave.length > i; i++) {
         this.ticketService.setAddTasks(
@@ -1063,6 +1079,22 @@ export class EditTicketComponent implements OnInit {
     return color
   }
 
+  totalPoint() {
+    this.sumPoint = 0
+    if (this.depositTasks.length !== undefined) {
+      for (let i = 0; this.depositTasks.length > i; i++) {
+        this.sumPoint = this.sumPoint + this.depositTasks[i].point
+      }
+    }
+    this.setSumPoint(this.sumPoint)
+  }
+
+  setSumPoint(sumPoint: any) {
+    this.editTicket.patchValue({
+      sumPoint
+    });
+  }
+
   getDev(task: { developer: string | any[]; }) {
     const name = []
     for (let i = 0; task.developer.length > i; i++) {
@@ -1070,4 +1102,30 @@ export class EditTicketComponent implements OnInit {
     }
     return (name.length != 0) ? name : '-'
   }
+
+  checkDueDate() {
+    this.maxDueDate = this.depositTasks.sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())[0].dueDate;
+    this.setDueDate(this.maxDueDate)
+  }
+
+  setDueDate(maxDueDate: any) {
+    this.editTicket.patchValue({
+      maxDueDate
+    })
+  }
+
+  changChecked(checked) {
+    checked = !checked
+    // console.log(checked);
+    if (this.depositTasks.length != 0) {
+      for (let i = 0; this.depositTasks.length > i; i++) {
+        console.log('do');
+        this.ticketService.updateTasks(
+          this.id,
+          this.depositTasks[i]
+        )
+      }
+    }
+  }
+
 }

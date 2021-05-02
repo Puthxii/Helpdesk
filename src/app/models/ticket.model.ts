@@ -27,6 +27,8 @@ export interface Ticket {
     resolveDescription?: string;
     resolveDescriptionFile?: any;
     task?: Tasks[]
+    sumPoint: number;
+    maxDueDate: any;
 }
 export interface Actions {
     actionSentence: string
@@ -42,4 +44,5 @@ export interface Tasks {
     developer: any
     point: number
     dueDate: any
+    checked: boolean
 }

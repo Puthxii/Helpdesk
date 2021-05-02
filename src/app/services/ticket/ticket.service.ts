@@ -231,7 +231,9 @@ export class TicketService {
         suggestDescription: ticket.suggestDescription,
         suggestDescriptionFile: ticket.suggestDescriptionFile,
         resolveDescription: ticket.resolveDescription,
-        resolveDescriptionFile: ticket.resolveDescriptionFile
+        resolveDescriptionFile: ticket.resolveDescriptionFile,
+        sumPoint: ticket.sumPoint,
+        maxDueDate: ticket.maxDueDate
       })
       this.deleteCollection('uploadDesciption')
       this.deleteCollection('uploadResponseDescription')
@@ -239,8 +241,11 @@ export class TicketService {
       this.deleteCollection('uploadSuggestDescription')
       this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
+    //  console.log(ticket);
     } catch (error) {
-      this.errorNotification();
+    console.error(error);
+    
+      // this.errorNotification();
     }
   }
 
@@ -263,7 +268,8 @@ export class TicketService {
         subjectTask: tasks.subjectTask,
         developer: tasks.developer,
         point: tasks.point,
-        dueDate: tasks.dueDate
+        dueDate: tasks.dueDate,
+        checked: tasks.checked
       })
   }
 
@@ -275,8 +281,10 @@ export class TicketService {
           subjectTask: tasks.subjectTask,
           developer: tasks.developer,
           point: tasks.point,
-          dueDate: tasks.dueDate
+          dueDate: tasks.dueDate,
+          checked: tasks.checked
         }))
+    console.log(tasks.checked);
   }
 
   removeTasks(id: any, tasks: Tasks) {
