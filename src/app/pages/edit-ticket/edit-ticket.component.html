@@ -257,9 +257,7 @@
                             <div>
                               <div *ngIf="taskIdx!==i">
                                 <input type="checkbox" [(ngModel)]="task.checked" (change)="changeChecked()"
-                                [ngModelOptions]="{standalone: true}">
-                                <!-- <input type="checkbox" [(ngModel)]="task.checked" (click)="changChecked(task.checked)"
-                                [ngModelOptions]="{standalone: true}"> -->
+                                  [ngModelOptions]="{standalone: true}">
                                 {{task?.subjectTask}}
                                 {{getDev(task)}}
                                 {{task?.point}}
@@ -291,13 +289,13 @@
                                   <div class="form-row">
                                     <div class="form-group col-md-6">
                                       <label for="point" class="control-label">point</label>
-                                      <input formControlName="point" type="number" class="form-control"
-                                        id="point" placeholder="Point">
+                                      <input formControlName="point" type="number" class="form-control" id="point"
+                                        placeholder="Point">
                                     </div>
                                     <div class="form-group col-md-6">
                                       <label for="dueDate" class="control-label">due date</label>
-                                      <input formControlName="dueDate" type="date" class="form-control"
-                                        id="dueDate" placeholder="Due Date">
+                                      <input formControlName="dueDate" type="date" class="form-control" id="dueDate"
+                                        placeholder="Due Date">
                                     </div>
                                   </div>
                                   <div class="form-row">
@@ -322,7 +320,7 @@
               </div>
               <p>total = {{ this.sumPoint }}</p>
               <p>Due date = {{this.maxDueDate | date: 'dd/MM/yyyy'}}</p>
-              
+
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <div class="row" *ngIf="!addTask">
