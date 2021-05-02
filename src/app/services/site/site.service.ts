@@ -47,4 +47,16 @@ export class SiteService {
         });
       }))
   }
+
+  getSites() {
+    return this.afs.collection('site', (ref) => ref
+      .orderBy('nameEN', 'asc'));
+  }
+
+  getSitesByNameSort(name) {
+    return this.afs.collection('site', (ref) => ref
+      .orderBy('nameEN')
+      .startAt(name)
+      .endAt(name + '\uf8ff'));
+  }
 }

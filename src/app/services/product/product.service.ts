@@ -20,4 +20,16 @@ export class ProductService {
     });
   }
 
+  getProductList() {
+    return this.afs.collection('product', (ref) => ref
+      .orderBy('name', 'asc'));
+  }
+
+  getProductByNameSort(name) {
+    return this.afs.collection('product', (ref) => ref
+      .orderBy('name')
+      .startAt(name)
+      .endAt(name + '\uf8ff'));
+  }
+
 }

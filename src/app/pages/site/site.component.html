@@ -1,3 +1,39 @@
-<p>
-  site works!
-</p>
+<div class="container-fluid">
+  <section id="minimal-statistics">
+    <div class="row">
+      <div class="col-12 mt-3 mb-1 searchbar">
+        <h5 class="primary-color">
+          <i class="fas fa-hotel"></i>
+          Site
+        </h5>
+        <div class="form-control-sm">
+          <div class="form-group has-search mb-2">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
+              (keyup)="search()" placeholder="Search Name">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="container-fluid">
+  <div class="pricing-header mx-auto">
+    <div class="table-responsive" *ngIf="hideWhenNoStaff">
+      <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let site of Site ; let i = index;">
+            <td>{{i+1}}</td>
+            <td>{{site.nameEN}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

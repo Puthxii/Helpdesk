@@ -30,6 +30,21 @@ export class UserService {
 
   getUserbyNameSort(name: string) {
     return this.afs.collection('users', (ref) => ref
+      .where('roles.customer', '==', false)
+      .orderBy('fullName')
+      .startAt(name)
+      .endAt(name + '\uf8ff'));
+  }
+
+  getCustomer() {
+    return this.afs.collection('users', (ref) => ref
+      .where('roles.customer', '==', true)
+      .orderBy('firstName', 'asc'));
+  }
+
+  getCustomerbyNameSort(name: string) {
+    return this.afs.collection('users', (ref) => ref
+      .where('roles.customer', '==', true)
       .orderBy('fullName')
       .startAt(name)
       .endAt(name + '\uf8ff'));

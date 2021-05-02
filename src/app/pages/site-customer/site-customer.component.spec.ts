@@ -11,9 +11,9 @@ describe('SiteCustomerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SiteCustomerComponent ]
+      declarations: [SiteCustomerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

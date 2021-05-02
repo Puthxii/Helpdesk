@@ -63,7 +63,7 @@ export class StaffComponent implements OnInit {
 
   search() {
     const searchValue = this.searchValue
-    if (searchValue != 'Total') {
+    if (searchValue != null) {
       this.getUserbyNameSort(searchValue)
     }
   }

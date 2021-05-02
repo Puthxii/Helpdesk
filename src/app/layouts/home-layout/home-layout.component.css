@@ -93,8 +93,21 @@ body {
     .staff.active {
       color: var(--primary-color);
     }
+
+    .site-customer.active{
+      color: var(--primary-color);
+    }
     
+    .site.active{
+      color: var(--primary-color);
+    }
+
+    .product.active{
+      color: var(--primary-color);
+    }
+
     .new.active {
       color: var(--primary-color);
     }
+    
   }  
