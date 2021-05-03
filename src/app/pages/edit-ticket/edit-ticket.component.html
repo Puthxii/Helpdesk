@@ -75,7 +75,7 @@
                     [ngClass]="setExpirationDate()" value="{{ getMaPackage() }}" readonly>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="product">Product</label>
+                  <label for="product">Producdatet</label>
                   <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
                 </div>
               </div>
@@ -294,8 +294,16 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                       <label for="dueDate" class="control-label">due date</label>
-                                      <input formControlName="dueDate" type="date" class="form-control" id="dueDate"
-                                        placeholder="Due Date">
+                                      <input class="form-control" placeholder="Due Date" angular-mydatepicker id="dueDate" name="dueDate"
+                                      formControlName="dueDate" [options]="myOptions" #dp="angular-mydatepicker">
+                                    <div class=" input-group-append">
+                                      <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                                        <i class="fas fa-calendar"></i>
+                                      </button>
+                                    </div>
+                      
+                                      <!-- <input formControlName="dueDate" type="date" class="form-control" id="dueDate"
+                                        placeholder="Due Date"> -->
                                     </div>
                                   </div>
                                   <div class="form-row">
