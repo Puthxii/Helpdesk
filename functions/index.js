@@ -33,6 +33,8 @@ exports.notifyUser = functions.firestore.document("messages/{messageId}")
   .onCreate((event, ctx) => {
     const message = event.data();
     const userId = message.recipientId;
+    console.log(message);
+    console.log(userId);
     const payload = {
       notification: {
         title: "New message!",
@@ -42,9 +44,11 @@ exports.notifyUser = functions.firestore.document("messages/{messageId}")
     };
     const db = admin.firestore();
     const userRef = db.collection("users").doc(userId);
+    console.log(userRef);
     return userRef.get()
       .then((snapshot) => snapshot.data())
       .then((user) => {
+        console.log(user);
         const tokens = user.fcmTokens ? Object.keys(user.fcmTokens) : [];
         if (!tokens.length) {
           throw new Error("User does not have any tokens!");
