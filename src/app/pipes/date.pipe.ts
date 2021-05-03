@@ -9,7 +9,10 @@ moment.locale('th-TH')
 export class DatePipe implements PipeTransform {
 
   transform(value: any, format: string): any {
-    if (!value) return moment(new Date()).format('MMMM Do YYYY, h:mm:ss a')
+    if (!value) {
+      return moment(new Date()).format('MMMM Do YYYY, h:mm:ss a')
+    }
+
     if (format) {
       return moment(new Date(value.seconds * 1000)).format(format)
     } else {

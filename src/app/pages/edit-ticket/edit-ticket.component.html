@@ -246,76 +246,78 @@
             </div>
             <div class="col-lg-6 col-md-12 col-sm-12"
               *ngIf="(auth.isSupervisor(user) || auth.isDeveloper(user))&&isAcceptedAssigned()&&isNotInprogress()">
-              <label class="" for="task">Tasks</label>
+              <h5 class="" for="task"><i class="fas fa-tasks"></i> Task</h5>
               <div class="form-row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="form-row">
                     <div class="form-group col-md-12">
                       <div class="row">
-                        <ul>
-                          <div *ngFor="let task of depositTasks; let i = index">
+                        <!-- display task -->
+                        <ul class="list-group-item list-group-item-action flex-column" *ngFor="let task of depositTasks; let i = index">
+                          <div class="list-group" *ngIf="taskIdx!==i">
                             <div>
-                              <div *ngIf="taskIdx!==i">
-                                <input type="checkbox" [(ngModel)]="task.checked" (change)="changeChecked()"
-                                  [ngModelOptions]="{standalone: true}">
+                              <h5>
+                                <input class="mr-2" type="checkbox" [(ngModel)]="task.checked" (change)="changeChecked()"
+                                [ngModelOptions]="{standalone: true}">
                                 {{task?.subjectTask}}
-                                {{getDev(task)}}
-                                {{task?.point}}
-                                {{task?.dueDate | date: 'dd/MM/yyyy'}}
-                                {{task?.checked}}
-                                <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn">
-                                  <i class="fas fa-pen"></i>
-                                </button>
-                                <button type="button" (click)="removeTasks(i)" class="btn dangerBtn">
-                                  <i class="fas fa-trash"></i>
-                                </button>
+                              </h5>
+                            </div>                         
+                          <span>Assign: {{getDev(task)}}</span>
+                          <span>Point: {{task?.point}}</span>
+                          <span>Deu date: {{task?.dueDate.singleDate.jsDate | datePipe: 'll' }}</span>
+                          <div class="mt-2">
+                            <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn mr-2">
+                              <i class="fas fa-pen"></i> Edit Task
+                            </button>
+                            <button type="button" (click)="removeTasks(i)" class="btn dangerBtn">
+                              <i class="fas fa-trash"></i> Delete Task
+                            </button>
+                          </div>
+                        </div>
+                        <!-- end display -->
+                        
+                          <div class="form-group col-md-12">
+                            <div formGroupName="tasks" class="form-group" *ngIf="updateTask&&taskIdx===i">
+                              <div class="form-row ">
+                                <div class="form-group col-md-6">
+                                  <label for="subjectTask" class="control-label">Subject Task</label>
+                                  <input formControlName="subjectTask" type="text" class="form-control"
+                                    id="subjectTask" placeholder="Subject Task">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="developer" class="control-label">Assign Dev</label>
+                                  <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'"
+                                    [data]="Staff" id="developer" formControlName="developer"
+                                    [settings]="devSettings">
+                                  </ng-multiselect-dropdown>
+                                </div>
                               </div>
-                              <div class="form-group col-md-12">
-                                <div formGroupName="tasks" class="form-group" *ngIf="updateTask&&taskIdx===i">
-                                  <div class="form-row ">
-                                    <div class="form-group col-md-6">
-                                      <label for="subjectTask" class="control-label">Subject Task</label>
-                                      <input formControlName="subjectTask" type="text" class="form-control"
-                                        id="subjectTask" placeholder="Subject Task">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                      <label for="developer" class="control-label">Assign Dev</label>
-                                      <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'"
-                                        [data]="Staff" id="developer" formControlName="developer"
-                                        [settings]="devSettings">
-                                      </ng-multiselect-dropdown>
-                                    </div>
-                                  </div>
-                                  <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                      <label for="point" class="control-label">point</label>
-                                      <input formControlName="point" type="number" class="form-control" id="point"
-                                        placeholder="Point">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                      <label for="dueDate" class="control-label">due date</label>
-                                      <input class="form-control" placeholder="Due Date" angular-mydatepicker id="dueDate" name="dueDate"
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="point" class="control-label">point</label>
+                                  <input formControlName="point" type="number" class="form-control" id="point"
+                                    placeholder="Point">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="dueDate" class="control-label">Due Date</label>
+                                  <div class="input-group">
+                                    <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="dueDate"
                                       formControlName="dueDate" [options]="myOptions" #dp="angular-mydatepicker">
                                     <div class=" input-group-append">
                                       <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
                                         <i class="fas fa-calendar"></i>
                                       </button>
                                     </div>
-                      
-                                      <!-- <input formControlName="dueDate" type="date" class="form-control" id="dueDate"
-                                        placeholder="Due Date"> -->
-                                    </div>
                                   </div>
-                                  <div class="form-row">
-                                    <div class="form-group mr-5">
-                                      <button type="button" (click)="onCancelUpdateTaks()"
-                                        class="btn btn-light btn-cancel">Cancel</button>
-                                    </div>
-                                    <div class="form-group">
-                                      <button type="button" (click)="onUpdateTask(i)" class="btn btn-success">Update
-                                        Tasks</button>
-                                    </div>
-                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group mr-5">
+                                  <button type="button" (click)="onCancelUpdateTaks()"
+                                    class="btn btn-light btn-cancel">Cancel</button>
+                                </div>
+                                <div class="form-group">
+                                  <button type="button" (click)="onUpdateTask(i)" class="btn btn-success">Update Tasks</button>
                                 </div>
                               </div>
                             </div>
@@ -327,7 +329,7 @@
                 </div>
               </div>
               <p>total = {{ this.sumPoint }}</p>
-              <p>Due date = {{this.maxDueDate | date: 'dd/MM/yyyy'}}</p>
+              <span>Deu date: {{this.maxDueDate | datePipe: 'll' }}</span>
 
               <div class="form-row">
                 <div class="form-group col-md-12">
@@ -358,9 +360,16 @@
                           placeholder="Point">
                       </div>
                       <div class="form-group col-md-6">
-                        <label for="dueDate" class="control-label">due date</label>
-                        <input formControlName="dueDate" type="date" class="form-control" id="dueDate"
-                          placeholder="Due Date">
+                        <label for="dueDate" class="control-label">Due Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="dueDate"
+                            formControlName="dueDate" [options]="myOptions" #dp="angular-mydatepicker">
+                          <div class=" input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+                              <i class="fas fa-calendar"></i>
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="form-row">

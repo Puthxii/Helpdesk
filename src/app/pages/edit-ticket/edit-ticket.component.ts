@@ -42,6 +42,9 @@ export class EditTicketComponent implements OnInit {
   updateTask = false;
   taskIdx: number;
   showTask = false
+  Stafficon = [
+    { icon: 'fas fa-user' },
+  ];
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -1095,17 +1098,20 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
+
   getDev(task: { developer: string | any[]; }) {
     const name = []
     for (let i = 0; task.developer.length > i; i++) {
       name.push(task.developer[i].fullName)
     }
-    return (name.length != 0) ? name : '-'
+    return (name.length !== 0) ? name : '-'
   }
 
   checkDueDate() {
     if (this.depositTasks.length !== 0) {
-      this.maxDueDate = this.depositTasks.sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())[0].dueDate;
+      this.maxDueDate = this.depositTasks.sort((a, b) =>
+        new Date(b.dueDate.singleDate.jsDate.seconds * 1000).getTime() - new Date(a.dueDate.singleDate.jsDate.seconds * 1000).getTime())[0]
+        .dueDate.singleDate.jsDate;
       this.setDueDate(this.maxDueDate)
     }
   }
@@ -1151,5 +1157,8 @@ export class EditTicketComponent implements OnInit {
         }
       }
     }
+  }
+  progressbar() {
+   
   }
 }
