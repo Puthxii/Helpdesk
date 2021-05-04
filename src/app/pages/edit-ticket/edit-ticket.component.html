@@ -75,7 +75,7 @@
                     [ngClass]="setExpirationDate()" value="{{ getMaPackage() }}" readonly>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="product">Producdatet</label>
+                  <label for="product">Product</label>
                   <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
                 </div>
               </div>
@@ -252,43 +252,40 @@
                   <div class="form-row">
                     <div class="form-group col-md-12">
                       <div class="row">
-                        <!-- display task -->
-                        <ul class="list-group-item list-group-item-action flex-column" *ngFor="let task of depositTasks; let i = index">
+                        <ul class="list-group-item list-group-item-action flex-column"
+                          *ngFor="let task of depositTasks; let i = index">
                           <div class="list-group" *ngIf="taskIdx!==i">
                             <div>
                               <h5>
-                                <input class="mr-2" type="checkbox" [(ngModel)]="task.checked" (change)="changeChecked()"
-                                [ngModelOptions]="{standalone: true}">
+                                <input class="mr-2" type="checkbox" [(ngModel)]="task.checked"
+                                  (change)="changeChecked()" [ngModelOptions]="{standalone: true}">
                                 {{task?.subjectTask}}
                               </h5>
-                            </div>                         
-                          <span>Assign: {{getDev(task)}}</span>
-                          <span>Point: {{task?.point}}</span>
-                          <span>Deu date: {{task?.dueDate.singleDate.jsDate | datePipe: 'll' }}</span>
-                          <div class="mt-2">
-                            <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn mr-2">
-                              <i class="fas fa-pen"></i> Edit Task
-                            </button>
-                            <button type="button" (click)="removeTasks(i)" class="btn dangerBtn">
-                              <i class="fas fa-trash"></i> Delete Task
-                            </button>
+                            </div>
+                            <span>Assign: {{getDev(task)}}</span>
+                            <span>Point: {{task?.point}}</span>
+                            <span>Deu date: {{task?.dueDate.singleDate.jsDate | datePipe: 'll' }}</span>
+                            <div class="mt-2">
+                              <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn mr-2">
+                                <i class="fas fa-pen"></i> Edit Task
+                              </button>
+                              <button type="button" (click)="removeTasks(i)" class="btn dangerBtn">
+                                <i class="fas fa-trash"></i> Delete Task
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                        <!-- end display -->
-                        
                           <div class="form-group col-md-12">
                             <div formGroupName="tasks" class="form-group" *ngIf="updateTask&&taskIdx===i">
                               <div class="form-row ">
                                 <div class="form-group col-md-6">
                                   <label for="subjectTask" class="control-label">Subject Task</label>
-                                  <input formControlName="subjectTask" type="text" class="form-control"
-                                    id="subjectTask" placeholder="Subject Task">
+                                  <input formControlName="subjectTask" type="text" class="form-control" id="subjectTask"
+                                    placeholder="Subject Task">
                                 </div>
                                 <div class="form-group col-md-6">
                                   <label for="developer" class="control-label">Assign Dev</label>
                                   <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'"
-                                    [data]="Staff" id="developer" formControlName="developer"
-                                    [settings]="devSettings">
+                                    [data]="Staff" id="developer" formControlName="developer" [settings]="devSettings">
                                   </ng-multiselect-dropdown>
                                 </div>
                               </div>
@@ -301,8 +298,9 @@
                                 <div class="form-group col-md-6">
                                   <label for="dueDate" class="control-label">Due Date</label>
                                   <div class="input-group">
-                                    <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="dueDate"
-                                      formControlName="dueDate" [options]="myOptions" #dp="angular-mydatepicker">
+                                    <input class="form-control" placeholder="Select a date range" angular-mydatepicker
+                                      name="dueDate" formControlName="dueDate" [options]="myOptions"
+                                      #dp="angular-mydatepicker">
                                     <div class=" input-group-append">
                                       <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
                                         <i class="fas fa-calendar"></i>
@@ -317,7 +315,8 @@
                                     class="btn btn-light btn-cancel">Cancel</button>
                                 </div>
                                 <div class="form-group">
-                                  <button type="button" (click)="onUpdateTask(i)" class="btn btn-success">Update Tasks</button>
+                                  <button type="button" (click)="onUpdateTask(i)" class="btn btn-success">Update
+                                    Tasks</button>
                                 </div>
                               </div>
                             </div>
@@ -328,9 +327,8 @@
                   </div>
                 </div>
               </div>
-              <p>total = {{ this.sumPoint }}</p>
-              <span>Deu date: {{this.maxDueDate | datePipe: 'll' }}</span>
-
+              <p>total: {{ this.sumPoint }}</p>
+              <span>Due date: {{this.maxDueDate | datePipe: 'll' }}</span>
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <div class="row" *ngIf="!addTask">
@@ -362,8 +360,8 @@
                       <div class="form-group col-md-6">
                         <label for="dueDate" class="control-label">Due Date</label>
                         <div class="input-group">
-                          <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="dueDate"
-                            formControlName="dueDate" [options]="myOptions" #dp="angular-mydatepicker">
+                          <input class="form-control" placeholder="Select a date range" angular-mydatepicker
+                            name="dueDate" formControlName="dueDate" [options]="myOptions" #dp="angular-mydatepicker">
                           <div class=" input-group-append">
                             <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
                               <i class="fas fa-calendar"></i>

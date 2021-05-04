@@ -10,7 +10,7 @@ export class DatePipe implements PipeTransform {
 
   transform(value: any, format: string): any {
     if (!value) {
-      return moment(new Date()).format('MMMM Do YYYY, h:mm:ss a')
+      return null
     }
 
     if (format) {

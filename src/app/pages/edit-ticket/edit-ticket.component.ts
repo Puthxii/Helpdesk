@@ -1158,7 +1158,7 @@ export class EditTicketComponent implements OnInit {
       }
     }
   }
-  progressbar() {
-   
-  }
+
+  progressbar() { }
+
 }
