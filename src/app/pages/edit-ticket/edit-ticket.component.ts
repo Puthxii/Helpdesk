@@ -32,6 +32,7 @@ export class EditTicketComponent implements OnInit {
   user: User
   Staff: User[];
   Task: Tasks[];
+  progress: any;
   staff: any;
   sumPoint: any;
   total: any;
@@ -212,6 +213,7 @@ export class EditTicketComponent implements OnInit {
       })
       this.totalPoint()
       this.checkDueDate()
+      this.progressbar()
     })
   }
 
@@ -1157,8 +1159,19 @@ export class EditTicketComponent implements OnInit {
         }
       }
     }
+    this.progressbar()
   }
 
-  progressbar() { }
-
+  progressbar() {
+      const total = this.depositTasks.length
+      let isChecked = 0
+      if (this.depositTasks.length !== 0) {
+        for( let i = 0; this.depositTasks.length > i; i++){
+          if (this.depositTasks[i].checked === true){
+            isChecked = isChecked + 1
+          }
+        }
+      }
+      this.progress = ((isChecked / total) * 100).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+  }
 }
