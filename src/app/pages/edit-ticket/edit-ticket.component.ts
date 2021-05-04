@@ -960,10 +960,11 @@ export class EditTicketComponent implements OnInit {
       this.tasksToDelete.push(this.depositTasks[i])
       this.depositTasks.splice(i, 1);
     }
+    this.deleteTasks()
     this.totalPoint()
-    this.checkDueDate()
     this.isAssignDev()
-    this.saveTasks()
+    this.checkDueDate()
+
   }
 
   onCancelUpdateTaks() {
@@ -1003,11 +1004,11 @@ export class EditTicketComponent implements OnInit {
     this.updateTask = false;
     this.taskIdx = null;
     this.showTask = !this.showTask;
+    this.updateTasks()
     this.totalPoint()
     this.clearTask()
     this.isAssignDev()
     this.checkDueDate()
-    this.saveTasks()
   }
 
 
@@ -1026,7 +1027,11 @@ export class EditTicketComponent implements OnInit {
         this.saveAction(`${staff} assigned task to developer`, this.tasksToSave[i].developer, staff, status)
       }
     }
+  }
 
+  updateTasks() {
+    const staff = this.getCurrentStaff()
+    const status = this.editTicket.controls.status.value
     if (this.tasksToUpdate.length != 0) {
       for (let i = 0; this.tasksToUpdate.length > i; i++) {
         this.ticketService.updateTasks(
@@ -1036,7 +1041,11 @@ export class EditTicketComponent implements OnInit {
         this.saveAction(`${staff} edit task`, this.tasksToUpdate[i].developer, staff, status)
       }
     }
+  }
 
+  deleteTasks() {
+    const staff = this.getCurrentStaff()
+    const status = this.editTicket.controls.status.value
     if (this.tasksToDelete.length != 0) {
       for (let i = 0; this.tasksToDelete.length > i; i++) {
         this.ticketService.removeTasks(
@@ -1143,6 +1152,9 @@ export class EditTicketComponent implements OnInit {
       this.maxDueDate = this.depositTasks.sort((a, b) =>
         new Date(b.dueDate.singleDate.jsDate.seconds * 1000).getTime() - new Date(a.dueDate.singleDate.jsDate.seconds * 1000).getTime())[0]
         .dueDate.singleDate.jsDate;
+      this.setDueDate(this.maxDueDate)
+    } else {
+      this.maxDueDate = null
       this.setDueDate(this.maxDueDate)
     }
   }
