@@ -7,7 +7,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Observable } from 'rxjs/internal/Observable';
 import { Ticket, Actions, Tasks } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
-import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
+import { IAngularMyDpOptions, IMyDate, IMyDateModel } from 'angular-mydatepicker';
 import * as moment from 'moment';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -96,7 +96,8 @@ export class EditTicketComponent implements OnInit {
   deadlineDate: any;
   myOptions: IAngularMyDpOptions = {
     dateRange: false,
-    dateFormat: 'dd/mm/yyyy'
+    dateFormat: 'dd/mm/yyyy',
+    disableUntil: this.minDate(),
   };
   NewUpload: { id: string; name: string; url: string; file: File; }[];
   tasks: Observable<any>
@@ -199,6 +200,14 @@ export class EditTicketComponent implements OnInit {
     this.site$ = this.siteService.getSitesList()
     this.getDeveloper()
     this.getTask()
+  }
+
+  minDate(): IMyDate {
+    const date = new Date()
+    const day = date.getDate() - 1
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+    return { year, month, day }
   }
 
   getTask() {
@@ -1071,10 +1080,9 @@ export class EditTicketComponent implements OnInit {
 
   setExpirationDate() {
     let color = ''
-    const endDate = moment(this.editTicket.controls.site.value.maEndDate.seconds * 1000).format('L');
+    const endDate = new Date(this.editTicket.controls.site.value.maEndDate.seconds * 1000)
     const currentDate = new Date()
-    const currentDateFormat = moment(currentDate).format('L');
-    if (endDate > currentDateFormat) {
+    if (endDate > currentDate) {
       color = 'curentDate'
     } else {
       color = 'expirationDate'

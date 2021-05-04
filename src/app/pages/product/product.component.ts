@@ -62,4 +62,14 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  getActive(product: Product) {
+    let active: string
+    if (product.active) {
+      active = 'True'
+    } else {
+      active = 'False'
+    }
+    return active
+  }
+
 }

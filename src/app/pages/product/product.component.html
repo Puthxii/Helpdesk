@@ -32,7 +32,7 @@
           <tr *ngFor="let product of Product ; let i = index;">
             <td>{{i+1}}</td>
             <td>{{product.name}}</td>
-            <td>{{product.active}}</td>
+            <td>{{getActive(product)}}</td>
           </tr>
         </tbody>
       </table>

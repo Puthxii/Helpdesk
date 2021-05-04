@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SiteService } from 'src/app/services/site/site.service';
 import { Site } from 'src/app/models/site.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'site',
@@ -60,6 +61,24 @@ export class SiteComponent implements OnInit {
         this.Site.push(item as Site)
       })
     });
+  }
+
+  getMaPackage(site: Site) {
+    const startDate = moment(site.maStartDate.seconds * 1000).format('L');
+    const endDate = moment(site.maEndDate.seconds * 1000).format('L');
+    return startDate + ' - ' + endDate;
+  }
+
+  setExpirationDate(site: Site) {
+    let color = ''
+    const endDate = new Date(site.maEndDate.seconds * 1000)
+    const currentDate = new Date()
+    if (endDate > currentDate) {
+      color = 'curentDate'
+    } else {
+      color = 'expirationDate'
+    }
+    return color
   }
 
 }

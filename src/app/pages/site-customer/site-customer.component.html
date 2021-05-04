@@ -25,7 +25,7 @@
           <tr>
             <th scope="col">No</th>
             <th scope="col">Name</th>
-            <th scope="col">Role</th>
+            <th scope="col">Site</th>
             <th scope="col">Email</th>
             <th scope="col">Mobile number</th>
           </tr>
@@ -34,7 +34,7 @@
           <tr *ngFor="let cus of Customer ; let i = index;">
             <td>{{i+1}}</td>
             <td>{{cus.fullName}}</td>
-            <td>{{ getRoles(cus.roles) }}</td>
+            <td>{{cus.site}}</td>
             <td>{{cus.email}}</td>
             <td>{{cus.mobileNumber}}</td>
           </tr>

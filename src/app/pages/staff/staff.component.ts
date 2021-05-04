@@ -48,15 +48,15 @@ export class StaffComponent implements OnInit {
   getRoles(roles: Roles): string {
     let role: string
     if (roles.supporter === true) {
-      role = 'supporter'
+      role = 'Supporter'
     } else if (roles.maintenance === true) {
-      role = 'maintenance'
+      role = 'Maintenance'
     } else if (roles.supervisor === true) {
-      role = 'supervisor'
+      role = 'Supervisor'
     } else if (roles.developer === true) {
-      role = 'developer'
+      role = 'Developer'
     } else {
-      role = 'staff'
+      role = 'Staff'
     }
     return role
   }

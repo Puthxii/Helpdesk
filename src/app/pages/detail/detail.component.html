@@ -87,12 +87,12 @@
                   </ul>
                 </div>
                 <div class="form-group col-md-12">
-                  <h5>Respon Description</h5>
-                  <p>{{ getResponDescription(ticket) }}</p>
+                  <h5>Response Description</h5>
+                  <p>{{ getResponseDescription(ticket) }}</p>
                 </div>
                 <div class="form-group col-md-12">
                   <h5>Respon Description File Upload</h5>
-                  <ul class="list-group list-group-flush" *ngFor="let file of ticket.responDescriptionFile">
+                  <ul class="list-group list-group-flush" *ngFor="let file of ticket.responseDescriptionFile">
                     <li class="list-group-item">
                       <app-upload-details [fileUpload]='file'></app-upload-details>
                     </li>

@@ -58,36 +58,35 @@ export class DetailComponent implements OnInit {
     return maStartDate + ' - ' + maEndDate;
   }
 
-  getSubject(ticket) {
+  getSubject(ticket: Ticket) {
     return ticket.subject ? ticket.subject : '-';
   }
 
-  getdescription(ticket) {
+  getdescription(ticket: Ticket) {
     return ticket.description ? ticket.description : '-';
   }
 
-  getDescriptionMA(ticket) {
+  getDescriptionMA(ticket: Ticket) {
     return ticket.maDescription ? ticket.maDescription : '-';
   }
 
-  getResolvedDescription(ticket) {
+  getResolvedDescription(ticket: Ticket) {
     return ticket.resolveDescription ? ticket.resolveDescription : '-';
   }
 
-  getResponDescription(ticket) {
-    return ticket.responDescription ? ticket.responDescription : '-';
+  getResponseDescription(ticket: Ticket) {
+    return ticket.responseDescription ? ticket.responseDescription : '-';
   }
 
-  getSuggestDescription(ticket) {
+  getSuggestDescription(ticket: Ticket) {
     return ticket.suggestDescription ? ticket.suggestDescription : '-';
   }
 
-  setExpirationDate(ticket) {
+  setExpirationDate(ticket: Ticket) {
     let color = ''
-    const endDate = moment(ticket.site.maEndDate.seconds * 1000).format('L');
+    const endDate = new Date(ticket.site.maEndDate.seconds * 1000)
     const currentDate = new Date()
-    const currentDateFormat = moment(currentDate).format('L');
-    if (endDate > currentDateFormat) {
+    if (endDate > currentDate) {
       color = 'curentDate'
     } else {
       color = 'expirationDate'
