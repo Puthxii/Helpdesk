@@ -932,6 +932,7 @@ export class EditTicketComponent implements OnInit {
     this.checkDueDate()
     this.isAssignDev()
     this.saveTasks()
+    this.progressbar()
   }
 
   isTasksExit(depositTasks: any[]) {
@@ -965,6 +966,7 @@ export class EditTicketComponent implements OnInit {
     this.totalPoint()
     this.checkDueDate()
     this.isAssignDev()
+    this.progressbar()
     this.saveTasks()
   }
 
@@ -1010,6 +1012,7 @@ export class EditTicketComponent implements OnInit {
     this.isAssignDev()
     this.checkDueDate()
     this.saveTasks()
+    this.progressbar()
   }
 
 
@@ -1194,15 +1197,16 @@ export class EditTicketComponent implements OnInit {
   }
 
   progressbar() {
+    if (this.depositTasks.length !== 0) {
       const total = this.depositTasks.length
       let isChecked = 0
-      if (this.depositTasks.length !== 0) {
-        for( let i = 0; this.depositTasks.length > i; i++){
-          if (this.depositTasks[i].checked === true){
-            isChecked = isChecked + 1
-          }
+      for (let i = 0; this.depositTasks.length > i; i++) {
+        if (this.depositTasks[i].checked === true) {
+          isChecked = isChecked + 1
         }
       }
-      this.progress = ((isChecked / total) * 100).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+      return this.progress = ((isChecked / total) * 100).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+    }
+    return this.progress = 0
   }
 }
