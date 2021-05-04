@@ -190,6 +190,7 @@
                   <hr>
                   <label for="maDescription">Maintenance Description</label>
                   <textarea formControlName="maDescription" class="form-control" id="maDescription" rows="7"
+                    (ngModelChange)="isEditMaDescription($event)"
                     [readonly]="!auth.isSupervisor(user)&&!auth.isMaintenance(user)"></textarea>
                 </div>
               </div>

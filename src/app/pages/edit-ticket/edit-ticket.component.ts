@@ -75,6 +75,7 @@ export class EditTicketComponent implements OnInit {
     { name: 'Save as Accept', value: 'Accepted' },
     { name: 'Save as Assign', value: 'Assigned' },
     { name: 'Save as Resolve', value: 'Resolved' },
+    { name: 'Save as Reject', value: 'Rejected' },
   ];
   ticket: any;
   depositDescriptionFiles = []
@@ -487,7 +488,7 @@ export class EditTicketComponent implements OnInit {
       this.isCloseInProgress()
     } else if (currentStatus === 'Informed') {
       this.removeStatus('More Info');
-      this.addStatus('Rejected');
+      this.removeStatus('Rejected');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
@@ -497,16 +498,17 @@ export class EditTicketComponent implements OnInit {
     } else if (currentStatus === 'More Info') {
       this.addStatus('More Info');
       this.addStatus('Informed');
-      this.addStatus('Rejected');
       this.isCloseInProgress()
       this.removeStatus('Draft');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
+      this.removeStatus('Rejected');
     } else if (currentStatus === 'In Progress') {
-      this.addStatus('Accepted');
-      this.addStatus('Rejected');
+      this.removeStatus('Accepted');
+      this.removeStatus('Rejected');
       this.isAddOns()
+      this.isEditMaDescription(Event);
       this.removeStatus('Draft');
       this.removeStatus('Informed');
       this.removeStatus('More Info');
@@ -518,6 +520,7 @@ export class EditTicketComponent implements OnInit {
       } else {
         this.removeStatus('Assigned');
       }
+      this.removeStatus('Rejected');
       this.removeStatus('Draft');
       this.removeStatus('Informed');
       this.removeStatus('More Info');
@@ -588,6 +591,9 @@ export class EditTicketComponent implements OnInit {
   }
 
   saveAction(actionSentence: any, dev: any, staff: any, status: any) {
+    if (typeof staff === 'undefined') {
+      staff = ''
+    }
     this.Actions = {
       actionSentence,
       dev,
@@ -619,12 +625,19 @@ export class EditTicketComponent implements OnInit {
 
   isResponseDescription(event: any) {
     (this.editTicket.controls.responseDescription.value) ?
-      (this.addStatus('Closed'), this.addStatus('More Info'))
-      : (this.removeStatus('Closed'), this.removeStatus('More Info'))
+      (this.addStatus('Closed'), this.addStatus('More Info'), this.addStatus('Rejected'))
+      : (this.removeStatus('Closed'), this.removeStatus('More Info'), this.removeStatus('Rejected'))
   }
 
   isEditDescription(event: any) {
     this.isEdit = true
+  }
+
+  isEditMaDescription(event: any) {
+    console.log(this.editTicket.controls.maDescription.value);
+    (this.editTicket.controls.maDescription.value) ?
+      (this.addStatus('Accepted'), this.addStatus('Rejected'))
+      : (this.removeStatus('Accepted'), this.removeStatus('Rejected'))
   }
 
   isResolveDescription(event: any) {
@@ -826,7 +839,6 @@ export class EditTicketComponent implements OnInit {
   setActionSentence() {
     let sentence: string
     const userCurrent = this.getCurrentUser()
-    const assignDev = this.editTicket.controls.tasks.value.developer
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
         sentence = `${userCurrent} edit ticket`
