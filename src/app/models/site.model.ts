@@ -7,6 +7,8 @@ export interface Site {
     productId: string;
     maLevelId: string;
     product: Product;
+    maStartDate: any;
+    maEndDate: any;
 }
 
 export interface MaLevel {
