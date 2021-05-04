@@ -103,6 +103,8 @@ export class EditTicketComponent implements OnInit {
   NewUpload: { id: string; name: string; url: string; file: File; }[];
   tasks: Observable<any>
   isEdit = false
+  isEditSuggest = false
+  isEditResolve = false
   title: string
   Tasks: Tasks[];
   Actions: Actions
@@ -438,7 +440,6 @@ export class EditTicketComponent implements OnInit {
 
   updateForm() {
     this.checkAction()
-    this.saveTasks()
     this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
   }
 
@@ -515,7 +516,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
-      if (this.user.roles.supervisor === true && this.depositTasks.length != 0) {
+      if (this.user.roles.supervisor === true && this.depositTasks.length != 0 && this.isEditSuggest) {
         this.addStatus('Assigned');
       } else {
         this.removeStatus('Assigned');
@@ -532,6 +533,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('In Progress');
       this.removeStatus('Accepted');
       this.removeStatus('Resolved');
+      this.removeStatus('Rejected');
       this.isResolveDescription(Event)
     } else if (currentStatus === 'Resolved') {
       this.removeStatus('Draft');
@@ -570,7 +572,7 @@ export class EditTicketComponent implements OnInit {
 
   isAssignDev() {
     this.addStatus('Assigned');
-    (this.depositTasks.length != 0) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
+    (this.depositTasks.length != 0 && this.isEditSuggest) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
   }
 
   checkAction() {
@@ -623,25 +625,30 @@ export class EditTicketComponent implements OnInit {
     return (this.editTicket.controls.type.value === 'Info' || this.editTicket.controls.type.value === 'Consult')
   }
 
+  isEditDescription(event: any) {
+    this.isEdit = true
+  }
+
   isResponseDescription(event: any) {
     (this.editTicket.controls.responseDescription.value) ?
       (this.addStatus('Closed'), this.addStatus('More Info'), this.addStatus('Rejected'))
       : (this.removeStatus('Closed'), this.removeStatus('More Info'), this.removeStatus('Rejected'))
   }
 
-  isEditDescription(event: any) {
-    this.isEdit = true
-  }
-
   isEditMaDescription(event: any) {
-    console.log(this.editTicket.controls.maDescription.value);
     (this.editTicket.controls.maDescription.value) ?
       (this.addStatus('Accepted'), this.addStatus('Rejected'))
       : (this.removeStatus('Accepted'), this.removeStatus('Rejected'))
   }
 
+  isEditSuggestDescription(event: any) {
+    (this.editTicket.controls.suggestDescription.value) ? this.isEditSuggest = true : this.isEditSuggest = false;
+    this.isAssignDev()
+  }
+
   isResolveDescription(event: any) {
-    (this.editTicket.controls.resolveDescription.value) ? this.addStatus('Resolved') : this.removeStatus('Resolved')
+    (this.editTicket.controls.resolveDescription.value) ? (this.addStatus('Resolved'), this.isEditResolve = true, this.changeChecked())
+      : (this.removeStatus('Resolved'), this.isEditResolve = false, this.onSelectedStatus('Assigned'))
   }
 
   removeStatus(status: string) {
@@ -922,6 +929,7 @@ export class EditTicketComponent implements OnInit {
     this.totalPoint()
     this.checkDueDate()
     this.isAssignDev()
+    this.saveTasks()
   }
 
   isTasksExit(depositTasks: any[]) {
@@ -955,6 +963,7 @@ export class EditTicketComponent implements OnInit {
     this.totalPoint()
     this.checkDueDate()
     this.isAssignDev()
+    this.saveTasks()
   }
 
   onCancelUpdateTaks() {
@@ -998,6 +1007,7 @@ export class EditTicketComponent implements OnInit {
     this.clearTask()
     this.isAssignDev()
     this.checkDueDate()
+    this.saveTasks()
   }
 
 
@@ -1148,7 +1158,7 @@ export class EditTicketComponent implements OnInit {
     if (this.depositTasks.length !== 0) {
       for (let i = 0; this.depositTasks.length > i; i++) {
         if (this.depositTasks[i].id) {
-          if (isChecked === true) {
+          if (isChecked === true && this.isEditResolve === true) {
             this.onSelectedStatus('Resolved')
             this.ticketService.updateTasks(
               this.id,

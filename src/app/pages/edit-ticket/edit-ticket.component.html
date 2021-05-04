@@ -210,7 +210,11 @@
                   <hr>
                   <label for="suggestDescription">Suggest Description</label>
                   <textarea formControlName="suggestDescription" class="form-control" rows="7"
-                    [readonly]="!auth.isSupervisor(user)"></textarea>
+                    (ngModelChange)="isEditSuggestDescription($event)" [readonly]="!auth.isSupervisor(user)">
+                  </textarea>
+                  <div class="danger-color">
+                    Please fill out a Suggest description for assign
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -229,7 +233,11 @@
                   <div class="form-group col-md-12">
                     <label for="resolve">Resolve Description</label>
                     <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="7"
-                      [readonly]="!auth.isDeveloper(user)"></textarea>
+                      (ngModelChange)="isResolveDescription($event)" [readonly]="!auth.isDeveloper(user)">
+                    </textarea>
+                    <div class="danger-color">
+                      Please fill out a Resolve description for resolve
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -247,7 +255,8 @@
             </div>
             <div class="col-lg-6 col-md-12 col-sm-12"
               *ngIf="(auth.isSupervisor(user) || auth.isDeveloper(user))&&isAcceptedAssigned()&&isNotInprogress()">
-              <h5 class="" for="task"><i class="fas fa-tasks"></i> Task</h5>
+              <h5 class="" for="task">Task <a title="You can save task regardless of the ticket."><i
+                    class="fas fa-info-circle primary-color"></i></a> </h5>
               <div class="form-row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="form-row">
