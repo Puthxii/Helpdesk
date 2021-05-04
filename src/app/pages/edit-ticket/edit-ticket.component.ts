@@ -941,6 +941,7 @@ export class EditTicketComponent implements OnInit {
       this.depositTasks.splice(i, 1);
     }
     this.totalPoint()
+    this.checkDueDate()
     this.isAssignDev()
   }
 

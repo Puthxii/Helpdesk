@@ -252,7 +252,7 @@
                   <div class="form-row">
                     <div class="form-group col-md-12">
                       <div class="row">
-                        <ul class="list-group-item list-group-item-action flex-column"
+                        <ul class="list-group-item list-group-item-action flex-column mb-2"
                           *ngFor="let task of depositTasks; let i = index">
                           <div class="list-group" *ngIf="taskIdx!==i">
                             <div>
@@ -312,10 +312,10 @@
                               <div class="form-row">
                                 <div class="form-group mr-5">
                                   <button type="button" (click)="onCancelUpdateTaks()"
-                                    class="btn btn-light btn-cancel">Cancel</button>
+                                    class="btn cancelBtn btn-cancel">Cancel</button>
                                 </div>
                                 <div class="form-group">
-                                  <button type="button" (click)="onUpdateTask(i)" class="btn btn-success">Update
+                                  <button type="button" (click)="onUpdateTask(i)" class="btn saveBtn">Update
                                     Tasks</button>
                                 </div>
                               </div>
@@ -331,7 +331,7 @@
                 <div class="form-group col-md-12">
                   <div class="row" *ngIf="!addTask">
                     <div class="form-group col-md-12">
-                      <button type="button" class="btn btn-success" (click)="setTask()"> <i
+                      <button type="button" class="btn saveBtn" (click)="setTask()"> <i
                           class="fas fa-plus-square"></i></button>
                     </div>
                   </div>
@@ -371,10 +371,10 @@
                     <div class="form-row">
                       <div class="form-group mr-5">
                         <button type="button" (click)="onCancelAddTaks()"
-                          class="btn btn-light btn-cancel">Cancel</button>
+                          class="btn cancelBtn btn-cancel">Cancel</button>
                       </div>
                       <div class="form-group">
-                        <button type="button" class="btn btn-success" (click)="onTasksSubmit()">Save Tasks</button>
+                        <button type="button" class="btn saveBtn" (click)="onTasksSubmit()">Save Tasks</button>
                       </div>
                     </div>
                   </div>

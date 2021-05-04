@@ -241,11 +241,8 @@ export class TicketService {
       this.deleteCollection('uploadSuggestDescription')
       this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
-    //  console.log(ticket);
     } catch (error) {
-    console.error(error);
-    
-      // this.errorNotification();
+      this.errorNotification();
     }
   }
 
