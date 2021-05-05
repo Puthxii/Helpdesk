@@ -40,6 +40,7 @@ export class SiteTicketComponent implements OnInit {
   siteState: any
   CountStatus = []
   statusSpecail = ['In Progress', 'Accepted', 'Assigned']
+  statusReject = ['Rejected', 'Pending']
   Status = [
     { value: 'Informed' },
     { value: 'More Info' },
@@ -264,7 +265,7 @@ export class SiteTicketComponent implements OnInit {
 
   getCountByStatus() {
     for (let i = 0; this.Status.length > i; i++) {
-      this.ticketService.getCountByStatus(this.Status[i].value).subscribe(result => {
+      this.ticketService.getCountByStatusSite(this.Status[i].value, this.siteState).subscribe(result => {
         this.CountStatus[i] = result.length;
       });
     }

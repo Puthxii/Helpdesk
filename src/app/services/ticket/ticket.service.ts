@@ -80,14 +80,14 @@ export class TicketService {
   getTicketsListByStatusFilter(status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
   getTicketsListByStatusSpecialFilter(status: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', status)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
@@ -95,7 +95,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', status)
       .where('participant', 'array-contains', creator)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
@@ -103,7 +103,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('participant', 'array-contains', creator)
       .where('status', '==', status)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
@@ -329,17 +329,23 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref.where('status', '==', status)).valueChanges();
   }
 
+  getCountByStatusSite(status: any, site: any) {
+    return this.afs.collection('ticket', ref => ref.where('status', '==', status).where('site.initials', '==', site)
+    ).valueChanges();
+  }
+
   getCountByStatusCurrentname(status: any, creator: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
       .where('participant', 'array-contains', creator)
+      .orderBy('date.singleDate.jsDate', 'asc')
     ).valueChanges();
   }
 
   getTicketsList(role: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', role)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     );
   }
 
@@ -347,7 +353,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', role)
       .where('participant', 'array-contains', creator)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     );
   }
 
@@ -427,7 +433,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('creator', '==', creator)
       .where('status', 'in', status)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     );
   }
 
@@ -436,7 +442,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('creator', '==', creator)
       .where('status', '==', status)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     );
   }
 
@@ -451,7 +457,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('site.initials', '==', site)
       .where('status', 'in', status)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
@@ -459,7 +465,7 @@ export class TicketService {
     return this.afs.collection('ticket', ref => ref
       .where('site.initials', '==', site)
       .where('status', '==', status)
-      .orderBy('date', 'desc')
+      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
