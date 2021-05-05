@@ -487,7 +487,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
-      this.removeStatus('Close');
+      this.removeStatus('Closed');
+      this.removeStatus('Rejected');
       this.isCloseInProgress()
     } else if (currentStatus === 'Informed') {
       this.removeStatus('More Info');
