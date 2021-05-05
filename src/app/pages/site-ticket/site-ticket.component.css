@@ -89,6 +89,13 @@
     color: white;
 }
 
+.pending-badge {
+    background-color:  #FFBE96;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
 .reject.active {
     background-color:  #FE8896;
     color: #ffff;

@@ -48,7 +48,8 @@ export class SiteTicketComponent implements OnInit {
     { value: 'Accepted', },
     { value: 'Assigned', },
     { value: 'Resolved' },
-    { value: 'Rejected' }
+    { value: 'Rejected' },
+    { value: 'Pending' }
   ]
   keword = null
   searchValue = '';
@@ -93,7 +94,9 @@ export class SiteTicketComponent implements OnInit {
         this.getCountByStatusCreatorStatus()
         this.status === 'Accepted' ?
           this.getTicketByCreatorSpecialStatus(this.creator, this.statusSpecail) :
-          this.getTicketByCreatorStatus(this.creator, this.status)
+          this.status === 'Rejected' ?
+            this.getTicketByCreatorSpecialStatus(this.creator, this.statusReject) :
+            this.getTicketByCreatorStatus(this.creator, this.status)
       } else { }
     });
   }
@@ -112,7 +115,9 @@ export class SiteTicketComponent implements OnInit {
     } else {
       this.status === 'Accepted' ?
         this.getBySiteStatusSpecialFilter(this.siteState, this.statusSpecail) :
-        this.getTicketBySiteStatus(this.siteState, this.status)
+        this.status === 'Rejected' ?
+          this.getBySiteStatusSpecialFilter(this.siteState, this.statusReject) :
+          this.getTicketBySiteStatus(this.siteState, this.status)
       this.getCountByStatus()
     }
   }
@@ -157,6 +162,10 @@ export class SiteTicketComponent implements OnInit {
     return this.CountStatus[2] + this.CountStatus[3] + this.CountStatus[4]
   }
 
+  getSumReject() {
+    return this.CountStatus[6] + this.CountStatus[7]
+  }
+
   getStatusName(status: any) {
     let statusString = ''
     switch (status) {
@@ -186,6 +195,10 @@ export class SiteTicketComponent implements OnInit {
       }
       case 'Rejected': {
         statusString = 'Rejected'
+        break;
+      }
+      case 'Pending': {
+        statusString = 'Pending'
         break;
       }
     }
@@ -223,6 +236,10 @@ export class SiteTicketComponent implements OnInit {
         classIcon = 'fa-times-circle'
         break;
       }
+      case 'Pending': {
+        classIcon = 'fa-clock'
+        break;
+      }
     }
     return `fas ${classIcon} mx-2`
   }
@@ -257,6 +274,10 @@ export class SiteTicketComponent implements OnInit {
       }
       case 'Rejected': {
         classBackground = 'reject-badge'
+        break;
+      }
+      case 'Pending': {
+        classBackground = 'pending-badge'
         break;
       }
     }
