@@ -22,13 +22,13 @@ import { Router } from '@angular/router';
 })
 export class AddTicketComponent implements OnInit {
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     public ticketService: TicketService,
     public siteService: SiteService,
     public productService: ProductService,
     public fb: FormBuilder,
     public userService: UserService,
-    private router: Router,
+    public router: Router,
   ) {
   }
 

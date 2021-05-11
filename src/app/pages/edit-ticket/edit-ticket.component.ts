@@ -115,13 +115,13 @@ export class EditTicketComponent implements OnInit {
   maxDueDate: any;
 
   constructor(
-    private ticketService: TicketService,
-    private route: ActivatedRoute,
-    private siteService: SiteService,
+    public ticketService: TicketService,
+    public route: ActivatedRoute,
+    public siteService: SiteService,
     public fb: FormBuilder,
-    private auth: AuthService,
+    public auth: AuthService,
     public userService: UserService,
-    private router: Router,
+    public router: Router,
   ) {
     this.route.params.subscribe(params => this.id = params.id)
   }

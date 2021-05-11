@@ -19,9 +19,9 @@ export class DetailComponent implements OnInit {
   actions: Observable<any>
   dateThai: any
   constructor(
-    private ticketService: TicketService,
-    private route: ActivatedRoute,
-    private auth: AuthService,
+    public ticketService: TicketService,
+    public route: ActivatedRoute,
+    public auth: AuthService,
   ) {
     this.route.params.subscribe(params => this.id = params.id);
   }

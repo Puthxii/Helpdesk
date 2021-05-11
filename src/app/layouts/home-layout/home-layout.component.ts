@@ -18,7 +18,7 @@ export class HomeLayoutComponent implements OnInit {
   menu: any;
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     public userService: UserService,
     public ticketService: TicketService
   ) { }

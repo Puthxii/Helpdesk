@@ -161,7 +161,7 @@
 </div>
 <div class="container-fluid">
   <div class="card mt-3">
-    <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; else loading; index as i">
+    <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; index as i">
       <div class="card mb-2" *ngFor="let ticket of ticket$">
         <div class="card-header" style="background-color: #F2EDF3;">
           <div class="row detail-problem">

@@ -43,6 +43,7 @@ import { UploadDetailFormComponent } from './components/upload-detail-form/uploa
 import { SiteComponent } from './pages/site/site.component';
 import { SiteCustomerComponent } from './pages/site-customer/site-customer.component';
 import { ProductComponent } from './pages/product/product.component';
+import { Error500Component } from './error-pages/error500/error500.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { ProductComponent } from './pages/product/product.component';
     TicketComponent,
     DetailComponent,
     Error404Component,
+    Error500Component,
     EditTicketComponent,
     SiteTicketComponent,
     TicketMaComponent,

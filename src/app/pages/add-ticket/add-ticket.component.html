@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="card-body">
-        <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()" *ngIf="site$ | async; else loading; let Site">
+        <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()" *ngIf="site$ | async; let Site">
           <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
               <label class="control-label" for="date">Date Inform</label>

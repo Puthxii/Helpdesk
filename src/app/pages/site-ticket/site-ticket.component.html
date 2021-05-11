@@ -151,7 +151,7 @@
 <div class="container-fluid">
   <div class="card mt-3">
     <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; index as i">
-      <div class="card mt-2" *ngFor="let ticket of ticket$ | slice:startIndex:endIndex">
+      <div class="card mt-2" *ngFor="let ticket of ticket$">
         <div class="card-header" style="background-color: #F2EDF3;">
           <div class="row">
             <div class="col-6">
