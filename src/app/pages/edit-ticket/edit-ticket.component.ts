@@ -898,12 +898,13 @@ export class EditTicketComponent implements OnInit {
   }
 
   mergeParticipant(name: any) {
-    if (this.stateParticipant.indexOf(name) !== -1) {
-      console.log('Value found inside the array')
-    } else {
-      console.log(this.stateParticipant);
-      console.log(name);
-      this.stateParticipant.push(name)
+    if (typeof this.stateParticipant === 'string') {
+      this.stateParticipant = []
+      if (this.stateParticipant.indexOf(name) !== -1) {
+        console.log('Value found inside the array')
+      } else {
+        this.stateParticipant.push(name)
+      }
     }
   }
 
