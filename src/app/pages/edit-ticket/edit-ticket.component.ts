@@ -1208,14 +1208,15 @@ export class EditTicketComponent implements OnInit {
 
   progressbar() {
     if (this.depositTasks.length !== 0) {
-      const total = this.depositTasks.length
-      let isChecked = 0
+      let total = 0
+      let poinOfCheck = 0
       for (let i = 0; this.depositTasks.length > i; i++) {
+        total = total + this.depositTasks[i].point
         if (this.depositTasks[i].checked === true) {
-          isChecked = isChecked + 1
+          poinOfCheck = poinOfCheck + this.depositTasks[i].point
         }
       }
-      return this.progress = ((isChecked / total) * 100).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+      return this.progress = ((poinOfCheck / total) * 100).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
     }
     return this.progress = 0
   }

@@ -281,7 +281,7 @@
                             </div>
                             <span>Assign: {{getDev(task)}}</span>
                             <span>Point: {{task?.point}}</span>
-                            <span>Deu date: {{task?.dueDate.singleDate.jsDate | datePipe: 'll' }}</span>
+                            <span>Due date: {{task?.dueDate.singleDate.jsDate | datePipe: 'l' }}</span>
                             <div class="mt-2">
                               <button type="button" (click)="formUpdateTasks(task, i)" class="btn warningBtn mr-2">
                                 <i class="fas fa-pen"></i> Edit Task
@@ -308,7 +308,7 @@
                               </div>
                               <div class="form-row">
                                 <div class="form-group col-md-6">
-                                  <label for="point" class="control-label">point</label>
+                                  <label for="point" class="control-label">Point</label>
                                   <input formControlName="point" type="number" class="form-control" id="point"
                                     placeholder="Point">
                                 </div>
@@ -397,8 +397,8 @@
                   </div>
                 </div>
               </div>
-              <p>total: {{ this.sumPoint }}</p>
-              <span>Due date: {{this.maxDueDate | datePipe: 'll' }}</span>
+              <p>Total: {{ this.sumPoint }}</p>
+              <span>Due date: {{this.maxDueDate | datePipe: 'l' }}</span>
             </div>
           </div>
           <div class="form-row">
