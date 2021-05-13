@@ -474,6 +474,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   onSelectedStatus(value: any) {
+    console.log(value, '1');
     this.editTicket.patchValue({
       status: value
     });
@@ -900,6 +901,8 @@ export class EditTicketComponent implements OnInit {
     if (this.stateParticipant.indexOf(name) !== -1) {
       console.log('Value found inside the array')
     } else {
+      console.log(this.stateParticipant);
+      console.log(name);
       this.stateParticipant.push(name)
     }
   }

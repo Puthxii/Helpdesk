@@ -26,7 +26,7 @@ import { DetailComponent } from './pages/detail/detail.component';
 import { Error404Component } from './error-pages/error404/error404.component';
 import { EditTicketComponent } from './pages/edit-ticket/edit-ticket.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
-import { CurrentStatus, iconAttachFile, Prioritys, Types } from './shared/constant';
+import { CurrentStatus, iconAttachFile, Prioritys, Sources, Types } from './shared/constant';
 import { DatePipe } from './pipes/date.pipe';
 import { UploadFormComponent } from './components/upload-form/upload-form.component';
 import { UploadDetailsComponent } from './components/upload-details/upload-details.component';
@@ -100,7 +100,8 @@ import { Error500Component } from './error-pages/error500/error500.component';
     { provide: 'PRIORITY', useValue: Prioritys },
     { provide: 'TYPES', useValue: Types },
     { provide: 'STATUS', useValue: CurrentStatus },
-    { provide: 'ICONATTACHFILE', useValue: iconAttachFile }
+    { provide: 'ICONATTACHFILE', useValue: iconAttachFile },
+    { provide: 'SOURCES', useValue: Sources }
 
   ],
   bootstrap: [AppComponent]

@@ -33,6 +33,7 @@ export class TicketDevComponent implements OnInit {
     @Inject('PRIORITY') public Prioritys: any[],
     @Inject('TYPES') public Types: any[],
     @Inject('STATUS') public CurrentStatus: any[],
+    @Inject('SOURCES') public Sources: any[],
     private auth: AuthService,
     private ticketService: TicketService,
     public userService: UserService,
@@ -239,6 +240,14 @@ export class TicketDevComponent implements OnInit {
     for (let i = 0; this.CurrentStatus.length; i++) {
       if (this.CurrentStatus[i].name === status) {
         return this.CurrentStatus[i].icon
+      }
+    }
+  }
+
+  getSourcesIcon(sources: any) {
+    for (let i = 0; this.Sources.length; i++) {
+      if (this.Sources[i].name === sources) {
+        return this.Sources[i].icon
       }
     }
   }

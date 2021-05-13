@@ -18,6 +18,13 @@
     --pdf-color: #F40F02;
     --jpg-color: #3786D1;
     --png-color: #3ACCC8;
+    --fb-color: #4267B2;
+    --line-color: #00c300;
+    --gmail-color: #D44638;
+    --call-color: #4ED964;
+    --on-site-color: #FFB246;
+    --conference-color: #45A5F5;
+    --other-color: #FF8B60;
 }
 
 * {
@@ -299,3 +306,32 @@
     align-items: center;
     position: relative;
 }
+
+.fb-color{
+    color: var(--fb-color);
+}
+
+.line-color{
+    color: var(--line-color);
+}
+
+.gmail-color{
+    color: var(--gmail-color);
+}
+
+.call-color{
+  color: var(--call-color);
+}
+
+.on-site-color{
+  color: var(--on-site-color);
+}
+
+.conference-color{
+  color: var(--conference-color);
+}
+
+.other-color{
+  color: var(--other-color);
+}
+

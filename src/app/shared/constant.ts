@@ -33,3 +33,14 @@ export const iconAttachFile = [
     { type: 'pptx', icon: 'fas fa-file-powerpoint fa-lg powerpoint-color' },
     { type: 'mp4', icon: 'fas fa-file-video fa-lg' }
 ]
+
+export const Sources = [
+    { icon: 'fas fa-globe-americas primary-color', name: 'Website' },
+    { icon: 'fab fa-line line-color', name: 'Line' },
+    { icon: 'fas fa-envelope gmail-color', name: 'Email' },
+    { icon: 'fas fa-phone call-color', name: 'Telephone' },
+    { icon: 'fas fa-user-friends on-site-color', name: 'Onsite' },
+    { icon: 'fab fa-facebook-square fb-color', name: 'Facebook' },
+    { icon: 'fas fa-comments conference-color', name: 'Conference' },
+    { icon: 'fas fa-ellipsis-v other-color', name: 'Other' }
+]

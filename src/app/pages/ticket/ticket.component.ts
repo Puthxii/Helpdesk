@@ -34,6 +34,7 @@ export class TicketComponent implements OnInit {
     @Inject('PRIORITY') public Prioritys: any[],
     @Inject('TYPES') public Types: any[],
     @Inject('STATUS') public CurrentStatus: any[],
+    @Inject('SOURCES') public Sources: any[],
     private auth: AuthService,
     private ticketService: TicketService,
     public userService: UserService,
@@ -57,17 +58,6 @@ export class TicketComponent implements OnInit {
   ]
 
   CountStatus = []
-
-  Sources = [
-    { icon: 'fas fa-globe-americas', name: 'Website' },
-    { icon: 'fab fa-line', name: 'Line' },
-    { icon: 'fas fa-envelope', name: 'Email' },
-    { icon: 'fas fa-phone', name: 'Telephone' },
-    { icon: 'fas fa-user-friends', name: 'Onsite' },
-    { icon: 'fab fa-facebook-square', name: 'Facebook' },
-    { icon: 'fas fa-comments', name: 'Conference' },
-    { icon: 'fas fa-ellipsis-v', name: 'Other' }
-  ];
 
   user: any
   User: User

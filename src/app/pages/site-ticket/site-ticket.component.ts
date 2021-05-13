@@ -10,6 +10,7 @@ import { Ticket } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-site-ticket',
