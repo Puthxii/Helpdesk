@@ -251,15 +251,14 @@ export class EditTicketComponent implements OnInit {
   }
 
   setDefaultMaDescription() {
-    const endDate = moment(this.editTicket.controls.site.value.maEndDate.seconds * 1000).format('L');
-    const newDate = new Date()
-    const newDateFormat = moment(newDate).format('L');
+    const endDate = new Date(this.editTicket.controls.site.value.maEndDate.seconds * 1000)
+    const currentDate = new Date()
     let maDescription: string
     if (this.editTicket.controls.maDescription.value === undefined) {
-      if (endDate < newDateFormat) {
-        maDescription = 'ไม่อยู่ในระยะเวลา Maintenance Package'
-      } else {
+      if (endDate > currentDate) {
         maDescription = 'อยู่ในระยะเวลา Maintenance Package'
+      } else {
+        maDescription = 'ไม่อยู่ในระยะเวลา Maintenance Package'
       }
     } else {
       maDescription = this.editTicket.controls.maDescription.value
