@@ -167,6 +167,15 @@
     border-radius: 10px;
 }
 
+.dueDate{
+    width: 130px;
+    background-color: #f44336;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+}
+
 .action{
     padding-top: 35px;
 }

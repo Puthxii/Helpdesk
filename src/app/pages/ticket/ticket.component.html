@@ -188,20 +188,25 @@
             </div>
           </div>
           <div class="col-xl-4 col-sm-4 col-12 left">
-            <div class="col">
+            <div class="row">
               <span>{{ticket.subject}}</span>
             </div>
-            <div class="col">
+            <div class="row">
               <i class="{{ getSourcesIcon(ticket.source) }}"></i>
               <span class="mx-1" style="color: black;">{{ticket.creator}} - {{ticket.site.initials}}</span>
             </div>
-            <div class="col">
+            <div class="row">
               <span for="">{{ticket.site.product.name}}</span>
             </div>
-            <div class="col">
+            <div class="row">
               <span style="color: gray;">Created {{ ticket.date.singleDate?.formatted?
                 ticket.date.singleDate.formatted
                 : ''}}</span>
+              <div class="col" *ngIf="checkDuedete(ticket.maxDueDate)">
+                <div class="dueDate">
+                  <i class="fas fa-exclamation-circle mx-2"></i>{{ticket.maxDueDate | datePipe: 'l' }}
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-xl-3 col-sm-4 col-12 mx-3 action">

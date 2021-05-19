@@ -251,4 +251,18 @@ export class TicketDevComponent implements OnInit {
       }
     }
   }
+
+  checkDuedete(maxDueDate: { seconds: number; }) {
+    if (maxDueDate) {
+      let isDuedate: boolean
+      const endDate = new Date(maxDueDate.seconds * 1000)
+      const currentDate = new Date()
+      if (endDate < currentDate) {
+        isDuedate = true
+      } else {
+        isDuedate = false
+      }
+      return isDuedate
+    }
+  }
 }

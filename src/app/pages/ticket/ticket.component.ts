@@ -65,7 +65,6 @@ export class TicketComponent implements OnInit {
   isChecked = true
   status = 'Draft'
   currentName: string
-
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
@@ -487,5 +486,19 @@ export class TicketComponent implements OnInit {
       }
     }
     return `${color}`
+  }
+
+  checkDuedete(maxDueDate: { seconds: number; }) {
+    if (maxDueDate) {
+      let isDuedate: boolean
+      const endDate = new Date(maxDueDate.seconds * 1000)
+      const currentDate = new Date()
+      if (endDate < currentDate) {
+        isDuedate = true
+      } else {
+        isDuedate = false
+      }
+      return isDuedate
+    }
   }
 }
