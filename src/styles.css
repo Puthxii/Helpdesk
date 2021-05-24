@@ -344,3 +344,9 @@
   color: var(--other-color);
 }
 
+.my-task{
+    width: 110px;
+    background-color: #20c997;
+    color: white;
+    border-radius: 10px;
+}

@@ -1220,4 +1220,9 @@ export class EditTicketComponent implements OnInit {
     }
     return this.progress = 0
   }
+
+  myTask(task: Tasks) {
+    return task.developer.map(dev => dev.$uid).includes(this.user.uid);
+  }
+
 }

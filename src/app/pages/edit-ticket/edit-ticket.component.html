@@ -272,12 +272,19 @@
                         <ul class="list-group-item list-group-item-action flex-column mb-2"
                           *ngFor="let task of depositTasks; let i = index">
                           <div class="list-group" *ngIf="taskIdx!==i">
-                            <div>
-                              <h5>
-                                <input class="mr-2" type="checkbox" [(ngModel)]="task.checked"
-                                  (change)="changeChecked()" [ngModelOptions]="{standalone: true}">
-                                {{task?.subjectTask}}
-                              </h5>
+                            <div class="row">
+                              <div class="col-auto">
+                                <h5>
+                                  <input class="mr-2" type="checkbox" [(ngModel)]="task.checked"
+                                    (change)="changeChecked()" [ngModelOptions]="{standalone: true}">
+                                  {{task?.subjectTask}}
+                                </h5>
+                              </div>
+                              <div *ngIf="myTask(task)" class="col-auto">
+                                <div class="my-task">
+                                  <i class="fas fa-user-circle mx-2"></i>My task
+                                </div>
+                              </div>
                             </div>
                             <span>Assign: {{getDev(task)}}</span>
                             <span>Point: {{task?.point}}</span>
