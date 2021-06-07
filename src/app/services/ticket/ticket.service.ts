@@ -281,7 +281,6 @@ export class TicketService {
           dueDate: tasks.dueDate,
           checked: tasks.checked
         }))
-    console.log(tasks.checked);
   }
 
   removeTasks(id: any, tasks: Tasks) {

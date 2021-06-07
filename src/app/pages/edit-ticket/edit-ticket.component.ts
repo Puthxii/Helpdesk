@@ -420,10 +420,10 @@ export class EditTicketComponent implements OnInit {
       dev: [''],
       tasks: this.fb.group({
         id: [''],
-        subjectTask: [''],
-        developer: [''],
-        point: [''],
-        dueDate: [''],
+        subjectTask: ['', [Validators.required]],
+        developer: ['', [Validators.required]],
+        point: ['', [Validators.required]],
+        dueDate: ['', [Validators.required]],
         checked: ['']
       }),
       participant: [''],
@@ -473,7 +473,6 @@ export class EditTicketComponent implements OnInit {
   }
 
   onSelectedStatus(value: any) {
-    console.log(value, '1');
     this.editTicket.patchValue({
       status: value
     });
@@ -1174,13 +1173,11 @@ export class EditTicketComponent implements OnInit {
       for (let i = 0; this.depositTasks.length > i; i++) {
         if (this.depositTasks[i].id) {
           if (isChecked === true && this.isEditResolve === true) {
-            this.onSelectedStatus('Resolved')
             this.ticketService.updateTasks(
               this.id,
               this.depositTasks[i]
             )
           } else {
-            this.onSelectedStatus('Assigned')
             this.ticketService.updateTasks(
               this.id,
               this.depositTasks[i]
@@ -1188,13 +1185,11 @@ export class EditTicketComponent implements OnInit {
           }
         } else {
           if (isChecked === true) {
-            this.onSelectedStatus('Resolved')
             this.ticketService.setAddTasks(
               this.id,
               this.depositTasks[i]
             )
           } else {
-            this.onSelectedStatus('Assigned')
             this.ticketService.setAddTasks(
               this.id,
               this.depositTasks[i]

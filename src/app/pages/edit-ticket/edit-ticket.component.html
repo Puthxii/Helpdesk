@@ -305,12 +305,26 @@
                                   <label for="subjectTask" class="control-label">Subject Task</label>
                                   <input formControlName="subjectTask" type="text" class="form-control" id="subjectTask"
                                     placeholder="Subject Task">
+                                  <div
+                                    *ngIf="editTicket.get('tasks').get('subjectTask').invalid && (editTicket.get('tasks').get('subjectTask').dirty || editTicket.get('tasks').get('subjectTask').touched)"
+                                    class="danger-color">
+                                    <div *ngIf="editTicket.get('tasks').get('subjectTask').errors.required">
+                                      Subject task is required.
+                                    </div>
+                                  </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                   <label for="developer" class="control-label">Assign Dev</label>
                                   <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'"
                                     [data]="Staff" id="developer" formControlName="developer" [settings]="devSettings">
                                   </ng-multiselect-dropdown>
+                                  <div
+                                    *ngIf="editTicket.get('tasks').get('developer').invalid && (editTicket.get('tasks').get('developer').dirty || editTicket.get('tasks').get('developer').touched)"
+                                    class="danger-color">
+                                    <div *ngIf="editTicket.get('tasks').get('developer').errors.required">
+                                      Developer task is required.
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                               <div class="form-row">
@@ -318,17 +332,31 @@
                                   <label for="point" class="control-label">Point</label>
                                   <input formControlName="point" type="number" class="form-control" id="point"
                                     placeholder="Point">
+                                  <div
+                                    *ngIf="editTicket.get('tasks').get('point').invalid && (editTicket.get('tasks').get('point').dirty || editTicket.get('tasks').get('point').touched)"
+                                    class="danger-color">
+                                    <div *ngIf="editTicket.get('tasks').get('point').errors.required">
+                                      Point task is required.
+                                    </div>
+                                  </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                   <label for="dueDate" class="control-label">Due Date</label>
                                   <div class="input-group">
                                     <input class="form-control" placeholder="Select a date" angular-mydatepicker
                                       name="dueDate" formControlName="dueDate" [options]="myOptions"
-                                      #dp="angular-mydatepicker">
+                                      #dp="angular-mydatepicker" readonly>
                                     <div class=" input-group-append">
                                       <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
                                         <i class="fas fa-calendar"></i>
                                       </button>
+                                    </div>
+                                  </div>
+                                  <div
+                                    *ngIf="editTicket.get('tasks').get('dueDate').invalid && (editTicket.get('tasks').get('dueDate').dirty || editTicket.get('tasks').get('dueDate').touched)"
+                                    class="danger-color">
+                                    <div *ngIf="editTicket.get('tasks').get('dueDate').errors.required">
+                                      Due Date task is required.
                                     </div>
                                   </div>
                                 </div>
@@ -339,7 +367,8 @@
                                     class="btn cancelBtn btn-cancel">Cancel</button>
                                 </div>
                                 <div class="form-group">
-                                  <button type="button" (click)="onUpdateTask(i)" class="btn saveBtn">Update
+                                  <button type="button" (click)="onUpdateTask(i)"
+                                    [disabled]="!editTicket.get('tasks').valid" class="btn saveBtn">Update
                                     Tasks</button>
                                 </div>
                               </div>
@@ -365,12 +394,26 @@
                         <label for="subjectTask" class="control-label">Subject Task</label>
                         <input formControlName="subjectTask" type="text" class="form-control" id="subjectTask"
                           placeholder="Subject Task">
+                        <div
+                          *ngIf="editTicket.get('tasks').get('subjectTask').invalid && (editTicket.get('tasks').get('subjectTask').dirty || editTicket.get('tasks').get('subjectTask').touched)"
+                          class="danger-color">
+                          <div *ngIf="editTicket.get('tasks').get('subjectTask').errors.required">
+                            Subject task is required.
+                          </div>
+                        </div>
                       </div>
                       <div class="form-group col-md-6">
                         <label for="developer" class="control-label">Assign Dev</label>
                         <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'" [data]="Staff"
                           id="developer" formControlName="developer" [settings]="devSettings">
                         </ng-multiselect-dropdown>
+                        <div
+                          *ngIf="editTicket.get('tasks').get('developer').invalid && (editTicket.get('tasks').get('developer').dirty || editTicket.get('tasks').get('developer').touched)"
+                          class="danger-color">
+                          <div *ngIf="editTicket.get('tasks').get('developer').errors.required">
+                            Developer task is required.
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="form-row">
@@ -378,16 +421,30 @@
                         <label for="point" class="control-label">point</label>
                         <input formControlName="point" type="number" class="form-control" id="point"
                           placeholder="Point">
+                        <div
+                          *ngIf="editTicket.get('tasks').get('point').invalid && (editTicket.get('tasks').get('point').dirty || editTicket.get('tasks').get('point').touched)"
+                          class="danger-color">
+                          <div *ngIf="editTicket.get('tasks').get('point').errors.required">
+                            Point task is required.
+                          </div>
+                        </div>
                       </div>
                       <div class="form-group col-md-6">
                         <label for="dueDate" class="control-label">Due Date</label>
                         <div class="input-group">
                           <input class="form-control" placeholder="Select a date" angular-mydatepicker name="dueDate"
-                            formControlName="dueDate" [options]="myOptions" #dp="angular-mydatepicker">
+                            formControlName="dueDate" [options]="myOptions" #dp="angular-mydatepicker" readonly>
                           <div class=" input-group-append">
                             <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
                               <i class="fas fa-calendar"></i>
                             </button>
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="editTicket.get('tasks').get('dueDate').invalid && (editTicket.get('tasks').get('dueDate').dirty || editTicket.get('tasks').get('dueDate').touched)"
+                          class="danger-color">
+                          <div *ngIf="editTicket.get('tasks').get('dueDate').errors.required">
+                            Due Date task is required.
                           </div>
                         </div>
                       </div>
@@ -398,7 +455,8 @@
                           class="btn cancelBtn btn-cancel">Cancel</button>
                       </div>
                       <div class="form-group">
-                        <button type="button" class="btn saveBtn" (click)="onTasksSubmit()">Save Tasks</button>
+                        <button type="button" class="btn saveBtn" [disabled]="!editTicket.get('tasks').valid"
+                          (click)="onTasksSubmit()">Save Tasks</button>
                       </div>
                     </div>
                   </div>
