@@ -59,27 +59,27 @@ export class DetailComponent implements OnInit {
   }
 
   getSubject(ticket: Ticket) {
-    return ticket.subject ? ticket.subject : '-';
+    return ticket.subject ? ticket.subject : false;
   }
 
-  getdescription(ticket: Ticket) {
-    return ticket.description ? ticket.description : '-';
+  getDescription(ticket: Ticket) {
+    return ticket.description ? ticket.description : false;
   }
 
   getDescriptionMA(ticket: Ticket) {
-    return ticket.maDescription ? ticket.maDescription : '-';
+    return ticket.maDescription ? ticket.maDescription : false;
   }
 
   getResolvedDescription(ticket: Ticket) {
-    return ticket.resolveDescription ? ticket.resolveDescription : '-';
+    return ticket.resolveDescription ? ticket.resolveDescription : false;
   }
 
   getResponseDescription(ticket: Ticket) {
-    return ticket.responseDescription ? ticket.responseDescription : '-';
+    return ticket.responseDescription ? ticket.responseDescription : false;
   }
 
   getSuggestDescription(ticket: Ticket) {
-    return ticket.suggestDescription ? ticket.suggestDescription : '-';
+    return ticket.suggestDescription ? ticket.suggestDescription : false;
   }
 
   setExpirationDate(ticket: Ticket) {
@@ -102,6 +102,10 @@ export class DetailComponent implements OnInit {
       }
     }
     return (name.length != 0) ? name : '-'
+  }
+
+  fileExit(file: any) {
+    return file.length ? true : false
   }
 
 }

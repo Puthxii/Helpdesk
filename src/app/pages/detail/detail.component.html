@@ -44,29 +44,29 @@
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col">
+                <div class="form-group col" *ngIf="getSubject(ticket)">
                   <h5 for="subject">Subject</h5>
                   <p>{{ getSubject(ticket) }}</p>
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" *ngIf="getDescription(ticket)">
                   <h5 for="description">Description</h5>
-                  <p>{{ getdescription(ticket) }}</p>
+                  <p>{{ getDescription(ticket) }}</p>
                 </div>
-                <div class="form-group col-md-12">
-                  <h5>Description file Upload Add Ticket</h5>
+                <div class="form-group col-md-12" *ngIf="fileExit(ticket.descriptionFile)">
+                  <h5>Description file Upload</h5>
                   <ul class="list-group list-group-flush" *ngFor="let file of ticket.descriptionFile">
                     <li class="list-group-item">
                       <app-upload-details [fileUpload]='file'></app-upload-details>
                     </li>
                   </ul>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" *ngIf="getDescriptionMA(ticket)">
                   <h5>Maintenance Description</h5>
                   <p>{{ getDescriptionMA(ticket) }}</p>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" *ngIf="fileExit(ticket.maDescriptionFile)">
                   <h5>Maintenance Description File Upload</h5>
                   <ul class="list-group list-group-flush" *ngFor="let file of ticket.maDescriptionFile">
                     <li class="list-group-item">
@@ -74,11 +74,11 @@
                     </li>
                   </ul>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" *ngIf="getResolvedDescription(ticket)">
                   <h5>Resolved Description</h5>
                   <p>{{ getResolvedDescription(ticket) }}</p>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" *ngIf="fileExit(ticket.resolveDescriptionFile)">
                   <h5>Resolved Description File Upload</h5>
                   <ul class="list-group list-group-flush" *ngFor="let file of ticket.resolveDescriptionFile">
                     <li class="list-group-item">
@@ -86,23 +86,23 @@
                     </li>
                   </ul>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" *ngIf="getResponseDescription(ticket)">
                   <h5>Response Description</h5>
                   <p>{{ getResponseDescription(ticket) }}</p>
                 </div>
-                <div class="form-group col-md-12">
-                  <h5>Respon Description File Upload</h5>
+                <div class="form-group col-md-12" *ngIf="fileExit(ticket.responseDescriptionFile)">
+                  <h5>Response Description File Upload</h5>
                   <ul class="list-group list-group-flush" *ngFor="let file of ticket.responseDescriptionFile">
                     <li class="list-group-item">
                       <app-upload-details [fileUpload]='file'></app-upload-details>
                     </li>
                   </ul>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" *ngIf="getSuggestDescription(ticket)">
                   <h5>Suggest Description</h5>
                   <p>{{ getSuggestDescription(ticket) }}</p>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" *ngIf="fileExit(ticket.suggestDescriptionFile)">
                   <h5>Suggest Description File Upload</h5>
                   <ul class="list-group list-group-flush" *ngFor="let file of ticket.suggestDescriptionFile">
                     <li class="list-group-item">

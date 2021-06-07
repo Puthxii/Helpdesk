@@ -31,7 +31,7 @@ export class UploadEditComponent implements OnInit {
       const icon = obj[0].icon;
       return icon;
     } else {
-      return 'fas fa-file fa-2x';
+      return 'fas fa-file fa-lg';
     }
   }
 
