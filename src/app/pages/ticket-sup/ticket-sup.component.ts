@@ -250,12 +250,12 @@ export class TicketSupComponent implements OnInit {
     }
   }
 
-  checkDuedete(maxDueDate: { seconds: number; }) {
-    if (maxDueDate) {
+  checkDuedete(minDueDate: { seconds: number; }) {
+    if (minDueDate) {
       let isDuedate: boolean
-      const endDate = new Date(maxDueDate.seconds * 1000)
+      const startDate = new Date(minDueDate.seconds * 1000)
       const currentDate = new Date()
-      if (endDate < currentDate) {
+      if (startDate < currentDate) {
         isDuedate = true
       } else {
         isDuedate = false
