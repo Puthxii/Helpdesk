@@ -29,6 +29,7 @@ export interface Ticket {
     task?: Tasks[]
     sumPoint: number;
     maxDueDate: any;
+    minDueDate: any;
 }
 export interface Actions {
     actionSentence: string

@@ -113,6 +113,7 @@ export class EditTicketComponent implements OnInit {
   tasksToUpdate: Tasks[] = [];
   tasksToDelete: Tasks[] = [];
   maxDueDate: any;
+  minDueDate: any;
 
   constructor(
     public ticketService: TicketService,
@@ -435,7 +436,8 @@ export class EditTicketComponent implements OnInit {
       resolveDescription: [''],
       resolveDescriptionFile: [''],
       sumPoint: [''],
-      maxDueDate: ['']
+      maxDueDate: [''],
+      minDueDate: ['']
     });
   }
 
@@ -1154,16 +1156,28 @@ export class EditTicketComponent implements OnInit {
       this.maxDueDate = this.depositTasks.sort((a, b) =>
         new Date(b.dueDate.singleDate.jsDate.seconds * 1000).getTime() - new Date(a.dueDate.singleDate.jsDate.seconds * 1000).getTime())[0]
         .dueDate.singleDate.jsDate;
-      this.setDueDate(this.maxDueDate)
+      this.minDueDate = this.depositTasks.sort((b, a) =>
+        new Date(b.dueDate.singleDate.jsDate.seconds * 1000).getTime() - new Date(a.dueDate.singleDate.jsDate.seconds * 1000).getTime())[0]
+        .dueDate.singleDate.jsDate;
+      this.setMaxDueDate(this.maxDueDate)
+      this.setMinDueDate(this.minDueDate)
     } else {
       this.maxDueDate = null
-      this.setDueDate(this.maxDueDate)
+      this.minDueDate = null
+      this.setMaxDueDate(this.maxDueDate)
+      this.setMinDueDate(this.minDueDate)
     }
   }
 
-  setDueDate(maxDueDate: any) {
+  setMaxDueDate(maxDueDate: any) {
     this.editTicket.patchValue({
       maxDueDate
+    })
+  }
+
+  setMinDueDate(minDueDate: any) {
+    this.editTicket.patchValue({
+      minDueDate
     })
   }
 
