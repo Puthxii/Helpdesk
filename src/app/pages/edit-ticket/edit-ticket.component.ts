@@ -521,6 +521,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
     } else if (currentStatus === 'Accepted') {
+      this.isEditSuggestDescription(Event)
       if (this.user.roles.supervisor === true && this.depositTasks.length != 0 && this.isEditSuggest) {
         this.addStatus('Assigned');
       } else {
