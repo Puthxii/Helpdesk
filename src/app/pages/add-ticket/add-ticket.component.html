@@ -16,7 +16,7 @@
               <label class="control-label" for="date">Date Inform</label>
               <div class="input-group">
                 <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
-                  formControlName="date" [options]="myOptions" #dp="angular-mydatepicker">
+                  formControlName="date" [options]="myOptions" #dp="angular-mydatepicker" readonly>
                 <div class="input-group-append">
                   <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
                     <i class="fas fa-calendar"></i>
