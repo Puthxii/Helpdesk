@@ -935,6 +935,7 @@ export class EditTicketComponent implements OnInit {
     this.isAssignDev()
     this.saveTasks()
     this.progressbar()
+    this.isEditSuggestDescription(Event)
   }
 
   isTasksExit(depositTasks: any[]) {
@@ -969,6 +970,7 @@ export class EditTicketComponent implements OnInit {
     this.totalPoint()
     this.isAssignDev()
     this.checkDueDate()
+    this.isEditSuggestDescription(Event)
   }
 
   onCancelUpdateTaks() {
@@ -1013,6 +1015,7 @@ export class EditTicketComponent implements OnInit {
     this.clearTask()
     this.isAssignDev()
     this.checkDueDate()
+    this.isEditSuggestDescription(Event)
   }
 
 
