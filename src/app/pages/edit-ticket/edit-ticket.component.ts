@@ -115,6 +115,8 @@ export class EditTicketComponent implements OnInit {
   maxDueDate: any;
   minDueDate: any;
   depositDev: any;
+  statusSpecail = ['In Progress', 'Accepted', 'Assigned', 'Resolved']
+  isChecked: boolean;
 
   constructor(
     public ticketService: TicketService,
@@ -653,7 +655,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   isResolveDescription(event: any) {
-    (this.editTicket.controls.resolveDescription.value) ? (this.addStatus('Resolved'), this.isEditResolve = true, this.changeChecked())
+    ((this.editTicket.controls.resolveDescription.value) && this.isChecked) ? (this.addStatus('Resolved'), this.isEditResolve = true)
       : (this.removeStatus('Resolved'), this.isEditResolve = false, this.onSelectedStatus('Assigned'))
   }
 
@@ -1178,34 +1180,14 @@ export class EditTicketComponent implements OnInit {
   }
 
   changeChecked(): void {
-    const isChecked = (this.depositTasks.findIndex(task => task.checked === false) === -1)
+    this.isChecked = (this.depositTasks.findIndex(task => task.checked === false) === -1)
+    this.isResolveDescription(Event)
     if (this.depositTasks.length !== 0) {
       for (let i = 0; this.depositTasks.length > i; i++) {
-        if (this.depositTasks[i].id) {
-          if (isChecked === true && this.isEditResolve === true) {
-            this.ticketService.updateTasks(
-              this.id,
-              this.depositTasks[i]
-            )
-          } else {
-            this.ticketService.updateTasks(
-              this.id,
-              this.depositTasks[i]
-            )
-          }
-        } else {
-          if (isChecked === true) {
-            this.ticketService.setAddTasks(
-              this.id,
-              this.depositTasks[i]
-            )
-          } else {
-            this.ticketService.setAddTasks(
-              this.id,
-              this.depositTasks[i]
-            )
-          }
-        }
+        this.ticketService.updateTasks(
+          this.id,
+          this.depositTasks[i]
+        )
       }
     }
     this.progressbar()
@@ -1228,6 +1210,10 @@ export class EditTicketComponent implements OnInit {
 
   myTask(task: Tasks) {
     return task.developer.map(dev => dev.$uid).includes(this.user.uid);
+  }
+
+  isSpecialStatus() {
+    return this.statusSpecail.includes(this.editTicket.controls.currentStatus.value)
   }
 
 }
