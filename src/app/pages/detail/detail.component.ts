@@ -105,7 +105,9 @@ export class DetailComponent implements OnInit {
   }
 
   fileExit(file: any) {
-    return file.length ? true : false
+    if (file) {
+      return file.length ? true : false
+    }
   }
 
 }
