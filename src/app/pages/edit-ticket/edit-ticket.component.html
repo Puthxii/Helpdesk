@@ -185,7 +185,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
+              <div class="form-row" *ngIf="(auth.isSupervisor(user)||auth.isMaintenance(user))&&isSpecialStatus()">
                 <div class="form-group col-md-12">
                   <hr>
                   <label for="maDescription">Maintenance Description</label>
@@ -194,7 +194,7 @@
                     [readonly]="!auth.isSupervisor(user)&&!auth.isMaintenance(user)"></textarea>
                 </div>
               </div>
-              <div class="row" *ngIf="auth.isSupervisor(user)||auth.isMaintenance(user)">
+              <div class="row" *ngIf="(auth.isSupervisor(user)||auth.isMaintenance(user))&&isSpecialStatus()">
                 <div class=" col-md-12">
                   <app-upload-detail-form [flag]="forMaDescription"
                     (editeUpload)="mergeMaDescriptionFileUpload($event)">
@@ -205,7 +205,7 @@
                     (fileRemove)="onDepositMaDescriptionFileRemove($event)"></app-upload-detail-list>
                 </div>
               </div>
-              <div class="form-row" *ngIf="auth.isSupervisor(user)||auth.isDeveloper(user)">
+              <div class="form-row" *ngIf="(auth.isSupervisor(user)||auth.isDeveloper(user))&&isSpecialStatus()">
                 <div class="form-group col-md-12">
                   <hr>
                   <label for="suggestDescription">Suggest Description</label>
@@ -218,7 +218,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12" *ngIf="auth.isSupervisor(user)">
+                <div class="col-md-12" *ngIf="auth.isSupervisor(user)&&isSpecialStatus()">
                   <app-upload-detail-form [flag]="forSuggestDescription"
                     (editeUpload)="mergeSuggestDescriptionFileUpload($event)">
                   </app-upload-detail-form>
