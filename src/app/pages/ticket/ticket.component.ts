@@ -123,7 +123,9 @@ export class TicketComponent implements OnInit {
   }
 
   getSum() {
-    return this.CountStatus[3] + this.CountStatus[4] + this.CountStatus[5]
+    let sum: number
+    sum = this.CountStatus[3] + this.CountStatus[4] + this.CountStatus[5]
+    return sum ? sum : null
   }
 
   getCountByStatusCurrentname() {
