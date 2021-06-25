@@ -246,7 +246,7 @@ export class TicketComponent implements OnInit {
   }
 
   getByCurrentname(value: string, currentName: string) {
-    this.ticket$ = this.ticketService.getByCurrentname(value, currentName)
+    this.ticket$ = this.ticketService.getByCurrentname(value, currentName, this.Supporter)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;

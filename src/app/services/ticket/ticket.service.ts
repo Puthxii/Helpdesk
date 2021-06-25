@@ -313,9 +313,10 @@ export class TicketService {
       .endAt(keword + '\uf8ff'));
   }
 
-  getByCurrentname(keword: string, currentName: string) {
+  getByCurrentname(keword: string, currentName: string, role: string[]) {
     return this.afs.collection('ticket', (ref) => ref
       .where('participant', 'array-contains', currentName)
+      .where('status', 'in', role)
       .orderBy('subject')
       .startAt(keword)
       .endAt(keword + '\uf8ff'));
