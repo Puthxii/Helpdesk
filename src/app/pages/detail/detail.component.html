@@ -16,27 +16,27 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <h5>Date</h5>
-                  <p>{{ getDate(ticket) }}</p>
+                  <p class="secondary-color">{{ getDate(ticket) }}</p>
                 </div>
                 <div class="form-group col-md-6">
                   <h5>Source</h5>
-                  <p>{{ getSource(ticket) }}</p>
+                  <p class="secondary-color">{{ getSource(ticket) }}</p>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col">
                   <h5 for="site">Site Name</h5>
-                  <p>{{ getSitename(ticket) }}</p>
+                  <p class="secondary-color">{{ getSitename(ticket) }}</p>
                 </div>
                 <div class="form-group col">
                   <h5 for="module">Module</h5>
-                  <p>{{ getModule(ticket) }}</p>
+                  <p class="secondary-color">{{ getModule(ticket) }}</p>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col">
                   <h5 for="product">Product</h5>
-                  <p>{{ getProduct(ticket) }}</p>
+                  <p class="secondary-color">{{ getProduct(ticket) }}</p>
                 </div>
                 <div class="form-group col">
                   <h5 for="maintenancePackage">Maintenance Package</h5>
@@ -46,13 +46,13 @@
               <div class="form-row">
                 <div class="form-group col" *ngIf="getSubject(ticket)">
                   <h5 for="subject">Subject</h5>
-                  <p>{{ getSubject(ticket) }}</p>
+                  <p class="secondary-color">{{ getSubject(ticket) }}</p>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-12" *ngIf="getDescription(ticket)">
                   <h5 for="description">Description</h5>
-                  <p>{{ getDescription(ticket) }}</p>
+                  <p class="secondary-color">{{ getDescription(ticket) }}</p>
                 </div>
                 <div class="form-group col-md-12" *ngIf="fileExit(ticket.descriptionFile)">
                   <h5>Description file Upload</h5>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="form-group col-md-12" *ngIf="getDescriptionMA(ticket)">
                   <h5>Maintenance Description</h5>
-                  <p>{{ getDescriptionMA(ticket) }}</p>
+                  <p class="secondary-color">{{ getDescriptionMA(ticket) }}</p>
                 </div>
                 <div class="form-group col-md-12" *ngIf="fileExit(ticket.maDescriptionFile)">
                   <h5>Maintenance Description File Upload</h5>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="form-group col-md-12" *ngIf="getResolvedDescription(ticket)">
                   <h5>Resolved Description</h5>
-                  <p>{{ getResolvedDescription(ticket) }}</p>
+                  <p class="secondary-color">{{ getResolvedDescription(ticket) }}</p>
                 </div>
                 <div class="form-group col-md-12" *ngIf="fileExit(ticket.resolveDescriptionFile)">
                   <h5>Resolved Description File Upload</h5>
@@ -88,7 +88,7 @@
                 </div>
                 <div class="form-group col-md-12" *ngIf="getResponseDescription(ticket)">
                   <h5>Response Description</h5>
-                  <p>{{ getResponseDescription(ticket) }}</p>
+                  <p class="secondary-color">{{ getResponseDescription(ticket) }}</p>
                 </div>
                 <div class="form-group col-md-12" *ngIf="fileExit(ticket.responseDescriptionFile)">
                   <h5>Response Description File Upload</h5>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="form-group col-md-12" *ngIf="getSuggestDescription(ticket)">
                   <h5>Suggest Description</h5>
-                  <p>{{ getSuggestDescription(ticket) }}</p>
+                  <p class="secondary-color">{{ getSuggestDescription(ticket) }}</p>
                 </div>
                 <div class="form-group col-md-12" *ngIf="fileExit(ticket.suggestDescriptionFile)">
                   <h5>Suggest Description File Upload</h5>
