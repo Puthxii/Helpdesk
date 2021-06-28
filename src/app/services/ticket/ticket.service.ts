@@ -1,9 +1,9 @@
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Ticket, Actions, Tasks } from '../../models/ticket.model';
-import { Injectable } from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {Actions, Tasks, Ticket} from '../../models/ticket.model';
+import {Injectable} from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import { Router } from '@angular/router';
-import { Roles } from 'src/app/models/user.model';
+import {Router} from '@angular/router';
+import {Roles} from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -167,7 +167,7 @@ export class TicketService {
 
   async addTicket(ticket: Ticket, role) {
     try {
-      (await this.afs.collection('ticket').add({
+      await (await this.afs.collection('ticket').add({
         date: ticket.date,
         source: ticket.source,
         site: ticket.site,
@@ -192,13 +192,21 @@ export class TicketService {
           date: new Date(),
           actionSentence: ticket.actionSentence
         });
-      this.deleteCollection('uploadDesciption')
-      this.deleteCollection('uploadResolveDescription')
+      await this.deleteCollection('uploadDesciption')
+      await this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
       console.log(error);
       this.errorNotification();
     }
+  }
+
+  async getCount() {
+    const query = this.afs.collection('ticket');
+    const snapshot = await query.get();
+    return snapshot.forEach(
+      (snapshot) => console.log(snapshot.docs.length + 1)
+    )
   }
 
   async deleteCollection(path: string) {
@@ -236,12 +244,12 @@ export class TicketService {
         maxDueDate: ticket.maxDueDate,
         minDueDate: ticket.minDueDate
       })
-      this.deleteCollection('uploadDesciption')
-      this.deleteCollection('uploadResponseDescription')
-      this.deleteCollection('uploadMaDescription')
-      this.deleteCollection('uploadSuggestDescription')
-      this.deleteCollection('uploadResolveDescription')
-      this.successNotification(role);
+      await this.deleteCollection('uploadDesciption')
+      await this.deleteCollection('uploadResponseDescription')
+      await this.deleteCollection('uploadMaDescription')
+      await this.deleteCollection('uploadSuggestDescription')
+      await this.deleteCollection('uploadResolveDescription')
+      await this.successNotification(role);
     } catch (error) {
       this.errorNotification();
     }
