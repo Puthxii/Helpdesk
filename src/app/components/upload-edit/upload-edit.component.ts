@@ -39,7 +39,7 @@ export class UploadEditComponent implements OnInit {
     let coll: string
     switch (flag) {
       case 'forDescription': {
-        coll = 'uploadDesciption'
+        coll = 'uploadDescription'
         break
       }
       case 'forResponseDescription': {

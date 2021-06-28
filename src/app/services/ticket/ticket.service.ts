@@ -1,9 +1,9 @@
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Ticket, Actions, Tasks } from '../../models/ticket.model';
-import { Injectable } from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {Actions, Tasks, Ticket} from '../../models/ticket.model';
+import {Injectable} from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import { Router } from '@angular/router';
-import { Roles } from 'src/app/models/user.model';
+import {Router} from '@angular/router';
+import {Roles} from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -167,7 +167,8 @@ export class TicketService {
 
   async addTicket(ticket: Ticket, role) {
     try {
-      (await this.afs.collection('ticket').add({
+      const countIncrement = await this.getCount()
+      await (await this.afs.collection('ticket').add({
         date: ticket.date,
         source: ticket.source,
         site: ticket.site,
@@ -184,6 +185,7 @@ export class TicketService {
         staff: ticket.staff,
         email: ticket.email,
         participant: ticket.participant,
+        countIncrement
       }))
         .collection('action')
         .add({
@@ -192,13 +194,23 @@ export class TicketService {
           date: new Date(),
           actionSentence: ticket.actionSentence
         });
-      this.deleteCollection('uploadDesciption')
-      this.deleteCollection('uploadResolveDescription')
+      await this.deleteCollection('uploadDescription')
+      await this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
       console.log(error);
       this.errorNotification();
     }
+  }
+
+  async getCount(): Promise<number> {
+    let count : number
+    const query = await this.afs.collection('ticket');
+    const snapshot = await query.get();
+    await snapshot.forEach((snapshot) =>
+       count = snapshot.docs.length + 1
+    )
+    return count
   }
 
   async deleteCollection(path: string) {
@@ -210,7 +222,7 @@ export class TicketService {
 
   async editTicket(ticket: Ticket, id: any, role: Roles) {
     try {
-      this.afs.collection('ticket').doc(id).update({
+      await this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
         source: ticket.source,
         site: ticket.site,
@@ -236,12 +248,12 @@ export class TicketService {
         maxDueDate: ticket.maxDueDate,
         minDueDate: ticket.minDueDate
       })
-      this.deleteCollection('uploadDesciption')
-      this.deleteCollection('uploadResponseDescription')
-      this.deleteCollection('uploadMaDescription')
-      this.deleteCollection('uploadSuggestDescription')
-      this.deleteCollection('uploadResolveDescription')
-      this.successNotification(role);
+      await this.deleteCollection('uploadDescription')
+      await this.deleteCollection('uploadResponseDescription')
+      await this.deleteCollection('uploadMaDescription')
+      await this.deleteCollection('uploadSuggestDescription')
+      await this.deleteCollection('uploadResolveDescription')
+      await this.successNotification(role);
     } catch (error) {
       this.errorNotification();
     }
