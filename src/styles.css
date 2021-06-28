@@ -57,7 +57,7 @@
 }
 
 .info-fade-color{
-    color: var(--primary-fade-color);
+    color: var(--info-fade-color);
 }
 
 .danger-color{
@@ -98,7 +98,7 @@
 .container .multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret:before {
     display: inline-block !important;
     border-style: none !important;
-   
+
 }
 
 .container .multiselect-dropdown .dropdown-btn {
@@ -301,7 +301,7 @@
     color: var(--png-color);
 }
 
-.curentDate {
+.currentDate {
     color: var( --success-color) !important;
 }
 

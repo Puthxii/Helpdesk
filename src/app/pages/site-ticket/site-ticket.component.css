@@ -6,14 +6,14 @@
 }
 
 .informed-badge {
-    background-image: linear-gradient(to right, #3096E7 20%,  #FFBE96 100%);
+    background: rgb(255, 202, 103);
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .informed.active {
-    background-image: linear-gradient(to right, #3096E7 20%,  #FFBE96 100%);
+  background: rgb(255, 202, 103);
     color: white;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .accept-badge {
-    background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
+    background-color: #3096E7;
     border: none;
     border-radius: 5px;
     color: white;
@@ -52,7 +52,7 @@
 
 
 .accept.active {
-    background-image: linear-gradient(to right, #3096E7 30%, #2ED0B9 70%);
+    background-color: #3096E7;
     color: #ffff;
 }
 

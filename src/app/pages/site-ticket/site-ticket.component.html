@@ -149,8 +149,7 @@
   </section>
 </div>
 <div class="container-fluid">
-  <div class="card mt-3">
-    <div class="card-header text-left" *ngIf="ticket$ | async as ticket$; index as i">
+    <div class="text-left mt-3" *ngIf="ticket$ | async as ticket$; index as i">
       <div class="card mt-2" *ngFor="let ticket of ticket$">
         <div class="card-header">
           <div class="row">
@@ -206,5 +205,4 @@
         <strong>No ticket in this status</strong>
       </div>
     </div>
-  </div>
 </div>
