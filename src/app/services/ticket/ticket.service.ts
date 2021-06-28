@@ -167,6 +167,7 @@ export class TicketService {
 
   async addTicket(ticket: Ticket, role) {
     try {
+      const countIncrement = await this.getCount()
       await (await this.afs.collection('ticket').add({
         date: ticket.date,
         source: ticket.source,
@@ -184,6 +185,7 @@ export class TicketService {
         staff: ticket.staff,
         email: ticket.email,
         participant: ticket.participant,
+        countIncrement
       }))
         .collection('action')
         .add({
@@ -192,7 +194,7 @@ export class TicketService {
           date: new Date(),
           actionSentence: ticket.actionSentence
         });
-      await this.deleteCollection('uploadDesciption')
+      await this.deleteCollection('uploadDescription')
       await this.deleteCollection('uploadResolveDescription')
       this.successNotification(role);
     } catch (error) {
@@ -201,12 +203,14 @@ export class TicketService {
     }
   }
 
-  async getCount() {
-    const query = this.afs.collection('ticket');
+  async getCount(): Promise<number> {
+    let count : number
+    const query = await this.afs.collection('ticket');
     const snapshot = await query.get();
-    return snapshot.forEach(
-      (snapshot) => console.log(snapshot.docs.length + 1)
+    await snapshot.forEach((snapshot) =>
+       count = snapshot.docs.length + 1
     )
+    return count
   }
 
   async deleteCollection(path: string) {
@@ -218,7 +222,7 @@ export class TicketService {
 
   async editTicket(ticket: Ticket, id: any, role: Roles) {
     try {
-      this.afs.collection('ticket').doc(id).update({
+      await this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
         source: ticket.source,
         site: ticket.site,
@@ -244,7 +248,7 @@ export class TicketService {
         maxDueDate: ticket.maxDueDate,
         minDueDate: ticket.minDueDate
       })
-      await this.deleteCollection('uploadDesciption')
+      await this.deleteCollection('uploadDescription')
       await this.deleteCollection('uploadResponseDescription')
       await this.deleteCollection('uploadMaDescription')
       await this.deleteCollection('uploadSuggestDescription')

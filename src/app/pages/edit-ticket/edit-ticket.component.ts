@@ -1066,10 +1066,10 @@ export class EditTicketComponent implements OnInit {
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
         if (this.user.roles.customer === true) {
-          this.deleteCollection('uploadDesciption')
+          this.deleteCollection('uploadDescription')
           this.router.navigate(['/site-ticket']);
         } else if (this.user.roles.supporter === true) {
-          this.deleteCollection('uploadDesciption')
+          this.deleteCollection('uploadDescription')
           this.deleteCollection('uploadResponseDescription')
           this.router.navigate(['/ticket']);
         } else if (this.user.roles.maintenance === true) {

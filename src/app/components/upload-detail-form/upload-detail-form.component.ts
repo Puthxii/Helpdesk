@@ -27,7 +27,7 @@ export class UploadDetailFormComponent implements OnInit {
     let coll: string
     switch (flag) {
       case 'forDescription': {
-        coll = 'uploadDesciption'
+        coll = 'uploadDescription'
         break
       }
       case 'forResponseDescription': {
@@ -72,7 +72,7 @@ export class UploadDetailFormComponent implements OnInit {
     let coll: string
     switch (this.flag) {
       case 'forDescription': {
-        coll = 'uploadDesciption'
+        coll = 'uploadDescription'
         break
       }
       case 'forResponseDescription': {
