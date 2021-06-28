@@ -15,7 +15,7 @@
             <div class="col-lg-6 col-md-12 col-sm-12">
               <div class="form-row" *ngIf="auth.isStaff(user)">
                 <div class="form-group col-md-6">
-                  <label class="control-label" for="date">Date</label>
+                  <label class="control-label" >Date</label>
                   <div class="input-group">
                     <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
                       formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
@@ -75,7 +75,7 @@
                     [ngClass]="setExpirationDate()" value="{{ getMaPackage() }}" readonly>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="product">Product</label>
+                  <label >Product</label>
                   <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
                 </div>
               </div>
@@ -163,7 +163,7 @@
               <div *ngIf="isSelectedType()">
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="response">Response Description</label>
+                    <label >Response Description</label>
                     <textarea formControlName="responseDescription" class="form-control" id="responseDescription"
                       rows="7" (ngModelChange)="isResponseDescription($event)"
                       [readonly]="!auth.isSupporter(user)"></textarea>
@@ -208,7 +208,7 @@
               <div class="form-row" *ngIf="(auth.isSupervisor(user)||auth.isDeveloper(user))&&isSpecialStatus()">
                 <div class="form-group col-md-12">
                   <hr>
-                  <label for="suggestDescription">Suggest Description</label>
+                  <label>Suggest Description</label>
                   <textarea formControlName="suggestDescription" class="form-control" rows="7"
                     (ngModelChange)="isEditSuggestDescription($event)" [readonly]="!auth.isSupervisor(user)">
                   </textarea>
@@ -231,7 +231,7 @@
               <div *ngIf="isAssignedResolved()&&(auth.isDeveloper(user) || auth.isSupporter(user))">
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="resolve">Resolve Description</label>
+                    <label>Resolve Description</label>
                     <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="7"
                       (ngModelChange)="isResolveDescription($event)" [readonly]="!auth.isDeveloper(user)">
                     </textarea>
@@ -255,15 +255,14 @@
             </div>
             <div class="col-lg-6 col-md-12 col-sm-12"
               *ngIf="(auth.isSupervisor(user) || auth.isDeveloper(user))&&isAcceptedAssigned()&&isNotInprogress()">
-              <h5 class="" for="task">Task <a title="You can save task regardless of the ticket."><i
+              <h5>Task <a title="You can save task regardless of the ticket."><i
                     class="fas fa-info-circle primary-color"></i></a> </h5>
               <div class="form-row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="form-row">
                     <div class="form-group col-md-12">
                       <div *ngIf="progress!=0&&progress!=null" class="progress mb-2">
-                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
-                          attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
+                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" aria-valuemin="0" aria-valuemax="100"
                           [ngStyle]="{ width: progress  + '%' }">
                           {{ progress }}%
                         </div>
@@ -303,7 +302,7 @@
                               <div class="form-row ">
                                 <div class="form-group col-md-6">
                                   <label for="subjectTask" class="control-label">Subject Task</label>
-                                  <input formControlName="subjectTask" type="text" class="form-control" id="subjectTask"
+                                  <input formControlName="subjectTask" type="text" class="form-control"
                                     placeholder="Subject Task">
                                   <div
                                     *ngIf="editTicket.get('tasks').get('subjectTask').invalid && (editTicket.get('tasks').get('subjectTask').dirty || editTicket.get('tasks').get('subjectTask').touched)"
@@ -316,7 +315,7 @@
                                 <div class="form-group col-md-6">
                                   <label for="developer" class="control-label">Assign Dev</label>
                                   <ng-multiselect-dropdown class="container" [placeholder]="'choose developer'"
-                                    [data]="Staff" id="developer" formControlName="developer" [settings]="devSettings">
+                                    [data]="Staff" formControlName="developer" [settings]="devSettings">
                                   </ng-multiselect-dropdown>
                                   <div
                                     *ngIf="editTicket.get('tasks').get('developer').invalid && (editTicket.get('tasks').get('developer').dirty || editTicket.get('tasks').get('developer').touched)"
@@ -330,7 +329,7 @@
                               <div class="form-row">
                                 <div class="form-group col-md-6">
                                   <label for="point" class="control-label">Point</label>
-                                  <input formControlName="point" type="number" class="form-control" id="point"
+                                  <input formControlName="point" type="number" class="form-control"
                                     placeholder="Point">
                                   <div
                                     *ngIf="editTicket.get('tasks').get('point').invalid && (editTicket.get('tasks').get('point').dirty || editTicket.get('tasks').get('point').touched)"
@@ -341,7 +340,7 @@
                                   </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                  <label for="dueDate" class="control-label">Due Date</label>
+                                  <label class="control-label">Due Date</label>
                                   <div class="input-group">
                                     <input class="form-control" placeholder="Select a date" angular-mydatepicker
                                       name="dueDate" formControlName="dueDate" [options]="myOptions"
@@ -363,7 +362,7 @@
                               </div>
                               <div class="form-row">
                                 <div class="form-group mr-5">
-                                  <button type="button" (click)="onCancelUpdateTaks()"
+                                  <button type="button" (click)="onCancelUpdateTask()"
                                     class="btn cancelBtn btn-cancel">Cancel</button>
                                 </div>
                                 <div class="form-group">
@@ -430,7 +429,7 @@
                         </div>
                       </div>
                       <div class="form-group col-md-6">
-                        <label for="dueDate" class="control-label">Due Date</label>
+                        <label class="control-label">Due Date</label>
                         <div class="input-group">
                           <input class="form-control" placeholder="Select a date" angular-mydatepicker name="dueDate"
                             formControlName="dueDate" [options]="myOptions" #dp="angular-mydatepicker" readonly>
@@ -451,7 +450,7 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group mr-5">
-                        <button type="button" (click)="onCancelAddTaks()"
+                        <button type="button" (click)="onCancelAddTask()"
                           class="btn cancelBtn btn-cancel">Cancel</button>
                       </div>
                       <div class="form-group">
@@ -475,7 +474,7 @@
                 <button type="submit" class="btn saveBtn" *ngIf="auth.isCustomer(user)" (click)="setActionSentence()">
                   Save
                 </button>
-                <button type=" button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                <button type="button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false" *ngIf="auth.isStaff(user)" (click)="filterAction()">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>

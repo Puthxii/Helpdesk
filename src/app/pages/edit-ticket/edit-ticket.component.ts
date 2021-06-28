@@ -1,4 +1,4 @@
-import { SiteService } from './../../services/site/site.service';
+import {SiteService} from "../../services/site/site.service";
 import { Site } from '../../models/site.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -31,21 +31,15 @@ export class EditTicketComponent implements OnInit {
   Site: Site[];
   user: User
   Staff: User[];
-  Task: Tasks[];
   progress: any;
   staff: any;
   sumPoint: any;
   total: any;
-  statusCurrent: any;
-  currentName: string
   user$: any
   addTask = false;
   updateTask = false;
   taskIdx: number;
   showTask = false
-  Stafficon = [
-    { icon: 'fas fa-user' },
-  ];
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -91,9 +85,7 @@ export class EditTicketComponent implements OnInit {
   forResolveDescription = 'forResolveDescription'
   stateParticipant = []
   depositTasks = []
-  entryTask = []
   newTask: any
-  subjectTasks: any;
   assignTask: any;
   deadlineDate: any;
   myOptions: IAngularMyDpOptions = {
@@ -101,7 +93,6 @@ export class EditTicketComponent implements OnInit {
     dateFormat: 'dd/mm/yyyy',
     disableUntil: this.minDate(),
   };
-  NewUpload: { id: string; name: string; url: string; file: File; }[];
   tasks: Observable<any>
   isEdit = false
   isEditSuggest = false
@@ -115,7 +106,7 @@ export class EditTicketComponent implements OnInit {
   maxDueDate: any;
   minDueDate: any;
   depositDev: any;
-  statusSpecail = ['In Progress', 'Accepted', 'Assigned', 'Resolved']
+  statusSpecial = ['In Progress', 'Accepted', 'Assigned', 'Resolved']
   isChecked: boolean;
 
   constructor(
@@ -388,10 +379,6 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('assign');
   }
 
-  get upldescriptionFileoad() {
-    return this.editTicket.get('descriptionFile');
-  }
-
   upadateTicketForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.editTicket = this.fb.group({
@@ -585,19 +572,10 @@ export class EditTicketComponent implements OnInit {
 
   checkAction() {
     const staff = this.getCurrentStaff()
-    const currentStatus = this.editTicket.controls.currentStatus.value
     const status = this.editTicket.controls.status.value
     const dev = this.depositDev ? this.depositDev : ''
     const actionSentence = this.editTicket.controls.actionSentence.value;
-    (currentStatus != status) ? this.saveAction(actionSentence, dev, staff, status) : ''
-  }
-
-  isSupAcceptedAssigned(status: any) {
-    if (this.user.roles.supervisor === true && (status === 'Assigned' || status === 'Accepted')) {
-      return false
-    } else {
-      return true
-    }
+    this.saveAction(actionSentence, dev, staff, status)
   }
 
   saveAction(actionSentence: any, dev: any, staff: any, status: any) {
@@ -917,7 +895,7 @@ export class EditTicketComponent implements OnInit {
     this.showTask = !this.showTask;
   }
 
-  onCancelAddTaks() {
+  onCancelAddTask() {
     this.addTask = false;
   }
 
@@ -977,7 +955,7 @@ export class EditTicketComponent implements OnInit {
     this.isEditSuggestDescription(Event)
   }
 
-  onCancelUpdateTaks() {
+  onCancelUpdateTask() {
     this.updateTask = false;
     this.taskIdx = null;
     this.showTask = !this.showTask;
@@ -1113,11 +1091,11 @@ export class EditTicketComponent implements OnInit {
   }
 
   setExpirationDate() {
-    let color = ''
+    let color: string
     const endDate = new Date(this.editTicket.controls.site.value.maEndDate.seconds * 1000)
     const currentDate = new Date()
     if (endDate > currentDate) {
-      color = 'curentDate'
+      color = 'currentDate'
     } else {
       color = 'expirationDate'
     }
@@ -1196,14 +1174,14 @@ export class EditTicketComponent implements OnInit {
   progressbar() {
     if (this.depositTasks.length !== 0) {
       let total = 0
-      let poinOfCheck = 0
+      let pointOfCheck = 0
       for (let i = 0; this.depositTasks.length > i; i++) {
         total = total + this.depositTasks[i].point
         if (this.depositTasks[i].checked === true) {
-          poinOfCheck = poinOfCheck + this.depositTasks[i].point
+          pointOfCheck = pointOfCheck + this.depositTasks[i].point
         }
       }
-      return this.progress = ((poinOfCheck / total) * 100).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+      return this.progress = ((pointOfCheck / total) * 100).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
     }
     return this.progress = 0
   }
@@ -1213,7 +1191,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   isSpecialStatus() {
-    return this.statusSpecail.includes(this.editTicket.controls.currentStatus.value)
+    return this.statusSpecial.includes(this.editTicket.controls.currentStatus.value)
   }
 
 }

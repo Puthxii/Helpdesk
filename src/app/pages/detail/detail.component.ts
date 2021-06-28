@@ -87,7 +87,7 @@ export class DetailComponent implements OnInit {
     const endDate = new Date(ticket.site.maEndDate.seconds * 1000)
     const currentDate = new Date()
     if (endDate > currentDate) {
-      color = 'curentDate'
+      color = 'currentDate'
     } else {
       color = 'expirationDate'
     }
