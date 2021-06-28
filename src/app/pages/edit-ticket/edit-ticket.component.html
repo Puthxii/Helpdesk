@@ -172,7 +172,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="auth.isSupporter(user)">
                   <div class="col-md-12">
                     <app-upload-detail-form [flag]="forResponseDescription"
                       (editeUpload)="mergeResponseDescriptionFileUpload($event)">
