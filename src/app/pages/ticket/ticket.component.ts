@@ -1,5 +1,5 @@
 import { Ticket } from '../../models/ticket.model';
-import { TicketService } from './../../services/ticket/ticket.service';
+import { TicketService } from '../../services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,6 @@ export class TicketComponent implements OnInit {
   ticket: any;
   id: string;
   countAll: number;
-  max: number;
   keword = null
   staff: any;
   selectedColor = ''
@@ -495,11 +494,7 @@ export class TicketComponent implements OnInit {
       let isDuedate: boolean
       const endDate = new Date(maxDueDate.seconds * 1000)
       const currentDate = new Date()
-      if (endDate < currentDate) {
-        isDuedate = true
-      } else {
-        isDuedate = false
-      }
+      isDuedate = endDate < currentDate;
       return isDuedate
     }
   }

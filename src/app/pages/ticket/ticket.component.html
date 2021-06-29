@@ -189,7 +189,9 @@
           </div>
           <div class="col-xl-4 col-sm-4 col-12 left">
             <div class="row">
-              <span>{{ticket.subject}}</span>
+              <span>
+                {{ticket.countIncrement}}: {{ticket.subject}}
+              </span>
             </div>
             <div class="row">
               <i class="{{ getSourcesIcon(ticket.source) }}"></i>

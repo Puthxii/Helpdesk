@@ -24,34 +24,34 @@
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col">
-                  <h5 for="site">Site Name</h5>
+                <div class="form-group col-md-6">
+                  <h5 >Site Name</h5>
                   <p class="secondary-color">{{ getSitename(ticket) }}</p>
                 </div>
-                <div class="form-group col">
-                  <h5 for="module">Module</h5>
+                <div class="form-group col-md-6">
+                  <h5 >Module</h5>
                   <p class="secondary-color">{{ getModule(ticket) }}</p>
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col">
-                  <h5 for="product">Product</h5>
+                <div class="form-group col-md-6">
+                  <h5 >Product</h5>
                   <p class="secondary-color">{{ getProduct(ticket) }}</p>
                 </div>
-                <div class="form-group col">
-                  <h5 for="maintenancePackage">Maintenance Package</h5>
+                <div class="form-group col-md-6">
+                  <h5 >Maintenance Package</h5>
                   <p class="{{ setExpirationDate(ticket) }}">{{ getMaPackage(ticket) }}</p>
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col" *ngIf="getSubject(ticket)">
-                  <h5 for="subject">Subject</h5>
+                <div class="form-group col-md-6" *ngIf="getSubject(ticket)">
+                  <h5 >Subject</h5>
                   <p class="secondary-color">{{ getSubject(ticket) }}</p>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-12" *ngIf="getDescription(ticket)">
-                  <h5 for="description">Description</h5>
+                  <h5 >Description</h5>
                   <p class="secondary-color">{{ getDescription(ticket) }}</p>
                 </div>
                 <div class="form-group col-md-12" *ngIf="fileExit(ticket.descriptionFile)">
@@ -115,7 +115,7 @@
             <div class="col-lg-6 col-md-12 col-sm-12">
               <div class="form-row">
                 <div class="form-group col-md-12">
-                  <h5 for="source">Track</h5>
+                  <h5 >Track</h5>
                   <div class="row">
                     <ul>
                       <li *ngFor="let action of actions | async">
