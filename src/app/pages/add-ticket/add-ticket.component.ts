@@ -1,7 +1,6 @@
 import { UserService } from 'src/app/services/user/user.service';
 import { Product } from '../../models/product.model';
-import { ProductService } from './../../services/product/product.service';
-import { SiteService } from './../../services/site/site.service';
+import { SiteService } from '../../services/site/site.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
@@ -14,6 +13,7 @@ import { User } from 'src/app/models/user.model';
 import { IAngularMyDpOptions, IMyDate, IMyDateModel } from 'angular-mydatepicker';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import {DataService} from "../../services/data/data.service";
 
 @Component({
   selector: 'app-add-ticket',
@@ -25,10 +25,10 @@ export class AddTicketComponent implements OnInit {
     public auth: AuthService,
     public ticketService: TicketService,
     public siteService: SiteService,
-    public productService: ProductService,
     public fb: FormBuilder,
     public userService: UserService,
     public router: Router,
+    public dataService: DataService
   ) {
   }
 
@@ -86,14 +86,10 @@ export class AddTicketComponent implements OnInit {
   user$: any;
   public addTicketForm: FormGroup;
   hideResponse = false;
-  dropdownList = [];
-  selectedItems = [];
   dropdownSettings: IDropdownSettings;
   User: User;
   Site: Site[];
   moduleList: any[];
-  devList: any[];
-  currentName: string
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -128,7 +124,6 @@ export class AddTicketComponent implements OnInit {
     disableUntil: this.minDate(),
     disableSince: this.maxDate()
   };
-
   minDate(): IMyDate {
     const date = new Date()
     const day = date.getDate()
@@ -136,7 +131,6 @@ export class AddTicketComponent implements OnInit {
     const year = date.getFullYear()
     return { year, month, day }
   }
-
   maxDate(): IMyDate {
     const date = new Date()
     const day = date.getDate() + 1
@@ -144,9 +138,10 @@ export class AddTicketComponent implements OnInit {
     const year = date.getFullYear()
     return { year, month, day }
   }
-
+  redirectPath: string
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
+    this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
     this.User = this.auth.authState;
     this.getUserValue();
     this.buildForm();
@@ -367,7 +362,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   addTicketData() {
-    this.ticketService.addTicket(this.addTicketForm.value, this.user.roles);
+    this.ticketService.addTicket(this.addTicketForm.value, this.redirectPath);
   }
 
   displaySelectedStatus(): any {
@@ -420,10 +415,6 @@ export class AddTicketComponent implements OnInit {
     return this.moduleList;
   }
 
-  getDev() {
-    return this.addTicketForm.controls.staff.value.firstName;
-  }
-
   getCurrentUser() {
     return this.user$.firstName + ' ' + this.user$.lastName
   }
@@ -445,14 +436,14 @@ export class AddTicketComponent implements OnInit {
             month: date.getMonth() + 1,
             day: date.getDate()
           },
-          formatted: this.formatDate(date),
+          formatted: AddTicketComponent.formatDate(date),
           jsDate: new Date()
         }
       }
     });
   }
 
-  private formatDate(date: Date) {
+  private static formatDate(date: Date) {
     let month = '' + (date.getMonth() + 1);
     let day = '' + date.getDate();
     const year = date.getFullYear();
@@ -488,14 +479,13 @@ export class AddTicketComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        if (this.user.roles.customer === true) {
+        if (this.redirectPath === 'site-ticket') {
           this.deleteCollection('uploadDescription')
-          this.router.navigate(['/site-ticket']);
-        } else if (this.user.roles.supporter === true) {
+        } else if (this.redirectPath=== 'ticket') {
           this.deleteCollection('uploadDescription')
           this.deleteCollection('uploadResponseDescription')
-          this.router.navigate(['/ticket']);
         }
+        this.router.navigate([`/${this.redirectPath}`]);
       }
     })
   }

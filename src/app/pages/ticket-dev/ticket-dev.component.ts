@@ -10,8 +10,8 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { ThrowStmt } from '@angular/compiler';
 import { Inject } from '@angular/core';
+import {DataService} from "../../services/data/data.service";
 @Component({
   selector: 'ticket-dev',
   templateUrl: './ticket-dev.component.html',
@@ -24,7 +24,6 @@ export class TicketDevComponent implements OnInit {
   ticket: any;
   id: string;
   countAll: number;
-  max: number;
   keword = null
   staff: any;
   selectedColor = ''
@@ -38,7 +37,7 @@ export class TicketDevComponent implements OnInit {
     private ticketService: TicketService,
     public userService: UserService,
     public fb: FormBuilder,
-
+    public dataService: DataService
   ) { }
 
   public filterTicketForm: FormGroup
@@ -257,12 +256,12 @@ export class TicketDevComponent implements OnInit {
       let isDuedate: boolean
       const endDate = new Date(maxDueDate.seconds * 1000)
       const currentDate = new Date()
-      if (endDate < currentDate) {
-        isDuedate = true
-      } else {
-        isDuedate = false
-      }
+      isDuedate = endDate < currentDate;
       return isDuedate
     }
+  }
+
+  newPath() {
+    this.dataService.changeRedirectSource('ticket-dev')
   }
 }
