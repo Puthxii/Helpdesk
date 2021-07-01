@@ -1,7 +1,6 @@
 import { UserService } from 'src/app/services/user/user.service';
 import { Product } from '../../models/product.model';
-import { ProductService } from './../../services/product/product.service';
-import { SiteService } from './../../services/site/site.service';
+import { SiteService } from '../../services/site/site.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
@@ -25,7 +24,6 @@ export class AddTicketComponent implements OnInit {
     public auth: AuthService,
     public ticketService: TicketService,
     public siteService: SiteService,
-    public productService: ProductService,
     public fb: FormBuilder,
     public userService: UserService,
     public router: Router,
@@ -86,14 +84,10 @@ export class AddTicketComponent implements OnInit {
   user$: any;
   public addTicketForm: FormGroup;
   hideResponse = false;
-  dropdownList = [];
-  selectedItems = [];
   dropdownSettings: IDropdownSettings;
   User: User;
   Site: Site[];
   moduleList: any[];
-  devList: any[];
-  currentName: string
   Sources = [
     { name: 'Line' },
     { name: 'Email' },
@@ -420,10 +414,6 @@ export class AddTicketComponent implements OnInit {
     return this.moduleList;
   }
 
-  getDev() {
-    return this.addTicketForm.controls.staff.value.firstName;
-  }
-
   getCurrentUser() {
     return this.user$.firstName + ' ' + this.user$.lastName
   }
@@ -445,14 +435,14 @@ export class AddTicketComponent implements OnInit {
             month: date.getMonth() + 1,
             day: date.getDate()
           },
-          formatted: this.formatDate(date),
+          formatted: AddTicketComponent.formatDate(date),
           jsDate: new Date()
         }
       }
     });
   }
 
-  private formatDate(date: Date) {
+  private static formatDate(date: Date) {
     let month = '' + (date.getMonth() + 1);
     let day = '' + date.getDate();
     const year = date.getFullYear();

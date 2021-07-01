@@ -24,7 +24,6 @@ export class TicketDevComponent implements OnInit {
   ticket: any;
   id: string;
   countAll: number;
-  max: number;
   keword = null
   staff: any;
   selectedColor = ''
@@ -257,11 +256,7 @@ export class TicketDevComponent implements OnInit {
       let isDuedate: boolean
       const endDate = new Date(maxDueDate.seconds * 1000)
       const currentDate = new Date()
-      if (endDate < currentDate) {
-        isDuedate = true
-      } else {
-        isDuedate = false
-      }
+      isDuedate = endDate < currentDate;
       return isDuedate
     }
   }

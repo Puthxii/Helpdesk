@@ -1,6 +1,6 @@
 import {SiteService} from "../../services/site/site.service";
 import { Site } from '../../models/site.model';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
