@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
 import Swal from 'sweetalert2';
+import {DataService} from "../../services/data/data.service";
 
 @Component({
   selector: 'app-edit-ticket',
@@ -108,7 +109,7 @@ export class EditTicketComponent implements OnInit {
   depositDev: any;
   statusSpecial = ['In Progress', 'Accepted', 'Assigned', 'Resolved']
   isChecked: boolean;
-
+  redirectPath: string
   constructor(
     public ticketService: TicketService,
     public route: ActivatedRoute,
@@ -117,6 +118,7 @@ export class EditTicketComponent implements OnInit {
     public auth: AuthService,
     public userService: UserService,
     public router: Router,
+    public dataService: DataService
   ) {
     this.route.params.subscribe(params => this.id = params.id)
   }
@@ -126,7 +128,8 @@ export class EditTicketComponent implements OnInit {
       this.user = user;
       this.getTitleByRoles()
     })
-    this.upadateTicketForm()
+    this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
+    this.updateTicketForm()
     this.ticketService.getTicketByid(this.id).subscribe(data => {
       this.ticket = data as Ticket
       this.editTicket.patchValue({
@@ -379,7 +382,7 @@ export class EditTicketComponent implements OnInit {
     return this.editTicket.get('assign');
   }
 
-  upadateTicketForm() {
+  updateTicketForm() {
     const model: IMyDateModel = { isRange: false, singleDate: { jsDate: new Date() }, dateRange: null };
     this.editTicket = this.fb.group({
       date: [model, [Validators.required]],
@@ -433,7 +436,7 @@ export class EditTicketComponent implements OnInit {
 
   updateForm() {
     this.checkAction()
-    this.ticketService.editTicket(this.editTicket.value, this.id, this.user.roles);
+    this.ticketService.editTicket(this.editTicket.value, this.id, this.redirectPath);
   }
 
   getMaPackage() {
@@ -1065,23 +1068,19 @@ export class EditTicketComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        if (this.user.roles.customer === true) {
+        if (this.redirectPath === 'site-ticket') {
           this.deleteCollection('uploadDescription')
-          this.router.navigate(['/site-ticket']);
-        } else if (this.user.roles.supporter === true) {
+        } else if (this.redirectPath === 'ticket') {
           this.deleteCollection('uploadDescription')
           this.deleteCollection('uploadResponseDescription')
-          this.router.navigate(['/ticket']);
-        } else if (this.user.roles.maintenance === true) {
+        } else if (this.redirectPath === 'ticket-ma') {
           this.deleteCollection('uploadMaDescription')
-          this.router.navigate(['/ticket-ma']);
-        } else if (this.user.roles.supervisor === true) {
+        } else if (this.redirectPath === 'ticket-sup') {
           this.deleteCollection('uploadSuggestDescription')
-          this.router.navigate(['/ticket-sup']);
-        } else if (this.user.roles.developer === true) {
+        } else if (this.redirectPath === 'ticket-dev') {
           this.deleteCollection('uploadResolveDescription')
-          this.router.navigate(['/ticket-dev']);
         }
+        this.router.navigate([`/${this.redirectPath}`]);
       }
     })
   }

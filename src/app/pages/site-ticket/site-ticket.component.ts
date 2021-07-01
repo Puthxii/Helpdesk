@@ -10,7 +10,7 @@ import { Ticket } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
-import { Inject } from '@angular/core';
+import {DataService} from "../../services/data/data.service";
 
 @Component({
   selector: 'app-site-ticket',
@@ -23,6 +23,7 @@ export class SiteTicketComponent implements OnInit {
     private auth: AuthService,
     public userService: UserService,
     private ticketService: TicketService,
+    public dataService: DataService
   ) { }
   public filterTicketForm: FormGroup
   user: any
@@ -30,7 +31,6 @@ export class SiteTicketComponent implements OnInit {
   user$: any
   creator: any
   isChecked = true
-  max: number;
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
@@ -83,7 +83,6 @@ export class SiteTicketComponent implements OnInit {
         this.getBySiteStatus(this.siteState, this.status, startDate, endDate)
       }
     }
-
   }
 
   getUserValue() {
@@ -400,5 +399,9 @@ export class SiteTicketComponent implements OnInit {
           return { id, ...data };
         }))
       )
+  }
+
+  newPath() {
+    this.dataService.changeRedirectSource('site-ticket')
   }
 }

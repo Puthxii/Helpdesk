@@ -3,7 +3,6 @@ import {Actions, Tasks, Ticket} from '../../models/ticket.model';
 import {Injectable} from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {Router} from '@angular/router';
-import {Roles} from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,22 +13,12 @@ export class TicketService {
     private router: Router,
   ) { }
 
-  successNotification(role: Roles) {
+  successNotification(path: string) {
     Swal.fire({
       text: 'Your ticket has been saved',
       icon: 'success',
     }).then((result: any) => {
-      if (role.customer === true) {
-        this.router.navigate(['/site-ticket']);
-      } else if (role.supporter === true) {
-        this.router.navigate(['/ticket']);
-      } else if (role.maintenance === true) {
-        this.router.navigate(['/ticket-ma']);
-      } else if (role.supervisor === true) {
-        this.router.navigate(['/ticket-sup']);
-      } else if (role.developer === true) {
-        this.router.navigate(['/ticket-dev']);
-      }
+        this.router.navigate([`/${path}`]);
     });
   }
 
@@ -165,7 +154,7 @@ export class TicketService {
     }
   }
 
-  async addTicket(ticket: Ticket, role) {
+  async addTicket(ticket: Ticket, path: string) {
     try {
       const countIncrement = await this.getCount()
       await (await this.afs.collection('ticket').add({
@@ -196,7 +185,7 @@ export class TicketService {
         });
       await this.deleteCollection('uploadDescription')
       await this.deleteCollection('uploadResolveDescription')
-      this.successNotification(role);
+      this.successNotification(path);
     } catch (error) {
       console.log(error);
       this.errorNotification();
@@ -220,7 +209,7 @@ export class TicketService {
     return batch.commit();
   }
 
-  async editTicket(ticket: Ticket, id: any, role: Roles) {
+  async editTicket(ticket: Ticket, id: any, path: string) {
     try {
       await this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
@@ -253,7 +242,7 @@ export class TicketService {
       await this.deleteCollection('uploadMaDescription')
       await this.deleteCollection('uploadSuggestDescription')
       await this.deleteCollection('uploadResolveDescription')
-      await this.successNotification(role);
+      await this.successNotification(path);
     } catch (error) {
       this.errorNotification();
     }

@@ -13,6 +13,7 @@ import { User } from 'src/app/models/user.model';
 import { IAngularMyDpOptions, IMyDate, IMyDateModel } from 'angular-mydatepicker';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import {DataService} from "../../services/data/data.service";
 
 @Component({
   selector: 'app-add-ticket',
@@ -27,6 +28,7 @@ export class AddTicketComponent implements OnInit {
     public fb: FormBuilder,
     public userService: UserService,
     public router: Router,
+    public dataService: DataService
   ) {
   }
 
@@ -122,7 +124,6 @@ export class AddTicketComponent implements OnInit {
     disableUntil: this.minDate(),
     disableSince: this.maxDate()
   };
-
   minDate(): IMyDate {
     const date = new Date()
     const day = date.getDate()
@@ -130,7 +131,6 @@ export class AddTicketComponent implements OnInit {
     const year = date.getFullYear()
     return { year, month, day }
   }
-
   maxDate(): IMyDate {
     const date = new Date()
     const day = date.getDate() + 1
@@ -138,9 +138,10 @@ export class AddTicketComponent implements OnInit {
     const year = date.getFullYear()
     return { year, month, day }
   }
-
+  redirectPath: string
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
+    this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
     this.User = this.auth.authState;
     this.getUserValue();
     this.buildForm();
@@ -361,7 +362,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   addTicketData() {
-    this.ticketService.addTicket(this.addTicketForm.value, this.user.roles);
+    this.ticketService.addTicket(this.addTicketForm.value, this.redirectPath);
   }
 
   displaySelectedStatus(): any {
@@ -478,14 +479,13 @@ export class AddTicketComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        if (this.user.roles.customer === true) {
+        if (this.redirectPath === 'site-ticket') {
           this.deleteCollection('uploadDescription')
-          this.router.navigate(['/site-ticket']);
-        } else if (this.user.roles.supporter === true) {
+        } else if (this.redirectPath=== 'ticket') {
           this.deleteCollection('uploadDescription')
           this.deleteCollection('uploadResponseDescription')
-          this.router.navigate(['/ticket']);
         }
+        this.router.navigate([`/${this.redirectPath}`]);
       }
     })
   }

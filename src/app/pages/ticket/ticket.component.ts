@@ -11,6 +11,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Inject } from '@angular/core';
+import {DataService} from "../../services/data/data.service";
 
 @Component({
   selector: 'app-ticket',
@@ -38,7 +39,7 @@ export class TicketComponent implements OnInit {
     private ticketService: TicketService,
     public userService: UserService,
     public fb: FormBuilder,
-
+    public dataService: DataService
   ) { }
 
   public filterTicketForm: FormGroup
@@ -497,5 +498,9 @@ export class TicketComponent implements OnInit {
       isDuedate = endDate < currentDate;
       return isDuedate
     }
+  }
+
+  newPath() {
+    this.dataService.changeRedirectSource('ticket')
   }
 }

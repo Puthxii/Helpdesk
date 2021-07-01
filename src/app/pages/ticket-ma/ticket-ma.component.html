@@ -153,7 +153,7 @@
           <div class="col-xl-3 col-sm-4 col-12 mx-3 action">
             <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon" title="Delete Ticket"></i>
             <a [routerLink]="['/edit-ticket', ticket.id]">
-              <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket"></i>
+              <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket" (click)="newPath()"></i>
             </a>
             <a [routerLink]="['/detail', ticket.id]">
               <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket"></i>

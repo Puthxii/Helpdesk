@@ -1,5 +1,5 @@
 import { Ticket } from '../../models/ticket.model';
-import { TicketService } from './../../services/ticket/ticket.service';
+import { TicketService } from '../../services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Inject } from '@angular/core';
+import {DataService} from "../../services/data/data.service";
 @Component({
   selector: 'ticket-sup',
   templateUrl: './ticket-sup.component.html',
@@ -23,7 +24,6 @@ export class TicketSupComponent implements OnInit {
   ticket: any;
   id: string;
   countAll: number;
-  max: number;
   keword = null
   staff: any;
   selectedColor = ''
@@ -37,7 +37,7 @@ export class TicketSupComponent implements OnInit {
     private ticketService: TicketService,
     public userService: UserService,
     public fb: FormBuilder,
-
+    public dataService: DataService
   ) { }
 
   public filterTicketForm: FormGroup
@@ -262,5 +262,9 @@ export class TicketSupComponent implements OnInit {
       }
       return isDuedate
     }
+  }
+
+  newPath() {
+    this.dataService.changeRedirectSource('ticket-sup')
   }
 }
