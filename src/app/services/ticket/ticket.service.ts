@@ -26,27 +26,26 @@ export class TicketService {
     Swal.fire({
       icon: 'error',
       title: 'error',
-      text: 'Your ticket has not been saved',
+      text: 'Your ticket hasn\'t been saved',
     }).then((result: any) => {
       this.router.navigate([`/${path}`]);
     });
   }
 
-  errorDelete() {
+  errorCancel() {
     Swal.fire({
       icon: 'error',
       title: 'error',
-      text: 'Your ticket has not been delete',
-    }).then((result: any) => {
-    });
+      text: 'Your ticket hasn\'t  been deleted',
+    })
   }
 
-  confirmCancel() {
-    Swal.fire(
-      'Deleted!',
-      'Your file has been deleted.',
-      'success'
-    )
+  successCancel() {
+    Swal.fire({
+      icon: 'success',
+      title: 'deleted',
+      text: 'Your ticket has been deleted',
+    })
   }
 
   getTicketsListByStatusFilter(status: any) {
@@ -91,19 +90,23 @@ export class TicketService {
         confirmButtonText: 'Yes, delete it!'
       }).then((result: { isConfirmed: any; }) => {
         if (result.isConfirmed) {
-          this.cancelticket(id)
-          this.confirmCancel()
+          this.updateStatusToCancel(id)
         }
       })
     } catch (error) {
-      this.errorDelete();
+      this.errorCancel();
     }
   }
 
-  cancelticket(id: string) {
-    this.afs.collection('ticket').doc(id).update({
-      status: 'Cancel'
-    })
+  updateStatusToCancel(id: string) {
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        status: 'Cancel'
+      })
+      this.successCancel()
+    } catch (error) {
+      this.errorCancel();
+    }
   }
 
   async addTicket(ticket: Ticket, path: string) {

@@ -189,7 +189,7 @@
               <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
                 (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
               <a [routerLink]="['/edit-ticket', ticket.id]">
-                <i *ngIf="isInformedmoreinfo(ticket)" class="fas fa-pen mx-1 secondary-color icon"
+                <i *ngIf="isInformedMoreInfo(ticket)" class="fas fa-pen mx-1 secondary-color icon"
                   title="Edit Ticket" (click)="newPath()"></i>
               </a>
               <a [routerLink]="['/detail', ticket.id]">
