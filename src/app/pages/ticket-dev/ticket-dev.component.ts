@@ -1,5 +1,5 @@
 import { Ticket } from '../../models/ticket.model';
-import { TicketService } from './../../services/ticket/ticket.service';
+import { TicketService } from '../../services/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
@@ -39,7 +39,6 @@ export class TicketDevComponent implements OnInit {
     public fb: FormBuilder,
     public dataService: DataService
   ) { }
-
   public filterTicketForm: FormGroup
 
   Status = [
@@ -57,17 +56,28 @@ export class TicketDevComponent implements OnInit {
   isChecked = true
   status = 'Assigned'
   currentName: string
-
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
+  public storageCheck: string = '0'
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
     this.buildForm()
+    this.getCheck()
     this.isFilter()
+  }
+
+  setCheck(data: string) {
+    localStorage.setItem(String(this.storageCheck), String(data));
+    this.getCheck()
+  }
+
+  getCheck() {
+    const data = localStorage.getItem(String(this.storageCheck));
+    this.isChecked = data === '0';
   }
 
   isFilter() {
@@ -177,7 +187,12 @@ export class TicketDevComponent implements OnInit {
     this.selectedColor = value;
   }
 
-  checkValue(event: any) {
+  checkValue(event: boolean) {
+    if (event === true) {
+      this.setCheck('0')
+    } else  {
+      this.setCheck('1')
+    }
     this.isFilter()
   }
 

@@ -44,9 +44,7 @@ export class TicketComponent implements OnInit {
 
   public filterTicketForm: FormGroup
   activeState = 'Draft'
-
   Supporter = ['Draft', 'Informed', 'More Info', 'In Progress', 'Accepted', 'Assigned', 'Resolved']
-
   Status = [
     { value: 'Draft' },
     { value: 'Informed' },
@@ -56,9 +54,7 @@ export class TicketComponent implements OnInit {
     { value: 'Assigned', },
     { value: 'Resolved' },
   ]
-
   CountStatus = []
-
   user: any
   User: User
   user$: any
@@ -69,12 +65,24 @@ export class TicketComponent implements OnInit {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
+  public storageCheck: string = '0'
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
     this.buildForm()
+    this.getCheck()
     this.isFilter()
+  }
+
+  setCheck(data: string) {
+    localStorage.setItem(String(this.storageCheck), String(data));
+    this.getCheck()
+  }
+
+  getCheck() {
+    const data = localStorage.getItem(String(this.storageCheck));
+    this.isChecked = data === '0';
   }
 
   isFilter() {
@@ -341,7 +349,12 @@ export class TicketComponent implements OnInit {
     }
   }
 
-  checkValue(event: any) {
+  checkValue(event: boolean) {
+    if (event === true) {
+      this.setCheck('0')
+    } else  {
+      this.setCheck('1')
+    }
     this.isFilter()
   }
 

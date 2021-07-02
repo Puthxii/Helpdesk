@@ -56,17 +56,28 @@ export class TicketMaComponent implements OnInit {
   isChecked = false
   status = 'In Progress'
   currentName: string
-
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
+  public storageCheck: string = '1'
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
     this.buildForm()
+    this.getCheck()
     this.isFilter()
+  }
+
+  setCheck(data: string) {
+    localStorage.setItem(String(this.storageCheck), String(data));
+    this.getCheck()
+  }
+
+  getCheck() {
+    const data = localStorage.getItem(String(this.storageCheck));
+    this.isChecked = data === '0';
   }
 
   isFilter() {
@@ -176,7 +187,12 @@ export class TicketMaComponent implements OnInit {
     this.selectedColor = value;
   }
 
-  checkValue(event: any) {
+  checkValue(event: boolean) {
+    if (event === true) {
+      this.setCheck('0')
+    } else  {
+      this.setCheck('1')
+    }
     this.isFilter()
   }
 
@@ -255,11 +271,7 @@ export class TicketMaComponent implements OnInit {
       let isDuedate: boolean
       const endDate = new Date(maxDueDate.seconds * 1000)
       const currentDate = new Date()
-      if (endDate < currentDate) {
-        isDuedate = true
-      } else {
-        isDuedate = false
-      }
+      isDuedate = endDate < currentDate;
       return isDuedate
     }
   }

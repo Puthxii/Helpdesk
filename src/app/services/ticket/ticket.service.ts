@@ -22,13 +22,13 @@ export class TicketService {
     });
   }
 
-  errorNotification() {
+  errorNotification(path: string) {
     Swal.fire({
       icon: 'error',
       title: 'error',
       text: 'Your ticket has not been saved',
     }).then((result: any) => {
-      this.router.navigate(['/']);
+      this.router.navigate([`/${path}`]);
     });
   }
 
@@ -188,7 +188,7 @@ export class TicketService {
       this.successNotification(path);
     } catch (error) {
       console.log(error);
-      this.errorNotification();
+      this.errorNotification(path);
     }
   }
 
@@ -244,7 +244,7 @@ export class TicketService {
       await this.deleteCollection('uploadResolveDescription')
       await this.successNotification(path);
     } catch (error) {
-      this.errorNotification();
+      this.errorNotification(path);
     }
   }
 
