@@ -8,8 +8,7 @@
         </h5>
         <div class="form-check">
           <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
-              (change)="checkValue(isChecked?'ture':'false')">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked" (change)="checkValue(isChecked? true : false)">
             My Tickets<i class="input-helper"></i>
           </label>
         </div>

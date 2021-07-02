@@ -22,30 +22,13 @@ export class TicketService {
     });
   }
 
-  errorNotification() {
+  errorNotification(path: string) {
     Swal.fire({
       icon: 'error',
       title: 'error',
       text: 'Your ticket has not been saved',
     }).then((result: any) => {
-      this.router.navigate(['/']);
-    });
-  }
-
-  successCancel() {
-    Swal.fire({
-      text: 'Your ticket has been saved',
-      icon: 'success',
-    }).then((result: any) => {
-    });
-  }
-
-  errorCancel() {
-    Swal.fire({
-      icon: 'error',
-      title: 'error',
-      text: 'Your ticket has not been saved',
-    }).then((result: any) => {
+      this.router.navigate([`/${path}`]);
     });
   }
 
@@ -123,37 +106,6 @@ export class TicketService {
     })
   }
 
-  async changeStatus(id: string, status: any, staff: any) {
-    try {
-      this.afs.collection('ticket').doc(id).update({
-        status
-      })
-      this.successCancel();
-    } catch (error) {
-      this.errorCancel();
-    }
-  }
-
-  async changePriority(id: string, priority: any) {
-    try {
-      this.afs.collection('ticket').doc(id).update({
-        priority
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async changeType(id: string, type: any) {
-    try {
-      this.afs.collection('ticket').doc(id).update({
-        type
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async addTicket(ticket: Ticket, path: string) {
     try {
       const countIncrement = await this.getCount()
@@ -188,7 +140,7 @@ export class TicketService {
       this.successNotification(path);
     } catch (error) {
       console.log(error);
-      this.errorNotification();
+      this.errorNotification(path);
     }
   }
 
@@ -244,7 +196,7 @@ export class TicketService {
       await this.deleteCollection('uploadResolveDescription')
       await this.successNotification(path);
     } catch (error) {
-      this.errorNotification();
+      this.errorNotification(path);
     }
   }
 

@@ -9,7 +9,7 @@
         <div class="form-check">
           <label class="form-check-label">
             <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
-              (change)="checkValue(isChecked?'ture':'false')">
+              (change)="checkValue(isChecked? true : false)">
             My Tickets<i class="input-helper"></i>
           </label>
         </div>
@@ -198,7 +198,7 @@
               <span class="mx-1" style="color: black;">{{ticket.creator}} - {{ticket.site.initials}}</span>
             </div>
             <div class="row">
-              <span for="">{{ticket.site.product.name}}</span>
+              <span>{{ticket.site.product.name}}</span>
             </div>
             <div class="row">
               <span style="color: gray;">Created {{ ticket.date.singleDate?.formatted?

@@ -124,11 +124,9 @@ export class EditTicketComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => {
-      this.user = user;
-      this.getTitleByRoles()
-    })
+    this.auth.user$.subscribe(user => this.user = user)
     this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
+    this.getTitleByPath()
     this.updateTicketForm()
     this.ticketService.getTicketByid(this.id).subscribe(data => {
       this.ticket = data as Ticket
@@ -1040,20 +1038,17 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
-  getTitleByRoles() {
-    if (this.user.roles === undefined) {
-    } else {
-      if (this.user.roles.customer === true) {
-        this.title = `Customer's Edit Ticket`
-      } else if (this.user.roles.supporter === true) {
-        this.title = `Supporter's Edit Ticket`
-      } else if (this.user.roles.maintenance === true) {
-        this.title = `Maintenance's Edit Ticket`
-      } else if (this.user.roles.supervisor === true) {
-        this.title = `Supervisor's Edit Ticket`
-      } else if (this.user.roles.developer === true) {
-        this.title = `Developer's Edit Ticket`
-      }
+  getTitleByPath() {
+    if (this.redirectPath === 'site-ticket') {
+      this.title = `Customer's Edit Ticket`
+    } else if (this.redirectPath === 'ticket') {
+      this.title = `Supporter's Edit Ticket`
+    } else if (this.redirectPath === 'ticket-ma') {
+      this.title = `Maintenance's Edit Ticket`
+    } else if (this.redirectPath === 'ticket-sup') {
+      this.title = `Supervisor's Edit Ticket`
+    } else if (this.redirectPath === 'ticket-dev') {
+      this.title = `Developer's Edit Ticket`
     }
     return this.title
   }

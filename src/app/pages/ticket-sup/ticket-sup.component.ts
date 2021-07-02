@@ -39,11 +39,8 @@ export class TicketSupComponent implements OnInit {
     public fb: FormBuilder,
     public dataService: DataService
   ) { }
-
   public filterTicketForm: FormGroup
-
   Supervisor = ['Accepted', 'Assigned']
-
   Status = [
     { value: 'Accepted' },
     { value: 'Assigned' },
@@ -56,17 +53,28 @@ export class TicketSupComponent implements OnInit {
   isChecked = false
   status = 'Accepted'
   currentName: string
-
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
+  public storageCheck: number = 1
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
     this.buildForm()
+    this.getCheck()
     this.isFilter()
+  }
+
+  setCheck(data: number) {
+    localStorage.setItem(String(this.storageCheck), String(data));
+    this.getCheck()
+  }
+
+  getCheck() {
+    const data = Number(localStorage.getItem(String(this.storageCheck)))
+    this.isChecked = data === 0;
   }
 
   isFilter() {
@@ -176,7 +184,12 @@ export class TicketSupComponent implements OnInit {
     this.selectedColor = value;
   }
 
-  checkValue(event: any) {
+  checkValue(event: boolean) {
+    if (event === true) {
+      this.setCheck(0)
+    } else  {
+      this.setCheck(1)
+    }
     this.isFilter()
   }
 
@@ -255,11 +268,7 @@ export class TicketSupComponent implements OnInit {
       let isDuedate: boolean
       const startDate = new Date(minDueDate.seconds * 1000)
       const currentDate = new Date()
-      if (startDate < currentDate) {
-        isDuedate = true
-      } else {
-        isDuedate = false
-      }
+      isDuedate = startDate < currentDate;
       return isDuedate
     }
   }
