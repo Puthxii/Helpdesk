@@ -32,23 +32,6 @@ export class TicketService {
     });
   }
 
-  successCancel() {
-    Swal.fire({
-      text: 'Your ticket has been saved',
-      icon: 'success',
-    }).then((result: any) => {
-    });
-  }
-
-  errorCancel() {
-    Swal.fire({
-      icon: 'error',
-      title: 'error',
-      text: 'Your ticket has not been saved',
-    }).then((result: any) => {
-    });
-  }
-
   errorDelete() {
     Swal.fire({
       icon: 'error',
@@ -121,37 +104,6 @@ export class TicketService {
     this.afs.collection('ticket').doc(id).update({
       status: 'Cancel'
     })
-  }
-
-  async changeStatus(id: string, status: any, staff: any) {
-    try {
-      this.afs.collection('ticket').doc(id).update({
-        status
-      })
-      this.successCancel();
-    } catch (error) {
-      this.errorCancel();
-    }
-  }
-
-  async changePriority(id: string, priority: any) {
-    try {
-      this.afs.collection('ticket').doc(id).update({
-        priority
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async changeType(id: string, type: any) {
-    try {
-      this.afs.collection('ticket').doc(id).update({
-        type
-      })
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   async addTicket(ticket: Ticket, path: string) {

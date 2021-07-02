@@ -65,7 +65,7 @@ export class TicketComponent implements OnInit {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
-  public storageCheck: string = '0'
+  public storageCheck: number = 0
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
@@ -75,14 +75,14 @@ export class TicketComponent implements OnInit {
     this.isFilter()
   }
 
-  setCheck(data: string) {
+  setCheck(data: number) {
     localStorage.setItem(String(this.storageCheck), String(data));
     this.getCheck()
   }
 
   getCheck() {
-    const data = localStorage.getItem(String(this.storageCheck));
-    this.isChecked = data === '0';
+    const data = Number(localStorage.getItem(String(this.storageCheck)))
+    this.isChecked = data === 0;
   }
 
   isFilter() {
@@ -202,22 +202,6 @@ export class TicketComponent implements OnInit {
 
   onSelectedDelete(id: any, subject: any) {
     this.ticketService.cancelTicket(id, subject)
-  }
-
-  // todo : event chang status
-  changeStatus(id: string, status: any, staff: any) {
-    this.ticketService.changeStatus(id, status, staff)
-  }
-
-  // todo : event chang priority
-  changePriority(id: string, priority: string) {
-    this.priorityClass = priority
-    this.ticketService.changePriority(id, priority)
-  }
-
-  // todo : event chang type
-  changeType(id: string, type: string) {
-    this.ticketService.changeType(id, type)
   }
 
   getByKeyWord(value: string) {
@@ -351,9 +335,9 @@ export class TicketComponent implements OnInit {
 
   checkValue(event: boolean) {
     if (event === true) {
-      this.setCheck('0')
+      this.setCheck(0)
     } else  {
-      this.setCheck('1')
+      this.setCheck(1)
     }
     this.isFilter()
   }
@@ -467,10 +451,6 @@ export class TicketComponent implements OnInit {
         return { id, ...data };
       }))
     )
-  }
-
-  getCurrentStaff() {
-    return this.staff = this.currentName
   }
 
   onChange(value: string) {

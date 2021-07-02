@@ -60,7 +60,7 @@ export class TicketMaComponent implements OnInit {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
-  public storageCheck: string = '1'
+  public storageCheck: number = 1
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
@@ -70,14 +70,14 @@ export class TicketMaComponent implements OnInit {
     this.isFilter()
   }
 
-  setCheck(data: string) {
+  setCheck(data: number) {
     localStorage.setItem(String(this.storageCheck), String(data));
     this.getCheck()
   }
 
   getCheck() {
-    const data = localStorage.getItem(String(this.storageCheck));
-    this.isChecked = data === '0';
+    const data = Number(localStorage.getItem(String(this.storageCheck)))
+    this.isChecked = data ===  0;
   }
 
   isFilter() {
@@ -189,9 +189,9 @@ export class TicketMaComponent implements OnInit {
 
   checkValue(event: boolean) {
     if (event === true) {
-      this.setCheck('0')
+      this.setCheck(0)
     } else  {
-      this.setCheck('1')
+      this.setCheck(1)
     }
     this.isFilter()
   }
