@@ -124,7 +124,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => {this.user = user;})
+    this.auth.user$.subscribe(user => this.user = user)
     this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
     this.getTitleByPath()
     this.updateTicketForm()
