@@ -109,6 +109,16 @@ export class TicketService {
     }
   }
 
+  updateMoreInfo(id: string, value: boolean){
+    try {
+      this.afs.collection('ticket').doc(id).update({
+        moreInfo: value
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   async addTicket(ticket: Ticket, path: string) {
     try {
       const countIncrement = await this.getCount()

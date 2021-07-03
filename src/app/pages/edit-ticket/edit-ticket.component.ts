@@ -842,6 +842,7 @@ export class EditTicketComponent implements OnInit {
         sentence = `${userCurrent} edit ticket`
         if (this.isEdit) {
           this.onSelectedStatus('Informed')
+          this.ticketService.updateMoreInfo(this.id, true)
         }
       }
     } else {

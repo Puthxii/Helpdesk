@@ -14,10 +14,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class DetailComponent implements OnInit {
   ticket$: Observable<Ticket>;
   id: string;
-  addTicketForm: any;
   user
   actions: Observable<any>
-  dateThai: any
   constructor(
     public ticketService: TicketService,
     public route: ActivatedRoute,
@@ -83,7 +81,7 @@ export class DetailComponent implements OnInit {
   }
 
   setExpirationDate(ticket: Ticket) {
-    let color = ''
+    let color: string
     const endDate = new Date(ticket.site.maEndDate.seconds * 1000)
     const currentDate = new Date()
     if (endDate > currentDate) {
@@ -106,7 +104,7 @@ export class DetailComponent implements OnInit {
 
   fileExit(file: any) {
     if (file) {
-      return file.length ? true : false
+      return !!file.length
     }
   }
 
