@@ -481,7 +481,7 @@ export class AddTicketComponent implements OnInit {
       if (result.isConfirmed) {
         if (this.redirectPath === 'site-ticket') {
           this.deleteCollection('uploadDescription')
-        } else if (this.redirectPath=== 'ticket') {
+        } else if (this.redirectPath === 'ticket') {
           this.deleteCollection('uploadDescription')
           this.deleteCollection('uploadResponseDescription')
         }

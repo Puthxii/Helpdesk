@@ -9,7 +9,7 @@
         <div class="form-check">
           <label class="form-check-label">
             <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
-              (change)="checkValue(isChecked? true : false)">
+              (change)="checkValue(isChecked)">
             My Tickets<i class="input-helper"></i>
           </label>
         </div>
@@ -189,6 +189,9 @@
           </div>
           <div class="col-xl-4 col-sm-4 col-12 left">
             <div class="row">
+              <span class="badge badge-pill badge-danger text-light " style="font-size: 90%" *ngIf="ticket.moreInfo">
+                <i class="fas fa-history"></i>
+              </span>
               <span>
                 {{ticket.countIncrement}}: {{ticket.subject}}
               </span>
@@ -215,7 +218,7 @@
             <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
               (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
             <a *ngIf="isStatusSpecail(ticket)" [routerLink]="['/edit-ticket', ticket.id]">
-              <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket" (click)="newPath()"></i>
+              <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket" (click)="newPath() || updateMoreInfo(ticket.id)"></i>
             </a>
             <a [routerLink]="['/detail', ticket.id]">
               <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket"></i>

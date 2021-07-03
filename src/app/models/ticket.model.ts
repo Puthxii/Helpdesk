@@ -30,7 +30,8 @@ export interface Ticket {
     sumPoint: number;
     maxDueDate: any;
     minDueDate: any;
-    countIncrement?: number
+    countIncrement?: number;
+    moreInfo?: boolean;
 }
 export interface Actions {
     actionSentence: string

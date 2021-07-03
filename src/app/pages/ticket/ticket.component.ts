@@ -496,4 +496,8 @@ export class TicketComponent implements OnInit {
   newPath() {
     this.dataService.changeRedirectSource('ticket')
   }
+
+  updateMoreInfo(id) {
+    this.ticketService.updateMoreInfo(id, false)
+  }
 }
