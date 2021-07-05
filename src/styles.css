@@ -171,13 +171,13 @@
     width: 130px;
     background-color: #f44336;
     color: white;
-    height: 30px;
-    padding: 3px;
+    height: 24px;
+    padding: 0px;
     border-radius: 10px;
 }
 
 .action{
-    padding-top: 35px;
+  padding-top: 35px;
 }
 
 .icon {
@@ -349,4 +349,75 @@
     background-color: #20c997;
     color: white;
     border-radius: 10px;
+}
+
+
+@media (max-width: 575px) {
+  .block {
+    display: none;
+  }
+
+  .action{
+    padding-top: 0px;
+  }
+
+  .low{
+    width: 40px;
+    background-color: #2ED0B9;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+  }
+
+  .medium{
+    width: 40px;
+    background-color: #FFBE96;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+  }
+
+  .high{
+    width: 40px;
+    background-color: #FE8896;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+  }
+
+  .critical{
+    width: 40px;
+    background-color: #533380;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+  }
+
+  .type {
+    width: 40px;
+    background-color: #3096E7;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+  }
+
+  .status {
+    width: 40px;
+    background-color: #6ba3b4;
+    color: white;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+  }
+}
+
+@media (min-width: 576px) {
+  .moblie-block {
+    display: none;
+  }
 }

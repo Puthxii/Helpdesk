@@ -153,39 +153,44 @@
       <div class="card mt-2" *ngFor="let ticket of ticket$">
         <div class="card-header">
           <div class="row">
-            <div class="col-6">
+            <div class="col-xl-6 col-sm-6 col-6">
               <div class="col">
                 <span>{{ticket.subject}}</span>
               </div>
               <div class="col">
-                <i class="fas fa-globe-asia" style="color: gray;"></i>
+                <i class="fas fa-globe-asia primary-color"></i>
                 <span class="mx-1" style="color: black;">{{ticket.creator}}</span>
               </div>
               <div class="col">
-                <span for="">{{ticket.site.product.name}}</span>
+                <span>{{ticket.site.product.name}}</span>
               </div>
               <div class="col">
                 <span style="color: gray;">
-                  Created
-                  {{ ticket.date.singleDate?.formatted?
-                  ticket.date.singleDate.formatted
-                  : ''}}
+                  Created{{ ticket.date.singleDate?.formatted? ticket.date.singleDate.formatted : ''}}
                 </span>
               </div>
             </div>
-            <div class="col-3">
-              <div class="col">
-                <div class="row">
-                  <div class="col-md-4 text-lg-left mt-4">
-                    <span class="{{ getBackgroundColor(ticket.status) }}">
-                      <i class="{{ getPriorityIcon(ticket.status) }}"></i>
-                      {{ getStatusName(ticket.status) }}
-                    </span>
-                  </div>
+              <div class="col-xl-3 col-sm-6 col-6 action">
+              <div class="row">
+                <div class="col-12">
+                   <span class="{{ getBackgroundColor(ticket.status) }}">
+                    <i class="{{ getPriorityIcon(ticket.status) }}"></i>{{ getStatusName(ticket.status) }}
+                   </span>
+                </div>
+                <div class="col-12 pt-3 moblie-block-ctm">
+                    <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
+                       (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
+                    <a [routerLink]="['/edit-ticket', ticket.id]">
+                      <i *ngIf="isInformedMoreInfo(ticket)" class="fas fa-pen mx-1 secondary-color icon"
+                         title="Edit Ticket" (click)="newPath()"></i>
+                    </a>
+                    <a [routerLink]="['/detail', ticket.id]">
+                      <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket"></i>
+                    </a>
                 </div>
               </div>
             </div>
-            <div class="col-3 action">
+            <div class="col-xl-3 col-sm-4 action block-ctm">
               <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
                 (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
               <a [routerLink]="['/edit-ticket', ticket.id]">
