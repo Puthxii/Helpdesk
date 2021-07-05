@@ -415,7 +415,7 @@ export class EditTicketComponent implements OnInit {
         subjectTask: ['', [Validators.required]],
         developer: ['', [Validators.required]],
         point: ['', [Validators.required]],
-        dueDate: ['', [Validators.required]],
+        dueDate: [model, [Validators.required]],
         checked: ['']
       }),
       participant: [''],
@@ -617,15 +617,25 @@ export class EditTicketComponent implements OnInit {
   }
 
   isResponseDescription(event: any) {
-    (this.editTicket.controls.responseDescription.value) ?
-      (this.addStatus('Closed'), this.addStatus('More Info'), this.addStatus('Rejected'))
-      : (this.removeStatus('Closed'), this.removeStatus('More Info'), this.removeStatus('Rejected'))
+    if (this.editTicket.controls.responseDescription.value) {
+      this.addStatus('Closed')
+      this.addStatus('More Info')
+      this.addStatus('Rejected')
+    } else {
+      this.removeStatus('Closed')
+      this.removeStatus('More Info')
+      this.removeStatus('Rejected')
+    }
   }
 
   isEditMaDescription(event: any) {
-    (this.editTicket.controls.maDescription.value) ?
-      (this.addStatus('Accepted'), this.addStatus('Rejected'))
-      : (this.removeStatus('Accepted'), this.removeStatus('Rejected'))
+    if (this.editTicket.controls.maDescription.value) {
+      this.addStatus('Accepted')
+      this.addStatus('Rejected')
+    } else {
+      this.removeStatus('Accepted')
+      this.removeStatus('Rejected')
+    }
   }
 
   isEditSuggestDescription(event: any) {
@@ -634,8 +644,14 @@ export class EditTicketComponent implements OnInit {
   }
 
   isResolveDescription(event: any) {
-    ((this.editTicket.controls.resolveDescription.value) && this.isChecked) ? (this.addStatus('Resolved'), this.isEditResolve = true)
-      : (this.removeStatus('Resolved'), this.isEditResolve = false, this.onSelectedStatus('Assigned'))
+    if ((this.editTicket.controls.resolveDescription.value) && this.isChecked) {
+      this.addStatus('Resolved')
+      this.isEditResolve = true
+    } else {
+      this.removeStatus('Resolved')
+      this.isEditResolve = false
+      this.onSelectedStatus('Assigned')
+    }
   }
 
   removeStatus(status: string) {
@@ -909,7 +925,7 @@ export class EditTicketComponent implements OnInit {
     const checked = false
     this.newTask = {
       subjectTask, developer, point, dueDate, checked
-    }
+    } as Tasks
     this.depositTasks.push(this.newTask);
     this.isTasksExit(this.depositTasks)
     this.clearTask()
@@ -922,7 +938,7 @@ export class EditTicketComponent implements OnInit {
     this.isEditSuggestDescription(Event)
   }
 
-  isTasksExit(depositTasks: any[]) {
+  isTasksExit(depositTasks: Tasks[]) {
     this.tasksToSave = []
     depositTasks.forEach(task => {
       if (typeof task.id === 'undefined') {
