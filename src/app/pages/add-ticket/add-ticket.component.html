@@ -13,7 +13,7 @@
         <form [formGroup]="addTicketForm" (ngSubmit)="addTicketData()" *ngIf="site$ | async; let Site">
           <div class="form-row" *ngIf="auth.isSupporter(user)">
             <div class="form-group col-md-6">
-              <label class="control-label" for="date">Date Inform</label>
+              <label class="control-label" >Date Inform</label>
               <div class="input-group">
                 <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
                   formControlName="date" [options]="myOptions" #dp="angular-mydatepicker" readonly>
@@ -165,7 +165,7 @@
           </div>
           <div class="row">
             <div class="form-group col-md-12" *ngIf="hideResponse">
-              <label for="respond">Response Description</label>
+              <label>Response Description</label>
               <textarea formControlName="responseDescription" class="form-control" id="responseDescription" rows="7"
                 (ngModelChange)="isResponseDescription($event)"></textarea>
             </div>

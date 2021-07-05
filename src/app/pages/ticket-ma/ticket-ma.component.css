@@ -2,14 +2,6 @@
     margin-bottom: 5px;
 }
 
-.status {
-    width: 144px;
-    background-color: #6ba3b4;
-    color: white;
-    height: 30px;
-    padding: 3px;
-}
-
 .has-search .form-control {
     padding-left: 2.375rem;
 }

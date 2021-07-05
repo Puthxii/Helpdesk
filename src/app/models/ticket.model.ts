@@ -1,7 +1,8 @@
 import { Site, MaLevel } from './site.model';
+import {IMyDateModel} from "angular-mydatepicker";
 export interface Ticket {
     id: any;
-    date: string;
+    date: IMyDateModel;
     source: string;
     site: Site;
     maLevel: MaLevel;
@@ -46,6 +47,6 @@ export interface Tasks {
     subjectTask: string
     developer: any
     point: number
-    dueDate: any
+    dueDate: IMyDateModel
     checked: boolean
 }
