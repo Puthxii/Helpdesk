@@ -1,38 +1,43 @@
 <div class="container-fluid">
   <section id="minimal-statistics">
-    <div class="row">
-      <div class="col-12 mt-3 mb-1 searchbar">
+    <div class="row mt-3 mb-1 searchbar">
+      <div class="col-xl-3 col-md-6 col-sm-6 col-6">
         <h5 class="primary-color">
           <i class="fas fa-ticket-alt"></i>
-          Tickets
+          Developer's Tickets
         </h5>
+      </div>
+      <div class="col-xl-3 col-md-6 col-sm-6 col-6">
         <div class="form-check">
-          <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked" (change)="checkValue(isChecked)">
+          <label class="form-check-label my-ticket">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
+                   (change)="checkValue(isChecked)">
             My Tickets<i class="input-helper"></i>
           </label>
         </div>
-        <div class="form-control-sm">
-          <div class="form-group has-search mb-2">
-            <span class="fa fa-search form-control-feedback"></span>
-            <input type="search" class="form-control" placeholder="Search Subject">
-          </div>
+      </div>
+      <div class="col-xl-3 col-md-6 col-sm-6 col-12">
+        <div class="form-group has-search mb-2">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
+                 (keyup)="search()" placeholder="Search Subject">
         </div>
+      </div>
+      <div class="col-xl-3 col-md-6 col-sm-6 col-12">
         <form [formGroup]="filterTicketForm">
-          <div class="form-control-sm">
-            <div class="input-group mb-2">
-              <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="date"
-                formControlName="date">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-secondary">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-              <div class=" input-group-append">
-                <button type="button" class="btn btn-secondary">
-                  <i class="fas fa-calendar"></i>
-                </button>
-              </div>
+          <div class="input-group mb-2">
+            <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="date"
+                   formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
+                   (dateChanged)="onDateChanged($event)" readonly>
+            <div class="input-group-append">
+              <button type="button" class="btn dangerBtn" (click)="dp.clearDate()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class=" input-group-append">
+              <button type="button" class="btn saveBtn" (click)="dp.toggleCalendar()">
+                <i class="fas fa-calendar"></i>
+              </button>
             </div>
           </div>
         </form>

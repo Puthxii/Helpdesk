@@ -113,6 +113,7 @@
     padding: 3px;
     border-radius: 10px;
 }
+
 .low{
     width: 144px;
     background-color: #2ED0B9;
@@ -420,4 +421,9 @@
   .moblie-block {
     display: none;
   }
+}
+
+.my-ticket {
+  display:block;
+  text-align:right;
 }

@@ -54,12 +54,27 @@ export class SiteTicketComponent implements OnInit {
   ]
   keword = null
   searchValue = '';
+  private storageCheck: number = 0
 
   ngOnInit() {
     this.buildForm()
-    this.auth.user$.subscribe(user => this.user = user);
-    this.User = this.auth.authState;
-    this.isFilter()
+    this.auth.user$.subscribe( user => {
+      this.user = user
+      this.siteState = this.user.site
+      this.User = this.auth.authState;
+      this.getCheck()
+      this.isFilter()
+    });
+  }
+
+  setCheck(data: number) {
+    localStorage.setItem(String(this.storageCheck), String(data));
+    this.getCheck()
+  }
+
+  getCheck() {
+    const data = Number(localStorage.getItem(String(this.storageCheck)))
+    this.isChecked = data === 0;
   }
 
   buildForm() {
@@ -97,7 +112,7 @@ export class SiteTicketComponent implements OnInit {
           this.status === 'Rejected' ?
             this.getTicketByCreatorSpecialStatus(this.creator, this.statusReject) :
             this.getTicketByCreatorStatus(this.creator, this.status)
-      } else { }
+      }
     });
   }
 
@@ -144,7 +159,12 @@ export class SiteTicketComponent implements OnInit {
       );
   }
 
-  checkValue(event: any) {
+  checkValue(event: boolean) {
+    if (event === true) {
+      this.setCheck(0)
+    } else  {
+      this.setCheck(1)
+    }
     this.isFilter()
   }
 

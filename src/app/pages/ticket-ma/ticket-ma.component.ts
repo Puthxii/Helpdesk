@@ -60,7 +60,7 @@ export class TicketMaComponent implements OnInit {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
-  public storageCheck: number = 1
+  private storageCheck: number = 1
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
