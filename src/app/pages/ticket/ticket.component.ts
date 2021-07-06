@@ -65,7 +65,7 @@ export class TicketComponent implements OnInit {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
-  public storageCheck: number = 0
+  private storageCheck: number = 0
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
