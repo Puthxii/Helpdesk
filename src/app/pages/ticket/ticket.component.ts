@@ -392,6 +392,10 @@ export class TicketComponent implements OnInit {
         this.getByCurrentnameKewordDateRangeSpacail(this.keyword, this.currentName, startDate, endDate)
       } else if (this.isChecked === true && this.status === 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
         this.getByCurrentnameDateRangeSpacail(this.currentName, startDate, endDate)
+      } else if (this.isChecked === false && this.status === 'In Progress' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByKeywordDateRangeSpacail(this.keyword, this.statusSpecail, startDate, endDate)
+      } else if (this.isChecked === false && this.status === 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
+        this.getByDateRangeSpacail(this.statusSpecail, startDate, endDate)
       }
     }
   }
@@ -551,5 +555,27 @@ export class TicketComponent implements OnInit {
 
   updateMoreInfo(id) {
     this.ticketService.updateMoreInfo(id, false)
+  }
+
+  private getByKeywordDateRangeSpacail(keyword: string, statusSpecail: string[], startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByKeywordDateRangeSpacail(keyword, startDate, endDate, statusSpecail)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      )
+  }
+
+  private getByDateRangeSpacail(statusSpecail: string[], startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByDateRangeSpacail(startDate, endDate, statusSpecail)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      )
   }
 }
