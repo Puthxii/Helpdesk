@@ -262,21 +262,44 @@ export class TicketService {
       .endAt(keword + '\uf8ff'));
   }
 
-  getByStatus(keword: string, status: any) {
-    return this.afs.collection('ticket', (ref) => ref
+  getByStatus(keyword: string, status: any) {
+    return this.afs.collection<Ticket>('ticket', (ref) => ref
       .where('status', '==', status)
       .orderBy('subject')
-      .startAt(keword)
-      .endAt(keword + '\uf8ff'));
+      .startAt(keyword.toUpperCase())
+      .endAt(keyword.toLowerCase() + '\uf8ff'));
   }
 
-  getByCurrentnameStatus(keword: string, currentName: string, status: any) {
-    return this.afs.collection('ticket', (ref) => ref
-      .where('status', '==', status)
-      .where('participant', 'array-contains', currentName)
+  getByStatusSpacail(keyword: string, status: any) {
+    return this.afs.collection<Ticket>('ticket', (ref) => ref
+      .where('status', 'in', status)
       .orderBy('subject')
-      .startAt(keword)
-      .endAt(keword + '\uf8ff'));
+      .startAt(keyword.toUpperCase())
+      .endAt(keyword.toLowerCase() + '\uf8ff'));
+  }
+
+  getByCurrentnameStatus(keyword: string, currentName: string, status: any) {
+    return this.afs.collection<Ticket>('ticket', (ref) => {
+        return ref
+          .where('status', '==', status)
+          .where('participant', 'array-contains', currentName)
+          .orderBy('subject')
+          .startAt(keyword.toUpperCase())
+          .endAt(keyword.toLowerCase() + '\uf8ff');
+      }
+    )
+  }
+
+  getByCurrentnameStatusSpacail(keyword: string, currentName: string, status: any) {
+    return this.afs.collection<Ticket>('ticket', (ref) => {
+        return ref
+          .where('status', 'in', status)
+          .where('participant', 'array-contains', currentName)
+          .orderBy('subject')
+          .startAt(keyword.toUpperCase())
+          .endAt(keyword.toLowerCase() + '\uf8ff');
+      }
+    )
   }
 
   getByCurrentname(keword: string, currentName: string, role: string[]) {
@@ -332,13 +355,13 @@ export class TicketService {
     );
   }
 
-  getByCurrentnameStatusKewordDateRange(keword: any, creator: string, status: any, startDate: Date, endDate: Date) {
-    return this.afs.collection('ticket', ref => ref
+  getByCurrentnameStatusKewordDateRange(keyword: any, creator: string, status: any, startDate: Date, endDate: Date) {
+     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('participant', 'array-contains', creator)
       .where('status', '==', status)
-      .where('subject', '==', keword)
+      .where('subject', '==', keyword)
     );
   }
 
@@ -360,17 +383,17 @@ export class TicketService {
     );
   }
 
-  getByCurrentnameKewordDateRange(keword: any, creator: string, startDate: Date, endDate: Date, role: any) {
+  getByCurrentnameKewordDateRange(keyword: any, creator: string, startDate: Date, endDate: Date, role: string[]) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', 'in', role)
       .where('participant', 'array-contains', creator)
-      .where('subject', '==', keword)
+      .where('subject', '==', keyword)
     );
   }
 
-  getByCurrentnameDateRange(creator: string, startDate: Date, endDate: Date, role: any) {
+  getByCurrentnameDateRange(creator: string, startDate: Date, endDate: Date, role: string[]) {
     return this.afs.collection('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
@@ -504,4 +527,22 @@ export class TicketService {
     return this.afs.collection('ticket').doc(id)
       .collection('tasks')
   }
+
+  getByKeywordDateRangeSpacail(keyword: string, startDate: Date, endDate: Date, statusSpecail: string[]) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
+      .where('status', 'in', statusSpecail)
+      .where('subject', '==', keyword)
+    );
+  }
+
+  getByDateRangeSpacail(startDate: Date, endDate: Date, statusSpecail: string[]) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
+      .where('status', 'in', statusSpecail)
+    );
+  }
+
 }

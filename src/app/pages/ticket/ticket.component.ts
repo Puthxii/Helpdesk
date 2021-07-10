@@ -25,11 +25,11 @@ export class TicketComponent implements OnInit {
   ticket: any;
   id: string;
   countAll: number;
-  keword = null
   staff: any;
   selectedColor = ''
   priorityClass: string;
   statusSpecail = ['In Progress', 'Accepted', 'Assigned']
+  keyword: string;
   constructor(
     @Inject('PRIORITY') public Prioritys: any[],
     @Inject('TYPES') public Types: any[],
@@ -226,8 +226,30 @@ export class TicketComponent implements OnInit {
       );
   }
 
+  getByCurrentnameStatusSpacail(value: string, currentname: string, status: any) {
+    this.ticket$ = this.ticketService.getByCurrentnameStatusSpacail(value, currentname, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
   getByStatus(value: string, status: any) {
     this.ticket$ = this.ticketService.getByStatus(value, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getByStatusSpacail(value: string, status: any) {
+    this.ticket$ = this.ticketService.getByStatusSpacail(value, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -249,15 +271,19 @@ export class TicketComponent implements OnInit {
   }
 
   search() {
-    this.keword = this.searchValue
+    this.keyword = this.searchValue
     if (this.isChecked === true && this.status != null && this.status != 'Total') {
-      this.getByCurrentnameStatus(this.keword, this.currentName, this.status)
+      this.getByCurrentnameStatus(this.keyword, this.currentName, this.status)
     } else if (this.isChecked === false && this.status != null && this.status != 'Total') {
-      this.getByStatus(this.keword, this.status)
+      this.getByStatus(this.keyword, this.status)
+    } if (this.isChecked === true && this.status != null && this.status === 'In Progress') {
+      this.getByCurrentnameStatusSpacail(this.keyword, this.currentName, this.statusSpecail)
+    } else if (this.isChecked === false && this.status != null && this.status === 'In Progress') {
+      this.getByStatusSpacail(this.keyword, this.statusSpecail)
     } else if (this.isChecked === true && this.status === 'Total') {
-      this.getByCurrentname(this.keword, this.currentName)
+      this.getByCurrentname(this.keyword, this.currentName)
     } else if (this.isChecked === false && this.status === 'Total') {
-      this.getByKeyWord(this.keword)
+      this.getByKeyWord(this.keyword)
     }
   }
 
@@ -346,22 +372,30 @@ export class TicketComponent implements OnInit {
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
     if (startDate != null && endDate != null) {
-      if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.keword != null) {
-        this.getByCurrentnameStatusKewordDateRange(this.keword, this.currentName, this.status, startDate, endDate)
-      } else if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.keword == null) {
+      if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.status !== 'In Progress' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByCurrentnameStatusKewordDateRange(this.keyword, this.currentName, this.status, startDate, endDate)
+      } else if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.status !== 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
         this.getByCurrentnameStatusDateRange(this.currentName, this.status, startDate, endDate)
-      } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && this.keword != null) {
-        this.getByStatusKewordDateRange(this.keword, this.status, startDate, endDate)
-      } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && this.keword == null) {
+      } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && this.status !== 'In Progress' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByStatusKewordDateRange(this.keyword, this.status, startDate, endDate)
+      } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && this.status !== 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
         this.getByStatusDateRange(this.status, startDate, endDate)
-      } else if (this.isChecked === true && this.status === 'Total' && this.keword != null) {
-        this.getByCurrentnameKewordDateRange(this.keword, this.currentName, startDate, endDate)
-      } else if (this.isChecked === true && this.status === 'Total' && this.keword == null) {
+      } else if (this.isChecked === true && this.status === 'Total' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByCurrentnameKewordDateRange(this.keyword, this.currentName, startDate, endDate)
+      } else if (this.isChecked === true && this.status === 'Total' && (this.keyword === undefined || this.keyword === '')) {
         this.getByCurrentnameDateRange(this.currentName, startDate, endDate)
-      } else if (this.isChecked === false && this.status === 'Total' && this.keword != null) {
-        this.getByKewordDaterange(this.keword, startDate, endDate)
-      } else if (this.isChecked === false && this.status === 'Total' && this.keword == null) {
+      } else if (this.isChecked === false && this.status === 'Total' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByKewordDaterange(this.keyword, startDate, endDate)
+      } else if (this.isChecked === false && this.status === 'Total' && (this.keyword === undefined || this.keyword === ''))  {
         this.getByDaterange(startDate, endDate)
+      } else if (this.isChecked === true && this.status === 'In Progress' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByCurrentnameKewordDateRangeSpacail(this.keyword, this.currentName, startDate, endDate)
+      } else if (this.isChecked === true && this.status === 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
+        this.getByCurrentnameDateRangeSpacail(this.currentName, startDate, endDate)
+      } else if (this.isChecked === false && this.status === 'In Progress' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByKeywordDateRangeSpacail(this.keyword, this.statusSpecail, startDate, endDate)
+      } else if (this.isChecked === false && this.status === 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
+        this.getByDateRangeSpacail(this.statusSpecail, startDate, endDate)
       }
     }
   }
@@ -421,8 +455,30 @@ export class TicketComponent implements OnInit {
       )
   }
 
+  getByCurrentnameKewordDateRangeSpacail(keyword: any, currentName: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCurrentnameKewordDateRange(keyword, currentName, startDate, endDate, this.statusSpecail)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      )
+  }
+
   getByCurrentnameDateRange(currentName: string, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getByCurrentnameDateRange(currentName, startDate, endDate, this.Supporter)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      )
+  }
+
+  getByCurrentnameDateRangeSpacail(currentName: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCurrentnameDateRange(currentName, startDate, endDate, this.statusSpecail)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -499,5 +555,27 @@ export class TicketComponent implements OnInit {
 
   updateMoreInfo(id) {
     this.ticketService.updateMoreInfo(id, false)
+  }
+
+  private getByKeywordDateRangeSpacail(keyword: string, statusSpecail: string[], startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByKeywordDateRangeSpacail(keyword, startDate, endDate, statusSpecail)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      )
+  }
+
+  private getByDateRangeSpacail(statusSpecail: string[], startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByDateRangeSpacail(startDate, endDate, statusSpecail)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      )
   }
 }
