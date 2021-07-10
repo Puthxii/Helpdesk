@@ -355,7 +355,6 @@ export class TicketService {
     );
   }
 
-  //todo : pass
   getByCurrentnameStatusKewordDateRange(keyword: any, creator: string, status: any, startDate: Date, endDate: Date) {
     console.log(keyword, creator, status , startDate , endDate)
     return this.afs.collection('ticket', ref => ref
@@ -367,7 +366,6 @@ export class TicketService {
     );
   }
 
-  //todo : pass
   getByCurrentnameStatusDateRange(creator: string, status: any, startDate: Date, endDate: Date) {
     console.log(creator, status , startDate , endDate)
     return this.afs.collection('ticket', ref => ref
