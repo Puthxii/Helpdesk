@@ -558,7 +558,7 @@ export class TicketService {
       let curName5 = ''
       let curName6 = ''
       let curName7 = ''
-      const chars = subject.split('');
+      const chars = str.split('');
       for (let i = 0; i < chars.length; i++) {
         curOrder += chars[i]
         curName1 = chars[i]
