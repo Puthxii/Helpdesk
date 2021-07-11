@@ -551,7 +551,6 @@ export class TicketService {
     function creatKeywords(str: string) {
       const arrName = []
       let curOrder = ''
-      let curName1 = ''
       let curName2 = ''
       let curName3 = ''
       let curName4 = ''
@@ -561,29 +560,38 @@ export class TicketService {
       const chars = str.split('');
       for (let i = 0; i < chars.length; i++) {
         curOrder += chars[i]
-        curName1 = chars[i]
-        curName2 += chars[i]
-        curName3 += chars[i]
-        curName4 += chars[i]
-        curName5 += chars[i]
-        curName6 += chars[i]
-        curName7 += chars[i]
-        if (chars[i + 1] && chars[i + 2] && chars[i + 3] && chars[i + 4] && chars[i + 5] && chars[i + 6] != undefined) {
+        if (chars[i + 1] != undefined) {
+          curName2 += chars[i]
           curName2 += chars[i + 1]
+        }
+        if (chars[i + 1] && chars[i + 2] != undefined) {
+          curName3 += chars[i]
           curName3 += chars[i + 1]
           curName3 += chars[i + 2]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] != undefined) {
+          curName4 += chars[i]
           curName4 += chars[i + 1]
           curName4 += chars[i + 2]
           curName4 += chars[i + 3]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] && chars[i + 4] != undefined) {
+          curName5 += chars[i]
           curName5 += chars[i + 1]
           curName5 += chars[i + 2]
           curName5 += chars[i + 3]
           curName5 += chars[i + 4]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] && chars[i + 4] && chars[i + 5] != undefined) {
+          curName6 += chars[i]
           curName6 += chars[i + 1]
           curName6 += chars[i + 2]
           curName6 += chars[i + 3]
           curName6 += chars[i + 4]
           curName6 += chars[i + 5]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] && chars[i + 4] && chars[i + 5] && chars[i + 6] != undefined) {
+          curName7 += chars[i]
           curName7 += chars[i + 1]
           curName7 += chars[i + 2]
           curName7 += chars[i + 3]
@@ -591,7 +599,7 @@ export class TicketService {
           curName7 += chars[i + 5]
           curName7 += chars[i + 6]
         }
-        arrName.push(curOrder, curName1, curName2, curName3, curName4, curName5, curName6, curName7)
+        arrName.push(curOrder, chars[i], curName2, curName3, curName4, curName5, curName6, curName7)
         curName2 = ''
         curName3 = ''
         curName4 = ''
