@@ -122,6 +122,7 @@ export class TicketService {
   async addTicket(ticket: Ticket, path: string) {
     try {
       const countIncrement = await this.getCount()
+      const keyword = await this.generateKeyword(ticket.subject, countIncrement)
       await (await this.afs.collection('ticket').add({
         date: ticket.date,
         source: ticket.source,
@@ -139,7 +140,8 @@ export class TicketService {
         staff: ticket.staff,
         email: ticket.email,
         participant: ticket.participant,
-        countIncrement
+        countIncrement,
+        keyword
       }))
         .collection('action')
         .add({
@@ -545,4 +547,66 @@ export class TicketService {
     );
   }
 
+  private async generateKeyword(subject: string, countIncrement: number) {
+    function creatKeywords(str: string) {
+      const arrName = []
+      let curOrder = ''
+      let curName1 = ''
+      let curName2 = ''
+      let curName3 = ''
+      let curName4 = ''
+      let curName5 = ''
+      let curName6 = ''
+      let curName7 = ''
+      const chars = subject.split('');
+      for (let i = 0; i < chars.length; i++) {
+        curOrder += chars[i]
+        curName1 = chars[i]
+        curName2 += chars[i]
+        curName3 += chars[i]
+        curName4 += chars[i]
+        curName5 += chars[i]
+        curName6 += chars[i]
+        curName7 += chars[i]
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] && chars[i + 4] && chars[i + 5] && chars[i + 6] != undefined) {
+          curName2 += chars[i + 1]
+          curName3 += chars[i + 1]
+          curName3 += chars[i + 2]
+          curName4 += chars[i + 1]
+          curName4 += chars[i + 2]
+          curName4 += chars[i + 3]
+          curName5 += chars[i + 1]
+          curName5 += chars[i + 2]
+          curName5 += chars[i + 3]
+          curName5 += chars[i + 4]
+          curName6 += chars[i + 1]
+          curName6 += chars[i + 2]
+          curName6 += chars[i + 3]
+          curName6 += chars[i + 4]
+          curName6 += chars[i + 5]
+          curName7 += chars[i + 1]
+          curName7 += chars[i + 2]
+          curName7 += chars[i + 3]
+          curName7 += chars[i + 4]
+          curName7 += chars[i + 5]
+          curName7 += chars[i + 6]
+        }
+        arrName.push(curOrder, curName1, curName2, curName3, curName4, curName5, curName6, curName7)
+        curName2 = ''
+        curName3 = ''
+        curName4 = ''
+        curName5 = ''
+        curName6 = ''
+        curName7 = ''
+      }
+      return arrName
+    }
+    const keywordSubject = await creatKeywords(`${subject}`)
+    const keywordCountIncrement = await creatKeywords(`${countIncrement}`)
+    return [
+        '',
+        ...keywordSubject,
+        ...keywordCountIncrement
+    ]
+  }
 }

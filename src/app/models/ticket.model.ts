@@ -33,6 +33,7 @@ export interface Ticket {
     minDueDate: any;
     countIncrement?: number;
     moreInfo?: boolean;
+    keyword?: any
 }
 export interface Actions {
     actionSentence: string
