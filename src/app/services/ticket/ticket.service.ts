@@ -603,10 +603,14 @@ export class TicketService {
     }
     const keywordSubject = await creatKeywords(`${subject}`)
     const keywordCountIncrement = await creatKeywords(`${countIncrement}`)
+    const keywordLowerCase = creatKeywords(`${subject.toLowerCase()}`)
+    const keywordUpperCase = creatKeywords(`${subject.toUpperCase()}`)
     return [
         '',
         ...keywordSubject,
-        ...keywordCountIncrement
+        ...keywordCountIncrement,
+        ...keywordLowerCase,
+        ...keywordUpperCase
     ]
   }
 }
