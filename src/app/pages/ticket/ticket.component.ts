@@ -272,18 +272,22 @@ export class TicketComponent implements OnInit {
 
   search() {
     this.keyword = this.searchValue
-    if (this.isChecked === true && this.status != null && this.status != 'Total') {
-      this.getByCurrentnameStatus(this.keyword, this.currentName, this.status)
-    } else if (this.isChecked === false && this.status != null && this.status != 'Total') {
-      this.getByStatus(this.keyword, this.status)
-    } if (this.isChecked === true && this.status != null && this.status === 'In Progress') {
-      this.getByCurrentnameStatusSpacail(this.keyword, this.currentName, this.statusSpecail)
-    } else if (this.isChecked === false && this.status != null && this.status === 'In Progress') {
-      this.getByStatusSpacail(this.keyword, this.statusSpecail)
-    } else if (this.isChecked === true && this.status === 'Total') {
-      this.getByCurrentname(this.keyword, this.currentName)
-    } else if (this.isChecked === false && this.status === 'Total') {
-      this.getByKeyWord(this.keyword)
+    if (this.keyword !== undefined && this.keyword !== null && this.keyword !== ''){
+      if (this.isChecked === true && this.status != null && this.status != 'Total') {
+        this.getByCurrentnameStatus(this.keyword, this.currentName, this.status)
+      } else if (this.isChecked === false && this.status != null && this.status != 'Total') {
+        this.getByStatus(this.keyword, this.status)
+      } if (this.isChecked === true && this.status != null && this.status === 'In Progress') {
+        this.getByCurrentnameStatusSpacail(this.keyword, this.currentName, this.statusSpecail)
+      } else if (this.isChecked === false && this.status != null && this.status === 'In Progress') {
+        this.getByStatusSpacail(this.keyword, this.statusSpecail)
+      } else if (this.isChecked === true && this.status === 'Total') {
+        this.getByCurrentname(this.keyword, this.currentName)
+      } else if (this.isChecked === false && this.status === 'Total') {
+        this.getByKeyWord(this.keyword)
+      }
+    } else {
+      this.isFilter()
     }
   }
 
