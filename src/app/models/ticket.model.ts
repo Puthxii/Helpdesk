@@ -34,6 +34,7 @@ export interface Ticket {
     countIncrement?: number;
     moreInfo?: boolean;
     keyword?: any
+    participantId? : any
 }
 export interface Actions {
     actionSentence: string
