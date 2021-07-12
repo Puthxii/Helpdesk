@@ -140,6 +140,7 @@ export class TicketService {
         staff: ticket.staff,
         email: ticket.email,
         participant: ticket.participant,
+        participantId: ticket.participantId,
         countIncrement,
         keyword
       }))
@@ -194,6 +195,7 @@ export class TicketService {
         staff: ticket.staff,
         descriptionFile: ticket.descriptionFile,
         participant: ticket.participant,
+        participantId: ticket.participantId,
         maDescription: ticket.maDescription,
         maDescriptionFile: ticket.maDescriptionFile,
         suggestDescription: ticket.suggestDescription,

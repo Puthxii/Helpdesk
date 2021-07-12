@@ -896,22 +896,22 @@ export class EditTicketComponent implements OnInit {
       } else if (this.status.value === 'Resolved') {
         sentence = `${userCurrent} resolved task`
       }
-      this.setParticaipant(userCurrent)
-      this.setParticaipantId(userIdCurrent)
+      this.setParticipant(userCurrent)
+      this.setParticipantId(userIdCurrent)
     }
     this.editTicket.patchValue({
       actionSentence: sentence
     })
   }
 
-  setParticaipant(currentParticipant: any) {
+  setParticipant(currentParticipant: any) {
     this.mergeParticipant(currentParticipant)
     this.editTicket.patchValue({
       participant: this.stateParticipant
     });
   }
 
-  setParticaipantId(currentParticipantId: any) {
+  setParticipantId(currentParticipantId: any) {
     this.mergeParticipantId(currentParticipantId)
     this.editTicket.patchValue({
       participantId: this.stateParticipantId
@@ -1055,7 +1055,9 @@ export class EditTicketComponent implements OnInit {
           this.tasksToSave[i]
         )
         for (let j = 0; this.tasksToSave[i].developer.length > j; j++) {
-          this.setParticaipant(this.tasksToSave[i].developer[j].fullName)
+          this.setParticipant(this.tasksToSave[i].developer[j].fullName)
+          this.setParticipantId(this.tasksToSave[i].developer[j].$uid)
+          //todo : save Participant/Id when save task
         }
         this.depositDev = this.tasksToSave[i].developer
       }
@@ -1069,6 +1071,7 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToUpdate[i]
         )
+        //todo : update Participant/Id when save task
       }
     }
   }
@@ -1080,6 +1083,7 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToDelete[i]
         )
+        // todo : delete Participant/Id when save task
       }
     }
   }
