@@ -85,6 +85,7 @@ export class EditTicketComponent implements OnInit {
   forSuggestDescription = 'forSuggestDescription'
   forResolveDescription = 'forResolveDescription'
   stateParticipant = []
+  stateParticipantId = []
   depositTasks = []
   newTask: any
   assignTask: any;
@@ -155,6 +156,7 @@ export class EditTicketComponent implements OnInit {
         assignTask: this.ticket.assignTask,
         deadlineDate: this.ticket.deadlineDate,
         participant: this.ticket.participant,
+        participantId: this.ticket.participantId,
         addTasks: this.ticket.addTasks,
         maDescription: this.ticket.maDescription,
         maDescriptionFile: this.ticket.maDescriptionFile,
@@ -169,6 +171,7 @@ export class EditTicketComponent implements OnInit {
       this.getSuggestDescriptionFileUpload()
       this.getResolvedDescriptionFileUpload()
       this.getParticipant()
+      this.getParticipantId()
       this.setDefaultMaDescription()
       this.setDefaultMaDescriptionFile()
       this.setDefaultSuggestDescription()
@@ -419,6 +422,7 @@ export class EditTicketComponent implements OnInit {
         checked: ['']
       }),
       participant: [''],
+      participantId: [''],
       addTasks: [''],
       maDescription: [''],
       maDescriptionFile: [''],
@@ -445,6 +449,10 @@ export class EditTicketComponent implements OnInit {
 
   getCurrentUser() {
     return this.user.fullName
+  }
+
+  getCurrentUserId() {
+    return this.user.uid
   }
 
   getCurrentStaff() {
@@ -739,6 +747,10 @@ export class EditTicketComponent implements OnInit {
     this.stateParticipant = this.editTicket.controls.participant.value
   }
 
+  getParticipantId() {
+    this.stateParticipantId = this.editTicket.controls.participantId.value
+  }
+
   public onDepositDescriptionFileRemove(value: any) {
     this.depositDescriptionFiles = this.editTicket.controls.descriptionFile.value.filter((item: { id: any; }) => item.id !== value.id)
     this.editTicket.patchValue({
@@ -849,6 +861,7 @@ export class EditTicketComponent implements OnInit {
   setActionSentence() {
     let sentence: string
     const userCurrent = this.getCurrentUser()
+    const userIdCurrent = this.getCurrentUserId()
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
         sentence = `${userCurrent} edit ticket`
@@ -884,6 +897,7 @@ export class EditTicketComponent implements OnInit {
         sentence = `${userCurrent} resolved task`
       }
       this.setParticaipant(userCurrent)
+      this.setParticaipantId(userIdCurrent)
     }
     this.editTicket.patchValue({
       actionSentence: sentence
@@ -895,6 +909,21 @@ export class EditTicketComponent implements OnInit {
     this.editTicket.patchValue({
       participant: this.stateParticipant
     });
+  }
+
+  setParticaipantId(currentParticipantId: any) {
+    this.mergeParticipantId(currentParticipantId)
+    this.editTicket.patchValue({
+      participantId: this.stateParticipantId
+    });
+  }
+
+  mergeParticipantId(id: any) {
+    if (this.stateParticipantId.indexOf(id) !== -1) {
+      console.log('Value found inside the array')
+    } else {
+      this.stateParticipantId.push(id)
+    }
   }
 
   mergeParticipant(name: any) {
