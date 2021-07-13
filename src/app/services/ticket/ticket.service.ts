@@ -209,6 +209,7 @@ export class TicketService {
         maxDueDate: ticket.maxDueDate,
         minDueDate: ticket.minDueDate
       })
+      await this.upDateParticipantIds(id, ticket.userId,true)
       await this.deleteCollection('uploadDescription')
       await this.deleteCollection('uploadResponseDescription')
       await this.deleteCollection('uploadMaDescription')
@@ -625,5 +626,13 @@ export class TicketService {
         ...keywordLowerCase,
         ...keywordUpperCase
     ]
+  }
+
+  private async upDateParticipantIds(id: any, userId: any, active: boolean) {
+    await this.afs.collection('ticket').doc(id).set({
+      "participantIds": {
+        [userId]: active
+      }
+    }, {merge: true})
   }
 }

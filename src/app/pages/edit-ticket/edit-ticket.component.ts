@@ -125,7 +125,10 @@ export class EditTicketComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => this.user = user)
+    this.auth.user$.subscribe(user => {
+      this.user = user
+      this.setUserId()
+    })
     this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
     this.getTitleByPath()
     this.updateTicketForm()
@@ -432,7 +435,8 @@ export class EditTicketComponent implements OnInit {
       resolveDescriptionFile: [''],
       sumPoint: [''],
       maxDueDate: [''],
-      minDueDate: ['']
+      minDueDate: [''],
+      userId: ['']
     });
   }
 
@@ -1238,4 +1242,9 @@ export class EditTicketComponent implements OnInit {
     return this.statusSpecial.includes(this.editTicket.controls.currentStatus.value)
   }
 
+  private setUserId() {
+    this.editTicket.patchValue({
+      userId: this.user.uid
+    })
+  }
 }
