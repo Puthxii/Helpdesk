@@ -35,6 +35,7 @@ export interface Ticket {
     moreInfo?: boolean;
     keyword?: any
     participantId? : any
+    userId? : any
 }
 export interface Actions {
     actionSentence: string

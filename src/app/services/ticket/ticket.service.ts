@@ -142,7 +142,10 @@ export class TicketService {
         participant: ticket.participant,
         participantId: ticket.participantId,
         countIncrement,
-        keyword
+        keyword,
+        participantIds: {
+          [ticket.userId]: true
+        }
       }))
         .collection('action')
         .add({
@@ -613,8 +616,8 @@ export class TicketService {
     }
     const keywordSubject = await creatKeywords(`${subject}`)
     const keywordCountIncrement = await creatKeywords(`${countIncrement}`)
-    const keywordLowerCase = creatKeywords(`${subject.toLowerCase()}`)
-    const keywordUpperCase = creatKeywords(`${subject.toUpperCase()}`)
+    const keywordLowerCase = await creatKeywords(`${subject.toLowerCase()}`)
+    const keywordUpperCase = await creatKeywords(`${subject.toUpperCase()}`)
     return [
         '',
         ...keywordSubject,
