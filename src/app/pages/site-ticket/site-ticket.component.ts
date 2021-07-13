@@ -137,7 +137,7 @@ export class SiteTicketComponent implements OnInit {
     }
   }
 
-  getTicketByCreatorSpecialStatus(creator: any, status: any) {
+  getTicketByCreatorSpecialStatus(creator: any, status: string[]) {
     this.ticket$ = this.ticketService.getTicketByCreatorSpecialStatus(creator, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
