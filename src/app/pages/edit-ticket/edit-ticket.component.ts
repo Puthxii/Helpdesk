@@ -85,6 +85,7 @@ export class EditTicketComponent implements OnInit {
   forSuggestDescription = 'forSuggestDescription'
   forResolveDescription = 'forResolveDescription'
   stateParticipant = []
+  stateParticipantId = []
   depositTasks = []
   newTask: any
   assignTask: any;
@@ -124,7 +125,10 @@ export class EditTicketComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => this.user = user)
+    this.auth.user$.subscribe(user => {
+      this.user = user
+      this.setUserId()
+    })
     this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
     this.getTitleByPath()
     this.updateTicketForm()
@@ -155,6 +159,7 @@ export class EditTicketComponent implements OnInit {
         assignTask: this.ticket.assignTask,
         deadlineDate: this.ticket.deadlineDate,
         participant: this.ticket.participant,
+        participantId: this.ticket.participantId,
         addTasks: this.ticket.addTasks,
         maDescription: this.ticket.maDescription,
         maDescriptionFile: this.ticket.maDescriptionFile,
@@ -169,6 +174,7 @@ export class EditTicketComponent implements OnInit {
       this.getSuggestDescriptionFileUpload()
       this.getResolvedDescriptionFileUpload()
       this.getParticipant()
+      this.getParticipantId()
       this.setDefaultMaDescription()
       this.setDefaultMaDescriptionFile()
       this.setDefaultSuggestDescription()
@@ -419,6 +425,7 @@ export class EditTicketComponent implements OnInit {
         checked: ['']
       }),
       participant: [''],
+      participantId: [''],
       addTasks: [''],
       maDescription: [''],
       maDescriptionFile: [''],
@@ -428,7 +435,8 @@ export class EditTicketComponent implements OnInit {
       resolveDescriptionFile: [''],
       sumPoint: [''],
       maxDueDate: [''],
-      minDueDate: ['']
+      minDueDate: [''],
+      userId: ['']
     });
   }
 
@@ -445,6 +453,10 @@ export class EditTicketComponent implements OnInit {
 
   getCurrentUser() {
     return this.user.fullName
+  }
+
+  getCurrentUserId() {
+    return this.user.uid
   }
 
   getCurrentStaff() {
@@ -739,6 +751,10 @@ export class EditTicketComponent implements OnInit {
     this.stateParticipant = this.editTicket.controls.participant.value
   }
 
+  getParticipantId() {
+    this.stateParticipantId = this.editTicket.controls.participantId.value
+  }
+
   public onDepositDescriptionFileRemove(value: any) {
     this.depositDescriptionFiles = this.editTicket.controls.descriptionFile.value.filter((item: { id: any; }) => item.id !== value.id)
     this.editTicket.patchValue({
@@ -849,6 +865,7 @@ export class EditTicketComponent implements OnInit {
   setActionSentence() {
     let sentence: string
     const userCurrent = this.getCurrentUser()
+    const userIdCurrent = this.getCurrentUserId()
     if (this.user.roles.customer === true) {
       if (this.status.value === 'Informed') {
         sentence = `${userCurrent} edit ticket`
@@ -883,18 +900,34 @@ export class EditTicketComponent implements OnInit {
       } else if (this.status.value === 'Resolved') {
         sentence = `${userCurrent} resolved task`
       }
-      this.setParticaipant(userCurrent)
+      this.setParticipant(userCurrent)
+      this.setParticipantId(userIdCurrent)
     }
     this.editTicket.patchValue({
       actionSentence: sentence
     })
   }
 
-  setParticaipant(currentParticipant: any) {
+  setParticipant(currentParticipant: any) {
     this.mergeParticipant(currentParticipant)
     this.editTicket.patchValue({
       participant: this.stateParticipant
     });
+  }
+
+  setParticipantId(currentParticipantId: any) {
+    this.mergeParticipantId(currentParticipantId)
+    this.editTicket.patchValue({
+      participantId: this.stateParticipantId
+    });
+  }
+
+  mergeParticipantId(id: any) {
+    if (this.stateParticipantId.indexOf(id) !== -1) {
+      console.log('Value found inside the array')
+    } else {
+      this.stateParticipantId.push(id)
+    }
   }
 
   mergeParticipant(name: any) {
@@ -1026,7 +1059,9 @@ export class EditTicketComponent implements OnInit {
           this.tasksToSave[i]
         )
         for (let j = 0; this.tasksToSave[i].developer.length > j; j++) {
-          this.setParticaipant(this.tasksToSave[i].developer[j].fullName)
+          this.setParticipant(this.tasksToSave[i].developer[j].fullName)
+          this.setParticipantId(this.tasksToSave[i].developer[j].$uid)
+          //todo : save Participant/Id when save task
         }
         this.depositDev = this.tasksToSave[i].developer
       }
@@ -1040,6 +1075,7 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToUpdate[i]
         )
+        //todo : update Participant/Id when save task
       }
     }
   }
@@ -1051,6 +1087,7 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToDelete[i]
         )
+        // todo : delete Participant/Id when save task
       }
     }
   }
@@ -1205,4 +1242,9 @@ export class EditTicketComponent implements OnInit {
     return this.statusSpecial.includes(this.editTicket.controls.currentStatus.value)
   }
 
+  private setUserId() {
+    this.editTicket.patchValue({
+      userId: this.user.uid
+    })
+  }
 }

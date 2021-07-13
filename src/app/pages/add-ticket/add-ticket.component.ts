@@ -171,9 +171,13 @@ export class AddTicketComponent implements OnInit {
         this.getCustomerContact(this.user$.name);
         this.setActionSentenceCus();
         this.setParticipantCustomer()
+        this.setParticipantIdCustomer()
+        this.setParticipantIdsCustomer()
       } else {
         this.setStaff();
         this.setParticipant()
+        this.setParticipantId()
+        this.setParticipantIds()
         this.setStatus();
         this.site$ = this.siteService.getSitesList();
         this.setActionSentence()
@@ -213,9 +217,34 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
+  setParticipantIdCustomer() {
+    this.addTicketForm.patchValue({
+      participantId: []
+    });
+  }
+
+  setParticipantIdsCustomer() {
+    this.addTicketForm.patchValue({
+      userId : 'customerId'
+    });
+  }
+
   setParticipant() {
+    console.log(this.user$.uid)
     this.addTicketForm.patchValue({
       participant: [this.user$.fullName]
+    });
+  }
+
+  setParticipantId() {
+    this.addTicketForm.patchValue({
+      participantId: [this.user$.uid]
+    });
+  }
+
+  setParticipantIds() {
+    this.addTicketForm.patchValue({
+      userId :this.user$.uid
     });
   }
 
@@ -308,7 +337,9 @@ export class AddTicketComponent implements OnInit {
       email: [''],
       descriptionFile: [''],
       actionSentence: [''],
-      participant: ['']
+      participant: [''],
+      participantId: [''],
+      userId: [''],
     });
   }
 

@@ -122,6 +122,7 @@ export class TicketService {
   async addTicket(ticket: Ticket, path: string) {
     try {
       const countIncrement = await this.getCount()
+      const keyword = await this.generateKeyword(ticket.subject, countIncrement)
       await (await this.afs.collection('ticket').add({
         date: ticket.date,
         source: ticket.source,
@@ -139,7 +140,12 @@ export class TicketService {
         staff: ticket.staff,
         email: ticket.email,
         participant: ticket.participant,
-        countIncrement
+        participantId: ticket.participantId,
+        countIncrement,
+        keyword,
+        participantIds: {
+          [ticket.userId]: true
+        }
       }))
         .collection('action')
         .add({
@@ -192,6 +198,7 @@ export class TicketService {
         staff: ticket.staff,
         descriptionFile: ticket.descriptionFile,
         participant: ticket.participant,
+        participantId: ticket.participantId,
         maDescription: ticket.maDescription,
         maDescriptionFile: ticket.maDescriptionFile,
         suggestDescription: ticket.suggestDescription,
@@ -202,6 +209,7 @@ export class TicketService {
         maxDueDate: ticket.maxDueDate,
         minDueDate: ticket.minDueDate
       })
+      await this.upDateParticipantIds(id, ticket.userId,true)
       await this.deleteCollection('uploadDescription')
       await this.deleteCollection('uploadResponseDescription')
       await this.deleteCollection('uploadMaDescription')
@@ -254,61 +262,49 @@ export class TicketService {
     this.afs.collection('ticket').doc(id).collection('tasks').doc(tasks.id).delete();
   }
 
-  getByKeyWord(keword: any, role) {
-    return this.afs.collection('ticket', (ref) => ref
-      .orderBy('subject')
-      .where('status', 'in', role)
-      .startAt(keword)
-      .endAt(keword + '\uf8ff'));
-  }
-
-  getByStatus(keyword: string, status: any) {
+  getByKeywordStatus(keyword: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => ref
       .where('status', '==', status)
-      .orderBy('subject')
-      .startAt(keyword.toUpperCase())
-      .endAt(keyword.toLowerCase() + '\uf8ff'));
+      .where('keyword', 'array-contains', keyword));
   }
 
-  getByStatusSpacail(keyword: string, status: any) {
+  getByKeywordStatusSpacial(keyword: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => ref
       .where('status', 'in', status)
-      .orderBy('subject')
-      .startAt(keyword.toUpperCase())
-      .endAt(keyword.toLowerCase() + '\uf8ff'));
+      .where('keyword', 'array-contains', keyword));
   }
 
-  getByCurrentnameStatus(keyword: string, currentName: string, status: any) {
+  getByKeywordUserIdStatus(keyword: string, userId: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => {
         return ref
           .where('status', '==', status)
-          .where('participant', 'array-contains', currentName)
-          .orderBy('subject')
-          .startAt(keyword.toUpperCase())
-          .endAt(keyword.toLowerCase() + '\uf8ff');
+          .where('keyword', 'array-contains', keyword)
+          .where(`participantIds.${userId}` ,'==' ,true)
       }
     )
   }
 
-  getByCurrentnameStatusSpacail(keyword: string, currentName: string, status: any) {
+  getByKeywordUserIdStatusSpacial(keyword: string, userId: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => {
         return ref
           .where('status', 'in', status)
-          .where('participant', 'array-contains', currentName)
-          .orderBy('subject')
-          .startAt(keyword.toUpperCase())
-          .endAt(keyword.toLowerCase() + '\uf8ff');
+          .where('keyword', 'array-contains', keyword)
+          .where(`participantIds.${userId}` ,'==' ,true)
       }
     )
   }
 
-  getByCurrentname(keword: string, currentName: string, role: string[]) {
-    return this.afs.collection('ticket', (ref) => ref
-      .where('participant', 'array-contains', currentName)
+  getByKeywordUserIdRole(keyword: string, userId: string, role: string[]) {
+    return this.afs.collection<Ticket>('ticket', (ref) => ref
+      .where('keyword', 'array-contains', keyword)
       .where('status', 'in', role)
-      .orderBy('subject')
-      .startAt(keword)
-      .endAt(keword + '\uf8ff'));
+      .where(`participantIds.${userId}` ,'==' ,true))
+  }
+
+  getByKeywordRole(keyword: string, role) {
+    return this.afs.collection<Ticket>('ticket', (ref) => ref
+      .where('status', 'in', role)
+      .where('keyword', 'array-contains', keyword));
   }
 
   getTicketByid(id: any) {
@@ -347,79 +343,80 @@ export class TicketService {
     );
   }
 
-  getByDaterange(startDate: any, endDate: any, role: any) {
-    return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>=', startDate)
-      .where('date.singleDate.jsDate', '<=', endDate)
-      .where('status', 'in', role)
-    );
+  getByDateRangeKeywordUserIdStatus(startDate: Date, endDate: Date, keyword: any, userId: string, status: string) {
+     return this.afs.collection<Ticket>('ticket', ref => ref
+       .where('date.singleDate.jsDate', '>=', startDate)
+       .where('date.singleDate.jsDate', '<=', endDate)
+       .where(`participantIds.${userId}` ,'==' ,true)
+       .where('status', '==', status)
+       .where('keyword', 'array-contains', keyword)
+     );
   }
 
-  getByCurrentnameStatusKewordDateRange(keyword: any, creator: string, status: any, startDate: Date, endDate: Date) {
-     return this.afs.collection('ticket', ref => ref
+  getByDateRangeUserIdStatus(startDate: Date, endDate: Date, userId: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
-      .where('participant', 'array-contains', creator)
-      .where('status', '==', status)
-      .where('subject', '==', keyword)
-    );
-  }
-
-  getByCurrentnameStatusDateRange(creator: string, status: any, startDate: Date, endDate: Date) {
-    return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>=', startDate)
-      .where('date.singleDate.jsDate', '<=', endDate)
-      .where('participant', 'array-contains', creator)
+      .where(`participantIds.${userId}` ,'==' ,true)
       .where('status', '==', status)
     );
   }
 
-  getByStatusKewordDateRange(keword: any, status: any, startDate: Date, endDate: Date) {
-    return this.afs.collection('ticket', ref => ref
+  getByDateRangeKeywordStatus(startDate: Date, endDate: Date, keyword: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
+      .where('keyword', 'array-contains', keyword)
       .where('status', '==', status)
-      .where('subject', '==', keword)
     );
   }
 
-  getByCurrentnameKewordDateRange(keyword: any, creator: string, startDate: Date, endDate: Date, role: string[]) {
-    return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>=', startDate)
-      .where('date.singleDate.jsDate', '<=', endDate)
-      .where('status', 'in', role)
-      .where('participant', 'array-contains', creator)
-      .where('subject', '==', keyword)
-    );
-  }
-
-  getByCurrentnameDateRange(creator: string, startDate: Date, endDate: Date, role: string[]) {
-    return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>=', startDate)
-      .where('date.singleDate.jsDate', '<=', endDate)
-      .where('status', 'in', role)
-      .where('participant', 'array-contains', creator)
-    );
-  }
-
-  getByKewordDaterange(keword: any, startDate: Date, endDate: Date, role: any) {
-    return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>=', startDate)
-      .where('date.singleDate.jsDate', '<=', endDate)
-      .where('status', 'in', role)
-      .where('subject', '==', keword)
-    );
-  }
-
-  getByStatusDateRange(status: any, startDate: Date, endDate: Date) {
-    return this.afs.collection('ticket', ref => ref
+  getByDateRangeStatus(startDate: Date, endDate: Date, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('status', '==', status)
     );
   }
 
-  getTicketByCreatorSpecialStatus(creator: any, status: any) {
+  getByDateRangeKeywordUserIdRole(startDate: Date, endDate: Date, keyword: string, userId: string,  role: string[]) {
+    return this.afs.collection('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
+      .where('keyword', 'array-contains', keyword)
+      .where(`participantIds.${userId}` ,'==' ,true)
+      .where('status', 'in', role)
+    );
+  }
+
+  getByDateRangeUserIdRole(startDate: Date, endDate: Date, userId: string, role: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
+      .where(`participantIds.${userId}` ,'==' ,true)
+      .where('status', 'in', role)
+    );
+  }
+
+  getByDateRangeKeywordRole(startDate: Date, endDate: Date, keyword: string, role: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
+      .where('keyword', 'array-contains', keyword)
+      .where('status', 'in', role)
+    );
+  }
+
+  getByDateRangeRole(startDate: Date, endDate: Date, role: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
+      .where('status', 'in', role)
+    );
+  }
+
+  //todo // customer get ticket by name
+  getTicketByCreatorSpecialStatus(creator: any, status: string[]) {
     return this.afs.collection('ticket', ref => ref
       .where('creator', '==', creator)
       .where('status', 'in', status)
@@ -428,7 +425,7 @@ export class TicketService {
   }
 
   // todo : customer get ticket by status
-  getTicketByCreatorStatus(creator: any, status: any) {
+  getTicketByCreatorStatus(creator: any, status: string) {
     return this.afs.collection('ticket', ref => ref
       .where('creator', '==', creator)
       .where('status', '==', status)
@@ -528,21 +525,86 @@ export class TicketService {
       .collection('tasks')
   }
 
-  getByKeywordDateRangeSpacail(keyword: string, startDate: Date, endDate: Date, statusSpecail: string[]) {
-    return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>=', startDate)
-      .where('date.singleDate.jsDate', '<=', endDate)
-      .where('status', 'in', statusSpecail)
-      .where('subject', '==', keyword)
-    );
+  private async generateKeyword(subject: string, countIncrement: number) {
+    function creatKeywords(str: string) {
+      const arrName = []
+      let curOrder = ''
+      let curName2 = ''
+      let curName3 = ''
+      let curName4 = ''
+      let curName5 = ''
+      let curName6 = ''
+      let curName7 = ''
+      const chars = str.split('');
+      for (let i = 0; i < chars.length; i++) {
+        curOrder += chars[i]
+        if (chars[i + 1] != undefined) {
+          curName2 += chars[i]
+          curName2 += chars[i + 1]
+        }
+        if (chars[i + 1] && chars[i + 2] != undefined) {
+          curName3 += chars[i]
+          curName3 += chars[i + 1]
+          curName3 += chars[i + 2]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] != undefined) {
+          curName4 += chars[i]
+          curName4 += chars[i + 1]
+          curName4 += chars[i + 2]
+          curName4 += chars[i + 3]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] && chars[i + 4] != undefined) {
+          curName5 += chars[i]
+          curName5 += chars[i + 1]
+          curName5 += chars[i + 2]
+          curName5 += chars[i + 3]
+          curName5 += chars[i + 4]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] && chars[i + 4] && chars[i + 5] != undefined) {
+          curName6 += chars[i]
+          curName6 += chars[i + 1]
+          curName6 += chars[i + 2]
+          curName6 += chars[i + 3]
+          curName6 += chars[i + 4]
+          curName6 += chars[i + 5]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] && chars[i + 4] && chars[i + 5] && chars[i + 6] != undefined) {
+          curName7 += chars[i]
+          curName7 += chars[i + 1]
+          curName7 += chars[i + 2]
+          curName7 += chars[i + 3]
+          curName7 += chars[i + 4]
+          curName7 += chars[i + 5]
+          curName7 += chars[i + 6]
+        }
+        arrName.push(curOrder, chars[i], curName2, curName3, curName4, curName5, curName6, curName7)
+        curName2 = ''
+        curName3 = ''
+        curName4 = ''
+        curName5 = ''
+        curName6 = ''
+        curName7 = ''
+      }
+      return arrName
+    }
+    const keywordSubject = await creatKeywords(`${subject}`)
+    const keywordCountIncrement = await creatKeywords(`${countIncrement}`)
+    const keywordLowerCase = await creatKeywords(`${subject.toLowerCase()}`)
+    const keywordUpperCase = await creatKeywords(`${subject.toUpperCase()}`)
+    return [
+        '',
+        ...keywordSubject,
+        ...keywordCountIncrement,
+        ...keywordLowerCase,
+        ...keywordUpperCase
+    ]
   }
 
-  getByDateRangeSpacail(startDate: Date, endDate: Date, statusSpecail: string[]) {
-    return this.afs.collection('ticket', ref => ref
-      .where('date.singleDate.jsDate', '>=', startDate)
-      .where('date.singleDate.jsDate', '<=', endDate)
-      .where('status', 'in', statusSpecail)
-    );
+  private async upDateParticipantIds(id: any, userId: any, active: boolean) {
+    await this.afs.collection('ticket').doc(id).set({
+      "participantIds": {
+        [userId]: active
+      }
+    }, {merge: true})
   }
-
 }

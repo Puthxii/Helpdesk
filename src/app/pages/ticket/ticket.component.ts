@@ -28,8 +28,9 @@ export class TicketComponent implements OnInit {
   staff: any;
   selectedColor = ''
   priorityClass: string;
-  statusSpecail = ['In Progress', 'Accepted', 'Assigned']
+  statusSpecial = ['In Progress', 'Accepted', 'Assigned']
   keyword: string;
+
   constructor(
     @Inject('PRIORITY') public Prioritys: any[],
     @Inject('TYPES') public Types: any[],
@@ -40,19 +41,20 @@ export class TicketComponent implements OnInit {
     public userService: UserService,
     public fb: FormBuilder,
     public dataService: DataService
-  ) { }
+  ) {
+  }
 
   public filterTicketForm: FormGroup
   activeState = 'Draft'
   Supporter = ['Draft', 'Informed', 'More Info', 'In Progress', 'Accepted', 'Assigned', 'Resolved']
   Status = [
-    { value: 'Draft' },
-    { value: 'Informed' },
-    { value: 'More Info' },
-    { value: 'In Progress' },
-    { value: 'Accepted', },
-    { value: 'Assigned', },
-    { value: 'Resolved' },
+    {value: 'Draft'},
+    {value: 'Informed'},
+    {value: 'More Info'},
+    {value: 'In Progress'},
+    {value: 'Accepted',},
+    {value: 'Assigned',},
+    {value: 'Resolved'},
   ]
   CountStatus = []
   user: any
@@ -61,6 +63,7 @@ export class TicketComponent implements OnInit {
   isChecked = true
   status = 'Draft'
   currentName: string
+  userId: string
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
@@ -92,7 +95,7 @@ export class TicketComponent implements OnInit {
       this.status === 'Total' ?
         this.getAllTicket(this.status) :
         this.status === 'In Progress' ?
-          this.getByStatusSpecialFilter(this.statusSpecail) :
+          this.getByStatusSpecialFilter(this.statusSpecial) :
           this.getByStatusFilter(this.status)
       this.getCountByStatus()
       this.getCountToltal()
@@ -100,7 +103,7 @@ export class TicketComponent implements OnInit {
   }
 
   buildForm() {
-    const model: IMyDateModel = { isRange: true, singleDate: { jsDate: new Date() }, dateRange: null };
+    const model: IMyDateModel = {isRange: true, singleDate: {jsDate: new Date()}, dateRange: null};
     this.filterTicketForm = this.fb.group({
       date: [model, [Validators.required]]
     })
@@ -111,14 +114,16 @@ export class TicketComponent implements OnInit {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.supporter === true) {
         this.currentName = this.user$.fullName
+        this.userId = this.user$.uid
         this.getCountByStatusCurrentname()
         this.getCountToltalCurrentname()
         this.status === 'Total' ?
           this.getAllTicket(this.status) :
           this.status === 'In Progress' ?
-            this.getByStatusCurentnameSpecialFilter(this.statusSpecail, this.currentName) :
+            this.getByStatusCurentnameSpecialFilter(this.statusSpecial, this.currentName) :
             this.getByStatusCurentnameFilter(this.status, this.currentName)
-      } else { }
+      } else {
+      }
     });
   }
 
@@ -162,7 +167,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
@@ -173,7 +178,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
@@ -184,7 +189,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
@@ -195,7 +200,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
@@ -204,86 +209,90 @@ export class TicketComponent implements OnInit {
     this.ticketService.cancelTicket(id, subject)
   }
 
-  getByKeyWord(value: string) {
-    this.ticket$ = this.ticketService.getByKeyWord(value, this.Supporter)
+  getByKeywordUserIdStatus(keyword: string, userId: string, status: any) {
+    this.ticket$ = this.ticketService.getByKeywordUserIdStatus(keyword, userId, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
 
-  getByCurrentnameStatus(value: string, currentname: string, status: any) {
-    this.ticket$ = this.ticketService.getByCurrentnameStatus(value, currentname, status)
+  getByKeywordUserIdStatusSpacial(keyword: string, userId: string, status: any) {
+    this.ticket$ = this.ticketService.getByKeywordUserIdStatusSpacial(keyword, userId, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
 
-  getByCurrentnameStatusSpacail(value: string, currentname: string, status: any) {
-    this.ticket$ = this.ticketService.getByCurrentnameStatusSpacail(value, currentname, status)
+  getByKeywordStatus(keyword: string, status: any) {
+    this.ticket$ = this.ticketService.getByKeywordStatus(keyword, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
 
-  getByStatus(value: string, status: any) {
-    this.ticket$ = this.ticketService.getByStatus(value, status)
+  getByKeywordStatusSpacial(keyword: string, status: any) {
+    this.ticket$ = this.ticketService.getByKeywordStatusSpacial(keyword, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
 
-  getByStatusSpacail(value: string, status: any) {
-    this.ticket$ = this.ticketService.getByStatusSpacail(value, status)
+  getByKeywordUserIdRole(keyword: string, userId: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByKeywordUserIdRole(keyword, userId, role)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
 
-  getByCurrentname(value: string, currentName: string) {
-    this.ticket$ = this.ticketService.getByCurrentname(value, currentName, this.Supporter)
+  getByKeywordRole(keyword: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByKeywordRole(keyword, role)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       );
   }
 
   search() {
     this.keyword = this.searchValue
-    if (this.isChecked === true && this.status != null && this.status != 'Total') {
-      this.getByCurrentnameStatus(this.keyword, this.currentName, this.status)
-    } else if (this.isChecked === false && this.status != null && this.status != 'Total') {
-      this.getByStatus(this.keyword, this.status)
-    } if (this.isChecked === true && this.status != null && this.status === 'In Progress') {
-      this.getByCurrentnameStatusSpacail(this.keyword, this.currentName, this.statusSpecail)
-    } else if (this.isChecked === false && this.status != null && this.status === 'In Progress') {
-      this.getByStatusSpacail(this.keyword, this.statusSpecail)
-    } else if (this.isChecked === true && this.status === 'Total') {
-      this.getByCurrentname(this.keyword, this.currentName)
-    } else if (this.isChecked === false && this.status === 'Total') {
-      this.getByKeyWord(this.keyword)
+    if (this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+      if (this.isChecked === true && this.status != null && this.status != 'Total') {
+        this.getByKeywordUserIdStatus(this.keyword, this.userId, this.status)
+      } else if (this.isChecked === false && this.status != null && this.status != 'Total') {
+        this.getByKeywordStatus(this.keyword, this.status)
+      } else if (this.isChecked === true && this.status != null && this.status === 'In Progress') {
+        this.getByKeywordUserIdStatusSpacial(this.keyword, this.userId, this.statusSpecial)
+      } else if (this.isChecked === false && this.status != null && this.status === 'In Progress') {
+        this.getByKeywordStatusSpacial(this.keyword, this.statusSpecial)
+      } else if (this.isChecked === true && this.status === 'Total') {
+        this.getByKeywordUserIdRole(this.keyword, this.userId, this.Supporter)
+      } else if (this.isChecked === false && this.status === 'Total') {
+        this.getByKeywordRole(this.keyword, this.Supporter)
+      }
+    } else {
+      this.isFilter()
     }
   }
 
@@ -309,7 +318,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
     } else {
@@ -317,7 +326,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
     }
@@ -362,7 +371,7 @@ export class TicketComponent implements OnInit {
   checkValue(event: boolean) {
     if (event === true) {
       this.setCheck(0)
-    } else  {
+    } else {
       this.setCheck(1)
     }
     this.isFilter()
@@ -373,140 +382,119 @@ export class TicketComponent implements OnInit {
     const endDate = event.dateRange.endJsDate
     if (startDate != null && endDate != null) {
       if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.status !== 'In Progress' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
-        this.getByCurrentnameStatusKewordDateRange(this.keyword, this.currentName, this.status, startDate, endDate)
+        this.getByDateRangeKeywordUserIdStatus(startDate, endDate, this.keyword, this.userId, this.status)
       } else if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.status !== 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
-        this.getByCurrentnameStatusDateRange(this.currentName, this.status, startDate, endDate)
+        this.getByDateRangeUserIdStatus(startDate, endDate, this.userId, this.status,)
       } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && this.status !== 'In Progress' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
-        this.getByStatusKewordDateRange(this.keyword, this.status, startDate, endDate)
+        this.getByDateRangeKeywordStatus(startDate, endDate, this.keyword, this.status)
       } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && this.status !== 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
-        this.getByStatusDateRange(this.status, startDate, endDate)
+        this.getByDateRangeStatus(startDate, endDate, this.status)
       } else if (this.isChecked === true && this.status === 'Total' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
-        this.getByCurrentnameKewordDateRange(this.keyword, this.currentName, startDate, endDate)
+        this.getByDateRangeKeywordUserIdRole(startDate, endDate, this.keyword, this.userId, this.Supporter)
       } else if (this.isChecked === true && this.status === 'Total' && (this.keyword === undefined || this.keyword === '')) {
-        this.getByCurrentnameDateRange(this.currentName, startDate, endDate)
+        this.getByDateRangeUserIdRole(startDate, endDate, this.userId, this.Supporter)
       } else if (this.isChecked === false && this.status === 'Total' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
-        this.getByKewordDaterange(this.keyword, startDate, endDate)
-      } else if (this.isChecked === false && this.status === 'Total' && (this.keyword === undefined || this.keyword === ''))  {
-        this.getByDaterange(startDate, endDate)
+        this.getByDateRangeKeywordRole(startDate, endDate, this.keyword, this.Supporter)
+      } else if (this.isChecked === false && this.status === 'Total' && (this.keyword === undefined || this.keyword === '')) {
+        this.getByDateRangeRole(startDate, endDate, this.Supporter)
       } else if (this.isChecked === true && this.status === 'In Progress' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
-        this.getByCurrentnameKewordDateRangeSpacail(this.keyword, this.currentName, startDate, endDate)
+        this.getByDateRangeKeywordUserIdRole(startDate, endDate, this.keyword, this.userId, this.statusSpecial)
       } else if (this.isChecked === true && this.status === 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
-        this.getByCurrentnameDateRangeSpacail(this.currentName, startDate, endDate)
+        this.getByDateRangeUserIdRole(startDate, endDate, this.userId, this.statusSpecial)
       } else if (this.isChecked === false && this.status === 'In Progress' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
-        this.getByKeywordDateRangeSpacail(this.keyword, this.statusSpecail, startDate, endDate)
+        this.getByDateRangeKeywordRole(startDate, endDate, this.keyword, this.statusSpecial)
       } else if (this.isChecked === false && this.status === 'In Progress' && (this.keyword === undefined || this.keyword === '')) {
-        this.getByDateRangeSpacail(this.statusSpecail, startDate, endDate)
+        this.getByDateRangeRole(startDate, endDate, this.statusSpecial)
       }
     }
   }
 
-  getByCurrentnameStatusKewordDateRange(keword: any, currentName: string, status: any, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCurrentnameStatusKewordDateRange(keword, currentName, status, startDate, endDate)
+  getByDateRangeKeywordUserIdStatus(startDate: Date, endDate: Date, keyword: string, userId: string, status: string) {
+    this.ticket$ = this.ticketService.getByDateRangeKeywordUserIdStatus(startDate, endDate, keyword, userId, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
   }
 
-  getByCurrentnameStatusDateRange(currentName: string, status: any, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCurrentnameStatusDateRange(currentName, status, startDate, endDate)
+  getByDateRangeUserIdStatus(startDate: Date, endDate: Date, userId: string, status: string) {
+    this.ticket$ = this.ticketService.getByDateRangeUserIdStatus(startDate, endDate, userId, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
   }
 
-  getByStatusKewordDateRange(keword: any, status: any, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByStatusKewordDateRange(keword, status, startDate, endDate)
+  getByDateRangeKeywordStatus(startDate: Date, endDate: Date, keyword: string, status: string,) {
+    this.ticket$ = this.ticketService.getByDateRangeKeywordStatus(startDate, endDate, keyword, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
   }
 
-  getByStatusDateRange(status: any, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByStatusDateRange(status, startDate, endDate)
+  getByDateRangeStatus(startDate: Date, endDate: Date, status: string) {
+    this.ticket$ = this.ticketService.getByDateRangeStatus(startDate, endDate, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
   }
 
-  getByCurrentnameKewordDateRange(keword: any, currentName: string, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCurrentnameKewordDateRange(keword, currentName, startDate, endDate, this.Supporter)
+  getByDateRangeKeywordUserIdRole(startDate: Date, endDate: Date, keyword: string, userId: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByDateRangeKeywordUserIdRole(startDate, endDate, keyword, userId, role)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
   }
 
-  getByCurrentnameKewordDateRangeSpacail(keyword: any, currentName: string, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCurrentnameKewordDateRange(keyword, currentName, startDate, endDate, this.statusSpecail)
+  getByDateRangeUserIdRole(startDate: Date, endDate: Date, userId: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByDateRangeUserIdRole(startDate, endDate, userId, role)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
   }
 
-  getByCurrentnameDateRange(currentName: string, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCurrentnameDateRange(currentName, startDate, endDate, this.Supporter)
+  getByDateRangeKeywordRole(startDate: Date, endDate: Date, keyword: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByDateRangeKeywordRole(startDate, endDate, keyword, role)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
   }
 
-  getByCurrentnameDateRangeSpacail(currentName: string, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCurrentnameDateRange(currentName, startDate, endDate, this.statusSpecail)
+  getByDateRangeRole(startDate: any, endDate: any, role: string[]) {
+    this.ticket$ = this.ticketService.getByDateRangeRole(startDate, endDate, role)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return { id, ...data };
+          return {id, ...data};
         }))
       )
-  }
-
-  getByKewordDaterange(keword: any, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByKewordDaterange(keword, startDate, endDate, this.Supporter)
-      .snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc['id'];
-          return { id, ...data };
-        }))
-      )
-  }
-
-  getByDaterange(startDate: any, endDate: any) {
-    this.ticket$ = this.ticketService.getByDaterange(startDate, endDate, this.Supporter).snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Ticket;
-        const id = a.payload.doc['id'];
-        return { id, ...data };
-      }))
-    )
   }
 
   onChange(value: string) {
@@ -557,25 +545,4 @@ export class TicketComponent implements OnInit {
     this.ticketService.updateMoreInfo(id, false)
   }
 
-  private getByKeywordDateRangeSpacail(keyword: string, statusSpecail: string[], startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByKeywordDateRangeSpacail(keyword, startDate, endDate, statusSpecail)
-      .snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc['id'];
-          return { id, ...data };
-        }))
-      )
-  }
-
-  private getByDateRangeSpacail(statusSpecail: string[], startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByDateRangeSpacail(startDate, endDate, statusSpecail)
-      .snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc['id'];
-          return { id, ...data };
-        }))
-      )
-  }
 }
