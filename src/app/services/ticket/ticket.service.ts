@@ -262,61 +262,49 @@ export class TicketService {
     this.afs.collection('ticket').doc(id).collection('tasks').doc(tasks.id).delete();
   }
 
-  getByKeyWord(keword: any, role) {
-    return this.afs.collection('ticket', (ref) => ref
-      .orderBy('subject')
-      .where('status', 'in', role)
-      .startAt(keword)
-      .endAt(keword + '\uf8ff'));
-  }
-
-  getByStatus(keyword: string, status: any) {
+  getByKeywordStatus(keyword: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => ref
       .where('status', '==', status)
-      .orderBy('subject')
-      .startAt(keyword.toUpperCase())
-      .endAt(keyword.toLowerCase() + '\uf8ff'));
+      .where('keyword', 'array-contains', keyword));
   }
 
-  getByStatusSpacail(keyword: string, status: any) {
+  getByKeywordStatusSpacial(keyword: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => ref
       .where('status', 'in', status)
-      .orderBy('subject')
-      .startAt(keyword.toUpperCase())
-      .endAt(keyword.toLowerCase() + '\uf8ff'));
+      .where('keyword', 'array-contains', keyword));
   }
 
-  getByCurrentnameStatus(keyword: string, currentName: string, status: any) {
+  getByKeywordUserIdStatus(keyword: string, userId: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => {
         return ref
           .where('status', '==', status)
-          .where('participant', 'array-contains', currentName)
-          .orderBy('subject')
-          .startAt(keyword.toUpperCase())
-          .endAt(keyword.toLowerCase() + '\uf8ff');
+          .where('keyword', 'array-contains', keyword)
+          .where(`participantIds.${userId}` ,'==' ,true)
       }
     )
   }
 
-  getByCurrentnameStatusSpacail(keyword: string, currentName: string, status: any) {
+  getByKeywordUserIdStatusSpacial(keyword: string, userId: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => {
         return ref
           .where('status', 'in', status)
-          .where('participant', 'array-contains', currentName)
-          .orderBy('subject')
-          .startAt(keyword.toUpperCase())
-          .endAt(keyword.toLowerCase() + '\uf8ff');
+          .where('keyword', 'array-contains', keyword)
+          .where(`participantIds.${userId}` ,'==' ,true)
       }
     )
   }
 
-  getByCurrentname(keword: string, currentName: string, role: string[]) {
-    return this.afs.collection('ticket', (ref) => ref
-      .where('participant', 'array-contains', currentName)
+  getByKeywordUserIdRole(keyword: string, userId: string, role: string[]) {
+    return this.afs.collection<Ticket>('ticket', (ref) => ref
+      .where('keyword', 'array-contains', keyword)
       .where('status', 'in', role)
-      .orderBy('subject')
-      .startAt(keword)
-      .endAt(keword + '\uf8ff'));
+      .where(`participantIds.${userId}` ,'==' ,true))
+  }
+
+  getByKeywordRole(keyword: string, role) {
+    return this.afs.collection<Ticket>('ticket', (ref) => ref
+      .where('status', 'in', role)
+      .where('keyword', 'array-contains', keyword));
   }
 
   getTicketByid(id: any) {
