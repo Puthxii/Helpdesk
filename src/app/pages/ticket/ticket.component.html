@@ -30,7 +30,7 @@
                    formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
                    (dateChanged)="onDateChanged($event)" readonly>
             <div class="input-group-append">
-              <button type="button" class="btn dangerBtn" (click)="dp.clearDate(); this.isFilter()">
+              <button type="button" class="btn dangerBtn" (click)="dp.clearDate(); this.search()">
                 <i class="fas fa-times"></i>
               </button>
             </div>

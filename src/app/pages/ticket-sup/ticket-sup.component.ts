@@ -58,6 +58,7 @@ export class TicketSupComponent implements OnInit {
     dateFormat: 'dd/mm/yyyy'
   }
   private storageCheck: number = 1
+  userId: string
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
@@ -82,7 +83,7 @@ export class TicketSupComponent implements OnInit {
       this.getCurrentUserByRoles()
     } else {
       this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
-      this.getCountToltal()
+      this.getCountByRole()
       this.getCountByStatus()
     }
   }
@@ -99,9 +100,10 @@ export class TicketSupComponent implements OnInit {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.supervisor === true) {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
-        this.getCountByStatusCurrentname()
-        this.getCountToltalCurrentname()
-        this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusCurentnameFilter(this.status, this.currentName)
+        this.userId = this.user$.uid
+        this.getCountByUserIdStatus()
+        this.getCountByUserIdRole()
+        this.status === 'Total' ? this.getAllTicket(this.status) : this.getTicketsListByUserIdStatus(this.userId, this.status)
       } else { }
     });
   }
@@ -114,9 +116,9 @@ export class TicketSupComponent implements OnInit {
     }
   }
 
-  getCountByStatusCurrentname() {
+  getCountByUserIdStatus() {
     for (let i = 0; this.Status.length > i; i++) {
-      this.ticketService.getCountByStatusCurrentname(this.Status[i].value, this.currentName).subscribe(result => {
+      this.ticketService.getCountByUserIdStatus(this.userId, this.Status[i].value).subscribe(result => {
         this.CountStatus[i] = result.length;
       });
     }
@@ -133,8 +135,8 @@ export class TicketSupComponent implements OnInit {
       );
   }
 
-  getByStatusCurentnameFilter(status: string, creator: string) {
-    this.ticket$ = this.ticketService.getTicketsListByFilter(status, creator)
+  getTicketsListByUserIdStatus(userId: string, status: string) {
+    this.ticket$ = this.ticketService.getTicketsListByUserIdStatus(userId, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -162,7 +164,7 @@ export class TicketSupComponent implements OnInit {
     this.setStatusState(status)
     this.status = status
     if (this.isChecked === true) {
-      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Supervisor).snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsListByUserIdRole(this.userId, this.Supervisor).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
@@ -193,14 +195,14 @@ export class TicketSupComponent implements OnInit {
     this.isFilter()
   }
 
-  getCountToltal() {
+  getCountByRole() {
     this.ticketService.getTicketsList(this.Supervisor).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
 
-  getCountToltalCurrentname() {
-    this.ticketService.getTicketsListCurrentname(this.currentName, this.Supervisor).valueChanges().subscribe(result => {
+  getCountByUserIdRole() {
+    this.ticketService.getTicketsListByUserIdRole(this.userId, this.Supervisor).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
