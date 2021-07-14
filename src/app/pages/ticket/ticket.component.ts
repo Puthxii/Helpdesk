@@ -30,6 +30,7 @@ export class TicketComponent implements OnInit {
   priorityClass: string;
   statusSpecial = ['In Progress', 'Accepted', 'Assigned']
   keyword: string;
+  private dateRange: IMyDateModel;
 
   constructor(
     @Inject('PRIORITY') public Prioritys: any[],
@@ -98,7 +99,7 @@ export class TicketComponent implements OnInit {
           this.getByStatusSpecialFilter(this.statusSpecial) :
           this.getByStatusFilter(this.status)
       this.getCountByStatus()
-      this.getCountToltal()
+      this.getCountByRole()
     }
   }
 
@@ -115,13 +116,13 @@ export class TicketComponent implements OnInit {
       if (this.user$.roles.supporter === true) {
         this.currentName = this.user$.fullName
         this.userId = this.user$.uid
-        this.getCountByStatusCurrentname()
-        this.getCountToltalCurrentname()
+        this.getCountByUserIdStatus()
+        this.getCountByUserIdRole()
         this.status === 'Total' ?
           this.getAllTicket(this.status) :
           this.status === 'In Progress' ?
-            this.getByStatusCurentnameSpecialFilter(this.statusSpecial, this.currentName) :
-            this.getByStatusCurentnameFilter(this.status, this.currentName)
+            this.getTicketsListByUserIdStatusSpecial(this.userId, this.statusSpecial) :
+            this.getTicketsListByUserIdStatus(this.userId, this.status)
       } else {
       }
     });
@@ -135,30 +136,30 @@ export class TicketComponent implements OnInit {
     }
   }
 
-  getSum() {
-    let sum: number
-    sum = this.CountStatus[3] + this.CountStatus[4] + this.CountStatus[5]
-    return sum ? sum : null
-  }
-
-  getCountByStatusCurrentname() {
-    for (let i = 0; this.Status.length > i; i++) {
-      this.ticketService.getCountByStatusCurrentname(this.Status[i].value, this.currentName).subscribe(result => {
-        this.CountStatus[i] = result.length;
-      });
-    }
-  }
-
-  getCountToltal() {
+  getCountByRole() {
     this.ticketService.getTicketsList(this.Supporter).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
 
-  getCountToltalCurrentname() {
-    this.ticketService.getTicketsListCurrentname(this.currentName, this.Supporter).valueChanges().subscribe(result => {
+  getCountByUserIdStatus() {
+    for (let i = 0; this.Status.length > i; i++) {
+      this.ticketService.getCountByUserIdStatus(this.userId, this.Status[i].value).subscribe(result => {
+        this.CountStatus[i] = result.length;
+      });
+    }
+  }
+
+  getCountByUserIdRole() {
+    this.ticketService.getTicketsListByUserIdRole(this.userId, this.Supporter).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
+  }
+
+  getSum() {
+    let sum: number
+    sum = this.CountStatus[3] + this.CountStatus[4] + this.CountStatus[5]
+    return sum ? sum : 0
   }
 
   getByStatusFilter(status: any) {
@@ -183,8 +184,8 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  getByStatusCurentnameSpecialFilter(status: any, creator: string) {
-    this.ticket$ = this.ticketService.getTicketsListByCreatorSpecialStatus(status, creator)
+  getTicketsListByUserIdStatusSpecial(userId: string, role: string[]) {
+    this.ticket$ = this.ticketService.getTicketsListByUserIdRole(userId, role)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -194,8 +195,8 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  getByStatusCurentnameFilter(status: any, creator: string) {
-    this.ticket$ = this.ticketService.getTicketsListByFilter(status, creator)
+  getTicketsListByUserIdStatus(status: any, creator: string) {
+    this.ticket$ = this.ticketService.getTicketsListByUserIdStatus(status, creator)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -307,28 +308,40 @@ export class TicketComponent implements OnInit {
   setStatus(status: any) {
     this.setStatusState(status)
     this.status = status
-    this.isFilter()
+    if (this.searchValue){
+      this.search()
+    } else if (this.dateRange) {
+      this.onDateChanged(this.dateRange)
+    } else {
+      this.isFilter()
+    }
   }
 
   getAllTicket(status: any) {
     this.setStatusState(status)
     this.status = status
-    if (this.isChecked === true) {
-      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Supporter).snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc['id'];
-          return {id, ...data};
-        }))
-      )
-    } else {
-      this.ticket$ = this.ticketService.getTicketsList(this.Supporter).snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc['id'];
-          return {id, ...data};
-        }))
-      )
+    if (this.searchValue){
+      this.search()
+    }  else if (this.dateRange) {
+      this.onDateChanged(this.dateRange)
+    }else {
+      if (this.isChecked === true) {
+        this.ticket$ = this.ticketService.getTicketsListByUserIdRole(this.userId, this.Supporter).snapshotChanges().pipe(
+          map(actions => actions.map(a => {
+            const data = a.payload.doc.data() as Ticket;
+            const id = a.payload.doc['id'];
+            return {id, ...data};
+          }))
+        )
+      } else {
+        this.ticket$ = this.ticketService.getTicketsList(this.Supporter).snapshotChanges().pipe(
+          map(actions => actions.map(a => {
+            const data = a.payload.doc.data() as Ticket;
+            const id = a.payload.doc['id'];
+            return {id, ...data};
+          }))
+        )
+      }
     }
   }
 
@@ -374,10 +387,11 @@ export class TicketComponent implements OnInit {
     } else {
       this.setCheck(1)
     }
-    this.isFilter()
+    this.search()
   }
 
   onDateChanged(event: IMyDateModel): void {
+    this.dateRange = event
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
     if (startDate != null && endDate != null) {
@@ -545,4 +559,15 @@ export class TicketComponent implements OnInit {
     this.ticketService.updateMoreInfo(id, false)
   }
 
+  private getNewCount() {
+    this.ticket$.subscribe(res => {
+      res.map(value => {
+        for (let i = 0; this.Status.length > i; i++) {
+          if (value.status === this.Status[i].value){
+            this.CountStatus[i] = res.length
+          }
+        }
+      })
+    })
+  }
 }
