@@ -62,19 +62,17 @@ export class TicketService {
     )
   }
 
-  getTicketsListByCreatorSpecialStatus(status: any, creator: string) {
-    return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', status)
-      .where('participant', 'array-contains', creator)
-      .orderBy('date.singleDate.jsDate', 'asc')
-    )
+  getTicketsListByUserIdRole(userId: string, role: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('status', 'in', role)
+      .where(`participantIds.${userId}`, '==', true)
+    );
   }
 
-  getTicketsListByFilter(status: any, creator: string) {
-    return this.afs.collection('ticket', ref => ref
-      .where('participant', 'array-contains', creator)
+  getTicketsListByUserIdStatus(userId: any, status: any) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where(`participantIds.${userId}`, '==', true)
       .where('status', '==', status)
-      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
@@ -209,7 +207,7 @@ export class TicketService {
         maxDueDate: ticket.maxDueDate,
         minDueDate: ticket.minDueDate
       })
-      await this.upDateParticipantIds(id, ticket.userId,true)
+      await this.upDateParticipantIds(id, ticket.userId, true)
       await this.deleteCollection('uploadDescription')
       await this.deleteCollection('uploadResponseDescription')
       await this.deleteCollection('uploadMaDescription')
@@ -320,37 +318,27 @@ export class TicketService {
     ).valueChanges();
   }
 
-  getCountByStatusCurrentname(status: any, creator: string) {
-    return this.afs.collection('ticket', ref => ref
+  getCountByUserIdStatus(userId: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('status', '==', status)
-      .where('participant', 'array-contains', creator)
-      .orderBy('date.singleDate.jsDate', 'asc')
+      .where(`participantIds.${userId}`, '==', true)
     ).valueChanges();
   }
 
-  getTicketsList(role: any) {
-    return this.afs.collection('ticket', ref => ref
+  getTicketsList(role: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('status', 'in', role)
-      .orderBy('date.singleDate.jsDate', 'asc')
-    );
-  }
-
-  getTicketsListCurrentname(creator: string, role: any) {
-    return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', role)
-      .where('participant', 'array-contains', creator)
-      .orderBy('date.singleDate.jsDate', 'asc')
     );
   }
 
   getByDateRangeKeywordUserIdStatus(startDate: Date, endDate: Date, keyword: any, userId: string, status: string) {
-     return this.afs.collection<Ticket>('ticket', ref => ref
-       .where('date.singleDate.jsDate', '>=', startDate)
-       .where('date.singleDate.jsDate', '<=', endDate)
-       .where(`participantIds.${userId}` ,'==' ,true)
-       .where('status', '==', status)
-       .where('keyword', 'array-contains', keyword)
-     );
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', startDate)
+      .where('date.singleDate.jsDate', '<=', endDate)
+      .where(`participantIds.${userId}`, '==', true)
+      .where('status', '==', status)
+      .where('keyword', 'array-contains', keyword)
+    );
   }
 
   getByDateRangeUserIdStatus(startDate: Date, endDate: Date, userId: string, status: string) {
