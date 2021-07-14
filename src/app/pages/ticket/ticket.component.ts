@@ -137,7 +137,7 @@ export class TicketComponent implements OnInit {
   }
 
   getCountByRole() {
-    this.ticketService.getTicketsList(this.Supporter).valueChanges().subscribe(result => {
+    this.ticketService.getTicketsListByRole(this.Supporter).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
@@ -173,8 +173,8 @@ export class TicketComponent implements OnInit {
       );
   }
 
-  getByStatusSpecialFilter(status: any) {
-    this.ticket$ = this.ticketService.getTicketsListByStatusSpecialFilter(status)
+  getByStatusSpecialFilter(role: string[]) {
+    this.ticket$ = this.ticketService.getTicketsListByRole(role)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -334,7 +334,7 @@ export class TicketComponent implements OnInit {
           }))
         )
       } else {
-        this.ticket$ = this.ticketService.getTicketsList(this.Supporter).snapshotChanges().pipe(
+        this.ticket$ = this.ticketService.getTicketsListByRole(this.Supporter).snapshotChanges().pipe(
           map(actions => actions.map(a => {
             const data = a.payload.doc.data() as Ticket;
             const id = a.payload.doc['id'];

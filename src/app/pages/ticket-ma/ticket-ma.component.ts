@@ -171,7 +171,7 @@ export class TicketMaComponent implements OnInit {
         }))
       )
     } else {
-      this.ticket$ = this.ticketService.getTicketsList(this.Maintenance).snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsListByRole(this.Maintenance).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
@@ -199,7 +199,7 @@ export class TicketMaComponent implements OnInit {
   }
 
   getCountByRole() {
-    this.ticketService.getTicketsList(this.Maintenance).valueChanges().subscribe(result => {
+    this.ticketService.getTicketsListByRole(this.Maintenance).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
