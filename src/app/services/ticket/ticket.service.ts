@@ -48,14 +48,14 @@ export class TicketService {
     })
   }
 
-  getTicketsListByStatusFilter(status: any) {
+  getTicketsListByStatusFilter(status: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
       .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
-  getTicketsListByStatusSpecialFilter(status: any) {
+  getTicketsListByStatusSpecialFilter(status: string[]) {
     return this.afs.collection('ticket', ref => ref
       .where('status', 'in', status)
       .orderBy('date.singleDate.jsDate', 'asc')

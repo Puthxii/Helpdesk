@@ -61,6 +61,7 @@ export class TicketDevComponent implements OnInit {
     dateFormat: 'dd/mm/yyyy'
   }
   private storageCheck: number = 0
+  userId: string
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
@@ -102,9 +103,10 @@ export class TicketDevComponent implements OnInit {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.developer === true) {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
-        this.getCountByStatusCurrentname()
-        this.getCountToltalCurrentname()
-        this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusCurentnameFilter(this.status, this.currentName)
+        this.userId = this.user$.uid
+        this.getCountByUserIdStatus()
+        this.getCountByUserIdRole()
+        this.status === 'Total' ? this.getAllTicket(this.status) : this.getTicketsListByUserIdStatus(this.userId, this.status)
       } else { }
     });
   }
@@ -117,9 +119,9 @@ export class TicketDevComponent implements OnInit {
     }
   }
 
-  getCountByStatusCurrentname() {
+  getCountByUserIdStatus() {
     for (let i = 0; this.Status.length > i; i++) {
-      this.ticketService.getCountByStatusCurrentname(this.Status[i].value, this.currentName).subscribe(result => {
+      this.ticketService.getCountByUserIdStatus(this.userId, this.Status[i].value).subscribe(result => {
         this.CountStatus[i] = result.length;
       });
     }
@@ -136,8 +138,8 @@ export class TicketDevComponent implements OnInit {
       );
   }
 
-  getByStatusCurentnameFilter(status: string, creator: string) {
-    this.ticket$ = this.ticketService.getTicketsListByFilter(status, creator)
+  getTicketsListByUserIdStatus(userId: string, status: string) {
+    this.ticket$ = this.ticketService.getTicketsListByUserIdStatus(userId, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -165,7 +167,7 @@ export class TicketDevComponent implements OnInit {
     this.setStatusState(status)
     this.status = status
     if (this.isChecked === true) {
-      this.ticket$ = this.ticketService.getTicketsListCurrentname(this.currentName, this.Developer).snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsListByUserIdRole(this.userId, this.Developer).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
@@ -202,8 +204,8 @@ export class TicketDevComponent implements OnInit {
     });
   }
 
-  getCountToltalCurrentname() {
-    this.ticketService.getTicketsListCurrentname(this.currentName, this.Developer).valueChanges().subscribe(result => {
+  getCountByUserIdRole() {
+    this.ticketService.getTicketsListByUserIdRole(this.userId, this.Developer).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
