@@ -87,7 +87,7 @@ export class TicketDevComponent implements OnInit {
     } else {
       this.status === 'Total' ? this.getAllTicket(this.status) : this.getByStatusFilter(this.status)
       this.getCountByStatus()
-      this.getCountToltal()
+      this.getCountByRole()
     }
   }
 
@@ -175,7 +175,7 @@ export class TicketDevComponent implements OnInit {
         }))
       )
     } else {
-      this.ticket$ = this.ticketService.getTicketsList(this.Developer).snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsListByRole(this.Developer).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
@@ -198,8 +198,8 @@ export class TicketDevComponent implements OnInit {
     this.isFilter()
   }
 
-  getCountToltal() {
-    this.ticketService.getTicketsList(this.Developer).valueChanges().subscribe(result => {
+  getCountByRole() {
+    this.ticketService.getTicketsListByRole(this.Developer).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }

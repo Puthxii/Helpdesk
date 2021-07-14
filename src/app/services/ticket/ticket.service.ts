@@ -55,11 +55,11 @@ export class TicketService {
     )
   }
 
-  getTicketsListByStatusSpecialFilter(status: string[]) {
-    return this.afs.collection('ticket', ref => ref
-      .where('status', 'in', status)
+  getTicketsListByRole(role: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('status', 'in', role)
       .orderBy('date.singleDate.jsDate', 'asc')
-    )
+    );
   }
 
   getTicketsListByUserIdRole(userId: string, role: string[]) {
@@ -325,12 +325,6 @@ export class TicketService {
     ).valueChanges();
   }
 
-  getTicketsList(role: string[]) {
-    return this.afs.collection<Ticket>('ticket', ref => ref
-      .where('status', 'in', role)
-    );
-  }
-
   getByDateRangeKeywordUserIdStatus(startDate: Date, endDate: Date, keyword: any, userId: string, status: string) {
     return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
@@ -368,7 +362,7 @@ export class TicketService {
   }
 
   getByDateRangeKeywordUserIdRole(startDate: Date, endDate: Date, keyword: string, userId: string,  role: string[]) {
-    return this.afs.collection('ticket', ref => ref
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('keyword', 'array-contains', keyword)
@@ -421,6 +415,7 @@ export class TicketService {
     );
   }
 
+  //todo : customer
   getCountByStatusCreatorStatus(status: any, creator: any) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)

@@ -172,7 +172,7 @@ export class TicketSupComponent implements OnInit {
         }))
       )
     } else {
-      this.ticket$ = this.ticketService.getTicketsList(this.Supervisor).snapshotChanges().pipe(
+      this.ticket$ = this.ticketService.getTicketsListByRole(this.Supervisor).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
@@ -196,7 +196,7 @@ export class TicketSupComponent implements OnInit {
   }
 
   getCountByRole() {
-    this.ticketService.getTicketsList(this.Supervisor).valueChanges().subscribe(result => {
+    this.ticketService.getTicketsListByRole(this.Supervisor).valueChanges().subscribe(result => {
       this.countAll = result.length;
     });
   }
