@@ -25,7 +25,7 @@ export class UserService {
 
   getUserByName(name: string) {
     return this.afs.collection('users', (ref) => ref
-      .where('name', '==', name))
+      .where('fullName', '==', name))
   }
 
   getUserByNameSort(name: string) {
