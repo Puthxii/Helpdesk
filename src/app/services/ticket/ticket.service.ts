@@ -125,6 +125,7 @@ export class TicketService {
         site: ticket.site,
         module: ticket.module,
         creator: ticket.creator,
+        creatorName: ticket.creatorName,
         type: ticket.type,
         subject: ticket.subject,
         priority: ticket.priority,

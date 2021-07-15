@@ -79,6 +79,11 @@ export class AddTicketComponent implements OnInit {
   get status() {
     return this.addTicketForm.get('status');
   }
+
+  get creatorName() {
+    return this.addTicketForm.get('creatorName');
+  }
+
   users: any;
   user: User;
   Product: Product;
@@ -159,7 +164,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   getUserValue() {
-    this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
+    this.userService.getUserById(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
       if (this.user$.roles.customer === true) {
         this.setCreator();
@@ -173,6 +178,7 @@ export class AddTicketComponent implements OnInit {
         this.setParticipantCustomer()
         this.setParticipantIdCustomer()
         this.setParticipantIdsCustomer()
+        this.setCreatorName()
       } else {
         this.setStaff();
         this.setParticipant()
@@ -230,7 +236,6 @@ export class AddTicketComponent implements OnInit {
   }
 
   setParticipant() {
-    console.log(this.user$.uid)
     this.addTicketForm.patchValue({
       participant: [this.user$.fullName]
     });
@@ -251,6 +256,12 @@ export class AddTicketComponent implements OnInit {
   setCreator() {
     this.addTicketForm.patchValue({
       creator: this.user$.uid
+    });
+  }
+
+  setCreatorName() {
+    this.addTicketForm.patchValue({
+      creatorName: this.user$.fullName
     });
   }
 
@@ -319,7 +330,8 @@ export class AddTicketComponent implements OnInit {
       source: ['', [Validators.required]],
       site: ['', [Validators.required]],
       module: [''],
-      creator: ['', [Validators.required]],
+      creator: [''],
+      creatorName: ['', [Validators.required]],
       type: ['', [Validators.required]],
       subject: ['', [
         Validators.required,
@@ -450,7 +462,6 @@ export class AddTicketComponent implements OnInit {
     return this.user$.firstName + ' ' + this.user$.lastName
   }
 
-
   getCreate() {
     return this.addTicketForm.controls.site.value.users;
   }
@@ -484,11 +495,12 @@ export class AddTicketComponent implements OnInit {
   }
 
   getCustomerContact(name: string) {
-    this.userService.getUserbyName(name).snapshotChanges().subscribe(data => {
+    this.userService.getUserByName(name).snapshotChanges().subscribe(data => {
       data.map(a => {
         const data = a.payload.doc.data() as User
         const id = a.payload.doc['id']
         this.setEmail(data)
+        this.setCreatorByName(data)
         return { id, ...data }
       })
     })
@@ -497,6 +509,12 @@ export class AddTicketComponent implements OnInit {
   setEmail(data: User) {
     this.addTicketForm.patchValue({
       email: data.email
+    });
+  }
+
+  setCreatorByName(data: User) {
+    this.addTicketForm.patchValue({
+      creator: data.uid
     });
   }
 

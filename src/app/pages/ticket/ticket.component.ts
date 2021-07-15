@@ -111,7 +111,7 @@ export class TicketComponent implements OnInit {
   }
 
   getCurrentUserByRoles() {
-    this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
+    this.userService.getUserById(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.supporter === true) {
         this.currentName = this.user$.fullName

@@ -38,7 +38,7 @@ export class HomeLayoutComponent implements OnInit {
   }
 
   getUserValue() {
-    this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
+    this.userService.getUserById(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
     })
   }

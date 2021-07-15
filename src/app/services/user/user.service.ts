@@ -19,16 +19,16 @@ export class UserService {
       .orderBy('firstName', 'asc'));
   }
 
-  getUserbyId(uid: string) {
+  getUserById(uid: string) {
     return this.afs.collection('users').doc(uid);
   }
 
-  getUserbyName(name: string) {
+  getUserByName(name: string) {
     return this.afs.collection('users', (ref) => ref
       .where('name', '==', name))
   }
 
-  getUserbyNameSort(name: string) {
+  getUserByNameSort(name: string) {
     return this.afs.collection('users', (ref) => ref
       .where('roles.customer', '==', false)
       .orderBy('fullName')
@@ -42,7 +42,7 @@ export class UserService {
       .orderBy('firstName', 'asc'));
   }
 
-  getCustomerbyNameSort(name: string) {
+  getCustomerByNameSort(name: string) {
     return this.afs.collection('users', (ref) => ref
       .where('roles.customer', '==', true)
       .orderBy('fullName')

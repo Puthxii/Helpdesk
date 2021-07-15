@@ -52,8 +52,9 @@ export class SiteTicketComponent implements OnInit {
     { value: 'Rejected' },
     { value: 'Pending' }
   ]
-  keyword = null
+  keyword: string;
   searchValue = '';
+  dateRange: IMyDateModel
   private storageCheck: number = 0
 
   ngOnInit() {
@@ -85,6 +86,7 @@ export class SiteTicketComponent implements OnInit {
   }
 
   onDateChanged(event: IMyDateModel): void {
+    this.dateRange = event
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
     if (startDate != null && endDate != null) {
@@ -101,7 +103,7 @@ export class SiteTicketComponent implements OnInit {
   }
 
   getUserValue() {
-    this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
+    this.userService.getUserById(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
       if (this.user$.roles.customer === true) {
         this.creator = this.user$.uid
@@ -172,10 +174,17 @@ export class SiteTicketComponent implements OnInit {
     this.activeState = status;
   }
 
+
   setStatus(status: string) {
     this.setStatusState(status)
     this.status = status
-    this.isFilter()
+    if (this.searchValue){
+      this.search()
+    } else if (this.dateRange) {
+      this.onDateChanged(this.dateRange)
+    } else {
+      this.isFilter()
+    }
   }
 
   getSum() {
@@ -348,10 +357,14 @@ export class SiteTicketComponent implements OnInit {
 
   search() {
     this.keyword = this.searchValue
-    if (this.isChecked === true && this.status != null) {
-      this.getByKeywordCreatorStatus(this.keyword, this.creator, this.status)
-    } else if (this.isChecked === false && this.status != null) {
-      this.getByKeywordSiteStatus(this.keyword, this.siteState, this.status)
+    if (this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+      if (this.isChecked === true && this.status != null) {
+        this.getByKeywordCreatorStatus(this.keyword, this.creator, this.status)
+      } else if (this.isChecked === false && this.status != null) {
+        this.getByKeywordSiteStatus(this.keyword, this.siteState, this.status)
+      }
+    } else {
+      this.isFilter()
     }
   }
 

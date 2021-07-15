@@ -64,12 +64,12 @@ export class StaffComponent implements OnInit {
   search() {
     const searchValue = this.searchValue
     if (searchValue != null) {
-      this.getUserbyNameSort(searchValue)
+      this.getUserByNameSort(searchValue)
     }
   }
 
-  getUserbyNameSort(searchValue: any) {
-    this.user.getUserbyNameSort(searchValue).snapshotChanges().subscribe(data => {
+  getUserByNameSort(searchValue: any) {
+    this.user.getUserByNameSort(searchValue).snapshotChanges().subscribe(data => {
       this.Staff = [];
       data.map(items => {
         const item = items.payload.doc.data();

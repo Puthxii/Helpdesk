@@ -98,7 +98,7 @@ export class TicketSupComponent implements OnInit {
   }
 
   getCurrentUserByRoles() {
-    this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
+    this.userService.getUserById(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.supervisor === true) {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName
