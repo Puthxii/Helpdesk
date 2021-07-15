@@ -26,7 +26,7 @@ export class DetailComponent implements OnInit {
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user)
-    this.ticket$ = this.ticketService.getTicketByid(this.id);
+    this.ticket$ = this.ticketService.getTicketById(this.id);
     this.actions = this.ticketService.getTrack(this.id).valueChanges();
   }
 

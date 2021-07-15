@@ -51,14 +51,12 @@ export class TicketService {
   getTicketsListByStatusFilter(status: string) {
     return this.afs.collection('ticket', ref => ref
       .where('status', '==', status)
-      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
   getTicketsListByRole(role: string[]) {
     return this.afs.collection<Ticket>('ticket', ref => ref
       .where('status', 'in', role)
-      .orderBy('date.singleDate.jsDate', 'asc')
     );
   }
 
@@ -180,6 +178,7 @@ export class TicketService {
 
   async editTicket(ticket: Ticket, id: any, path: string) {
     try {
+      const keyword = await this.generateKeyword(ticket.subject, ticket.countIncrement)
       await this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
         source: ticket.source,
@@ -205,7 +204,8 @@ export class TicketService {
         resolveDescriptionFile: ticket.resolveDescriptionFile,
         sumPoint: ticket.sumPoint,
         maxDueDate: ticket.maxDueDate,
-        minDueDate: ticket.minDueDate
+        minDueDate: ticket.minDueDate,
+        keyword
       })
       await this.upDateParticipantIds(id, ticket.userId, true)
       await this.deleteCollection('uploadDescription')
@@ -305,7 +305,7 @@ export class TicketService {
       .where('keyword', 'array-contains', keyword));
   }
 
-  getTicketByid(id: any) {
+  getTicketById(id: any) {
     return this.afs.doc<Ticket>(`ticket/` + id).valueChanges();
   }
 
@@ -397,80 +397,69 @@ export class TicketService {
     );
   }
 
-  //todo // customer get ticket by name
-  getTicketByCreatorSpecialStatus(creator: any, status: string[]) {
-    return this.afs.collection('ticket', ref => ref
+  getTicketByCreatorSpecialStatus(creator: string, status: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('creator', '==', creator)
       .where('status', 'in', status)
-      .orderBy('date.singleDate.jsDate', 'asc')
     );
   }
 
-  // todo : customer get ticket by status
-  getTicketByCreatorStatus(creator: any, status: string) {
-    return this.afs.collection('ticket', ref => ref
+  getTicketByCreatorStatus(creator: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('creator', '==', creator)
       .where('status', '==', status)
-      .orderBy('date.singleDate.jsDate', 'asc')
     );
   }
 
-  //todo : customer
-  getCountByStatusCreatorStatus(status: any, creator: any) {
-    return this.afs.collection('ticket', ref => ref
+  getCountByStatusCreatorStatus(status: string, creator: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('status', '==', status)
       .where('creator', '==', creator)
     ).valueChanges();
   }
 
-  getTicketBySiteSpecialStatus(site: any, status: any) {
-    return this.afs.collection('ticket', ref => ref
+  getTicketBySiteSpecialStatus(site: string, status: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('site.initials', '==', site)
       .where('status', 'in', status)
-      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
-  getTicketBySiteStatus(site: any, status: any) {
-    return this.afs.collection('ticket', ref => ref
+  getTicketBySiteStatus(site: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('site.initials', '==', site)
       .where('status', '==', status)
-      .orderBy('date.singleDate.jsDate', 'asc')
     )
   }
 
-  getByKewordCreatorStatus(keword: any, creator: any, status: any) {
-    return this.afs.collection('ticket', (ref) => ref
+  getByKeywordCreatorStatus(keyword: string, creator: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', (ref) => ref
       .where('status', '==', status)
       .where('creator', '==', creator)
-      .orderBy('subject')
-      .startAt(keword)
-      .endAt(keword + '\uf8ff')
-    )
+      .where('keyword', 'array-contains', keyword)
+    );
   }
 
-  getByKewordSiteStatus(keword: any, site: any, status: any) {
-    return this.afs.collection('ticket', ref => ref
+  getByKeywordSiteStatus(keyword: string, site: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('status', '==', status)
       .where('site.initials', '==', site)
-      .orderBy('subject')
-      .startAt(keword)
-      .endAt(keword + '\uf8ff')
+      .where('keyword', 'array-contains', keyword)
     )
   }
 
-  getByCreatorStatusKeword(creator: any, status: any, keword: any, startDate: Date, endDate: Date) {
-    return this.afs.collection('ticket', ref => ref
+  getByCreatorStatusKeyword(creator: string, status: string, keyword: string, startDate: Date, endDate: Date) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('creator', '==', creator)
       .where('status', '==', status)
-      .where('subject', '==', keword)
+      .where('keyword', 'array-contains', keyword)
     )
   }
 
-  getByCreatorStatus(creator: any, status: any, startDate: Date, endDate: Date) {
-    return this.afs.collection('ticket', ref => ref
+  getByCreatorStatus(creator: string, status: string, startDate: Date, endDate: Date) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('creator', '==', creator)
@@ -478,18 +467,18 @@ export class TicketService {
     )
   }
 
-  getBySiteStatusKeword(siteState: any, status: any, keword: any, startDate: Date, endDate: Date) {
-    return this.afs.collection('ticket', ref => ref
+  getBySiteStatusKeyword(siteState: string, status: string, keyword: string, startDate: Date, endDate: Date) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('site.initials', '==', siteState)
       .where('status', '==', status)
-      .where('subject', '==', keword)
+      .where('keyword', 'array-contains', keyword)
     )
   }
 
-  getBySiteStatus(siteState: any, status: any, startDate: Date, endDate: Date) {
-    return this.afs.collection('ticket', ref => ref
+  getBySiteStatus(siteState: string, status: string, startDate: Date, endDate: Date) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('site.initials', '==', siteState)
@@ -497,13 +486,13 @@ export class TicketService {
     )
   }
 
-  getTrack(id: string): any {
+  getTrack(id: string) {
     return this.afs.collection('ticket').doc(id)
       .collection('action', ref => ref
         .orderBy('date', 'asc'))
   }
 
-  getTask(id: string): any {
+  getTask(id: string) {
     return this.afs.collection('ticket').doc(id)
       .collection('tasks')
   }

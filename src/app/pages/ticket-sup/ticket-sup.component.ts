@@ -59,6 +59,8 @@ export class TicketSupComponent implements OnInit {
   }
   private storageCheck: number = 1
   userId: string
+  keyword: string;
+  private dateRange: IMyDateModel;
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
@@ -153,7 +155,13 @@ export class TicketSupComponent implements OnInit {
   setStatus(status: string) {
     this.setStatusState(status)
     this.status = status
-    this.isFilter()
+    if (this.searchValue){
+      this.search()
+    } else if (this.dateRange) {
+      this.onDateChanged(this.dateRange)
+    } else {
+      this.isFilter()
+    }
   }
 
   setStatusState(status: string) {
@@ -163,22 +171,28 @@ export class TicketSupComponent implements OnInit {
   getAllTicket(status: string) {
     this.setStatusState(status)
     this.status = status
-    if (this.isChecked === true) {
-      this.ticket$ = this.ticketService.getTicketsListByUserIdRole(this.userId, this.Supervisor).snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc['id'];
-          return { id, ...data };
-        }))
-      )
+    if (this.searchValue){
+      this.search()
+    } else if (this.dateRange) {
+      this.onDateChanged(this.dateRange)
     } else {
-      this.ticket$ = this.ticketService.getTicketsListByRole(this.Supervisor).snapshotChanges().pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Ticket;
-          const id = a.payload.doc['id'];
-          return { id, ...data };
-        }))
-      )
+      if (this.isChecked === true) {
+        this.ticket$ = this.ticketService.getTicketsListByUserIdRole(this.userId, this.Supervisor).snapshotChanges().pipe(
+          map(actions => actions.map(a => {
+            const data = a.payload.doc.data() as Ticket;
+            const id = a.payload.doc['id'];
+            return { id, ...data };
+          }))
+        )
+      } else {
+        this.ticket$ = this.ticketService.getTicketsListByRole(this.Supervisor).snapshotChanges().pipe(
+          map(actions => actions.map(a => {
+            const data = a.payload.doc.data() as Ticket;
+            const id = a.payload.doc['id'];
+            return { id, ...data };
+          }))
+        )
+      }
     }
   }
 
@@ -265,17 +279,191 @@ export class TicketSupComponent implements OnInit {
     }
   }
 
-  checkDuedete(minDueDate: { seconds: number; }) {
+  checkDueDate(minDueDate: { seconds: number; }) {
     if (minDueDate) {
-      let isDuedate: boolean
+      let isDueDate: boolean
       const startDate = new Date(minDueDate.seconds * 1000)
       const currentDate = new Date()
-      isDuedate = startDate < currentDate;
-      return isDuedate
+      isDueDate = startDate < currentDate;
+      return isDueDate
     }
   }
 
   newPath() {
     this.dataService.changeRedirectSource('ticket-sup')
+  }
+
+  search() {
+    this.keyword = this.searchValue
+    if (this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+      if (this.isChecked === true && this.status != null && this.status != 'Total') {
+        this.getByKeywordUserIdStatus(this.keyword, this.userId, this.status)
+      } else if (this.isChecked === false && this.status != null && this.status != 'Total') {
+        this.getByKeywordStatus(this.keyword, this.status)
+      } else if (this.isChecked === true && this.status === 'Total') {
+        this.getByKeywordUserIdRole(this.keyword, this.userId, this.Supervisor)
+      } else if (this.isChecked === false && this.status === 'Total') {
+        this.getByKeywordRole(this.keyword, this.Supervisor)
+      }
+    } else {
+      this.isFilter()
+    }
+  }
+
+  getByKeywordUserIdStatus(keyword: string, userId: string, status: any) {
+    this.ticket$ = this.ticketService.getByKeywordUserIdStatus(keyword, userId, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      );
+  }
+
+  getByKeywordStatus(keyword: string, status: any) {
+    this.ticket$ = this.ticketService.getByKeywordStatus(keyword, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      );
+  }
+
+  getByKeywordUserIdRole(keyword: string, userId: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByKeywordUserIdRole(keyword, userId, role)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      );
+  }
+
+  getByKeywordRole(keyword: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByKeywordRole(keyword, role)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      );
+  }
+
+  onDateChanged(event: IMyDateModel): void {
+    this.dateRange = event
+    const startDate = event.dateRange.beginJsDate
+    const endDate = event.dateRange.endJsDate
+    if (startDate != null && endDate != null) {
+      if (this.isChecked === true && this.status != null && this.status !== 'Total' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByDateRangeKeywordUserIdStatus(startDate, endDate, this.keyword, this.userId, this.status)
+      } else if (this.isChecked === true && this.status != null && this.status !== 'Total' && (this.keyword === undefined || this.keyword === '')) {
+        this.getByDateRangeUserIdStatus(startDate, endDate, this.userId, this.status,)
+      } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByDateRangeKeywordStatus(startDate, endDate, this.keyword, this.status)
+      } else if (this.isChecked === false && this.status != null && this.status !== 'Total' && (this.keyword === undefined || this.keyword === '')) {
+        this.getByDateRangeStatus(startDate, endDate, this.status)
+      } else if (this.isChecked === true && this.status === 'Total' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByDateRangeKeywordUserIdRole(startDate, endDate, this.keyword, this.userId, this.Supervisor)
+      } else if (this.isChecked === true && this.status === 'Total' && (this.keyword === undefined || this.keyword === '')) {
+        this.getByDateRangeUserIdRole(startDate, endDate, this.userId, this.Supervisor)
+      } else if (this.isChecked === false && this.status === 'Total' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+        this.getByDateRangeKeywordRole(startDate, endDate, this.keyword, this.Supervisor)
+      } else if (this.isChecked === false && this.status === 'Total' && (this.keyword === undefined || this.keyword === '')) {
+        this.getByDateRangeRole(startDate, endDate, this.Supervisor)
+      }
+    }
+  }
+
+  getByDateRangeKeywordUserIdStatus(startDate: Date, endDate: Date, keyword: string, userId: string, status: string) {
+    this.ticket$ = this.ticketService.getByDateRangeKeywordUserIdStatus(startDate, endDate, keyword, userId, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      )
+  }
+
+  getByDateRangeUserIdStatus(startDate: Date, endDate: Date, userId: string, status: string) {
+    this.ticket$ = this.ticketService.getByDateRangeUserIdStatus(startDate, endDate, userId, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      )
+  }
+
+  getByDateRangeKeywordStatus(startDate: Date, endDate: Date, keyword: string, status: string,) {
+    this.ticket$ = this.ticketService.getByDateRangeKeywordStatus(startDate, endDate, keyword, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      )
+  }
+
+  getByDateRangeStatus(startDate: Date, endDate: Date, status: string) {
+    this.ticket$ = this.ticketService.getByDateRangeStatus(startDate, endDate, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      )
+  }
+
+  getByDateRangeKeywordUserIdRole(startDate: Date, endDate: Date, keyword: string, userId: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByDateRangeKeywordUserIdRole(startDate, endDate, keyword, userId, role)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      )
+  }
+
+  getByDateRangeUserIdRole(startDate: Date, endDate: Date, userId: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByDateRangeUserIdRole(startDate, endDate, userId, role)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      )
+  }
+
+  getByDateRangeKeywordRole(startDate: Date, endDate: Date, keyword: string, role: string[]) {
+    this.ticket$ = this.ticketService.getByDateRangeKeywordRole(startDate, endDate, keyword, role)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      )
+  }
+
+  getByDateRangeRole(startDate: any, endDate: any, role: string[]) {
+    this.ticket$ = this.ticketService.getByDateRangeRole(startDate, endDate, role)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return {id, ...data};
+        }))
+      )
   }
 }

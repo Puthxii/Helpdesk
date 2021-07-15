@@ -29,7 +29,7 @@ export class SiteTicketComponent implements OnInit {
   user: any
   User: User
   user$: any
-  creator: any
+  creator: string
   isChecked = true
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
@@ -38,9 +38,9 @@ export class SiteTicketComponent implements OnInit {
   status = 'Informed'
   activeState = 'Informed'
   ticket$: Observable<Ticket[]>;
-  siteState: any
+  siteState: string
   CountStatus = []
-  statusSpecail = ['In Progress', 'Accepted', 'Assigned']
+  statusSpecial = ['In Progress', 'Accepted', 'Assigned']
   statusReject = ['Rejected', 'Pending']
   Status = [
     { value: 'Informed' },
@@ -52,7 +52,7 @@ export class SiteTicketComponent implements OnInit {
     { value: 'Rejected' },
     { value: 'Pending' }
   ]
-  keword = null
+  keyword = null
   searchValue = '';
   private storageCheck: number = 0
 
@@ -88,13 +88,13 @@ export class SiteTicketComponent implements OnInit {
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
     if (startDate != null && endDate != null) {
-      if (this.isChecked === true && this.status != null && this.keword != null) {
-        this.getByCreatorStatusKeword(this.creator, this.status, this.keword, startDate, endDate)
-      } else if (this.isChecked === true && this.status != null && this.keword == null) {
+      if (this.isChecked === true && this.status != null && this.keyword != null) {
+        this.getByCreatorStatusKeyword(this.creator, this.status, this.keyword, startDate, endDate)
+      } else if (this.isChecked === true && this.status != null && this.keyword == null) {
         this.getByCreatorStatus(this.creator, this.status, startDate, endDate)
-      } else if (this.isChecked === false && this.status != null && this.keword != null) {
-        this.getBySiteStatusKeword(this.siteState, this.status, this.keword, startDate, endDate)
-      } else if (this.isChecked === false && this.status != null && this.keword == null) {
+      } else if (this.isChecked === false && this.status != null && this.keyword != null) {
+        this.getBySiteStatusKeyword(this.siteState, this.status, this.keyword, startDate, endDate)
+      } else if (this.isChecked === false && this.status != null && this.keyword == null) {
         this.getBySiteStatus(this.siteState, this.status, startDate, endDate)
       }
     }
@@ -104,11 +104,11 @@ export class SiteTicketComponent implements OnInit {
     this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User;
       if (this.user$.roles.customer === true) {
-        this.creator = this.user$.firstName + ' ' + this.user$.lastName
+        this.creator = this.user$.uid
         this.siteState = this.user$.site
         this.getCountByStatusCreatorStatus()
         this.status === 'Accepted' ?
-          this.getTicketByCreatorSpecialStatus(this.creator, this.statusSpecail) :
+          this.getTicketByCreatorSpecialStatus(this.creator, this.statusSpecial) :
           this.status === 'Rejected' ?
             this.getTicketByCreatorSpecialStatus(this.creator, this.statusReject) :
             this.getTicketByCreatorStatus(this.creator, this.status)
@@ -129,7 +129,7 @@ export class SiteTicketComponent implements OnInit {
       this.getUserValue()
     } else {
       this.status === 'Accepted' ?
-        this.getBySiteStatusSpecialFilter(this.siteState, this.statusSpecail) :
+        this.getBySiteStatusSpecialFilter(this.siteState, this.statusSpecial) :
         this.status === 'Rejected' ?
           this.getBySiteStatusSpecialFilter(this.siteState, this.statusReject) :
           this.getTicketBySiteStatus(this.siteState, this.status)
@@ -137,7 +137,7 @@ export class SiteTicketComponent implements OnInit {
     }
   }
 
-  getTicketByCreatorSpecialStatus(creator: any, status: string[]) {
+  getTicketByCreatorSpecialStatus(creator: string, status: string[]) {
     this.ticket$ = this.ticketService.getTicketByCreatorSpecialStatus(creator, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -148,7 +148,7 @@ export class SiteTicketComponent implements OnInit {
       );
   }
 
-  getTicketByCreatorStatus(creator: any, status: string) {
+  getTicketByCreatorStatus(creator: string, status: string) {
     this.ticket$ = this.ticketService.getTicketByCreatorStatus(creator, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -186,7 +186,7 @@ export class SiteTicketComponent implements OnInit {
     return this.CountStatus[6] + this.CountStatus[7]
   }
 
-  getStatusName(status: any) {
+  getStatusName(status: string) {
     let statusString = ''
     switch (status) {
       case 'Informed': {
@@ -225,7 +225,7 @@ export class SiteTicketComponent implements OnInit {
     return statusString
   }
 
-  getPriorityIcon(status: any) {
+  getPriorityIcon(status: string) {
     let classIcon = ''
     switch (status) {
       case 'Informed': {
@@ -265,7 +265,7 @@ export class SiteTicketComponent implements OnInit {
   }
 
 
-  getBackgroundColor(status: any) {
+  getBackgroundColor(status: string) {
     let classBackground = ''
     switch (status) {
       case 'Informed': {
@@ -312,7 +312,7 @@ export class SiteTicketComponent implements OnInit {
     }
   }
 
-  getBySiteStatusSpecialFilter(site: any, status: any) {
+  getBySiteStatusSpecialFilter(site: string, status: string[]) {
     this.ticket$ = this.ticketService.getTicketBySiteSpecialStatus(site, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -323,7 +323,7 @@ export class SiteTicketComponent implements OnInit {
       );
   }
 
-  getTicketBySiteStatus(site: any, status: string) {
+  getTicketBySiteStatus(site: string, status: string) {
     this.ticket$ = this.ticketService.getTicketBySiteStatus(site, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -342,21 +342,21 @@ export class SiteTicketComponent implements OnInit {
     return ticket.status === 'Informed' || ticket.status === 'More Info';
   }
 
-  onSelectedDelete(id: any, subject: any) {
+  onSelectedDelete(id: string, subject: string) {
     this.ticketService.cancelTicket(id, subject)
   }
 
   search() {
-    this.keword = this.searchValue
+    this.keyword = this.searchValue
     if (this.isChecked === true && this.status != null) {
-      this.getByKewordCreatorStatus(this.keword, this.creator, this.status)
+      this.getByKeywordCreatorStatus(this.keyword, this.creator, this.status)
     } else if (this.isChecked === false && this.status != null) {
-      this.getByKewordSiteStatus(this.keword, this.siteState, this.status)
+      this.getByKeywordSiteStatus(this.keyword, this.siteState, this.status)
     }
   }
 
-  getByKewordCreatorStatus(keword: any, creator: any, status: string) {
-    this.ticket$ = this.ticketService.getByKewordCreatorStatus(keword, creator, status)
+  getByKeywordCreatorStatus(keyword: string, creator: string, status: string) {
+    this.ticket$ = this.ticketService.getByKeywordCreatorStatus(keyword, creator, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -366,8 +366,8 @@ export class SiteTicketComponent implements OnInit {
       );
   }
 
-  getByKewordSiteStatus(keword: any, site: any, status: string) {
-    this.ticket$ = this.ticketService.getByKewordSiteStatus(keword, site, status)
+  getByKeywordSiteStatus(keyword: string, site: string, status: string) {
+    this.ticket$ = this.ticketService.getByKeywordSiteStatus(keyword, site, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -377,7 +377,7 @@ export class SiteTicketComponent implements OnInit {
       );
   }
 
-  getBySiteStatus(siteState: any, status: string, startDate: Date, endDate: Date) {
+  getBySiteStatus(siteState: string, status: string, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getBySiteStatus(siteState, status, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -388,8 +388,8 @@ export class SiteTicketComponent implements OnInit {
       )
   }
 
-  getBySiteStatusKeword(siteState: any, status: string, keword: any, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getBySiteStatusKeword(siteState, status, keword, startDate, endDate)
+  getBySiteStatusKeyword(siteState: string, status: string, keyword: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getBySiteStatusKeyword(siteState, status, keyword, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
@@ -399,7 +399,7 @@ export class SiteTicketComponent implements OnInit {
       )
   }
 
-  getByCreatorStatus(creator: any, status: string, startDate: Date, endDate: Date) {
+  getByCreatorStatus(creator: string, status: string, startDate: Date, endDate: Date) {
     this.ticket$ = this.ticketService.getByCreatorStatus(creator, status, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
@@ -410,8 +410,8 @@ export class SiteTicketComponent implements OnInit {
       )
   }
 
-  getByCreatorStatusKeword(creator: any, status: string, keword: any, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getByCreatorStatusKeword(creator, status, keword, startDate, endDate)
+  getByCreatorStatusKeyword(creator: string, status: string, keyword: string, startDate: Date, endDate: Date) {
+    this.ticket$ = this.ticketService.getByCreatorStatusKeyword(creator, status, keyword, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;

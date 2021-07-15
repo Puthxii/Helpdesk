@@ -132,7 +132,7 @@ export class EditTicketComponent implements OnInit {
     this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
     this.getTitleByPath()
     this.updateTicketForm()
-    this.ticketService.getTicketByid(this.id).subscribe(data => {
+    this.ticketService.getTicketById(this.id).subscribe(data => {
       this.ticket = data as Ticket
       this.editTicket.patchValue({
         date: this.ticket.date,
@@ -166,7 +166,8 @@ export class EditTicketComponent implements OnInit {
         suggestDescription: this.ticket.suggestDescription,
         suggestDescriptionFile: this.ticket.suggestDescriptionFile,
         resolveDescription: this.ticket.resolveDescription,
-        resolveDescriptionFile: this.ticket.resolveDescriptionFile
+        resolveDescriptionFile: this.ticket.resolveDescriptionFile,
+        countIncrement: this.ticket.countIncrement
       });
       this.getDescriptionFileUpload()
       this.getResponseDescriptionFileUpload()
@@ -436,7 +437,8 @@ export class EditTicketComponent implements OnInit {
       sumPoint: [''],
       maxDueDate: [''],
       minDueDate: [''],
-      userId: ['']
+      userId: [''],
+      countIncrement: ['']
     });
   }
 
