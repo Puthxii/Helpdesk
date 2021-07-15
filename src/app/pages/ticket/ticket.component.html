@@ -30,7 +30,7 @@
                    formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
                    (dateChanged)="onDateChanged($event)" readonly>
             <div class="input-group-append">
-              <button type="button" class="btn dangerBtn" (click)="dp.clearDate(); this.search()">
+              <button type="button" class="btn dangerBtn" (click)="dp.clearDate(); search()">
                 <i class="fas fa-times"></i>
               </button>
             </div>
@@ -186,7 +186,7 @@
               <div class="col-6">
                 <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
                    (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
-                <a *ngIf="isStatusSpecail(ticket)" [routerLink]="['/edit-ticket', ticket.id]">
+                <a *ngIf="isStatusSpecial(ticket)" [routerLink]="['/edit-ticket', ticket.id]">
                   <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket" (click)="newPath(); updateMoreInfo(ticket.id)"></i>
                 </a>
                 <a [routerLink]="['/detail', ticket.id]">
@@ -252,7 +252,7 @@
           <div class="col-xl-3 col-sm-4 action block">
             <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
               (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
-            <a *ngIf="isStatusSpecail(ticket)" [routerLink]="['/edit-ticket', ticket.id]">
+            <a *ngIf="isStatusSpecial(ticket)" [routerLink]="['/edit-ticket', ticket.id]">
               <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket" (click)="newPath(); updateMoreInfo(ticket.id)"></i>
             </a>
             <a [routerLink]="['/detail', ticket.id]">

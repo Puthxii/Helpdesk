@@ -250,7 +250,7 @@ export class AddTicketComponent implements OnInit {
 
   setCreator() {
     this.addTicketForm.patchValue({
-      creator: this.user$.firstName + ' ' + this.user$.lastName
+      creator: this.user$.uid
     });
   }
 

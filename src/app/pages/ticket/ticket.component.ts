@@ -301,7 +301,7 @@ export class TicketComponent implements OnInit {
     return ticket.status === 'Draft';
   }
 
-  isStatusSpecail(ticket) {
+  isStatusSpecial(ticket) {
     return ticket.status !== 'In Progress' && ticket.status !== 'Assigned' && ticket.status !== 'Accepted';
   }
 

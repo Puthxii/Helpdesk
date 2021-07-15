@@ -30,7 +30,7 @@
                    formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
                    (dateChanged)="onDateChanged($event)" readonly>
             <div class="input-group-append">
-              <button type="button" class="btn dangerBtn" (click)="dp.clearDate()">
+              <button type="button" class="btn dangerBtn" (click)="dp.clearDate(); search()">
                 <i class="fas fa-times"></i>
               </button>
             </div>
@@ -204,5 +204,4 @@
       <strong>No ticket in this status</strong>
     </div>
   </div>
-
 </div>

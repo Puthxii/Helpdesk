@@ -30,7 +30,7 @@
                    formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
                    (dateChanged)="onDateChanged($event)" readonly>
             <div class="input-group-append">
-              <button type="button" class="btn dangerBtn" (click)="dp.clearDate()">
+              <button type="button" class="btn dangerBtn" (click)="dp.clearDate(); search()">
                 <i class="fas fa-times"></i>
               </button>
             </div>
@@ -178,7 +178,7 @@
                   Created {{ ticket.date.singleDate?.formatted? ticket.date.singleDate.formatted : ''}}
                 </span>
                 </div>
-                <div class="col-auto" *ngIf="checkDuedete(ticket.minDueDate)">
+                <div class="col-auto" *ngIf="checkDueDate(ticket.minDueDate)">
                   <div class="dueDate">
                     <i class="fas fa-exclamation-circle mx-2"></i>{{ticket.minDueDate | datePipe: 'l' }}
                   </div>
