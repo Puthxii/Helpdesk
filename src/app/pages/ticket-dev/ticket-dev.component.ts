@@ -101,7 +101,7 @@ export class TicketDevComponent implements OnInit {
   }
 
   getCurrentUserByRoles() {
-    this.userService.getUserbyId(this.User.uid).snapshotChanges().subscribe(data => {
+    this.userService.getUserById(this.User.uid).snapshotChanges().subscribe(data => {
       this.user$ = data.payload.data() as User
       if (this.user$.roles.developer === true) {
         this.currentName = this.user$.firstName + ' ' + this.user$.lastName

@@ -8,6 +8,7 @@ export interface Ticket {
     maLevel: MaLevel;
     module: any;
     creator: string;
+    creatorName: string;
     type: string;
     subject: string;
     priority: string;

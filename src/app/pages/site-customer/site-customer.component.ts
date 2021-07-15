@@ -57,12 +57,12 @@ export class SiteCustomerComponent implements OnInit {
   search() {
     const searchValue = this.searchValue
     if (searchValue != null) {
-      this.getCustomerbyNameSort(searchValue)
+      this.getCustomerByNameSort(searchValue)
     }
   }
 
-  getCustomerbyNameSort(searchValue: any) {
-    this.user.getCustomerbyNameSort(searchValue).snapshotChanges().subscribe(data => {
+  getCustomerByNameSort(searchValue: any) {
+    this.user.getCustomerByNameSort(searchValue).snapshotChanges().subscribe(data => {
       this.Customer = [];
       data.map(items => {
         const item = items.payload.doc.data();

@@ -60,16 +60,16 @@
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label class="control-label" for="creator">Creator Name</label>
-              <select name="creator" formControlName="creator" class="form-control" id="creator"
+              <label class="control-label" for="creatorName">Creator Name</label>
+              <select name="creatorName" formControlName="creatorName" class="form-control" id="creatorName"
                 (ngModelChange)="getCustomerContact($event)">
                 <option value="">choose creator...</option>
                 <option *ngFor="let user of getCreate()" [ngValue]="user">
                   {{ user }}
                 </option>
               </select>
-              <div *ngIf="creator.invalid && (creator.dirty || creator.touched)" class="danger-color">
-                <div *ngIf="creator.errors.required">
+              <div *ngIf="creatorName.invalid && (creatorName.dirty || creatorName.touched)" class="danger-color">
+                <div *ngIf="creatorName.errors.required">
                   Creator is required.
                 </div>
               </div>
