@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { firebase } from '@firebase/app';
-import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@firebase/auth-types';
-import { AlertService } from '../../_alert/alert.service';
-import { Options } from '../../_alert/alert.model';
-import { switchMap } from 'rxjs/operators';
-import { User } from '../../models/user.model';
-import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {firebase} from '@firebase/app';
+import {FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, TwitterAuthProvider} from '@firebase/auth-types';
+import {AlertService, Options} from '../../_alert';
+import {switchMap} from 'rxjs/operators';
+import {User} from '../../models/user.model';
+import {AngularFireDatabase, AngularFireObject} from '@angular/fire/database';
+import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,6 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 export class AuthService {
   options: Options;
   authState: any = null;
-  userRef: AngularFireObject<any>;
   user$: Observable<User>;
   constructor(
     protected alertService: AlertService,
@@ -90,8 +88,7 @@ export class AuthService {
 
   private async socialSignIn(provider: GithubAuthProvider | GoogleAuthProvider | FacebookAuthProvider | TwitterAuthProvider) {
     try {
-      const credential = await this.afAuth.signInWithPopup(provider);
-      this.authState = credential;
+      this.authState = await this.afAuth.signInWithPopup(provider);
       this.updateUserDataToFirestore();
       this.router.navigate(['/']);
     } catch (error) {
@@ -122,8 +119,7 @@ export class AuthService {
 
   async emailLogin(email: string, password: string) {
     try {
-      const user = await this.afAuth.signInWithEmailAndPassword(email, password);
-      this.authState = user;
+      this.authState = await this.afAuth.signInWithEmailAndPassword(email, password);
       this.router.navigate(['/']);
       this.alertService.success('Login success', this.options = {
         autoClose: true,
