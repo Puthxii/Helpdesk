@@ -52,7 +52,7 @@ export class UserService {
       .endAt(name + '\uf8ff'));
   }
 
-  async addCustomer(user: User){
+  async addStaff(user: User){
     try {
       await (await this.afs.collection('users').add({
         email: user.email,
