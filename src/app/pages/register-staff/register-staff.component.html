@@ -1,3 +1,92 @@
-<p>
-  register-staff works!
-</p>
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content">
+          <h5>
+            <i class="fas fa-user-tie"></i>
+            New Staff
+          </h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="userForm" (ngSubmit)="signup()">
+          <div class="form-row" >
+            <div class="form-group col-md-6">
+              <label class="control-label" >Email</label>
+              <div class="input-group">
+                <input type="text" formControlName="email" class="form-control" id="email" placeholder="Email"
+                       required>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label" >Password</label>
+              <div class="input-group">
+                <input type="text" formControlName="password" class="form-control" id="password" placeholder="Password"
+                       required>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" >
+            <div class="form-group col-md-6">
+              <label class="control-label" >Name</label>
+              <div class="input-group">
+                <input type="text" formControlName="firstName" class="form-control" id="name" placeholder="Name"
+                       required>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label" >Last name</label>
+              <div class="input-group">
+                <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Last name"
+                       required>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" >
+            <div class="form-group col-md-6">
+              <label class="control-label" >Mobile number</label>
+              <div class="input-group">
+                <input type="text" formControlName="mobileNumber" class="form-control" id="mobileNumber" placeholder="Mobile number"
+                       required>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" formGroupName="roles">
+            <div class="col-md-12 col-centered">
+              <label class="control-label" >Roles</label>
+              <div class="my-2 d-flex justify-content-between align-items-center">
+                <div class="form-check">
+                  <label class="form-check-label form-check-inline">
+                    <input type="checkbox" class="form-check-input" formControlName="supporter" >
+                    Supporter<i class="input-helper"></i>
+                  </label>
+                  <label class="form-check-label form-check-inline">
+                    <input type="checkbox" class="form-check-input" formControlName="maintenance">
+                    Maintenance<i class="input-helper"></i>
+                  </label>
+                  <label class="form-check-label form-check-inline">
+                    <input type="checkbox" class="form-check-input" formControlName="supervisor">
+                    Supervisor<i class="input-helper"></i>
+                  </label>
+                  <label class="form-check-label form-check-inline">
+                    <input type="checkbox" class="form-check-input" formControlName="developer">
+                    Developer<i class="input-helper"></i>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" style="float: right;">
+            <div class="form-group mr-2">
+              <button type="button" class="btn cancelBtn btn-cancel">Cancel</button>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn saveBtn">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

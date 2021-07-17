@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { firebase } from '@firebase/app';
-import { GithubAuthProvider, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@firebase/auth-types';
-import { AlertService } from '../../_alert/alert.service';
-import { Options } from '../../_alert/alert.model';
-import { switchMap } from 'rxjs/operators';
-import { User } from '../../models/user.model';
-import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {firebase} from '@firebase/app';
+import {FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, TwitterAuthProvider} from '@firebase/auth-types';
+import {AlertService, Options} from '../../_alert';
+import {switchMap} from 'rxjs/operators';
+import {User} from '../../models/user.model';
+import {AngularFireDatabase, AngularFireObject} from '@angular/fire/database';
+import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +17,14 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 export class AuthService {
   options: Options;
   authState: any = null;
-  userRef: AngularFireObject<any>;
   user$: Observable<User>;
   constructor(
     protected alertService: AlertService,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private router: Router,
-    private afs: AngularFirestore) {
+    private afs: AngularFirestore
+  ) {
     this.afAuth.authState.subscribe((auth) => {
       this.authState = auth;
     });
@@ -37,6 +37,8 @@ export class AuthService {
       }
     }));
   }
+
+  private secondaryApp = firebase.initializeApp(environment.firebaseConfig, "SecondaryApp")
 
   get authenticated(): boolean {
     return this.authState !== null;
@@ -90,8 +92,7 @@ export class AuthService {
 
   private async socialSignIn(provider: GithubAuthProvider | GoogleAuthProvider | FacebookAuthProvider | TwitterAuthProvider) {
     try {
-      const credential = await this.afAuth.signInWithPopup(provider);
-      this.authState = credential;
+      this.authState = await this.afAuth.signInWithPopup(provider);
       this.updateUserDataToFirestore();
       this.router.navigate(['/']);
     } catch (error) {
@@ -113,7 +114,8 @@ export class AuthService {
     try {
       const user = await this.afAuth.createUserWithEmailAndPassword(email, password);
       this.authState = user;
-      this.updateUserDataToFirestore();
+      await this.updateUserDataToFirestore();
+      console.log(this.authState)
       this.router.navigate(['/']);
     } catch (error) {
       return console.log(error);
@@ -122,8 +124,7 @@ export class AuthService {
 
   async emailLogin(email: string, password: string) {
     try {
-      const user = await this.afAuth.signInWithEmailAndPassword(email, password);
-      this.authState = user;
+      this.authState = await this.afAuth.signInWithEmailAndPassword(email, password);
       this.router.navigate(['/']);
       this.alertService.success('Login success', this.options = {
         autoClose: true,
@@ -224,4 +225,31 @@ export class AuthService {
     }
     return false;
   }
+
+  async registerUser(user: User) {
+    try {
+      const authUser = await this.secondaryApp.auth().createUserWithEmailAndPassword(user.email, user.password)
+      await this.registerUserDataToFirestore(authUser, user);
+      await this.router.navigate(['/staff']);
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+
+  private async registerUserDataToFirestore(authUser, user) {
+    const path = `users/${authUser.user.uid}`;
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(path);
+    const data: User = {
+      uid: authUser.user.uid,
+      email: authUser.user.email,
+      photoURL: authUser.user.photoURL,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      fullName: `${user.firstName}`+' '+`${user.lastName}`,
+      mobileNumber: user.mobileNumber,
+      roles: user.roles,
+    };
+    return userRef.set(data, { merge: true });
+  }
+
 }

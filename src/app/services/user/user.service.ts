@@ -1,5 +1,7 @@
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
+import {Roles, User} from "../../models/user.model";
+import {Ticket} from "../../models/ticket.model";
 @Injectable({
   providedIn: 'root'
 })
@@ -48,6 +50,22 @@ export class UserService {
       .orderBy('fullName')
       .startAt(name)
       .endAt(name + '\uf8ff'));
+  }
+
+  async addStaff(user: User){
+    try {
+      await (await this.afs.collection('users').add({
+        email: user.email,
+        name: user.name,
+        firstName: user.email,
+        lastName: user.email,
+        fullName: user.fullName,
+        mobileNumber: user.mobileNumber,
+        photoURL: user.photoURL,
+      }))
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 }
