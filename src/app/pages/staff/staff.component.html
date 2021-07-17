@@ -1,17 +1,22 @@
 <div class="container-fluid">
   <section id="minimal-statistics">
-    <div class="row">
-      <div class="col-12 mt-3 mb-1 searchbar">
+    <div class="row mt-3 mb-1 searchbar-staff">
+      <div class="col-xl-4 col-md-4 col-sm-6 col-6">
         <h5 class="primary-color">
           <i class="fas fa-user-tie"></i>
           Staff
         </h5>
-        <div class="form-control-sm">
-          <div class="form-group has-search mb-2">
-            <span class="fa fa-search form-control-feedback"></span>
-            <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
-              (keyup)="search()" placeholder="Search Name">
-          </div>
+      </div>
+      <div class="col-xl-4 col-md-4 col-sm-6 col-6 my-ticket">
+        <a routerLink="/register-staff" class="btn btn-success saveBtn">
+          <i class="fas fa-plus-square fa-lg mx-2"></i>Add Staff
+        </a>
+      </div>
+      <div class="col-xl-4 col-md-4 col-sm-12 col-12">
+        <div class="form-group has-search mb-2">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
+                 (keyup)="search()" placeholder="Search Name">
         </div>
       </div>
     </div>
