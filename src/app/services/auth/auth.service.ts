@@ -228,21 +228,26 @@ export class AuthService {
 
   async registerUser(user: User) {
     try {
-      const newUser = await this.secondaryApp.auth().createUserWithEmailAndPassword(user.email, user.password)
-      await this.registerUserDataToFirestore(newUser);
+      const authUser = await this.secondaryApp.auth().createUserWithEmailAndPassword(user.email, user.password)
+      await this.registerUserDataToFirestore(authUser, user);
       await this.router.navigate(['/staff']);
     } catch (error) {
       return console.log(error);
     }
   }
 
-  private async registerUserDataToFirestore(newUser) {
-    const path = `users/${newUser.user.uid}`;
+  private async registerUserDataToFirestore(authUser, user) {
+    const path = `users/${authUser.user.uid}`;
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(path);
     const data: User = {
-      uid: newUser.user.uid,
-      email: newUser.user.email,
-      photoURL: newUser.user.photoURL,
+      uid: authUser.user.uid,
+      email: authUser.user.email,
+      photoURL: authUser.user.photoURL,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      fullName: `${user.firstName}`+' '+`${user.lastName}`,
+      mobileNumber: user.mobileNumber,
+      roles: user.roles,
     };
     return userRef.set(data, { merge: true });
   }

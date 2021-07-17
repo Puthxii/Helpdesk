@@ -18,6 +18,7 @@ export class RegisterStaffComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    this.setDefaultRole()
   }
 
   buildForm(): void {
@@ -28,7 +29,13 @@ export class RegisterStaffComponent implements OnInit {
       lastName: [''],
       fullName: [''],
       mobileNumber: [''],
-      roles: [''],
+      roles: this.fb.group({
+        supporter: [''],
+        maintenance: [''],
+        supervisor: [''],
+        developer: [''],
+        customer: ['']
+      }),
     })
 
   }
@@ -55,6 +62,18 @@ export class RegisterStaffComponent implements OnInit {
 
   get roles() {
     return this.userForm.get('roles');
+  }
+
+  private setDefaultRole() {
+    this.userForm.patchValue({
+      roles: {
+        supporter: false,
+        maintenance: false,
+        supervisor: false,
+        developer: false,
+        customer: false,
+      }
+    })
   }
 
   signup(): void {

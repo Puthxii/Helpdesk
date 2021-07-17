@@ -52,25 +52,25 @@
               </div>
             </div>
           </div>
-          <div class="form-row">
+          <div class="form-row" formGroupName="roles">
             <div class="col-md-12 col-centered">
               <label class="control-label" >Roles</label>
               <div class="my-2 d-flex justify-content-between align-items-center">
                 <div class="form-check">
                   <label class="form-check-label form-check-inline">
-                    <input type="checkbox" class="form-check-input">
+                    <input type="checkbox" class="form-check-input" formControlName="supporter" >
                     Supporter<i class="input-helper"></i>
                   </label>
                   <label class="form-check-label form-check-inline">
-                    <input type="checkbox" class="form-check-input">
+                    <input type="checkbox" class="form-check-input" formControlName="maintenance">
                     Maintenance<i class="input-helper"></i>
                   </label>
                   <label class="form-check-label form-check-inline">
-                    <input type="checkbox" class="form-check-input">
+                    <input type="checkbox" class="form-check-input" formControlName="supervisor">
                     Supervisor<i class="input-helper"></i>
                   </label>
                   <label class="form-check-label form-check-inline">
-                    <input type="checkbox" class="form-check-input">
+                    <input type="checkbox" class="form-check-input" formControlName="developer">
                     Developer<i class="input-helper"></i>
                   </label>
                 </div>
