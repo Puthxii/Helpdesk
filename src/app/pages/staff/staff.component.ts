@@ -2,6 +2,7 @@ import { Roles } from '../../models/user.model';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from '../../models/user.model';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-staff',
@@ -79,4 +80,19 @@ export class StaffComponent implements OnInit {
     });
   }
 
+  alertDeleteStaff(id: string, name) {
+    Swal.fire({
+      title: 'Do you want to delete staff?',
+      text: name,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2ED0B9',
+      cancelButtonColor: '#9C9FA6',
+      confirmButtonText: 'Yes, I do'
+    }).then((result: { isConfirmed: any; }) => {
+      if (result.isConfirmed) {
+        this.user.deleteUserById(id)
+      }
+    })
+  }
 }

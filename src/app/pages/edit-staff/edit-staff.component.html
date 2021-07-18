@@ -5,24 +5,25 @@
         <div class="header content">
           <h5>
             <i class="fas fa-user-tie"></i>
-            New Staff
+            Edit Staff
           </h5>
         </div>
       </div>
       <div class="card-body">
-        <form [formGroup]="userForm" (ngSubmit)="register()">
+        <form [formGroup]="userForm" (ngSubmit)="update()">
+          <input type="hidden" name="id" formControlName="uid" />
           <div class="form-row" >
             <div class="form-group col-md-6">
               <label class="control-label" >Email</label>
               <div class="input-group">
                 <input type="text" formControlName="email" class="form-control" id="email" placeholder="Email"
-                       required>
+                       required readonly>
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label class="control-label" >Password</label>
+              <label class="control-label" >Mobile number</label>
               <div class="input-group">
-                <input type="text" formControlName="password" class="form-control" id="password" placeholder="Password"
+                <input type="text" formControlName="mobileNumber" class="form-control" id="mobileNumber" placeholder="Mobile number"
                        required>
               </div>
             </div>
@@ -39,15 +40,6 @@
               <label class="control-label" >Last name</label>
               <div class="input-group">
                 <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Last name"
-                       required>
-              </div>
-            </div>
-          </div>
-          <div class="form-row" >
-            <div class="form-group col-md-6">
-              <label class="control-label" >Mobile number</label>
-              <div class="input-group">
-                <input type="text" formControlName="mobileNumber" class="form-control" id="mobileNumber" placeholder="Mobile number"
                        required>
               </div>
             </div>
@@ -79,10 +71,10 @@
           </div>
           <div class="form-row" style="float: right;">
             <div class="form-group mr-2">
-              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelAddStaff()">Cancel</button>
+              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelEditStaff()">Cancel</button>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn saveBtn">Save</button>
+              <button type="submit" class="btn saveBtn">Update</button>
             </div>
           </div>
         </form>

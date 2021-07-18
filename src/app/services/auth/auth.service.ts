@@ -10,6 +10,7 @@ import {User} from '../../models/user.model';
 import {AngularFireDatabase, AngularFireObject} from '@angular/fire/database';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {environment} from "../../../environments/environment";
+import Swal from "sweetalert2";
 
 @Injectable({
   providedIn: 'root'
@@ -230,9 +231,9 @@ export class AuthService {
     try {
       const authUser = await this.secondaryApp.auth().createUserWithEmailAndPassword(user.email, user.password)
       await this.registerUserDataToFirestore(authUser, user);
-      await this.router.navigate(['/staff']);
+      this.successNotification()
     } catch (error) {
-      return console.log(error);
+      this.errorNotification()
     }
   }
 
@@ -252,4 +253,22 @@ export class AuthService {
     return userRef.set(data, { merge: true });
   }
 
+  successNotification() {
+    Swal.fire({
+      text: 'Your staff has been saved',
+      icon: 'success',
+    }).then((result: any) => {
+      this.router.navigate([`/staff`]);
+    });
+  }
+
+  errorNotification() {
+    Swal.fire({
+      icon: 'error',
+      title: 'error',
+      text: 'Your staff hasn\'t been saved',
+    }).then((result: any) => {
+      this.router.navigate([`/register-staff`]);
+    });
+  }
 }

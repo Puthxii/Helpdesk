@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import {Roles} from "../../models/user.model";
+import Swal from "sweetalert2";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register-staff',
@@ -13,7 +15,9 @@ export class RegisterStaffComponent implements OnInit {
   userForm: FormGroup;
   constructor (
     private fb: FormBuilder,
-    private auth: AuthService)
+    private auth: AuthService,
+    public router: Router,
+  )
   { }
 
   ngOnInit() {
@@ -76,8 +80,22 @@ export class RegisterStaffComponent implements OnInit {
     })
   }
 
-  signup(): void {
+  register(): void {
     this.auth.registerUser(this.userForm.value)
   }
 
+  alertCancelAddStaff() {
+    Swal.fire({
+      title: 'Do you want to cancel add staff.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2ED0B9',
+      cancelButtonColor: '#9C9FA6',
+      confirmButtonText: 'Yes, I do'
+    }).then((result: { isConfirmed: any; }) => {
+      if (result.isConfirmed) {
+        this.router.navigate([`/staff`]);
+      }
+    })
+  }
 }
