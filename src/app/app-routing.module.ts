@@ -27,6 +27,7 @@ import { StaffGuard } from './guards/staff.guard';
 import { SiteComponent } from './pages/site/site.component';
 import { SiteCustomerComponent } from './pages/site-customer/site-customer.component';
 import { ProductComponent } from './pages/product/product.component';
+import {EditStaffComponent} from "./pages/edit-staff/edit-staff.component";
 
 const router: Routes = [
   {
@@ -110,7 +111,15 @@ const router: Routes = [
         path: 'ticket-dev',
         canActivate: [DeveloperGuard],
         component: TicketDevComponent
-      }
+      },
+      {
+        path: 'edit-staff',
+        component: EditStaffComponent
+      },
+      {
+        path: 'edit-staff/:id',
+        component: EditStaffComponent
+      },
     ]
   },
   {

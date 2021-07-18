@@ -44,6 +44,7 @@ import { SiteComponent } from './pages/site/site.component';
 import { SiteCustomerComponent } from './pages/site-customer/site-customer.component';
 import { ProductComponent } from './pages/product/product.component';
 import { Error500Component } from './error-pages/error500/error500.component';
+import { EditStaffComponent } from './pages/edit-staff/edit-staff.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { Error500Component } from './error-pages/error500/error500.component';
     UploadDetailFormComponent,
     SiteComponent,
     SiteCustomerComponent,
-    ProductComponent
+    ProductComponent,
+    EditStaffComponent
   ],
   imports: [
     FormsModule,
