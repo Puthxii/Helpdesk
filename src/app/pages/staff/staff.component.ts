@@ -46,20 +46,21 @@ export class StaffComponent implements OnInit {
     });
   }
 
-  getRoles(roles: Roles): string {
-    let role: string
+  getRoles(roles: Roles) {
+    let Supporter
+    let Maintenance
+    let Supervisor
+    let Developer
     if (roles.supporter === true) {
-      role = 'Supporter'
-    } else if (roles.maintenance === true) {
-      role = 'Maintenance'
-    } else if (roles.supervisor === true) {
-      role = 'Supervisor'
-    } else if (roles.developer === true) {
-      role = 'Developer'
-    } else {
-      role = 'Staff'
+      Supporter = 'Supporter'
+    } if (roles.maintenance === true) {
+      Maintenance = 'Maintenance'
+    } if (roles.supervisor === true) {
+      Supervisor = 'Supervisor'
+    } if (roles.developer === true) {
+      Developer = 'Developer'
     }
-    return role
+    return [Supporter, Maintenance, Supervisor, Developer].filter((role): role is string => role !== undefined).join(", ");
   }
 
   search() {

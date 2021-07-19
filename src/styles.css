@@ -426,4 +426,5 @@
 .my-ticket {
   display:block;
   text-align:right;
+  padding-bottom: 8px;
 }
