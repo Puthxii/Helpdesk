@@ -16,14 +16,43 @@
               <label class="control-label" >Email</label>
               <div class="input-group">
                 <input type="text" formControlName="email" class="form-control" id="email" placeholder="Email"
-                       required>
+                       required (ngModelChange)="checkEmailExist()">
+              </div>
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="email.errors.required">
+                  Email is required.
+                </div>
+                <div *ngIf="email.errors.email">
+                  Email doesn't look quite right
+                </div>
+              </div>
+              <div *ngIf="userForm.controls.email.value && validateEmail()" class="col-sm-12">
+                <p class="success-color" *ngIf="!emailAlreadyExists">{{userForm.controls.email.value}} is available</p>
+                <p class="danger-color" *ngIf="emailAlreadyExists">{{userForm.controls.email.value}} has already been taken</p>
               </div>
             </div>
             <div class="form-group col-md-6">
               <label class="control-label" >Password</label>
               <div class="input-group">
-                <input type="text" formControlName="password" class="form-control" id="password" placeholder="Password"
+                <input type="{{inputType}}" formControlName="password" class="form-control" id="password" placeholder="Password"
                        required>
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-outline-secondary" (click)="hideShowPassword()">
+                    <i *ngIf="inputType === 'password'" class="fas fa-eye"></i>
+                    <i *ngIf="inputType === 'text'" class="fas fa-eye-slash"></i>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="password.invalid && (password.dirty || password.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="password.errors.required">
+                  Password is required.
+                </div>
+                <div *ngIf="password.errors.minlength">
+                  Password must be more than 6 characters.
+                </div>
+                <div *ngIf="password.errors.maxlength">
+                  Password is less than 25 characters.
+                </div>
               </div>
             </div>
           </div>
@@ -34,6 +63,11 @@
                 <input type="text" formControlName="firstName" class="form-control" id="name" placeholder="Name"
                        required>
               </div>
+              <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="firstName.errors.required">
+                  Name is required.
+                </div>
+              </div>
             </div>
             <div class="form-group col-md-6">
               <label class="control-label" >Last name</label>
@@ -41,14 +75,27 @@
                 <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Last name"
                        required>
               </div>
+              <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="lastName.errors.required">
+                  Last name is required.
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-row" >
             <div class="form-group col-md-6">
               <label class="control-label" >Mobile number</label>
               <div class="input-group">
-                <input type="text" formControlName="mobileNumber" class="form-control" id="mobileNumber" placeholder="Mobile number"
+                <input type="tel" formControlName="mobileNumber" class="form-control" id="mobileNumber" placeholder="Mobile number"
                        required>
+              </div>
+              <div *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="mobileNumber.errors.required">
+                  Mobile number is required.
+                </div>
+                <div *ngIf="mobileNumber.errors.pattern">
+                  Mobile number doesn't look quite right
+                </div>
               </div>
             </div>
           </div>
@@ -73,6 +120,7 @@
                     <input type="checkbox" class="form-check-input" formControlName="developer">
                     Developer<i class="input-helper"></i>
                   </label>
+                  <div class="col-sm-12 danger-color" *ngIf="userForm.controls['roles'].errors && userForm.controls['roles'].errors.requireCheckboxesToBeChecked">At least one checkbox is required to check</div>
                 </div>
               </div>
             </div>
@@ -82,7 +130,7 @@
               <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelAddStaff()">Cancel</button>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn saveBtn">Save</button>
+              <button type="submit" class="btn saveBtn" [disabled]="!userForm.valid || emailAlreadyExists">Save</button>
             </div>
           </div>
         </form>

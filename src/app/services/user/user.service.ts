@@ -138,4 +138,10 @@ export class UserService {
     }
   }
 
+  checkEmail(email: string) {
+    email = email.toLowerCase()
+    return this.afs.collection('users', (ref) => ref
+      .where('email', '==', email))
+  }
+
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import {Roles} from "../../models/user.model";
+import {FormGroup, FormControl, FormBuilder, Validators, ValidatorFn} from '@angular/forms';
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-register-staff',
@@ -13,35 +13,65 @@ import {Router} from "@angular/router";
 
 export class RegisterStaffComponent implements OnInit {
   userForm: FormGroup;
+  inputType = 'password';
+  emailAlreadyExists
   constructor (
     private fb: FormBuilder,
     private auth: AuthService,
     public router: Router,
+    private userService: UserService
   )
   { }
 
   ngOnInit() {
     this.buildForm();
-    this.setDefaultRole()
   }
 
   buildForm(): void {
     this.userForm = this.fb.group({
-      email: [''],
-      password: [''],
+      email: ['', [
+        Validators.required,
+        Validators.email,
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(25)
+      ]],
       firstName: [''],
       lastName: [''],
       fullName: [''],
-      mobileNumber: [''],
-      roles: this.fb.group({
-        supporter: [''],
-        maintenance: [''],
-        supervisor: [''],
-        developer: [''],
-        customer: ['']
-      }),
+      mobileNumber: ['', [
+        Validators.pattern('[- +()0-9]+')
+      ]],
+      roles: new FormGroup({
+        supporter: new FormControl(false),
+        maintenance: new FormControl(false),
+        supervisor: new FormControl(false),
+        developer: new FormControl(false),
+        customer: new FormControl(false),
+        }, requireCheckboxesToBeCheckedValidator()
+      ),
     })
 
+    function requireCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
+      return function validate (formGroup: FormGroup) {
+        let checked = 0;
+
+        Object.keys(formGroup.controls).forEach(key => {
+          const control = formGroup.controls[key];
+          if (control.value === true) {
+            checked ++;
+          }
+        });
+        if (checked < minRequired) {
+          return {
+            requireCheckboxesToBeChecked: true,
+          };
+        }
+        return null;
+      };
+    }
   }
 
   get email() {
@@ -68,18 +98,6 @@ export class RegisterStaffComponent implements OnInit {
     return this.userForm.get('roles');
   }
 
-  private setDefaultRole() {
-    this.userForm.patchValue({
-      roles: {
-        supporter: false,
-        maintenance: false,
-        supervisor: false,
-        developer: false,
-        customer: false,
-      }
-    })
-  }
-
   register(): void {
     this.auth.registerUser(this.userForm.value)
   }
@@ -97,5 +115,24 @@ export class RegisterStaffComponent implements OnInit {
         this.router.navigate([`/staff`]);
       }
     })
+  }
+
+  hideShowPassword() {
+    if (this.inputType === 'password') {
+      this.inputType = 'text';
+    } else {
+      this.inputType = 'password';
+    }
+  };
+
+  checkEmailExist() {
+    this.userService.checkEmail(this.userForm.controls.email.value).valueChanges().subscribe(value => {
+      this.emailAlreadyExists = value.length > 0;
+    })
+  }
+
+  validateEmail() {
+    const format = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return format.test(this.userForm.controls.email.value);
   }
 }

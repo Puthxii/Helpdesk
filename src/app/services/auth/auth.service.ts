@@ -281,4 +281,8 @@ export class AuthService {
       console.log(error)
     }
   }
+
+  emailAuthExist(email) {
+    return firebase.auth().fetchSignInMethodsForEmail(email)
+   }
 }

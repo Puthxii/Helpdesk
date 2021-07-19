@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user/user.service";
 import {User} from "../../models/user.model";
@@ -43,20 +43,43 @@ export class EditStaffComponent implements OnInit {
   buildForm(): void {
     this.userForm = this.fb.group({
       uid: [''],
-      email: [''],
-      password: [''],
+      email: ['', [
+        Validators.required,
+        Validators.email,
+      ]],
       firstName: [''],
       lastName: [''],
-      fullName: [''],
-      mobileNumber: [''],
-      roles: this.fb.group({
-        supporter: false,
-        maintenance: false,
-        supervisor: false,
-        developer: false,
-        customer: false
-      }),
+      mobileNumber: ['', [
+        Validators.pattern('[- +()0-9]+')
+      ]],
+      roles: new FormGroup({
+          supporter: new FormControl(false),
+          maintenance: new FormControl(false),
+          supervisor: new FormControl(false),
+          developer: new FormControl(false),
+          customer: new FormControl(false),
+        }, requireCheckboxesToBeCheckedValidator()
+      ),
     })
+
+    function requireCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
+      return function validate (formGroup: FormGroup) {
+        let checked = 0;
+
+        Object.keys(formGroup.controls).forEach(key => {
+          const control = formGroup.controls[key];
+          if (control.value === true) {
+            checked ++;
+          }
+        });
+        if (checked < minRequired) {
+          return {
+            requireCheckboxesToBeChecked: true,
+          };
+        }
+        return null;
+      };
+    }
 
   }
 
@@ -102,4 +125,5 @@ export class EditStaffComponent implements OnInit {
       }
     })
   }
+
 }
