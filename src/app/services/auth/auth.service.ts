@@ -273,13 +273,12 @@ export class AuthService {
     });
   }
 
-  async deleteEmail(user: User): Promise<any>{
+  async deleteEmail(user: User) {
     try {
       await this.secondaryApp.auth().signInWithEmailAndPassword(user.email, user.password)
       await this.secondaryApp.auth().currentUser.delete()
-      this.successNotification()
     } catch (error) {
-      this.errorNotification()
+      console.log(error)
     }
   }
 }
