@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {Roles, User} from "../../models/user.model";
 import {Router} from "@angular/router";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import {AuthService} from "../auth/auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class UserService {
 
   constructor (
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   successNotification() {
@@ -109,9 +111,10 @@ export class UserService {
     }
   }
 
-  async deleteUserById(id: string) {
+  async deleteUserById(user: User) {
     try {
-      await this.afs.collection('users').doc(id).delete();
+      await this.afs.collection('users').doc(user.uid).delete();
+      await this.authService.deleteEmail(user)
       this.successDelete()
     } catch (err){
       this.errorDelete()
@@ -133,6 +136,12 @@ export class UserService {
     } catch (err){
       this.errorNotification()
     }
+  }
+
+  checkEmail(email: string) {
+    email = email.toLowerCase()
+    return this.afs.collection('users', (ref) => ref
+      .where('email', '==', email))
   }
 
 }

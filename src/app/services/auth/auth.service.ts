@@ -19,6 +19,7 @@ export class AuthService {
   options: Options;
   authState: any = null;
   user$: Observable<User>;
+  private secondaryApp = firebase.initializeApp(environment.firebaseConfig, "secondaryApp")
   constructor(
     protected alertService: AlertService,
     private afAuth: AngularFireAuth,
@@ -38,8 +39,6 @@ export class AuthService {
       }
     }));
   }
-
-  private secondaryApp = firebase.initializeApp(environment.firebaseConfig, "SecondaryApp")
 
   get authenticated(): boolean {
     return this.authState !== null;
@@ -231,6 +230,7 @@ export class AuthService {
     try {
       const authUser = await this.secondaryApp.auth().createUserWithEmailAndPassword(user.email, user.password)
       await this.registerUserDataToFirestore(authUser, user);
+      await this.secondaryApp.auth().signOut()
       this.successNotification()
     } catch (error) {
       this.errorNotification()
@@ -243,6 +243,7 @@ export class AuthService {
     const data: User = {
       uid: authUser.user.uid,
       email: authUser.user.email,
+      password: user.password,
       photoURL: authUser.user.photoURL,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -271,4 +272,17 @@ export class AuthService {
       this.router.navigate([`/register-staff`]);
     });
   }
+
+  async deleteEmail(user: User) {
+    try {
+      await this.secondaryApp.auth().signInWithEmailAndPassword(user.email, user.password)
+      await this.secondaryApp.auth().currentUser.delete()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  emailAuthExist(email) {
+    return firebase.auth().fetchSignInMethodsForEmail(email)
+   }
 }

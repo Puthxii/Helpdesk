@@ -46,20 +46,21 @@ export class StaffComponent implements OnInit {
     });
   }
 
-  getRoles(roles: Roles): string {
-    let role: string
+  getRoles(roles: Roles) {
+    let Supporter
+    let Maintenance
+    let Supervisor
+    let Developer
     if (roles.supporter === true) {
-      role = 'Supporter'
-    } else if (roles.maintenance === true) {
-      role = 'Maintenance'
-    } else if (roles.supervisor === true) {
-      role = 'Supervisor'
-    } else if (roles.developer === true) {
-      role = 'Developer'
-    } else {
-      role = 'Staff'
+      Supporter = 'Supporter'
+    } if (roles.maintenance === true) {
+      Maintenance = 'Maintenance'
+    } if (roles.supervisor === true) {
+      Supervisor = 'Supervisor'
+    } if (roles.developer === true) {
+      Developer = 'Developer'
     }
-    return role
+    return [Supporter, Maintenance, Supervisor, Developer].filter((role): role is string => role !== undefined).join(", ");
   }
 
   search() {
@@ -80,10 +81,10 @@ export class StaffComponent implements OnInit {
     });
   }
 
-  alertDeleteStaff(id: string, name) {
+  alertDeleteStaff(staff: User) {
     Swal.fire({
       title: 'Do you want to delete staff?',
-      text: name,
+      text: staff.name,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#2ED0B9',
@@ -91,7 +92,7 @@ export class StaffComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        this.user.deleteUserById(id)
+        this.user.deleteUserById(staff)
       }
     })
   }
