@@ -17,4 +17,5 @@ export interface User {
     mobileNumber?: string
     roles?: Roles
     photoURL?: string
+    keyword?: any
 }

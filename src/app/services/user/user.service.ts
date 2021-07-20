@@ -123,6 +123,7 @@ export class UserService {
 
   async updateUser(user: User) {
     try {
+      const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`)
       await this.afs.collection('users').doc(user.uid).update({
         uid: user.uid,
         email: user.email,
@@ -131,6 +132,7 @@ export class UserService {
         fullName: `${user.firstName}`+' '+`${user.lastName}`,
         mobileNumber: user.mobileNumber,
         roles: user.roles,
+        keyword
       })
       this.successNotification()
     } catch (err){
@@ -142,6 +144,49 @@ export class UserService {
     email = email.toLowerCase()
     return this.afs.collection('users', (ref) => ref
       .where('email', '==', email))
+  }
+
+  private async generateKeyword(fullName: string) {
+    function creatKeywords(str: string) {
+      const arrName = []
+      let curOrder = ''
+      let curName2 = ''
+      let curName3 = ''
+      let curName4 = ''
+      const chars = str.split('');
+      for (let i = 0; i < chars.length; i++) {
+        curOrder += chars[i]
+        if (chars[i + 1] != undefined) {
+          curName2 += chars[i]
+          curName2 += chars[i + 1]
+        }
+        if (chars[i + 1] && chars[i + 2] != undefined) {
+          curName3 += chars[i]
+          curName3 += chars[i + 1]
+          curName3 += chars[i + 2]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] != undefined) {
+          curName4 += chars[i]
+          curName4 += chars[i + 1]
+          curName4 += chars[i + 2]
+          curName4 += chars[i + 3]
+        }
+        arrName.push(curOrder, chars[i], curName2, curName3, curName4)
+        curName2 = ''
+        curName3 = ''
+        curName4 = ''
+      }
+      return arrName
+    }
+    const keywordSubject = await creatKeywords(fullName)
+    const keywordLowerCase = await creatKeywords(fullName.toLowerCase())
+    const keywordUpperCase = await creatKeywords(fullName.toUpperCase())
+    return [
+      '',
+      ...keywordSubject,
+      ...keywordLowerCase,
+      ...keywordUpperCase
+    ]
   }
 
 }

@@ -240,6 +240,7 @@ export class AuthService {
   private async registerUserDataToFirestore(authUser, user) {
     const path = `users/${authUser.user.uid}`;
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(path);
+    const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`)
     const data: User = {
       uid: authUser.user.uid,
       email: authUser.user.email,
@@ -250,6 +251,7 @@ export class AuthService {
       fullName: `${user.firstName}`+' '+`${user.lastName}`,
       mobileNumber: user.mobileNumber,
       roles: user.roles,
+      keyword
     };
     return userRef.set(data, { merge: true });
   }
@@ -285,4 +287,47 @@ export class AuthService {
   emailAuthExist(email) {
     return firebase.auth().fetchSignInMethodsForEmail(email)
    }
+
+  private async generateKeyword(fullName: string) {
+    function creatKeywords(str: string) {
+      const arrName = []
+      let curOrder = ''
+      let curName2 = ''
+      let curName3 = ''
+      let curName4 = ''
+      const chars = str.split('');
+      for (let i = 0; i < chars.length; i++) {
+        curOrder += chars[i]
+        if (chars[i + 1] != undefined) {
+          curName2 += chars[i]
+          curName2 += chars[i + 1]
+        }
+        if (chars[i + 1] && chars[i + 2] != undefined) {
+          curName3 += chars[i]
+          curName3 += chars[i + 1]
+          curName3 += chars[i + 2]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] != undefined) {
+          curName4 += chars[i]
+          curName4 += chars[i + 1]
+          curName4 += chars[i + 2]
+          curName4 += chars[i + 3]
+        }
+        arrName.push(curOrder, chars[i], curName2, curName3, curName4)
+        curName2 = ''
+        curName3 = ''
+        curName4 = ''
+      }
+      return arrName
+    }
+    const keywordSubject = await creatKeywords(fullName)
+    const keywordLowerCase = await creatKeywords(fullName.toLowerCase())
+    const keywordUpperCase = await creatKeywords(fullName.toUpperCase())
+    return [
+      '',
+      ...keywordSubject,
+      ...keywordLowerCase,
+      ...keywordUpperCase
+    ]
+  }
 }
