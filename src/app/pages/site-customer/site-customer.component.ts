@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Roles, User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'site-customer',
@@ -72,4 +73,19 @@ export class SiteCustomerComponent implements OnInit {
     });
   }
 
+  alertDeleteCustomer(cus: User) {
+    Swal.fire({
+      title: 'Do you want to delete staff?',
+      text: cus.name,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2ED0B9',
+      cancelButtonColor: '#9C9FA6',
+      confirmButtonText: 'Yes, I do'
+    }).then((result: { isConfirmed: any; }) => {
+      if (result.isConfirmed) {
+        this.user.deleteUserById(cus)
+      }
+    })
+  }
 }
