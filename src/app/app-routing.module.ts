@@ -28,6 +28,7 @@ import { SiteComponent } from './pages/site/site.component';
 import { SiteCustomerComponent } from './pages/site-customer/site-customer.component';
 import { ProductComponent } from './pages/product/product.component';
 import {EditStaffComponent} from "./pages/edit-staff/edit-staff.component";
+import {RegisterCustomerComponent} from "./pages/register-customer/register-customer.component";
 
 const router: Routes = [
   {
@@ -119,6 +120,10 @@ const router: Routes = [
       {
         path: 'edit-staff/:id',
         component: EditStaffComponent
+      },
+      {
+        path: 'register-customer',
+        component: RegisterCustomerComponent
       },
     ]
   },
