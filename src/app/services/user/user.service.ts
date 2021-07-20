@@ -73,12 +73,11 @@ export class UserService {
       .where('fullName', '==', name))
   }
 
-  getUserByNameSort(name: string) {
+  getUserByNameSort(keyword: string) {
     return this.afs.collection('users', (ref) => ref
       .where('roles.customer', '==', false)
-      .orderBy('fullName')
-      .startAt(name)
-      .endAt(name + '\uf8ff'));
+      .where('keyword', 'array-contains', keyword)
+    )
   }
 
   getCustomer() {
