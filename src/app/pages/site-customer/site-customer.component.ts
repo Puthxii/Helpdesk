@@ -75,7 +75,7 @@ export class SiteCustomerComponent implements OnInit {
 
   alertDeleteCustomer(cus: User) {
     Swal.fire({
-      title: 'Do you want to delete staff?',
+      title: 'Do you want to delete customer?',
       text: cus.name,
       icon: 'warning',
       showCancelButton: true,

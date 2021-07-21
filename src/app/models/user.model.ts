@@ -18,4 +18,7 @@ export interface User {
     roles?: Roles
     photoURL?: string
     keyword?: any
+    site?: string
+    siteId?: string
+    keyMan?: boolean
 }

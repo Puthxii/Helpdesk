@@ -80,8 +80,7 @@ export class RegisterCustomerComponent implements OnInit {
   }
 
   register(): void {
-    console.log(this.userForm.value)
-    // this.auth.registerUser(this.userForm.value)
+    this.auth.registerUser(this.userForm.value)
   }
 
   generatePassword() {

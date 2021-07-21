@@ -4,6 +4,7 @@ import {Roles, User} from "../../models/user.model";
 import {Router} from "@angular/router";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {AuthService} from "../auth/auth.service";
+import {firestore} from "firebase";
 
 @Injectable({
   providedIn: 'root'
@@ -111,7 +112,11 @@ export class UserService {
   }
 
   async deleteUserById(user: User) {
+    console.log(user)
     try {
+      if (user.roles.customer === true) {
+        await this.deleteSiteCustomer(user)
+      }
       await this.afs.collection('users').doc(user.uid).delete();
       await this.authService.deleteEmail(user)
       this.successDelete()
@@ -188,4 +193,14 @@ export class UserService {
     ]
   }
 
+  private async deleteSiteCustomer(user: User) {
+    try {
+      await this.afs.collection('site').doc(user.siteId).update({
+        users: firestore.FieldValue.arrayRemove(`${user.firstName}`+' '+`${user.lastName}`),
+        userId: firestore.FieldValue.arrayRemove(user.uid)
+      })
+    } catch (err){
+      console.log(err)
+    }
+  }
 }
