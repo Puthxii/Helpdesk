@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     this.auth.emailLogin(this.loginForm.value.email, this.loginForm.value.password)
   }
 
-  googleLogin(): void {
-    this.auth.googleLogin()
+  resetPassword() {
+    this.auth.resetPassword(this.loginForm.value.email)
   }
 }

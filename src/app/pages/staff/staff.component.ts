@@ -22,7 +22,11 @@ export class StaffComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getStaffList();
     this.dataState();
+  }
+
+  private getStaffList() {
     this.user.getStaffsList().snapshotChanges().subscribe(data => {
       this.Staff = [];
       data.map(items => {
@@ -35,6 +39,19 @@ export class StaffComponent implements OnInit {
 
   dataState() {
     this.user.getStaffsList().snapshotChanges().subscribe(data => {
+      this.preLoader = false;
+      if (data.length <= 0) {
+        this.hideWhenNoStaff = false;
+        this.noData = true;
+      } else {
+        this.hideWhenNoStaff = true;
+        this.noData = false;
+      }
+    });
+  }
+
+  dataStateSearch(keyword) {
+    this.user.getUserByNameSort(keyword).snapshotChanges().subscribe(data => {
       this.preLoader = false;
       if (data.length <= 0) {
         this.hideWhenNoStaff = false;
@@ -64,13 +81,16 @@ export class StaffComponent implements OnInit {
   }
 
   search() {
-    const searchValue = this.searchValue
-    if (searchValue != null) {
-      this.getUserByNameSort(searchValue)
+    if (this.searchValue !== undefined && this.searchValue !== null && this.searchValue !== '') {
+      this.getUserByNameSort(this.searchValue)
+      this.dataStateSearch(this.searchValue)
+    } else {
+      this.getStaffList()
+      this.dataState()
     }
   }
 
-  getUserByNameSort(searchValue: any) {
+  getUserByNameSort(searchValue: string) {
     this.user.getUserByNameSort(searchValue).snapshotChanges().subscribe(data => {
       this.Staff = [];
       data.map(items => {
@@ -96,4 +116,5 @@ export class StaffComponent implements OnInit {
       }
     })
   }
+
 }

@@ -4,6 +4,7 @@ import {Roles, User} from "../../models/user.model";
 import {Router} from "@angular/router";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {AuthService} from "../auth/auth.service";
+import {firestore} from "firebase";
 
 @Injectable({
   providedIn: 'root'
@@ -16,22 +17,31 @@ export class UserService {
     private authService: AuthService
   ) { }
 
-  successNotification() {
+
+  successNotification(roles: Roles) {
     Swal.fire({
-      text: 'Your staff has been saved',
+      text: 'Your user has been saved',
       icon: 'success',
     }).then((result: any) => {
-      this.router.navigate([`/staff`]);
+      if (roles.customer === true){
+        this.router.navigate([`/site-customer`]);
+      } else {
+        this.router.navigate([`/staff`]);
+      }
     });
   }
 
-  errorNotification() {
+  errorNotification(roles: Roles) {
     Swal.fire({
       icon: 'error',
       title: 'error',
-      text: 'Your staff hasn\'t been saved',
+      text: 'Your user hasn\'t been saved',
     }).then((result: any) => {
-      this.router.navigate([`/staff`]);
+      if (roles.customer === true){
+        this.router.navigate([`/edit-customer`]);
+      } else {
+        this.router.navigate([`/edit-staff`]);
+      }
     });
   }
 
@@ -73,12 +83,11 @@ export class UserService {
       .where('fullName', '==', name))
   }
 
-  getUserByNameSort(name: string) {
+  getUserByNameSort(keyword: string) {
     return this.afs.collection('users', (ref) => ref
       .where('roles.customer', '==', false)
-      .orderBy('fullName')
-      .startAt(name)
-      .endAt(name + '\uf8ff'));
+      .where('keyword', 'array-contains', keyword)
+    )
   }
 
   getCustomer() {
@@ -87,32 +96,18 @@ export class UserService {
       .orderBy('firstName', 'asc'));
   }
 
-  getCustomerByNameSort(name: string) {
+  getCustomerByNameSort(keyword: string) {
     return this.afs.collection('users', (ref) => ref
       .where('roles.customer', '==', true)
-      .orderBy('fullName')
-      .startAt(name)
-      .endAt(name + '\uf8ff'));
-  }
-
-  async addStaff(user: User){
-    try {
-      await (await this.afs.collection('users').add({
-        email: user.email,
-        name: user.name,
-        firstName: user.email,
-        lastName: user.email,
-        fullName: user.fullName,
-        mobileNumber: user.mobileNumber,
-        photoURL: user.photoURL,
-      }))
-    } catch (error) {
-      console.log(error)
-    }
+      .where('keyword', 'array-contains', keyword)
+    )
   }
 
   async deleteUserById(user: User) {
     try {
+      if (user.roles.customer === true) {
+        await this.deleteSiteCustomer(user)
+      }
       await this.afs.collection('users').doc(user.uid).delete();
       await this.authService.deleteEmail(user)
       this.successDelete()
@@ -123,6 +118,7 @@ export class UserService {
 
   async updateUser(user: User) {
     try {
+      const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`)
       await this.afs.collection('users').doc(user.uid).update({
         uid: user.uid,
         email: user.email,
@@ -131,10 +127,35 @@ export class UserService {
         fullName: `${user.firstName}`+' '+`${user.lastName}`,
         mobileNumber: user.mobileNumber,
         roles: user.roles,
+        keyword
       })
-      this.successNotification()
+      this.successNotification(user.roles)
     } catch (err){
-      this.errorNotification()
+      this.errorNotification(user.roles)
+    }
+  }
+
+  async updateCustomer(user: User) {
+    try {
+      const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`+' '+`${user.site}`)
+      await this.updateSiteCustomer(user)
+      await this.afs.collection('users').doc(user.uid).update({
+        uid: user.uid,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        fullName: `${user.firstName}`+' '+`${user.lastName}`,
+        mobileNumber: user.mobileNumber,
+        roles: user.roles,
+        site: user.site,
+        siteId: user.siteId,
+        keyMan: user.keyMan,
+        keyword
+      })
+      this.successNotification(user.roles)
+    } catch (err){
+      console.log(err)
+      this.errorNotification(user.roles)
     }
   }
 
@@ -144,4 +165,68 @@ export class UserService {
       .where('email', '==', email))
   }
 
+  private async generateKeyword(fullName: string) {
+    function creatKeywords(str: string) {
+      const arrName = []
+      let curOrder = ''
+      let curName2 = ''
+      let curName3 = ''
+      let curName4 = ''
+      const chars = str.split('');
+      for (let i = 0; i < chars.length; i++) {
+        curOrder += chars[i]
+        if (chars[i + 1] != undefined) {
+          curName2 += chars[i]
+          curName2 += chars[i + 1]
+        }
+        if (chars[i + 1] && chars[i + 2] != undefined) {
+          curName3 += chars[i]
+          curName3 += chars[i + 1]
+          curName3 += chars[i + 2]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] != undefined) {
+          curName4 += chars[i]
+          curName4 += chars[i + 1]
+          curName4 += chars[i + 2]
+          curName4 += chars[i + 3]
+        }
+        arrName.push(curOrder, chars[i], curName2, curName3, curName4)
+        curName2 = ''
+        curName3 = ''
+        curName4 = ''
+      }
+      return arrName
+    }
+    const keywordSubject = await creatKeywords(fullName)
+    const keywordLowerCase = await creatKeywords(fullName.toLowerCase())
+    const keywordUpperCase = await creatKeywords(fullName.toUpperCase())
+    return [
+      '',
+      ...keywordSubject,
+      ...keywordLowerCase,
+      ...keywordUpperCase
+    ]
+  }
+
+  private async updateSiteCustomer(user: User) {
+    try {
+      await this.afs.collection('site').doc(user.siteId).update({
+        users: firestore.FieldValue.arrayUnion(`${user.firstName}`+' '+`${user.lastName}`),
+        userId: firestore.FieldValue.arrayUnion(user.uid)
+      })
+    } catch (err){
+      console.log(err)
+    }
+  }
+
+  private async deleteSiteCustomer(user: User) {
+    try {
+      await this.afs.collection('site').doc(user.siteId).update({
+        users: firestore.FieldValue.arrayRemove(`${user.firstName}`+' '+`${user.lastName}`),
+        userId: firestore.FieldValue.arrayRemove(user.uid)
+      })
+    } catch (err){
+      console.log(err)
+    }
+  }
 }

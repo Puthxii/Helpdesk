@@ -6,11 +6,12 @@ import {firebase} from '@firebase/app';
 import {FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, TwitterAuthProvider} from '@firebase/auth-types';
 import {AlertService, Options} from '../../_alert';
 import {switchMap} from 'rxjs/operators';
-import {User} from '../../models/user.model';
+import {Roles, User} from '../../models/user.model';
 import {AngularFireDatabase, AngularFireObject} from '@angular/fire/database';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {environment} from "../../../environments/environment";
 import Swal from "sweetalert2";
+import {firestore} from "firebase";
 
 @Injectable({
   providedIn: 'root'
@@ -142,9 +143,9 @@ export class AuthService {
     const fbAuth = firebase.auth();
     try {
       await fbAuth.sendPasswordResetEmail(email);
-      return console.log('email sent');
+      this.successSent()
     } catch (error) {
-      return console.log(error);
+      this.errorSent()
     }
   }
 
@@ -229,17 +230,23 @@ export class AuthService {
   async registerUser(user: User) {
     try {
       const authUser = await this.secondaryApp.auth().createUserWithEmailAndPassword(user.email, user.password)
-      await this.registerUserDataToFirestore(authUser, user);
+      if (user.roles.customer === true) {
+        await this.registerCustomerData(authUser, user);
+        await this.updateSiteCustomer(user, authUser.user.uid)
+      } else {
+        await this.registerStaffData(authUser, user);
+      }
       await this.secondaryApp.auth().signOut()
-      this.successNotification()
+      this.successNotification(user.roles)
     } catch (error) {
-      this.errorNotification()
+      this.errorNotification(user.roles)
     }
   }
 
-  private async registerUserDataToFirestore(authUser, user) {
+  private async registerStaffData(authUser, user) {
     const path = `users/${authUser.user.uid}`;
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(path);
+    const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`)
     const data: User = {
       uid: authUser.user.uid,
       email: authUser.user.email,
@@ -250,26 +257,57 @@ export class AuthService {
       fullName: `${user.firstName}`+' '+`${user.lastName}`,
       mobileNumber: user.mobileNumber,
       roles: user.roles,
+      keyword
     };
     return userRef.set(data, { merge: true });
   }
 
-  successNotification() {
+  private async registerCustomerData(authUser, user) {
+    const path = `users/${authUser.user.uid}`;
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(path);
+    const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`+' '+`${user.site}`)
+    const data: User = {
+      uid: authUser.user.uid,
+      email: authUser.user.email,
+      password: user.password,
+      photoURL: authUser.user.photoURL,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      fullName: `${user.firstName}`+' '+`${user.lastName}`,
+      mobileNumber: user.mobileNumber,
+      roles: user.roles,
+      site: user.site,
+      siteId: user.siteId,
+      keyMan: user.keyMan,
+      keyword
+    };
+    return userRef.set(data, { merge: true });
+  }
+
+  successNotification(roles: Roles) {
     Swal.fire({
-      text: 'Your staff has been saved',
+      text: 'Your user has been saved',
       icon: 'success',
     }).then((result: any) => {
-      this.router.navigate([`/staff`]);
+      if (roles.customer === true){
+        this.router.navigate([`/site-customer`]);
+      } else {
+        this.router.navigate([`/staff`]);
+      }
     });
   }
 
-  errorNotification() {
+  errorNotification(roles: Roles) {
     Swal.fire({
       icon: 'error',
       title: 'error',
-      text: 'Your staff hasn\'t been saved',
+      text: 'Your user hasn\'t been saved',
     }).then((result: any) => {
-      this.router.navigate([`/register-staff`]);
+      if (roles.customer === true){
+        this.router.navigate([`/register-customer`]);
+      } else {
+        this.router.navigate([`/register-staff`]);
+      }
     });
   }
 
@@ -285,4 +323,73 @@ export class AuthService {
   emailAuthExist(email) {
     return firebase.auth().fetchSignInMethodsForEmail(email)
    }
+
+  private async generateKeyword(fullName: string) {
+    function creatKeywords(str: string) {
+      const arrName = []
+      let curOrder = ''
+      let curName2 = ''
+      let curName3 = ''
+      let curName4 = ''
+      const chars = str.split('');
+      for (let i = 0; i < chars.length; i++) {
+        curOrder += chars[i]
+        if (chars[i + 1] != undefined) {
+          curName2 += chars[i]
+          curName2 += chars[i + 1]
+        }
+        if (chars[i + 1] && chars[i + 2] != undefined) {
+          curName3 += chars[i]
+          curName3 += chars[i + 1]
+          curName3 += chars[i + 2]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] != undefined) {
+          curName4 += chars[i]
+          curName4 += chars[i + 1]
+          curName4 += chars[i + 2]
+          curName4 += chars[i + 3]
+        }
+        arrName.push(curOrder, chars[i], curName2, curName3, curName4)
+        curName2 = ''
+        curName3 = ''
+        curName4 = ''
+      }
+      return arrName
+    }
+    const keywordSubject = await creatKeywords(fullName)
+    const keywordLowerCase = await creatKeywords(fullName.toLowerCase())
+    const keywordUpperCase = await creatKeywords(fullName.toUpperCase())
+    return [
+      '',
+      ...keywordSubject,
+      ...keywordLowerCase,
+      ...keywordUpperCase
+    ]
+  }
+
+  private async updateSiteCustomer(user: User, uid: string) {
+    try {
+      await this.afs.collection('site').doc(user.siteId).update({
+        users: firestore.FieldValue.arrayUnion(`${user.firstName}`+' '+`${user.lastName}`),
+        userId: firestore.FieldValue.arrayUnion(uid)
+      })
+    } catch (err){
+      console.log(err)
+    }
+  }
+
+  successSent() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Email sent',
+    })
+  }
+
+  errorSent() {
+    Swal.fire({
+      icon: 'error',
+      title: 'Send email failed',
+    })
+  }
+
 }
