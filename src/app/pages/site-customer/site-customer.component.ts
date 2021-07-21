@@ -21,7 +21,11 @@ export class SiteCustomerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataState();
+    this.getCustomerList()
+    this.dataState()
+  }
+
+  private getCustomerList() {
     this.user.getCustomer().snapshotChanges().subscribe(data => {
       this.Customer = [];
       data.map(items => {
@@ -45,24 +49,31 @@ export class SiteCustomerComponent implements OnInit {
     });
   }
 
-  getRoles(roles: Roles): string {
-    let role: string
-    if (roles.customer === true) {
-      role = 'customer'
-    } else {
-      role = 'customer'
-    }
-    return role
+  dataStateSearch(keyword) {
+    this.user.getCustomerByNameSort(keyword).snapshotChanges().subscribe(data => {
+      this.preLoader = false;
+      if (data.length <= 0) {
+        this.hideWhenNoStaff = false;
+        this.noData = true;
+      } else {
+        this.hideWhenNoStaff = true;
+        this.noData = false;
+      }
+    });
   }
 
   search() {
-    const searchValue = this.searchValue
-    if (searchValue != null) {
-      this.getCustomerByNameSort(searchValue)
+    if (this.searchValue !== undefined && this.searchValue !== null && this.searchValue !== '') {
+      this.getCustomerByNameSort(this.searchValue)
+      this.dataStateSearch(this.searchValue)
+    } else {
+      this.getCustomerList()
+      this.dataState()
     }
   }
 
-  getCustomerByNameSort(searchValue: any) {
+
+  getCustomerByNameSort(searchValue: string) {
     this.user.getCustomerByNameSort(searchValue).snapshotChanges().subscribe(data => {
       this.Customer = [];
       data.map(items => {
@@ -88,4 +99,5 @@ export class SiteCustomerComponent implements OnInit {
       }
     })
   }
+
 }

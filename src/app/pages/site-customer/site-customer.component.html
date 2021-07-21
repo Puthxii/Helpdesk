@@ -44,7 +44,7 @@
             <td>{{cus.email}}</td>
             <td>{{cus.mobileNumber}}</td>
             <td>
-              <a [routerLink]="['/edit-staff', cus.uid]">
+              <a [routerLink]="['/edit-customer', cus.uid]">
                 <i class="fas fa-pen fa-lg text-warning " style="padding: 0.5em 0.6em;"></i>
               </a>
               <a (click)="alertDeleteCustomer(cus)">
@@ -54,6 +54,11 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+  <div *ngIf="Customer?.length === 0">
+    <div class="alert alert-warning" role="alert">
+      <strong>Customer you searched for could not be found.</strong>
     </div>
   </div>
 </div>

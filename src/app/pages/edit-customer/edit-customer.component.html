@@ -5,33 +5,23 @@
         <div class="header content">
           <h5>
             <i class="fas fa-user-tie"></i>
-            Edit Staff
+            Edit Customer
           </h5>
         </div>
       </div>
       <div class="card-body">
-        <form [formGroup]="userForm" (ngSubmit)="update()">
-          <input type="hidden" name="id" formControlName="uid" />
+        <form [formGroup]="userForm" (ngSubmit)="update()" >
           <div class="form-row" >
             <div class="form-group col-md-6">
               <label class="control-label" >Email</label>
               <div class="input-group">
-                <input type="text" formControlName="email" class="form-control" id="email" placeholder="Email" readonly>
+                <input type="text" formControlName="email" class="form-control" id="email" readonly>
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label class="control-label" >Mobile number</label>
+              <label class="control-label" >Site</label>
               <div class="input-group">
-                <input type="text" formControlName="mobileNumber" class="form-control" id="mobileNumber" placeholder="Mobile number"
-                       required>
-              </div>
-              <div *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)" class="col-sm-12 danger-color">
-                <div *ngIf="mobileNumber.errors.required">
-                  Mobile number is required.
-                </div>
-                <div *ngIf="mobileNumber.errors.pattern">
-                  Mobile number doesn't look quite right
-                </div>
+                <input type="text" formControlName="site" class="form-control" id="site" readonly>
               </div>
             </div>
           </div>
@@ -61,35 +51,38 @@
               </div>
             </div>
           </div>
-          <div class="form-row" formGroupName="roles">
+          <div class="form-row" >
+            <div class="form-group col-md-6">
+              <label class="control-label" >Mobile number</label>
+              <div class="input-group">
+                <input type="tel" formControlName="mobileNumber" class="form-control" id="mobileNumber" placeholder="Mobile number"
+                       required>
+              </div>
+              <div *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="mobileNumber.errors.required">
+                  Mobile number is required.
+                </div>
+                <div *ngIf="mobileNumber.errors.pattern">
+                  Mobile number doesn't look quite right
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" >
             <div class="col-md-12 col-centered">
-              <label class="control-label" >Roles</label>
               <div class="my-2 d-flex justify-content-between align-items-center">
                 <div class="form-check">
-                  <label class="form-check-label form-check-inline">
-                    <input type="checkbox" class="form-check-input" formControlName="supporter" >
-                    Supporter<i class="input-helper"></i>
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" formControlName="keyMan">
+                    Keyman<i class="input-helper"></i>
                   </label>
-                  <label class="form-check-label form-check-inline">
-                    <input type="checkbox" class="form-check-input" formControlName="maintenance">
-                    Maintenance<i class="input-helper"></i>
-                  </label>
-                  <label class="form-check-label form-check-inline">
-                    <input type="checkbox" class="form-check-input" formControlName="supervisor">
-                    Supervisor<i class="input-helper"></i>
-                  </label>
-                  <label class="form-check-label form-check-inline">
-                    <input type="checkbox" class="form-check-input" formControlName="developer">
-                    Developer<i class="input-helper"></i>
-                  </label>
-                  <div class="col-sm-12 danger-color" *ngIf="userForm.controls['roles'].errors && userForm.controls['roles'].errors.requireCheckboxesToBeChecked">At least one checkbox is required to check</div>
                 </div>
               </div>
             </div>
           </div>
           <div class="form-row" style="float: right;">
             <div class="form-group mr-2">
-              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelEditStaff()">Cancel</button>
+              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelEditCustomer()">Cancel</button>
             </div>
             <div class="form-group">
               <button type="submit" class="btn saveBtn" [disabled]="!userForm.valid">Update</button>

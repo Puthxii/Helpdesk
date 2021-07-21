@@ -90,7 +90,7 @@ export class StaffComponent implements OnInit {
     }
   }
 
-  getUserByNameSort(searchValue: any) {
+  getUserByNameSort(searchValue: string) {
     this.user.getUserByNameSort(searchValue).snapshotChanges().subscribe(data => {
       this.Staff = [];
       data.map(items => {
