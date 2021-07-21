@@ -56,8 +56,8 @@
                     Keep me signed in <i class="input-helper"></i>
                   </label>
                 </div>
-                <a class="text-muted new-member" [routerLink]="['/signup']">
-                  new member ?
+                <a class="text-muted new-member" (click)="resetPassword()">
+                  forgot password
                 </a>
               </div>
             </div>

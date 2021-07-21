@@ -143,9 +143,9 @@ export class AuthService {
     const fbAuth = firebase.auth();
     try {
       await fbAuth.sendPasswordResetEmail(email);
-      return console.log('email sent');
+      this.successSent()
     } catch (error) {
-      return console.log(error);
+      this.errorSent()
     }
   }
 
@@ -376,6 +376,20 @@ export class AuthService {
     } catch (err){
       console.log(err)
     }
+  }
+
+  successSent() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Email sent',
+    })
+  }
+
+  errorSent() {
+    Swal.fire({
+      icon: 'error',
+      title: 'Send email failed',
+    })
   }
 
 }
