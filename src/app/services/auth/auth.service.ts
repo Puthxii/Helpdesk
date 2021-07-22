@@ -41,6 +41,10 @@ export class AuthService {
     }));
   }
 
+  getAuth() {
+    return firebase.auth()
+  }
+
   get authenticated(): boolean {
     return this.authState !== null;
   }
@@ -142,7 +146,7 @@ export class AuthService {
   async resetPassword(email: string) {
     const fbAuth = firebase.auth();
     try {
-      await fbAuth.sendPasswordResetEmail(email);
+      await fbAuth.sendPasswordResetEmail(email, { url: 'http://localhost:4200/' });
       this.successSent()
     } catch (error) {
       this.errorSent()

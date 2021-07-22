@@ -30,6 +30,7 @@ import { ProductComponent } from './pages/product/product.component';
 import {EditStaffComponent} from "./pages/edit-staff/edit-staff.component";
 import {RegisterCustomerComponent} from "./pages/register-customer/register-customer.component";
 import {EditCustomerComponent} from "./pages/edit-customer/edit-customer.component";
+import {UserManageComponent} from "./pages/user-manage/user-manage.component";
 
 const router: Routes = [
   {
@@ -148,7 +149,11 @@ const router: Routes = [
         path: 'signup',
         component: SignupComponent
       },
+
     ]
+  },
+  { path: 'user-manage',
+    component: UserManageComponent
   },
   {
     path: '**',

@@ -47,6 +47,7 @@ import { Error500Component } from './error-pages/error500/error500.component';
 import { EditStaffComponent } from './pages/edit-staff/edit-staff.component';
 import { RegisterCustomerComponent } from './pages/register-customer/register-customer.component';
 import { EditCustomerComponent } from './pages/edit-customer/edit-customer.component';
+import { UserManageComponent } from './pages/user-manage/user-manage.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { EditCustomerComponent } from './pages/edit-customer/edit-customer.compo
     ProductComponent,
     EditStaffComponent,
     RegisterCustomerComponent,
-    EditCustomerComponent
+    EditCustomerComponent,
+    UserManageComponent
   ],
   imports: [
     FormsModule,
