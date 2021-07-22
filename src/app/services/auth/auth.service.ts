@@ -149,7 +149,7 @@ export class AuthService {
       await fbAuth.sendPasswordResetEmail(email, { url: 'http://localhost:4200/' });
       this.successSent()
     } catch (error) {
-      this.errorSent()
+      this.errorSent(error)
     }
   }
 
@@ -389,11 +389,25 @@ export class AuthService {
     })
   }
 
-  errorSent() {
+  errorSent(error) {
     Swal.fire({
       icon: 'error',
       title: 'Send email failed',
     })
   }
 
+  findUserByEmail(email: string) {
+    return this.afs.collection('users', (ref) => ref
+      .where('email', '==', email))
+  }
+
+  async updatePasswordById(uid: string, newPassword: string) {
+    try {
+      await this.afs.collection('users').doc(uid).update({
+        password: newPassword
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }

@@ -4,6 +4,7 @@ import {UserManagementActions} from "../../models/enum.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/auth/auth.service";
 import {takeUntil} from "rxjs/operators";
+import {User} from "../../models/user.model";
 
 @Component({
   selector: 'app-user-manage',
@@ -19,6 +20,7 @@ export class UserManageComponent implements OnInit, OnDestroy  {
   newPassword: string;
   confirmPassword: string;
   actionCodeChecked: boolean;
+  User: User[];
 
   constructor(
     private router: Router,
@@ -36,9 +38,16 @@ export class UserManageComponent implements OnInit, OnDestroy  {
         switch (params['mode']) {
           case UserManagementActions.resetPassword: {
             this.authService.getAuth().verifyPasswordResetCode(this.actionCode)
-              .then(email => {
-                this.email = email
+              .then(async email => {
                 this.actionCodeChecked = true;
+                this.email = email
+                this.authService.findUserByEmail(email).snapshotChanges().subscribe(data => {
+                  this.User = [];
+                  data.map(items => {
+                    const item = items.payload.doc.data();
+                    this.User.push(item as User)
+                  })
+                });
               }).catch(e => {
                 alert(e);
                 this.router.navigate(['/login']);
@@ -71,7 +80,8 @@ export class UserManageComponent implements OnInit, OnDestroy  {
       this.actionCode,
       this.newPassword
     )
-      .then(resp => {
+      .then( resp => {
+        this.authService.updatePasswordById(this.User[0].uid, this.newPassword);
         alert('New password has been saved');
         this.router.navigate(['/login']);
       }).catch(e => {

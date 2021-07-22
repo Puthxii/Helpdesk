@@ -1,6 +1,7 @@
-<ng-container  [ngSwitch]="mode">
+<ng-container *ngIf="actionCodeChecked" [ngSwitch]="mode">
   <!-- Reset Password -->
   <ng-container *ngSwitchCase="'resetPassword'">
+    <p>{{ email }}</p>
     <input [(ngModel)]="newPassword" type="text" id="newPassword"
            name="newPassword" placeholder="New Password"> <br>
     <input [(ngModel)]="confirmPassword" type="text"
