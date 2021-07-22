@@ -385,7 +385,7 @@ export class AuthService {
   successSent() {
     Swal.fire({
       icon: 'success',
-      title: 'Email sent',
+      title: 'Email sent'
     })
   }
 
@@ -393,6 +393,7 @@ export class AuthService {
     Swal.fire({
       icon: 'error',
       title: 'Send email failed',
+      text: error.message
     })
   }
 

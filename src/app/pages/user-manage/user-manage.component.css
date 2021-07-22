@@ -1,0 +1,41 @@
+main { padding-top: 67px; }
+
+.card-header{
+  border: none;
+}
+.card-body{
+  padding-top: 10px;
+}
+.col-centered{
+  float: none;
+  margin: 0 auto;
+}
+.btn {
+  flex: 1 1 auto;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+}
+.btn:hover {
+  background-position: right center;
+}
+.header.content > img,
+.header.content > h3 {
+  display: inline-block;
+}
+h3{
+  padding: 10px 10px 10px 10px;
+}
+.new-member{
+  margin-bottom: .5rem;
+  cursor: pointer;
+}
+
+p.thicker {
+  font-weight: 900;
+}
