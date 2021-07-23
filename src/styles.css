@@ -418,7 +418,7 @@
 }
 
 @media (min-width: 576px) {
-  .moblie-block {
+  .mobile-block {
     display: none;
   }
 }
