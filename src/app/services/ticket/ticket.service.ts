@@ -573,7 +573,7 @@ export class TicketService {
     ]
   }
 
-  private async upDateParticipantIds(id: any, userId: any, active: boolean) {
+  async upDateParticipantIds(id: string, userId: string, active: boolean) {
     await this.afs.collection('ticket').doc(id).set({
       "participantIds": {
         [userId]: active

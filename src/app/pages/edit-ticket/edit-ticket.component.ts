@@ -141,6 +141,7 @@ export class EditTicketComponent implements OnInit {
         product: this.ticket.site.product.name,
         module: this.ticket.module,
         creator: this.ticket.creator,
+        creatorName: this.ticket.creatorName,
         type: this.ticket.type,
         subject: this.ticket.subject,
         priority: this.ticket.priority,
@@ -395,6 +396,7 @@ export class EditTicketComponent implements OnInit {
       site: [''],
       module: [''],
       creator: ['', [Validators.required]],
+      creatorName: [''],
       type: ['', [Validators.required]],
       subject: ['', [
         Validators.required,
@@ -1064,6 +1066,7 @@ export class EditTicketComponent implements OnInit {
           this.setParticipant(this.tasksToSave[i].developer[j].fullName)
           this.setParticipantId(this.tasksToSave[i].developer[j].$uid)
           //todo : save Participant/Id when save task
+          this.ticketService.upDateParticipantIds(this.id, this.tasksToSave[i].developer[j].$uid, true)
         }
         this.depositDev = this.tasksToSave[i].developer
       }
@@ -1077,7 +1080,9 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToUpdate[i]
         )
-        //todo : update Participant/Id when save task
+        for (let j = 0; this.tasksToUpdate[i].developer.length > j; j++) {
+          this.ticketService.upDateParticipantIds(this.id, this.tasksToUpdate[i].developer[j].$uid, true)
+        }
       }
     }
   }
@@ -1089,7 +1094,9 @@ export class EditTicketComponent implements OnInit {
           this.id,
           this.tasksToDelete[i]
         )
-        // todo : delete Participant/Id when save task
+        for (let j = 0; this.tasksToDelete[i].developer.length > j; j++) {
+          this.ticketService.upDateParticipantIds(this.id, this.tasksToDelete[i].developer[j].$uid, false)
+        }
       }
     }
   }

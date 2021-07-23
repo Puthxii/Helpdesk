@@ -54,8 +54,8 @@
                   <input name="site" formControlName="siteName" class="form-control" id="site" readonly>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="creator" class="control-label">Creator</label>
-                  <select name="creator" formControlName="creator" class="form-control" id="creator"
+                  <label class="control-label">Creator</label>
+                  <select name="creatorName" formControlName="creatorName" class="form-control" id="creator"
                     [attr.disabled]="!auth.isSupporter(user)? true : null">
                     <option *ngFor="let user of getCreate()" [ngValue]="user">
                       {{ user }}
