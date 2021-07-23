@@ -1,13 +1,13 @@
 <div class="container-fluid">
   <section id="minimal-statistics">
     <div class="row mt-3 mb-1 searchbar">
-      <div class="col-xl-3 col-md-6 col-sm-6 col-6">
+      <div class="col-xl-2 col-md-12 col-sm-12 col-12">
         <h5 class="primary-color">
-          <i class="fas fa-ticket-alt"></i>
-          Supporter's Tickets
+          <i class="fas fa-history"></i>
+          Tickets History
         </h5>
       </div>
-      <div class="col-xl-3 col-md-6 col-sm-6 col-6">
+      <div class="col-xl-2 col-md-6 col-sm-6 col-12">
         <div class="form-check">
           <label class="form-check-label my-ticket">
             <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
@@ -16,10 +16,27 @@
           </label>
         </div>
       </div>
+      <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+        <div class="btn-group btn-save" style="float: right;">
+          <button type="button" class="btn saveBtn">
+            {{ displaySelectedStatus()}}
+          </button>
+          <button type="button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" >
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <button *ngFor="let status of CurrentStatus" type="button" class="dropdown-item"
+                    (click)="onSelectedStatus(status.name)">
+              {{status.name}}
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="col-xl-3 col-md-6 col-sm-6 col-12">
         <div class="form-group has-search mb-2">
           <span class="fa fa-search form-control-feedback"></span>
-          <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
+          <input type="search" class="form-control" [(ngModel)]="keyword" [ngModelOptions]="{standalone: true}"
                  (keyup)="search()" placeholder="Search Subject">
         </div>
       </div>
@@ -41,122 +58,6 @@
             </div>
           </div>
         </form>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Draft')">
-        <div class="card draft mt-2" [class.active]="'Draft' === activeState">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="fas fa-pen float-left mr-2"></i>
-                </div>
-                <div class="text-right">
-                  <span>Draft</span>
-                </div>
-                <div class="media-body text-right">
-                  <span>{{ CountStatus[0] }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Informed')">
-        <div class="card inform mt-2" [class.active]="'Informed' === activeState">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="fas fa-file float-left mr-2"></i>
-                </div>
-                <div class="text-right">
-                  <span>Informed</span>
-                </div>
-                <div class="media-body text-right ml-2">
-                  <span>{{ CountStatus[1] }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('More Info')">
-        <div class="card moreinfo mt-2" [class.active]="'More Info' === activeState">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="fas fa-history mr-2"></i>
-                </div>
-                <div class="text-right">
-                  <span>More Info</span>
-                </div>
-                <div class="media-body text-right ml-2">
-                  <span>{{ CountStatus[2] }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('In Progress')">
-        <div class="card in-progress mt-2" [class.active]="'In Progress' === activeState">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="fas fa-clock float-left mr-2"></i>
-                </div>
-                <div class="text-right">
-                  <span>In Progress</span>
-                </div>
-                <div class="media-body text-right ml-2">
-                  <span>{{ getSum() }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="setStatus('Resolved')">
-        <div class="card resolved mt-2" [class.active]="'Resolved' === activeState">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="fas fa-check float-left mr-2"></i>
-                </div>
-                <div class="text-right">
-                  <span>Resolved</span>
-                </div>
-                <div class="media-body text-right ml-2">
-                  <span>{{ CountStatus[6] }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-2 col-sm-6 col-12" (click)="getAllTicket('Total')">
-        <div class="card total mt-2" [class.active]="'Total' === activeState">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="fas fa-clone float-left mr-2"></i>
-                </div>
-                <div class="text-right">
-                  <span>Total</span>
-                </div>
-                <div class="media-body text-right ml-2">
-                  <span>{{ countAll }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -241,11 +142,11 @@
           </div>
           <div class="col-xl-3 col-sm-4 action">
             <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
-              (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
-            <a *ngIf="isStatusSpecial(ticket)" [routerLink]="['/edit-ticket', ticket.id]">
+               (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
+            <a [routerLink]="['/edit-ticket', ticket.id]">
               <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket" (click)="newPath(); updateMoreInfo(ticket.id)"></i>
             </a>
-            <a [routerLink]="['/detail', ticket.id]">
+            <a [routerLink]="['/detail', ticket.id]" (click)="newPath()">
               <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket"></i>
             </a>
           </div>

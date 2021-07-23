@@ -21,7 +21,10 @@ export const CurrentStatus = [
     { name: 'In Progress', icon: 'fas fa-clock mx-2' },
     { name: 'Accepted', icon: 'fas fa-check mx-2' },
     { name: 'Assigned', icon: 'fas fa-user-check mx-2' },
-    { name: 'Resolved', icon: 'fas fa-tasks mx-2' }
+    { name: 'Resolved', icon: 'fas fa-tasks mx-2' },
+    { name: 'Closed', icon: 'fas fa-check-circle mr-2' },
+    { name: 'Rejected', icon: 'fas fa-times-circle mr-2' },
+    { name: 'Pending', icon: 'fas fa-stopwatch mx-2' }
 ]
 
 export const iconAttachFile = [

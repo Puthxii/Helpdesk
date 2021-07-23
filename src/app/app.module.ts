@@ -48,6 +48,7 @@ import { EditStaffComponent } from './pages/edit-staff/edit-staff.component';
 import { RegisterCustomerComponent } from './pages/register-customer/register-customer.component';
 import { EditCustomerComponent } from './pages/edit-customer/edit-customer.component';
 import { UserManageComponent } from './pages/user-manage/user-manage.component';
+import { HistoryComponent } from './pages/history/history.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { UserManageComponent } from './pages/user-manage/user-manage.component';
     EditStaffComponent,
     RegisterCustomerComponent,
     EditCustomerComponent,
-    UserManageComponent
+    UserManageComponent,
+    HistoryComponent
   ],
   imports: [
     FormsModule,

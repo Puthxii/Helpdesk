@@ -133,7 +133,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <button type="button" class="btn back" [routerLink]="['/']" *ngIf="auth.isStaff(user)">Back</button>
+              <button type="button" class="btn back" *ngIf="auth.isStaff(user)" (click)="back()">Back</button>
               <button type="button" class="btn back" [routerLink]="['/site-ticket']"
                 *ngIf="auth.isCustomer(user)">Back</button>
             </div>

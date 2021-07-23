@@ -541,10 +541,10 @@ export class TicketComponent implements OnInit {
     return `${color}`
   }
 
-  checkDueDate(maxDueDate: { seconds: number; }) {
-    if (maxDueDate) {
+  checkDueDate(minDueDate: { seconds: number; }) {
+    if (minDueDate) {
       let isDueDate: boolean
-      const endDate = new Date(maxDueDate.seconds * 1000)
+      const endDate = new Date(minDueDate.seconds * 1000)
       const currentDate = new Date()
       isDueDate = endDate < currentDate;
       return isDueDate

@@ -1,10 +1,11 @@
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { Ticket } from '../../models/ticket.model';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import {DataService} from "../../services/data/data.service";
 
 @Component({
   selector: 'detail',
@@ -16,11 +17,14 @@ export class DetailComponent implements OnInit {
   id: string;
   user
   actions: Observable<any>
+  redirectPath: string
   constructor(
     public ticketService: TicketService,
     public route: ActivatedRoute,
     public auth: AuthService,
-  ) {
+    public router: Router,
+    private dataService: DataService
+) {
     this.route.params.subscribe(params => this.id = params.id);
   }
 
@@ -28,6 +32,7 @@ export class DetailComponent implements OnInit {
     this.auth.user$.subscribe(user => this.user = user)
     this.ticket$ = this.ticketService.getTicketById(this.id);
     this.actions = this.ticketService.getTrack(this.id).valueChanges();
+    this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
   }
 
   getDate(ticket) {
@@ -108,5 +113,8 @@ export class DetailComponent implements OnInit {
     }
   }
 
+  back() {
+    this.router.navigate([`/${this.redirectPath}`]);
+  }
 }
 
