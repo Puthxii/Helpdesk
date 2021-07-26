@@ -32,6 +32,7 @@ import {RegisterCustomerComponent} from "./pages/register-customer/register-cust
 import {EditCustomerComponent} from "./pages/edit-customer/edit-customer.component";
 import {UserManageComponent} from "./pages/user-manage/user-manage.component";
 import {HistoryComponent} from "./pages/history/history.component";
+import {AddSiteComponent} from "./pages/add-site/add-site.component";
 
 const router: Routes = [
   {
@@ -139,6 +140,10 @@ const router: Routes = [
       {
         path: 'history',
         component: HistoryComponent
+      },
+      {
+        path: 'add-site',
+        component: AddSiteComponent
       },
     ]
   },

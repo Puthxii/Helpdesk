@@ -49,6 +49,7 @@ import { RegisterCustomerComponent } from './pages/register-customer/register-cu
 import { EditCustomerComponent } from './pages/edit-customer/edit-customer.component';
 import { UserManageComponent } from './pages/user-manage/user-manage.component';
 import { HistoryComponent } from './pages/history/history.component';
+import { AddSiteComponent } from './pages/add-site/add-site.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { HistoryComponent } from './pages/history/history.component';
     RegisterCustomerComponent,
     EditCustomerComponent,
     UserManageComponent,
-    HistoryComponent
+    HistoryComponent,
+    AddSiteComponent
   ],
   imports: [
     FormsModule,
