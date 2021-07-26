@@ -67,7 +67,7 @@ export class TicketService {
     );
   }
 
-  getTicketsListByUserIdStatus(userId: any, status: any) {
+  getTicketsListByUserIdStatus(userId: string, status: string) {
     return this.afs.collection<Ticket>('ticket', ref => ref
       .where(`participantIds.${userId}`, '==', true)
       .where('status', '==', status)
