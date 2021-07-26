@@ -233,7 +233,7 @@
                   <div class="form-group col-md-12">
                     <label>Resolve Description</label>
                     <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="7"
-                      (ngModelChange)="isResolveDescription($event)" [readonly]="!auth.isDeveloper(user)">
+                      (ngModelChange)="isResolveDescription($event); changeChecked()" [readonly]="!auth.isDeveloper(user)">
                     </textarea>
                     <div class="danger-color">
                       Please fill out a Resolve description for resolve
