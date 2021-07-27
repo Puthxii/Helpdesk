@@ -1,1 +1,78 @@
-<p>add-site works!</p>
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content">
+          <h5>
+            <i class="fas fa-user-tie"></i>
+            New Site
+          </h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="siteForm" (ngSubmit)="addSite()">
+          <div class="form-row" >
+            <div class="form-group col-md-6">
+              <label class="control-label" >Initial</label>
+              <div class="input-group">
+                <input type="text" formControlName="initial" class="form-control" id="initial" placeholder="initial">
+              </div>
+              <div *ngIf="initials.invalid && (initials.dirty || initials.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="initials.errors.required">
+                  Email is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label" >Name TH</label>
+              <div class="input-group">
+                <input type="text" formControlName="nameTH" class="form-control" id="nameTH" placeholder="Name TH">
+              </div>
+              <input type="hidden" >
+              <div *ngIf="nameTH.invalid && (nameTH.dirty || nameTH.touched)" class="danger-color">
+                <div *ngIf="nameTH.errors.required">
+                  Name TH name is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" >
+            <div class="form-group col-md-6">
+              <label class="control-label" >Name EN</label>
+              <div class="input-group">
+                <input type="text" formControlName="nameEN" class="form-control" id="nameEN" placeholder="name EN"
+                       required>
+              </div>
+              <div *ngIf="nameEN.invalid && (nameEN.dirty || nameEN.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="nameEN.errors.required">
+                  nameEN is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label" >Last name</label>
+              <div class="input-group">
+                <input type="text" formControlName="productId" class="form-control" id="lastName" placeholder="Last name"
+                       required>
+              </div>
+              <div *ngIf="productId.invalid && (productId.dirty || productId.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="productId.errors.required">
+                  Product name is required.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row" style="float: right;">
+            <div class="form-group mr-2">
+              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelAddCustomer()">Cancel</button>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn saveBtn" [disabled]="!siteForm.valid">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
