@@ -26,7 +26,7 @@ export class SiteComponent implements OnInit {
       this.Site = [];
       data.map(items => {
         const item = items.payload.doc.data();
-        item['$uid'] = items.payload.doc['id'];
+        item['$key'] = items.payload.doc['id'];
         this.Site.push(item as Site)
       })
     });
@@ -57,7 +57,7 @@ export class SiteComponent implements OnInit {
       this.Site = [];
       data.map(items => {
         const item = items.payload.doc.data();
-        item['$uid'] = items.payload.doc['id'];
+        item['$key'] = items.payload.doc['id'];
         this.Site.push(item as Site)
       })
     });

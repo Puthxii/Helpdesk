@@ -27,12 +27,13 @@ import { StaffGuard } from './guards/staff.guard';
 import { SiteComponent } from './pages/site/site.component';
 import { SiteCustomerComponent } from './pages/site-customer/site-customer.component';
 import { ProductComponent } from './pages/product/product.component';
-import {EditStaffComponent} from "./pages/edit-staff/edit-staff.component";
-import {RegisterCustomerComponent} from "./pages/register-customer/register-customer.component";
-import {EditCustomerComponent} from "./pages/edit-customer/edit-customer.component";
-import {UserManageComponent} from "./pages/user-manage/user-manage.component";
-import {HistoryComponent} from "./pages/history/history.component";
-import {AddSiteComponent} from "./pages/add-site/add-site.component";
+import { EditStaffComponent } from './pages/edit-staff/edit-staff.component';
+import { RegisterCustomerComponent } from './pages/register-customer/register-customer.component';
+import { EditCustomerComponent } from './pages/edit-customer/edit-customer.component';
+import { UserManageComponent } from './pages/user-manage/user-manage.component';
+import { HistoryComponent } from './pages/history/history.component';
+import { AddSiteComponent } from './pages/add-site/add-site.component';
+import { SiteMngComponent } from './pages/site-mng/site-mng.component';
 
 const router: Routes = [
   {
@@ -145,6 +146,14 @@ const router: Routes = [
         path: 'add-site',
         component: AddSiteComponent
       },
+      {
+        path: 'site-mng',
+        component: SiteMngComponent
+      },
+      {
+        path: 'site-mng/:id',
+        component: SiteMngComponent
+      },
     ]
   },
   {
@@ -162,7 +171,8 @@ const router: Routes = [
 
     ]
   },
-  { path: 'user-manage',
+  {
+    path: 'user-manage',
     component: UserManageComponent
   },
   {

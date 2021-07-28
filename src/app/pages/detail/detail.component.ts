@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import {DataService} from "../../services/data/data.service";
+import {DataService} from '../../services/data/data.service';
 
 @Component({
   selector: 'detail',

@@ -1,5 +1,7 @@
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
+import { Product } from 'src/app/models/product.model';
+import { MaLevel } from 'src/app/models/site.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +11,7 @@ export class ProductService {
   constructor(private afs: AngularFirestore) { }
 
   getProductById(id: string) {
-    this.afs.collection('product').doc(id).ref.get().then(function (doc) {
-      if (doc.exists) {
-        console.log(doc.data());
-      } else {
-        console.log('No such document!');
-      }
-    }).catch(function (error) {
-      console.log('Error getting document:', error);
-    });
+    return this.afs.doc<Product>(`product/` + id).valueChanges();
   }
 
   getProductList() {
@@ -38,6 +32,10 @@ export class ProductService {
 
   getMaLevel() {
     return this.afs.collection('maintenanceLevel');
+  }
+
+  getMaLevelById(id: string) {
+    return this.afs.doc<MaLevel>(`maintenanceLevel/` + id).valueChanges();
   }
 
 }

@@ -44,7 +44,7 @@
             <td>{{site.nameTH}}</td>
             <td class="{{ setExpirationDate(site) }}">{{getMaPackage(site)}}</td>
             <td>
-              <a [routerLink]="['/', site.$uid]">
+              <a [routerLink]="['/site-mng', site.$key]">
                 <i class="fas fa-pen fa-lg text-warning " style="padding: 0.5em 0.6em;"></i>
               </a>
               <a (click)="alertDeleteCustomer(site)">

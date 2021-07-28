@@ -5,12 +5,17 @@ import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/internal/observable/combineLatest';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SiteService {
-  constructor(private afs: AngularFirestore) { }
+  constructor(
+    private afs: AngularFirestore,
+    private router: Router,
+  ) { }
 
   getSitesList() {
     return this.afs.collection<Site>('site').valueChanges().pipe(switchMap(Site => {
@@ -68,9 +73,13 @@ export class SiteService {
     return this.afs.collection('province')
   }
 
+  getSiteById(id: string) {
+    return this.afs.doc<Site>(`site/` + id).valueChanges();
+  }
+
   async addSite(site: Site) {
     try {
-      await (await this.afs.collection('site').add({
+      (await this.afs.collection('site').add({
         initials: site.initials,
         nameEN: site.nameEN,
         nameTH: site.nameTH,
@@ -78,10 +87,32 @@ export class SiteService {
         maLevelId: site.maLevelId,
         maStartDate: site.maStartDate,
         maEndDate: site.maEndDate,
+        module: site.module,
         addresses: site.addresses
+      }).then((docRef) => {
+        this.successNotification('site-mng', docRef.id)
       }))
     } catch (error) {
       console.log(error);
     }
+  }
+
+  successNotification(path: string, data?: any | null) {
+    Swal.fire({
+      text: 'Your site has been saved',
+      icon: 'success',
+    }).then((result: any) => {
+      this.router.navigate([`/${path}/${data}`]);
+    });
+  }
+
+  errorNotification(path: string) {
+    Swal.fire({
+      icon: 'error',
+      title: 'error',
+      text: 'Your site hasn\'t been saved',
+    }).then((result: any) => {
+      this.router.navigate([`/${path}`]);
+    });
   }
 }

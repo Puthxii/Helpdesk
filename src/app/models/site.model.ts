@@ -11,6 +11,7 @@ export interface Site {
   product: Product;
   maStartDate: any;
   maEndDate: any;
+  module: any
   addresses: Addresses[]
 }
 

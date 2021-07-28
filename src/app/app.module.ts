@@ -50,6 +50,8 @@ import { EditCustomerComponent } from './pages/edit-customer/edit-customer.compo
 import { UserManageComponent } from './pages/user-manage/user-manage.component';
 import { HistoryComponent } from './pages/history/history.component';
 import { AddSiteComponent } from './pages/add-site/add-site.component';
+import { SiteMngComponent } from './pages/site-mng/site-mng.component';
+import { SiteGeneralComponent } from './components/site-general/site-general.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,9 @@ import { AddSiteComponent } from './pages/add-site/add-site.component';
     EditCustomerComponent,
     UserManageComponent,
     HistoryComponent,
-    AddSiteComponent
+    AddSiteComponent,
+    SiteMngComponent,
+    SiteGeneralComponent
   ],
   imports: [
     FormsModule,

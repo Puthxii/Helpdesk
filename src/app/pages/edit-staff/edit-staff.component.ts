@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../services/user/user.service";
-import {User} from "../../models/user.model";
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { UserService } from "../../services/user/user.service";
+import { User } from "../../models/user.model";
 import Swal from "sweetalert2";
 
 @Component({
@@ -14,7 +14,7 @@ export class EditStaffComponent implements OnInit {
   userForm: FormGroup;
   id: string;
   user: User
-  constructor (
+  constructor(
     private fb: FormBuilder,
     public route: ActivatedRoute,
     public userService: UserService,
@@ -25,7 +25,7 @@ export class EditStaffComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.userService.getUserById(this.id).valueChanges().subscribe( data => {
+    this.userService.getUserById(this.id).valueChanges().subscribe(data => {
       this.user = data as User
       this.userForm.patchValue({
         uid: this.user.uid,
@@ -53,23 +53,23 @@ export class EditStaffComponent implements OnInit {
         Validators.pattern('[- +()0-9]+')
       ]],
       roles: new FormGroup({
-          supporter: new FormControl(false),
-          maintenance: new FormControl(false),
-          supervisor: new FormControl(false),
-          developer: new FormControl(false),
-          customer: new FormControl(false),
-        }, requireCheckboxesToBeCheckedValidator()
+        supporter: new FormControl(false),
+        maintenance: new FormControl(false),
+        supervisor: new FormControl(false),
+        developer: new FormControl(false),
+        customer: new FormControl(false),
+      }, requireCheckboxesToBeCheckedValidator()
       ),
     })
 
     function requireCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
-      return function validate (formGroup: FormGroup) {
+      return function validate(formGroup: FormGroup) {
         let checked = 0;
 
         Object.keys(formGroup.controls).forEach(key => {
           const control = formGroup.controls[key];
           if (control.value === true) {
-            checked ++;
+            checked++;
           }
         });
         if (checked < minRequired) {
