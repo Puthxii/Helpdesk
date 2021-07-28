@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth/auth.service";
-import {Router} from "@angular/router";
-import {UserService} from "../../services/user/user.service";
-import Swal from "sweetalert2";
-import {SiteService} from "../../services/site/site.service";
-import {Observable} from "rxjs";
-import {Site} from "../../models/site.model";
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
+import { UserService } from '../../services/user/user.service';
+import Swal from 'sweetalert2';
+import { SiteService } from '../../services/site/site.service';
+import { Observable } from 'rxjs';
+import { Site } from '../../models/site.model';
 
 @Component({
   selector: 'app-register-customer',
@@ -17,14 +17,14 @@ export class RegisterCustomerComponent implements OnInit {
   userForm: FormGroup;
   emailAlreadyExists
   site$: Observable<any>;
-  constructor (
+  Site: any[];
+  constructor(
     private fb: FormBuilder,
     private auth: AuthService,
     public router: Router,
     private userService: UserService,
     private siteService: SiteService
-  )
-  { }
+  ) { }
 
   ngOnInit() {
     this.buildForm();
@@ -49,12 +49,12 @@ export class RegisterCustomerComponent implements OnInit {
       siteId: [''],
       keyMan: false,
       roles: new FormGroup({
-          supporter: new FormControl(false),
-          maintenance: new FormControl(false),
-          supervisor: new FormControl(false),
-          developer: new FormControl(false),
-          customer: new FormControl(true),
-        }
+        supporter: new FormControl(false),
+        maintenance: new FormControl(false),
+        supervisor: new FormControl(false),
+        developer: new FormControl(false),
+        customer: new FormControl(true),
+      }
       ),
     })
   }
@@ -117,14 +117,21 @@ export class RegisterCustomerComponent implements OnInit {
   }
 
   getSiteId(site: string) {
-    this.siteService.getSiteByName(site).subscribe((siteData: Site[]) => {
-      this.setSiteId(siteData);
+    this.siteService.getSitesByName(site).snapshotChanges().subscribe(data => {
+      this.Site = [];
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['$key'] = items.payload.doc['id'];
+        this.Site.push(item as Site)
+        this.setSiteId(this.Site[0].$key);
+      })
     });
   }
 
-  private setSiteId(siteData: Site[]) {
+  private setSiteId(id: string) {
     this.userForm.patchValue({
-      siteId: siteData[0].sid
+      siteId: id
     });
   }
+
 }

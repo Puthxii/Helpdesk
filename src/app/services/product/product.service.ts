@@ -32,4 +32,12 @@ export class ProductService {
       .endAt(name + '\uf8ff'));
   }
 
+  getModule() {
+    return this.afs.collection('module');
+  }
+
+  getMaLevel() {
+    return this.afs.collection('maintenanceLevel');
+  }
+
 }

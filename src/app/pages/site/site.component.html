@@ -16,7 +16,7 @@
         <div class="form-group has-search mb-2">
           <span class="fa fa-search form-control-feedback"></span>
           <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
-                 (keyup)="search()" placeholder="Search name or initials name">
+            (keyup)="search()" placeholder="Search name or initials name">
         </div>
       </div>
     </div>
@@ -27,31 +27,31 @@
     <div class="table-responsive" *ngIf="hideWhenNoStaff">
       <table class="table table-striped table-responsive-sm table-responsive-md table-responsive-lg bg-white">
         <thead>
-        <tr>
-          <th scope="col">No</th>
-          <th scope="col">Initials</th>
-          <th scope="col">Name</th>
-          <th scope="col">Name TH</th>
-          <th scope="col">Maintenance Date</th>
-          <th></th>
-        </tr>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Initials</th>
+            <th scope="col">Name</th>
+            <th scope="col">Name TH</th>
+            <th scope="col">Maintenance Date</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let site of Site ; let i = index;">
-          <td>{{i+1}}</td>
-          <td>{{site.initials}}</td>
-          <td>{{site.nameEN}}</td>
-          <td>{{site.nameTH}}</td>
-          <td class="{{ setExpirationDate(site) }}">{{getMaPackage(site)}}</td>
-          <td>
-            <a [routerLink]="['/edit-customer', site.sid]">
-              <i class="fas fa-pen fa-lg text-warning " style="padding: 0.5em 0.6em;"></i>
-            </a>
-            <a (click)="alertDeleteCustomer(site)">
-              <i class="fas fa-trash fa-lg text-danger"></i>
-            </a>
-          </td>
-        </tr>
+          <tr *ngFor="let site of Site ; let i = index;">
+            <td>{{i+1}}</td>
+            <td>{{site.initials}}</td>
+            <td>{{site.nameEN}}</td>
+            <td>{{site.nameTH}}</td>
+            <td class="{{ setExpirationDate(site) }}">{{getMaPackage(site)}}</td>
+            <td>
+              <a [routerLink]="['/', site.$uid]">
+                <i class="fas fa-pen fa-lg text-warning " style="padding: 0.5em 0.6em;"></i>
+              </a>
+              <a (click)="alertDeleteCustomer(site)">
+                <i class="fas fa-trash fa-lg text-danger"></i>
+              </a>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

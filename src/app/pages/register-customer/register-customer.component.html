@@ -11,12 +11,12 @@
       </div>
       <div class="card-body">
         <form [formGroup]="userForm" (ngSubmit)="register()" *ngIf="site$ | async; let Site">
-          <div class="form-row" >
+          <div class="form-row">
             <div class="form-group col-md-6">
-              <label class="control-label" >Email</label>
+              <label class="control-label">Email</label>
               <div class="input-group">
-                <input type="text" formControlName="email" class="form-control" id="email" placeholder="Email"
-                       required (ngModelChange)="checkEmailExist()">
+                <input type="text" formControlName="email" class="form-control" id="email" placeholder="Email" required
+                  (ngModelChange)="checkEmailExist()">
               </div>
               <div *ngIf="email.invalid && (email.dirty || email.touched)" class="col-sm-12 danger-color">
                 <div *ngIf="email.errors.required">
@@ -28,19 +28,20 @@
               </div>
               <div *ngIf="userForm.controls.email.value && validateEmail()" class="col-sm-12">
                 <p class="success-color" *ngIf="!emailAlreadyExists">{{userForm.controls.email.value}} is available</p>
-                <p class="danger-color" *ngIf="emailAlreadyExists">{{userForm.controls.email.value}} has already been taken</p>
+                <p class="danger-color" *ngIf="emailAlreadyExists">{{userForm.controls.email.value}} has already been
+                  taken</p>
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label class="control-label" >Site</label>
+              <label class="control-label">Site</label>
               <select name="site" formControlName="site" class="form-control" id="site"
-                      (ngModelChange)="getSiteId($event)">
+                (ngModelChange)="getSiteId($event)">
                 <option value="">choose site...</option>
                 <option *ngFor=" let site of Site" [ngValue]="site.initials">
                   {{ site.nameEN? site.nameEN : '-' }}
                 </option>
               </select>
-              <input type="hidden" >
+              <input type="hidden">
               <div *ngIf="site.invalid && (site.dirty || site.touched)" class="danger-color">
                 <div *ngIf="site.errors.required">
                   Site name is required.
@@ -48,12 +49,12 @@
               </div>
             </div>
           </div>
-          <div class="form-row" >
+          <div class="form-row">
             <div class="form-group col-md-6">
-              <label class="control-label" >Name</label>
+              <label class="control-label">Name</label>
               <div class="input-group">
                 <input type="text" formControlName="firstName" class="form-control" id="name" placeholder="Name"
-                       required>
+                  required>
               </div>
               <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="col-sm-12 danger-color">
                 <div *ngIf="firstName.errors.required">
@@ -62,10 +63,10 @@
               </div>
             </div>
             <div class="form-group col-md-6">
-              <label class="control-label" >Last name</label>
+              <label class="control-label">Last name</label>
               <div class="input-group">
                 <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Last name"
-                       required>
+                  required>
               </div>
               <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="col-sm-12 danger-color">
                 <div *ngIf="lastName.errors.required">
@@ -74,14 +75,15 @@
               </div>
             </div>
           </div>
-          <div class="form-row" >
+          <div class="form-row">
             <div class="form-group col-md-6">
-              <label class="control-label" >Mobile number</label>
+              <label class="control-label">Mobile number</label>
               <div class="input-group">
-                <input type="tel" formControlName="mobileNumber" class="form-control" id="mobileNumber" placeholder="Mobile number"
-                       required>
+                <input type="tel" formControlName="mobileNumber" class="form-control" id="mobileNumber"
+                  placeholder="Mobile number" required>
               </div>
-              <div *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)" class="col-sm-12 danger-color">
+              <div *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)"
+                class="col-sm-12 danger-color">
                 <div *ngIf="mobileNumber.errors.required">
                   Mobile number is required.
                 </div>
@@ -91,7 +93,7 @@
               </div>
             </div>
           </div>
-          <div class="form-row" >
+          <div class="form-row">
             <div class="col-md-12 col-centered">
               <div class="my-2 d-flex justify-content-between align-items-center">
                 <div class="form-check">

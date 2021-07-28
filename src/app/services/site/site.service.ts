@@ -59,4 +59,29 @@ export class SiteService {
       .startAt(name)
       .endAt(name + '\uf8ff'));
   }
+
+  getSitesByName(site: string) {
+    return this.afs.collection('site', (ref) => ref.where('initials', '==', site))
+  }
+
+  getProvinces() {
+    return this.afs.collection('province')
+  }
+
+  async addSite(site: Site) {
+    try {
+      await (await this.afs.collection('site').add({
+        initials: site.initials,
+        nameEN: site.nameEN,
+        nameTH: site.nameTH,
+        productId: site.productId,
+        maLevelId: site.maLevelId,
+        maStartDate: site.maStartDate,
+        maEndDate: site.maEndDate,
+        addresses: site.addresses
+      }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

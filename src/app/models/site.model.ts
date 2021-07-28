@@ -3,7 +3,6 @@ import { Product } from './product.model';
 
 export interface Site {
   $key: string;
-  sid: string;
   initials: string;
   nameEN: string;
   nameTH: string;
@@ -12,7 +11,7 @@ export interface Site {
   product: Product;
   maStartDate: any;
   maEndDate: any;
-  addresses : Addresses[]
+  addresses: Addresses[]
 }
 
 export interface MaLevel {
@@ -22,8 +21,8 @@ export interface MaLevel {
 
 
 export interface Addresses {
-  street : string;
-  city : string;
-  province : string;
-  zipCode : string;
+  street: string;
+  city: string;
+  province: string;
+  zipCode: string;
 }
