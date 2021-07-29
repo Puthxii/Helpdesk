@@ -18,12 +18,14 @@ export class UserService {
   ) { }
 
 
-  successNotification(roles: Roles) {
+  successNotification(roles: Roles, sid?: string | null) {
     Swal.fire({
       text: 'Your user has been saved',
       icon: 'success',
     }).then((result: any) => {
-      if (roles.customer === true) {
+      if (sid) {
+        this.router.navigate([`/site-mng/${sid}`])
+      } else if (roles.customer === true) {
         this.router.navigate([`/site-customer`]);
       } else {
         this.router.navigate([`/staff`]);
@@ -135,7 +137,7 @@ export class UserService {
     }
   }
 
-  async updateCustomer(user: User) {
+  async updateCustomer(user: User, sid?: string | null) {
     try {
       const keyword = await this.generateKeyword(`${user.firstName}` + ' ' + `${user.lastName}` + ' ' + `${user.site}`)
       await this.updateSiteCustomer(user)
@@ -152,7 +154,7 @@ export class UserService {
         keyMan: user.keyMan,
         keyword
       })
-      this.successNotification(user.roles)
+      this.successNotification(user.roles, sid)
     } catch (err) {
       console.log(err)
       this.errorNotification(user.roles)
@@ -228,5 +230,11 @@ export class UserService {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  getCustomerBySiteId(siteId: string) {
+    return this.afs.collection('users', (ref) => ref
+      .where('siteId', '==', siteId)
+    )
   }
 }

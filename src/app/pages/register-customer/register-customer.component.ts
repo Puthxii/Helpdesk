@@ -100,7 +100,7 @@ export class RegisterCustomerComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        this.router.navigate([`/customer`]);
+        this.router.navigate([`/site-customer`]);
       }
     })
   }

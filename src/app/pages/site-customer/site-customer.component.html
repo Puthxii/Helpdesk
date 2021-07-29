@@ -16,7 +16,7 @@
         <div class="form-group has-search mb-2">
           <span class="fa fa-search form-control-feedback"></span>
           <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
-                 (keyup)="search()" placeholder="Search name or site">
+            (keyup)="search()" placeholder="Search name or site">
         </div>
       </div>
     </div>
@@ -45,10 +45,10 @@
             <td>{{cus.mobileNumber}}</td>
             <td>
               <a [routerLink]="['/edit-customer', cus.uid]">
-                <i class="fas fa-pen fa-lg text-warning " style="padding: 0.5em 0.6em;"></i>
+                <i class="fas fa-pen fa-lg warning-color " style="padding: 0.5em 0.6em;"></i>
               </a>
               <a (click)="alertDeleteCustomer(cus)">
-                <i class="fas fa-trash fa-lg text-danger"></i>
+                <i class="fas fa-trash fa-lg danger-color"></i>
               </a>
             </td>
           </tr>

@@ -139,6 +139,10 @@ const router: Routes = [
         component: EditCustomerComponent
       },
       {
+        path: 'edit-customer/:id/:sid',
+        component: EditCustomerComponent
+      },
+      {
         path: 'history',
         component: HistoryComponent
       },

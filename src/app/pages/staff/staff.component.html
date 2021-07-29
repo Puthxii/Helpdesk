@@ -45,10 +45,10 @@
             <td>{{staff.mobileNumber}}</td>
             <td>
               <a [routerLink]="['/edit-staff', staff.uid]">
-                <i class="fas fa-pen fa-lg text-warning " style="padding: 0.5em 0.6em;"></i>
+                <i class="fas fa-pen fa-lg warning-color" style="padding: 0.5em 0.6em;"></i>
               </a>
               <a (click)="alertDeleteStaff(staff)">
-                <i class="fas fa-trash fa-lg text-danger"></i>
+                <i class="fas fa-trash fa-lg danger-color"></i>
               </a>
             </td>
           </tr>
