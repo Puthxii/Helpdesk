@@ -43,7 +43,7 @@ export class SiteGeneralComponent implements OnInit {
   Module: any[];
   moduleList: any;
   Provinces: any[];
-  minDate(event: IMyDateModel): IMyDate {
+  minDate(event: any): IMyDate {
     let date: Date
     if (typeof event.singleDate.jsDate.seconds === 'undefined') {
       date = event.singleDate.jsDate
@@ -56,7 +56,7 @@ export class SiteGeneralComponent implements OnInit {
     return { year, month, day }
   }
 
-  maxDate(event: IMyDateModel): IMyDate {
+  maxDate(event: any): IMyDate {
     let date: Date
     if (typeof event.singleDate.jsDate.seconds === 'undefined') {
       date = event.singleDate.jsDate
