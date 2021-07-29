@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content">
+          <h5>
+            <i class="fas fa-layer-group"></i>
+            New Product
+          </h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="productForm" (ngSubmit)="editProduct()">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="control-label">Product Name</label>
+              <div class="input-group">
+                <input type="text" formControlName="name" class="form-control" id="nameTH" placeholder="Product Name">
+              </div>
+              <div *ngIf="name.invalid && (name.dirty || name.touched)" class="danger-color">
+                <div *ngIf="name.errors.required">
+                  name is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label">Status</label>
+              <select name="active" formControlName="active" class="form-control" id="active">
+                <option value="">choose status ...</option>
+                <option *ngFor=" let stt of Status" [ngValue]="stt">
+                  {{stt}}
+                </option>
+              </select>
+              <div *ngIf="active.invalid && (active.dirty || active.touched)" class="danger-color">
+                <div *ngIf="active.errors.required">
+                  status is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" style="float: right;">
+            <div class="form-group mr-2">
+              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelEditProduct()">Cancel</button>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn saveBtn" [disabled]="!productForm.valid">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.control-label::after {
+  content: " *";
+  color: #FE8896;
+}
+
+.card-header {
+  border: none;
+}

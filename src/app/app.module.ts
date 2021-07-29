@@ -54,6 +54,8 @@ import { SiteMngComponent } from './pages/site-mng/site-mng.component';
 import { SiteGeneralComponent } from './components/site-general/site-general.component';
 import { SiteServeComponent } from './components/site-serve/site-serve.component';
 import { SiteContactComponent } from './components/site-contact/site-contact.component';
+import { AddProductComponent } from './pages/add-product/add-product.component';
+import { EditProductComponent } from './pages/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +98,9 @@ import { SiteContactComponent } from './components/site-contact/site-contact.com
     SiteMngComponent,
     SiteGeneralComponent,
     SiteServeComponent,
-    SiteContactComponent
+    SiteContactComponent,
+    AddProductComponent,
+    EditProductComponent
   ],
   imports: [
     FormsModule,

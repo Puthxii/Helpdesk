@@ -34,6 +34,8 @@ import { UserManageComponent } from './pages/user-manage/user-manage.component';
 import { HistoryComponent } from './pages/history/history.component';
 import { AddSiteComponent } from './pages/add-site/add-site.component';
 import { SiteMngComponent } from './pages/site-mng/site-mng.component';
+import { AddProductComponent } from './pages/add-product/add-product.component';
+import { EditProductComponent } from './pages/edit-product/edit-product.component';
 
 const router: Routes = [
   {
@@ -161,6 +163,18 @@ const router: Routes = [
       {
         path: 'site-mng/:id',
         component: SiteMngComponent
+      },
+      {
+        path: 'add-product',
+        component: AddProductComponent
+      },
+      {
+        path: 'edit-product',
+        component: EditProductComponent
+      },
+      {
+        path: 'edit-product/:id',
+        component: EditProductComponent
       },
     ]
   },

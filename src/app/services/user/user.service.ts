@@ -1,10 +1,10 @@
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Roles, User } from "../../models/user.model";
-import { Router } from "@angular/router";
+import { Roles, User } from '../../models/user.model';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import { AuthService } from "../auth/auth.service";
-import { firestore } from "firebase";
+import { AuthService } from '../auth/auth.service';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +51,7 @@ export class UserService {
     Swal.fire({
       icon: 'success',
       title: 'deleted',
-      text: 'Your staff has been deleted',
+      text: 'Your user has been deleted',
     })
   }
 
@@ -59,10 +59,9 @@ export class UserService {
     Swal.fire({
       icon: 'error',
       title: 'error',
-      text: 'Your staff hasn\'t  been deleted',
+      text: 'Your user hasn\'t  been deleted',
     })
   }
-
 
   getStaffsList() {
     return this.afs.collection('users', (ref) => ref
