@@ -64,21 +64,28 @@ export class SiteComponent implements OnInit {
   }
 
   getMaPackage(site: Site) {
-    const startDate = moment(site.maStartDate.seconds * 1000).format('L');
-    const endDate = moment(site.maEndDate.seconds * 1000).format('L');
-    return startDate + ' - ' + endDate;
+    if (site.maStartDate.singleDate) {
+      const startDate = moment(site.maStartDate.singleDate.jsDate.seconds * 1000).format('L');
+      const endDate = moment(site.maEndDate.singleDate.jsDate.seconds * 1000).format('L');
+      return startDate + ' - ' + endDate;
+    }
+    return 'invalid'
+
   }
 
   setExpirationDate(site: Site) {
     let color = ''
-    const endDate = new Date(site.maEndDate.seconds * 1000)
-    const currentDate = new Date()
-    if (endDate > currentDate) {
-      color = 'currentDate'
-    } else {
-      color = 'expirationDate'
+    if (site.maStartDate.singleDate) {
+      const endDate = new Date(site.maEndDate.singleDate.jsDate.seconds * 1000)
+      const currentDate = new Date()
+      if (endDate > currentDate) {
+        color = 'currentDate'
+      } else {
+        color = 'expirationDate'
+      }
+      return color
     }
-    return color
+    return color = 'expirationDate'
   }
 
 }

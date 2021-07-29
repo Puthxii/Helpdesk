@@ -135,8 +135,6 @@ export class AddSiteComponent implements OnInit {
 
 
   addSite() {
-    this.reformeteStartDate(this.siteForm.controls.maStartDate.value)
-    this.reformeteEndDate(this.siteForm.controls.maEndDate.value)
     this.site.addSite(this.siteForm.value)
   }
 

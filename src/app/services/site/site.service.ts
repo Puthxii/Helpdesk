@@ -97,6 +97,26 @@ export class SiteService {
     }
   }
 
+  async updateSite(site: Site, id: string) {
+    try {
+      (await this.afs.collection('site').doc(id).update({
+        initials: site.initials,
+        nameEN: site.nameEN,
+        nameTH: site.nameTH,
+        productId: site.productId,
+        maLevelId: site.maLevelId,
+        maStartDate: site.maStartDate,
+        maEndDate: site.maEndDate,
+        module: site.module,
+        addresses: site.addresses
+      }).then(() => {
+        this.successNotification('site-mng', id)
+      }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   successNotification(path: string, data?: any | null) {
     Swal.fire({
       text: 'Your site has been saved',
