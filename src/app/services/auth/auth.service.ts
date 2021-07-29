@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {Observable, of} from 'rxjs';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {firebase} from '@firebase/app';
-import {FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, TwitterAuthProvider} from '@firebase/auth-types';
-import {AlertService, Options} from '../../_alert';
-import {switchMap} from 'rxjs/operators';
-import {Roles, User} from '../../models/user.model';
-import {AngularFireDatabase, AngularFireObject} from '@angular/fire/database';
-import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {environment} from "../../../environments/environment";
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { firebase } from '@firebase/app';
+import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, TwitterAuthProvider } from '@firebase/auth-types';
+import { AlertService, Options } from '../../_alert';
+import { switchMap } from 'rxjs/operators';
+import { Roles, User } from '../../models/user.model';
+import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { environment } from "../../../environments/environment";
 import Swal from "sweetalert2";
-import {firestore} from "firebase";
+import { firestore } from "firebase";
 
 @Injectable({
   providedIn: 'root'
@@ -231,7 +231,7 @@ export class AuthService {
     return false;
   }
 
-  async registerUser(user: User) {
+  async registerUser(user: User, sid?: string | null) {
     try {
       const authUser = await this.secondaryApp.auth().createUserWithEmailAndPassword(user.email, user.password)
       if (user.roles.customer === true) {
@@ -241,7 +241,7 @@ export class AuthService {
         await this.registerStaffData(authUser, user);
       }
       await this.secondaryApp.auth().signOut()
-      this.successNotification(user.roles)
+      this.successNotification(user.roles, sid)
     } catch (error) {
       this.errorNotification(user.roles)
     }
@@ -250,7 +250,7 @@ export class AuthService {
   private async registerStaffData(authUser, user) {
     const path = `users/${authUser.user.uid}`;
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(path);
-    const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`)
+    const keyword = await this.generateKeyword(`${user.firstName}` + ' ' + `${user.lastName}`)
     const data: User = {
       uid: authUser.user.uid,
       email: authUser.user.email,
@@ -258,7 +258,7 @@ export class AuthService {
       photoURL: authUser.user.photoURL,
       firstName: user.firstName,
       lastName: user.lastName,
-      fullName: `${user.firstName}`+' '+`${user.lastName}`,
+      fullName: `${user.firstName}` + ' ' + `${user.lastName}`,
       mobileNumber: user.mobileNumber,
       roles: user.roles,
       keyword
@@ -269,7 +269,7 @@ export class AuthService {
   private async registerCustomerData(authUser, user) {
     const path = `users/${authUser.user.uid}`;
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(path);
-    const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`+' '+`${user.site}`)
+    const keyword = await this.generateKeyword(`${user.firstName}` + ' ' + `${user.lastName}` + ' ' + `${user.site}`)
     const data: User = {
       uid: authUser.user.uid,
       email: authUser.user.email,
@@ -277,7 +277,7 @@ export class AuthService {
       photoURL: authUser.user.photoURL,
       firstName: user.firstName,
       lastName: user.lastName,
-      fullName: `${user.firstName}`+' '+`${user.lastName}`,
+      fullName: `${user.firstName}` + ' ' + `${user.lastName}`,
       mobileNumber: user.mobileNumber,
       roles: user.roles,
       site: user.site,
@@ -288,12 +288,14 @@ export class AuthService {
     return userRef.set(data, { merge: true });
   }
 
-  successNotification(roles: Roles) {
+  successNotification(roles: Roles, sid?: string | null) {
     Swal.fire({
       text: 'Your user has been saved',
       icon: 'success',
     }).then((result: any) => {
-      if (roles.customer === true){
+      if (sid) {
+        this.router.navigate([`/site-mng/${sid}`])
+      } else if (roles.customer === true) {
         this.router.navigate([`/site-customer`]);
       } else {
         this.router.navigate([`/staff`]);
@@ -307,7 +309,7 @@ export class AuthService {
       title: 'error',
       text: 'Your user hasn\'t been saved',
     }).then((result: any) => {
-      if (roles.customer === true){
+      if (roles.customer === true) {
         this.router.navigate([`/register-customer`]);
       } else {
         this.router.navigate([`/register-staff`]);
@@ -326,7 +328,7 @@ export class AuthService {
 
   emailAuthExist(email) {
     return firebase.auth().fetchSignInMethodsForEmail(email)
-   }
+  }
 
   private async generateKeyword(fullName: string) {
     function creatKeywords(str: string) {
@@ -374,10 +376,10 @@ export class AuthService {
   private async updateSiteCustomer(user: User, uid: string) {
     try {
       await this.afs.collection('site').doc(user.siteId).update({
-        users: firestore.FieldValue.arrayUnion(`${user.firstName}`+' '+`${user.lastName}`),
+        users: firestore.FieldValue.arrayUnion(`${user.firstName}` + ' ' + `${user.lastName}`),
         userId: firestore.FieldValue.arrayUnion(uid)
       })
-    } catch (err){
+    } catch (err) {
       console.log(err)
     }
   }

@@ -13,7 +13,7 @@ import { User } from 'src/app/models/user.model';
 import { IAngularMyDpOptions, IMyDate, IMyDateModel } from 'angular-mydatepicker';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import {DataService} from "../../services/data/data.service";
+import { DataService } from '../../services/data/data.service';
 
 @Component({
   selector: 'app-add-ticket',
@@ -129,6 +129,15 @@ export class AddTicketComponent implements OnInit {
     disableUntil: this.minDate(),
     disableSince: this.maxDate()
   };
+  redirectPath: string
+  private static formatDate(date: Date) {
+    let month = '' + (date.getMonth() + 1);
+    let day = '' + date.getDate();
+    const year = date.getFullYear();
+    if (month.length < 2) { month = '0' + month; }
+    if (day.length < 2) { day = '0' + day; }
+    return [day, month, year].join('/');
+  }
   minDate(): IMyDate {
     const date = new Date()
     const day = date.getDate()
@@ -143,7 +152,6 @@ export class AddTicketComponent implements OnInit {
     const year = date.getFullYear()
     return { year, month, day }
   }
-  redirectPath: string
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
@@ -231,7 +239,7 @@ export class AddTicketComponent implements OnInit {
 
   setParticipantIdsCustomer() {
     this.addTicketForm.patchValue({
-      userId : 'customerId'
+      userId: 'customerId'
     });
   }
 
@@ -249,7 +257,7 @@ export class AddTicketComponent implements OnInit {
 
   setParticipantIds() {
     this.addTicketForm.patchValue({
-      userId :this.user$.uid
+      userId: this.user$.uid
     });
   }
 
@@ -483,15 +491,6 @@ export class AddTicketComponent implements OnInit {
         }
       }
     });
-  }
-
-  private static formatDate(date: Date) {
-    let month = '' + (date.getMonth() + 1);
-    let day = '' + date.getDate();
-    const year = date.getFullYear();
-    if (month.length < 2) { month = '0' + month; }
-    if (day.length < 2) { day = '0' + day; }
-    return [day, month, year].join('/');
   }
 
   getCustomerContact(name: string) {

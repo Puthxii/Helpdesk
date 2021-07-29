@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content">
+          <h5>
+            Contact
+          </h5>
+        </div>
+        <div style=" text-align:right;">
+          <a [routerLink]="['/register-customer', id]">
+            <i class="fas fa-plus fa-lg primary-color"></i>
+          </a>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="pricing-header mx-auto">
+          <div class="table-responsive">
+            <table class="table table-striped table-responsive-sm table-responsive-md table-responsive-lg bg-white">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Mobile number</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cus of Customer ; let i = index;">
+                  <td>{{i+1}}</td>
+                  <td><i class="{{getStar(cus.keyMan)}}"></i>{{cus.fullName}}</td>
+                  <td>{{cus.email}}</td>
+                  <td>{{cus.mobileNumber}}</td>
+                  <td>
+                    <a [routerLink]="['/edit-customer', cus.uid, cus.siteId]">
+                      <i class="fas fa-pen fa-lg warning-color " style="padding: 0.5em 0.6em;"></i>
+                    </a>
+                    <a (click)="alertDeleteCustomer(cus)">
+                      <i class="fas fa-trash fa-lg danger-color"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="Customer?.length === 0">
+          <div class="alert alert-warning" role="alert">
+            <strong>Customer could not be found.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

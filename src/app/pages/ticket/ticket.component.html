@@ -231,9 +231,9 @@
                   Created {{ ticket.date.singleDate?.formatted? ticket.date.singleDate.formatted : ''}}
                 </span>
                 </div>
-                <div class="col-auto" *ngIf="checkDueDate(ticket.maxDueDate)">
+                <div class="col-auto" *ngIf="checkDueDate(ticket.minDueDate)">
                   <div class="dueDate">
-                    <i class="fas fa-exclamation-circle mx-2"></i>{{ticket.maxDueDate | datePipe: 'l' }}
+                    <i class="fas fa-exclamation-circle mx-2"></i>{{ticket.minDueDate | datePipe: 'l' }}
                   </div>
                 </div>
               </div>

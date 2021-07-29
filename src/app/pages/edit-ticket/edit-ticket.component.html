@@ -15,11 +15,11 @@
             <div class="col-lg-6 col-md-12 col-sm-12">
               <div class="form-row" *ngIf="auth.isStaff(user)">
                 <div class="form-group col-md-6">
-                  <label class="control-label" >Date</label>
+                  <label class="control-label" >Date Inform</label>
                   <div class="input-group">
                     <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
                       formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
-                      [readonly]="!auth.isSupporter(user)">
+                     readonly>
                     <div class="input-group-append">
                       <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()"
                         [attr.disabled]="!auth.isSupporter(user)">
@@ -233,7 +233,7 @@
                   <div class="form-group col-md-12">
                     <label>Resolve Description</label>
                     <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="7"
-                      (ngModelChange)="isResolveDescription($event)" [readonly]="!auth.isDeveloper(user)">
+                      (ngModelChange)="isResolveDescription($event); changeChecked()" [readonly]="!auth.isDeveloper(user)">
                     </textarea>
                     <div class="danger-color">
                       Please fill out a Resolve description for resolve

@@ -1,6 +1,6 @@
-import {SiteService} from "../../services/site/site.service";
+import { SiteService } from '../../services/site/site.service';
 import { Site } from '../../models/site.model';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/models/user.model';
 import Swal from 'sweetalert2';
-import {DataService} from "../../services/data/data.service";
+import { DataService } from '../../services/data/data.service';
 
 @Component({
   selector: 'app-edit-ticket',
@@ -72,6 +72,8 @@ export class EditTicketComponent implements OnInit {
     { name: 'Save as Assign', value: 'Assigned' },
     { name: 'Save as Resolve', value: 'Resolved' },
     { name: 'Save as Reject', value: 'Rejected' },
+    { name: 'Save as Closed', value: 'Closed' },
+    { name: 'Save as Pending', value: 'Pending' }
   ];
   ticket: any;
   depositDescriptionFiles = []
@@ -495,8 +497,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
-      this.removeStatus('Closed');
       this.removeStatus('Rejected');
+      this.removeStatus('Pending');
       this.isCloseInProgress()
     } else if (currentStatus === 'Informed') {
       this.removeStatus('More Info');
@@ -506,6 +508,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Resolved');
       this.removeStatus('Draft');
       this.removeStatus('Assigned');
+      this.removeStatus('Pending');
       this.isCloseInProgress()
     } else if (currentStatus === 'More Info') {
       this.addStatus('More Info');
@@ -516,6 +519,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
       this.removeStatus('Rejected');
+      this.removeStatus('Pending');
     } else if (currentStatus === 'In Progress') {
       this.removeStatus('Accepted');
       this.removeStatus('Rejected');
@@ -526,6 +530,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('More Info');
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
+      this.removeStatus('Closed');
+      this.removeStatus('Pending');
     } else if (currentStatus === 'Accepted') {
       this.isEditSuggestDescription(Event)
       if (this.user.roles.supervisor === true && this.depositTasks.length != 0 && this.isEditSuggest) {
@@ -538,6 +544,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Informed');
       this.removeStatus('More Info');
       this.removeStatus('Resolved');
+      this.removeStatus('Closed');
+      this.removeStatus('Pending');
     } else if (currentStatus === 'Assigned') {
       this.removeStatus('Draft');
       this.removeStatus('Informed');
@@ -546,6 +554,8 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Accepted');
       this.removeStatus('Resolved');
       this.removeStatus('Rejected');
+      this.removeStatus('Closed');
+      this.removeStatus('Pending');
       this.isResolveDescription(Event)
     } else if (currentStatus === 'Resolved') {
       this.removeStatus('Draft');
@@ -554,11 +564,28 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('In Progress');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
+      this.removeStatus('Pending');
       if (this.user.roles.supporter) {
         this.addStatus('Closed');
       } else {
         this.removeStatus('Closed');
       }
+    } else if (currentStatus === 'Closed') {
+      this.removeStatus('Draft');
+      this.removeStatus('Informed');
+      this.removeStatus('More Info');
+      this.removeStatus('In Progress');
+      this.removeStatus('Accepted');
+      this.removeStatus('Assigned');
+      this.removeStatus('Rejected');
+      this.removeStatus('Resolved');
+      this.removeStatus('Pending');
+    } else if (currentStatus === 'Pending') {
+      this.removeStatus('Accepted');
+      this.removeStatus('Assigned');
+      this.removeStatus('Rejected');
+      this.removeStatus('Resolved');
+      this.removeStatus('Closed');
     }
   }
 

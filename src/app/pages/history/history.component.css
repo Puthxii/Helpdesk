@@ -1,0 +1,82 @@
+.draft{
+  background:white;
+  border: none;
+  border-radius: 5px;
+  color: black;
+}
+
+.draft.active {
+  background: slategray;
+  color: white;
+}
+
+.inform {
+  background:white;
+  border: none;
+  border-radius: 5px;
+  color: black;
+}
+
+.inform.active {
+  background: rgb(255, 202, 103);
+  color: white;
+}
+
+.moreinfo {
+  background:white;
+  border: none;
+  border-radius: 5px;
+  color: black;
+}
+
+.moreinfo.active {
+  background-color: #FFBE96;
+  color: white;
+}
+
+.closed {
+  background: slateblue;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.closed.active {
+  background: rgb(145, 138, 187);
+  color: white;
+}
+
+.dd {
+  margin-bottom: 5px;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+.pagination {
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  padding: 10px 10px 10px 10px;
+}
+
+.btn-save {
+  margin-left: 40px;
+  float:  right;
+  padding-bottom: 7px;
+}
+
+

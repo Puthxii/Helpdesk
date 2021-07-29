@@ -128,4 +128,8 @@ body {
       color: var(--primary-color);
     }
 
+    .history.active{
+      color: var(--primary-color);
+    }
+
   }

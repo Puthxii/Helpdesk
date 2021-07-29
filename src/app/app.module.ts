@@ -48,6 +48,14 @@ import { EditStaffComponent } from './pages/edit-staff/edit-staff.component';
 import { RegisterCustomerComponent } from './pages/register-customer/register-customer.component';
 import { EditCustomerComponent } from './pages/edit-customer/edit-customer.component';
 import { UserManageComponent } from './pages/user-manage/user-manage.component';
+import { HistoryComponent } from './pages/history/history.component';
+import { AddSiteComponent } from './pages/add-site/add-site.component';
+import { SiteMngComponent } from './pages/site-mng/site-mng.component';
+import { SiteGeneralComponent } from './components/site-general/site-general.component';
+import { SiteServeComponent } from './components/site-serve/site-serve.component';
+import { SiteContactComponent } from './components/site-contact/site-contact.component';
+import { AddProductComponent } from './pages/add-product/add-product.component';
+import { EditProductComponent } from './pages/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +92,15 @@ import { UserManageComponent } from './pages/user-manage/user-manage.component';
     EditStaffComponent,
     RegisterCustomerComponent,
     EditCustomerComponent,
-    UserManageComponent
+    UserManageComponent,
+    HistoryComponent,
+    AddSiteComponent,
+    SiteMngComponent,
+    SiteGeneralComponent,
+    SiteServeComponent,
+    SiteContactComponent,
+    AddProductComponent,
+    EditProductComponent
   ],
   imports: [
     FormsModule,

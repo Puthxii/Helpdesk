@@ -1,8 +1,8 @@
-import {AngularFirestore} from '@angular/fire/firestore';
-import {Actions, Tasks, Ticket} from '../../models/ticket.model';
-import {Injectable} from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Actions, Tasks, Ticket } from '../../models/ticket.model';
+import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class TicketService {
       text: 'Your ticket has been saved',
       icon: 'success',
     }).then((result: any) => {
-        this.router.navigate([`/${path}`]);
+      this.router.navigate([`/${path}`]);
     });
   }
 
@@ -67,7 +67,7 @@ export class TicketService {
     );
   }
 
-  getTicketsListByUserIdStatus(userId: any, status: any) {
+  getTicketsListByUserIdStatus(userId: string, status: string) {
     return this.afs.collection<Ticket>('ticket', ref => ref
       .where(`participantIds.${userId}`, '==', true)
       .where('status', '==', status)
@@ -105,7 +105,7 @@ export class TicketService {
     }
   }
 
-  updateMoreInfo(id: string, value: boolean){
+  updateMoreInfo(id: string, value: boolean) {
     try {
       this.afs.collection('ticket').doc(id).update({
         moreInfo: value
@@ -161,11 +161,11 @@ export class TicketService {
   }
 
   async getCount(): Promise<number> {
-    let count : number
+    let count: number
     const query = await this.afs.collection('ticket');
     const snapshot = await query.get();
     await snapshot.forEach((snapshot) =>
-       count = snapshot.docs.length + 1
+      count = snapshot.docs.length + 1
     )
     return count
   }
@@ -275,21 +275,21 @@ export class TicketService {
 
   getByKeywordUserIdStatus(keyword: string, userId: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => {
-        return ref
-          .where('status', '==', status)
-          .where('keyword', 'array-contains', keyword)
-          .where(`participantIds.${userId}` ,'==' ,true)
-      }
+      return ref
+        .where('status', '==', status)
+        .where('keyword', 'array-contains', keyword)
+        .where(`participantIds.${userId}`, '==', true)
+    }
     )
   }
 
   getByKeywordUserIdStatusSpacial(keyword: string, userId: string, status: any) {
     return this.afs.collection<Ticket>('ticket', (ref) => {
-        return ref
-          .where('status', 'in', status)
-          .where('keyword', 'array-contains', keyword)
-          .where(`participantIds.${userId}` ,'==' ,true)
-      }
+      return ref
+        .where('status', 'in', status)
+        .where('keyword', 'array-contains', keyword)
+        .where(`participantIds.${userId}`, '==', true)
+    }
     )
   }
 
@@ -297,7 +297,7 @@ export class TicketService {
     return this.afs.collection<Ticket>('ticket', (ref) => ref
       .where('keyword', 'array-contains', keyword)
       .where('status', 'in', role)
-      .where(`participantIds.${userId}` ,'==' ,true))
+      .where(`participantIds.${userId}`, '==', true))
   }
 
   getByKeywordRole(keyword: string, role) {
@@ -340,7 +340,7 @@ export class TicketService {
     return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
-      .where(`participantIds.${userId}` ,'==' ,true)
+      .where(`participantIds.${userId}`, '==', true)
       .where('status', '==', status)
     );
   }
@@ -362,12 +362,12 @@ export class TicketService {
     );
   }
 
-  getByDateRangeKeywordUserIdRole(startDate: Date, endDate: Date, keyword: string, userId: string,  role: string[]) {
+  getByDateRangeKeywordUserIdRole(startDate: Date, endDate: Date, keyword: string, userId: string, role: string[]) {
     return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
       .where('keyword', 'array-contains', keyword)
-      .where(`participantIds.${userId}` ,'==' ,true)
+      .where(`participantIds.${userId}`, '==', true)
       .where('status', 'in', role)
     );
   }
@@ -376,7 +376,7 @@ export class TicketService {
     return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
-      .where(`participantIds.${userId}` ,'==' ,true)
+      .where(`participantIds.${userId}`, '==', true)
       .where('status', 'in', role)
     );
   }
@@ -565,11 +565,11 @@ export class TicketService {
     const keywordLowerCase = await creatKeywords(`${subject.toLowerCase()}`)
     const keywordUpperCase = await creatKeywords(`${subject.toUpperCase()}`)
     return [
-        '',
-        ...keywordSubject,
-        ...keywordCountIncrement,
-        ...keywordLowerCase,
-        ...keywordUpperCase
+      '',
+      ...keywordSubject,
+      ...keywordCountIncrement,
+      ...keywordLowerCase,
+      ...keywordUpperCase
     ]
   }
 
@@ -578,6 +578,6 @@ export class TicketService {
       "participantIds": {
         [userId]: active
       }
-    }, {merge: true})
+    }, { merge: true })
   }
 }

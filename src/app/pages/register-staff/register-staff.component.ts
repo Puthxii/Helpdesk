@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
-import {FormGroup, FormControl, FormBuilder, Validators, ValidatorFn} from '@angular/forms';
-import Swal from "sweetalert2";
-import {Router} from "@angular/router";
-import {UserService} from "../../services/user/user.service";
+import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-register-staff',
@@ -15,13 +15,12 @@ export class RegisterStaffComponent implements OnInit {
   userForm: FormGroup;
   inputType = 'password';
   emailAlreadyExists
-  constructor (
+  constructor(
     private fb: FormBuilder,
     private auth: AuthService,
     public router: Router,
     private userService: UserService
-  )
-  { }
+  ) { }
 
   ngOnInit() {
     this.buildForm();
@@ -50,18 +49,18 @@ export class RegisterStaffComponent implements OnInit {
         supervisor: new FormControl(false),
         developer: new FormControl(false),
         customer: new FormControl(false),
-        }, requireCheckboxesToBeCheckedValidator()
+      }, requireCheckboxesToBeCheckedValidator()
       ),
     })
 
     function requireCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
-      return function validate (formGroup: FormGroup) {
+      return function validate(formGroup: FormGroup) {
         let checked = 0;
 
         Object.keys(formGroup.controls).forEach(key => {
           const control = formGroup.controls[key];
           if (control.value === true) {
-            checked ++;
+            checked++;
           }
         });
         if (checked < minRequired) {

@@ -1,6 +1,6 @@
 import { Ticket } from '../../models/ticket.model';
 import { TicketService } from '../../services/ticket/ticket.service';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -11,7 +11,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Inject } from '@angular/core';
-import {DataService} from "../../services/data/data.service";
+import { DataService } from "../../services/data/data.service";
 
 @Component({
   selector: 'app-ticket',
@@ -49,13 +49,13 @@ export class TicketComponent implements OnInit {
   activeState = 'Draft'
   Supporter = ['Draft', 'Informed', 'More Info', 'In Progress', 'Accepted', 'Assigned', 'Resolved']
   Status = [
-    {value: 'Draft'},
-    {value: 'Informed'},
-    {value: 'More Info'},
-    {value: 'In Progress'},
-    {value: 'Accepted',},
-    {value: 'Assigned',},
-    {value: 'Resolved'},
+    { value: 'Draft' },
+    { value: 'Informed' },
+    { value: 'More Info' },
+    { value: 'In Progress' },
+    { value: 'Accepted', },
+    { value: 'Assigned', },
+    { value: 'Resolved' },
   ]
   CountStatus = []
   user: any
@@ -104,7 +104,7 @@ export class TicketComponent implements OnInit {
   }
 
   buildForm() {
-    const model: IMyDateModel = {isRange: true, singleDate: {jsDate: new Date()}, dateRange: null};
+    const model: IMyDateModel = { isRange: true, singleDate: { jsDate: new Date() }, dateRange: null };
     this.filterTicketForm = this.fb.group({
       date: [model, [Validators.required]]
     })
@@ -168,7 +168,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -179,7 +179,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -190,18 +190,18 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
 
-  getTicketsListByUserIdStatus(status: any, creator: string) {
-    this.ticket$ = this.ticketService.getTicketsListByUserIdStatus(status, creator)
+  getTicketsListByUserIdStatus(userId: string, status: string) {
+    this.ticket$ = this.ticketService.getTicketsListByUserIdStatus(userId, status)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -216,7 +216,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -227,7 +227,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -238,7 +238,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -249,7 +249,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -260,7 +260,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -271,7 +271,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -308,7 +308,7 @@ export class TicketComponent implements OnInit {
   setStatus(status: any) {
     this.setStatusState(status)
     this.status = status
-    if (this.searchValue){
+    if (this.searchValue) {
       this.search()
     } else if (this.dateRange) {
       this.onDateChanged(this.dateRange)
@@ -320,17 +320,17 @@ export class TicketComponent implements OnInit {
   getAllTicket(status: any) {
     this.setStatusState(status)
     this.status = status
-    if (this.searchValue){
+    if (this.searchValue) {
       this.search()
-    }  else if (this.dateRange) {
+    } else if (this.dateRange) {
       this.onDateChanged(this.dateRange)
-    }else {
+    } else {
       if (this.isChecked === true) {
         this.ticket$ = this.ticketService.getTicketsListByUserIdRole(this.userId, this.Supporter).snapshotChanges().pipe(
           map(actions => actions.map(a => {
             const data = a.payload.doc.data() as Ticket;
             const id = a.payload.doc['id'];
-            return {id, ...data};
+            return { id, ...data };
           }))
         )
       } else {
@@ -338,7 +338,7 @@ export class TicketComponent implements OnInit {
           map(actions => actions.map(a => {
             const data = a.payload.doc.data() as Ticket;
             const id = a.payload.doc['id'];
-            return {id, ...data};
+            return { id, ...data };
           }))
         )
       }
@@ -429,7 +429,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -440,7 +440,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -451,7 +451,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -462,7 +462,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -473,7 +473,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -484,7 +484,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -495,7 +495,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -506,7 +506,7 @@ export class TicketComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -541,10 +541,10 @@ export class TicketComponent implements OnInit {
     return `${color}`
   }
 
-  checkDueDate(maxDueDate: { seconds: number; }) {
-    if (maxDueDate) {
+  checkDueDate(minDueDate: { seconds: number; }) {
+    if (minDueDate) {
       let isDueDate: boolean
-      const endDate = new Date(maxDueDate.seconds * 1000)
+      const endDate = new Date(minDueDate.seconds * 1000)
       const currentDate = new Date()
       isDueDate = endDate < currentDate;
       return isDueDate
@@ -563,7 +563,7 @@ export class TicketComponent implements OnInit {
     this.ticket$.subscribe(res => {
       res.map(value => {
         for (let i = 0; this.Status.length > i; i++) {
-          if (value.status === this.Status[i].value){
+          if (value.status === this.Status[i].value) {
             this.CountStatus[i] = res.length
           }
         }

@@ -1,0 +1,207 @@
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content">
+          <h5>
+            <i class="fas fa-hotel"></i>
+            New Site
+          </h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="siteForm" (ngSubmit)="addSite()">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="control-label">Name TH</label>
+              <div class="input-group">
+                <input type="text" formControlName="nameTH" class="form-control" id="nameTH" placeholder="Name TH">
+              </div>
+              <div *ngIf="nameTH.invalid && (nameTH.dirty || nameTH.touched)" class="danger-color">
+                <div *ngIf="nameTH.errors.required">
+                  Name TH name is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label">Name EN</label>
+              <div class="input-group">
+                <input type="text" formControlName="nameEN" class="form-control" id="nameEN" placeholder="name EN"
+                  required>
+              </div>
+              <div *ngIf="nameEN.invalid && (nameEN.dirty || nameEN.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="nameEN.errors.required">
+                  nameEN is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label class="control-label">Initials</label>
+              <div class="input-group">
+                <input type="text" formControlName="initials" class="form-control" id="initial" placeholder="initial">
+              </div>
+              <div *ngIf="initials.invalid && (initials.dirty || initials.touched)" class="col-sm-12 danger-color">
+                <div *ngIf="initials.errors.required">
+                  Initials is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-5">
+              <label class="control-label">Product</label>
+              <select name="productId" formControlName="productId" class="form-control" id="productId">
+                <option value="">choose product ...</option>
+                <option *ngFor=" let product of Product" [ngValue]="product.id">
+                  {{product.name}}
+                </option>
+              </select>
+              <div *ngIf="productId.invalid && (productId.dirty || productId.touched)" class="danger-color">
+                <div *ngIf="productId.errors.required">
+                  Product name is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="control-label">MA level</label>
+              <select name="maLevelId" formControlName="maLevelId" class="form-control" id="maLevelId">
+                <option value="">choose ma level ...</option>
+                <option *ngFor=" let ma of MaLevel" [ngValue]="ma.id">
+                  {{ma.name}}
+                </option>
+              </select>
+              <div *ngIf="maLevelId.invalid && (maLevelId.dirty || maLevelId.touched)" class="danger-color">
+                <div *ngIf="maLevelId.errors.required">
+                  MA level is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label class="control-label" for="module">Module</label>
+              <ng-multiselect-dropdown class="container" [placeholder]="'choose module...'" [data]="moduleList"
+                id="module" formControlName="module" [settings]="dropdownSettings">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="control-label">MA Start date</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="Select a MA Start date" angular-mydatepicker name="maStartDate"
+                  formControlName="maStartDate" [options]="myOptions1" #dp1="angular-mydatepicker"
+                  (dateChanged)="setMinDate($event)" readonly>
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="dp1.toggleCalendar()">
+                    <i class="fas fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="maStartDate.invalid && (maStartDate.dirty || maStartDate.touched)"
+                class="col-sm-12 danger-color">
+                <div *ngIf="maStartDate.errors.required">
+                  MA start date is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label">MA End date</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="Select a MA End date" angular-mydatepicker name="maEndDate"
+                  formControlName="maEndDate" [options]="myOptions2" #dp2="angular-mydatepicker"
+                  (dateChanged)="setMaxDate($event)" readonly>
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="dp2.toggleCalendar()">
+                    <i class="fas fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="maEndDate.invalid && (maEndDate.dirty || maEndDate.touched)" class="danger-color">
+                <div *ngIf="maEndDate.errors.required">
+                  MA end date is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <h6>Address</h6>
+          <div class="add-lessons-form">
+            <ng-container formArrayName="addresses">
+              <ng-container *ngFor="let addressForm of addresses.controls; let i = index">
+                <p>#{{i+1}}</p>
+                <div class="form-row" [formGroup]="addressForm">
+                  <div class="form-group col-md-12">
+                    <label for="subjectTask" class="control-label">street</label>
+                    <input formControlName="street" type="text" class="form-control" placeholder="street">
+                    <div
+                      *ngIf="addressForm.get('street').invalid && (addressForm.get('street').dirty || addressForm.get('street').touched)"
+                      class="col-sm-12 danger-color">
+                      <div *ngIf="addressForm.get('street').errors.required">
+                        street is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="city" class="control-label">city</label>
+                    <input formControlName="city" type="text" class="form-control" placeholder="city">
+                    <div
+                      *ngIf="addressForm.get('city').invalid && (addressForm.get('city').dirty || addressForm.get('city').touched)"
+                      class="col-sm-12 danger-color">
+                      <div *ngIf="addressForm.get('city').errors.required">
+                        city is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="province" class="control-label">province</label>
+                    <select name="province" formControlName="province" class="form-control" id="province">
+                      <option value="">choose province ...</option>
+                      <option *ngFor=" let province of Provinces" [ngValue]="province">
+                        {{province}}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="addressForm.get('province').invalid && (addressForm.get('province').dirty || addressForm.get('province').touched)"
+                      class="col-sm-12 danger-color">
+                      <div *ngIf="addressForm.get('province').errors.required">
+                        province is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="zipCode" class="control-label">zip code</label>
+                    <input formControlName="zipCode" type="text" class="form-control" placeholder="zip code">
+                    <div
+                      *ngIf="addressForm.get('zipCode').invalid && (addressForm.get('zipCode').dirty || addressForm.get('zipCode').touched)"
+                      class="col-sm-12 danger-color">
+                      <div *ngIf="addressForm.get('zipCode').errors.required">
+                        zip code is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <button class="btn dangerBtn" (click)="deleteAddress(i)">
+                      <i class="fas fa-trash fa-lg"></i>
+                    </button>
+                  </div>
+                </div>
+                <hr>
+              </ng-container>
+            </ng-container>
+            <button type="button" class="btn saveBtn" (click)="addAddress()">
+              <i class="fas fa-plus-circle"></i>
+            </button>
+          </div>
+          <div class="form-row" style="float: right;">
+            <div class="form-group mr-2">
+              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelAddCustomer()">Cancel</button>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn saveBtn" [disabled]="!siteForm.valid">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

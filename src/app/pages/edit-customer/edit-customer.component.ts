@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth/auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../services/user/user.service";
-import {User} from "../../models/user.model";
-import Swal from "sweetalert2";
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../services/user/user.service';
+import { User } from '../../models/user.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-customer',
@@ -14,20 +14,21 @@ import Swal from "sweetalert2";
 export class EditCustomerComponent implements OnInit {
   userForm: FormGroup;
   id: string;
+  sid: string;
   user: User
-  constructor (
+  constructor(
     private fb: FormBuilder,
-    private auth: AuthService,
     public router: Router,
     private userService: UserService,
     public route: ActivatedRoute,
   ) {
     this.route.params.subscribe(params => this.id = params.id)
+    this.route.params.subscribe(params => this.sid = params.sid)
   }
 
   ngOnInit() {
     this.buildForm();
-    this.userService.getUserById(this.id).valueChanges().subscribe( data => {
+    this.userService.getUserById(this.id).valueChanges().subscribe(data => {
       this.user = data as User
       this.userForm.patchValue({
         uid: this.user.uid,
@@ -60,12 +61,12 @@ export class EditCustomerComponent implements OnInit {
       siteId: [''],
       keyMan: [''],
       roles: new FormGroup({
-          supporter: new FormControl(false),
-          maintenance: new FormControl(false),
-          supervisor: new FormControl(false),
-          developer: new FormControl(false),
-          customer: new FormControl(true),
-        }
+        supporter: new FormControl(false),
+        maintenance: new FormControl(false),
+        supervisor: new FormControl(false),
+        developer: new FormControl(false),
+        customer: new FormControl(true),
+      }
       ),
     })
   }
@@ -99,8 +100,11 @@ export class EditCustomerComponent implements OnInit {
   }
 
   update(): void {
-    console.log(this.userForm.value)
-    this.userService.updateCustomer(this.userForm.value)
+    if (this.sid) {
+      this.userService.updateCustomer(this.userForm.value, this.sid)
+    } else {
+      this.userService.updateCustomer(this.userForm.value)
+    }
   }
 
   alertCancelEditCustomer() {
@@ -113,7 +117,11 @@ export class EditCustomerComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        this.router.navigate([`/site-customer`]);
+        if (this.sid) {
+          this.router.navigate([`/site-mng/${this.sid}`]);
+        } else {
+          this.router.navigate([`/site-customer`]);
+        }
       }
     })
   }

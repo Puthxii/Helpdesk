@@ -27,10 +27,15 @@ import { StaffGuard } from './guards/staff.guard';
 import { SiteComponent } from './pages/site/site.component';
 import { SiteCustomerComponent } from './pages/site-customer/site-customer.component';
 import { ProductComponent } from './pages/product/product.component';
-import {EditStaffComponent} from "./pages/edit-staff/edit-staff.component";
-import {RegisterCustomerComponent} from "./pages/register-customer/register-customer.component";
-import {EditCustomerComponent} from "./pages/edit-customer/edit-customer.component";
-import {UserManageComponent} from "./pages/user-manage/user-manage.component";
+import { EditStaffComponent } from './pages/edit-staff/edit-staff.component';
+import { RegisterCustomerComponent } from './pages/register-customer/register-customer.component';
+import { EditCustomerComponent } from './pages/edit-customer/edit-customer.component';
+import { UserManageComponent } from './pages/user-manage/user-manage.component';
+import { HistoryComponent } from './pages/history/history.component';
+import { AddSiteComponent } from './pages/add-site/add-site.component';
+import { SiteMngComponent } from './pages/site-mng/site-mng.component';
+import { AddProductComponent } from './pages/add-product/add-product.component';
+import { EditProductComponent } from './pages/edit-product/edit-product.component';
 
 const router: Routes = [
   {
@@ -128,12 +133,48 @@ const router: Routes = [
         component: RegisterCustomerComponent
       },
       {
+        path: 'register-customer/:sid',
+        component: RegisterCustomerComponent
+      },
+      {
         path: 'edit-customer',
         component: EditCustomerComponent
       },
       {
         path: 'edit-customer/:id',
         component: EditCustomerComponent
+      },
+      {
+        path: 'edit-customer/:id/:sid',
+        component: EditCustomerComponent
+      },
+      {
+        path: 'history',
+        component: HistoryComponent
+      },
+      {
+        path: 'add-site',
+        component: AddSiteComponent
+      },
+      {
+        path: 'site-mng',
+        component: SiteMngComponent
+      },
+      {
+        path: 'site-mng/:id',
+        component: SiteMngComponent
+      },
+      {
+        path: 'add-product',
+        component: AddProductComponent
+      },
+      {
+        path: 'edit-product',
+        component: EditProductComponent
+      },
+      {
+        path: 'edit-product/:id',
+        component: EditProductComponent
       },
     ]
   },
@@ -152,7 +193,8 @@ const router: Routes = [
 
     ]
   },
-  { path: 'user-manage',
+  {
+    path: 'user-manage',
     component: UserManageComponent
   },
   {
