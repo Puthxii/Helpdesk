@@ -18,7 +18,6 @@ export class EditCustomerComponent implements OnInit {
   user: User
   constructor(
     private fb: FormBuilder,
-    private auth: AuthService,
     public router: Router,
     private userService: UserService,
     public route: ActivatedRoute,

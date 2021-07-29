@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
 import Swal from 'sweetalert2';
 import { SiteService } from '../../services/site/site.service';
@@ -18,18 +18,36 @@ export class RegisterCustomerComponent implements OnInit {
   emailAlreadyExists
   site$: Observable<any>;
   Site: any[];
+  sid: string;
+  siteBy: Site
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
     public router: Router,
     private userService: UserService,
-    private siteService: SiteService
-  ) { }
+    private siteService: SiteService,
+    public route: ActivatedRoute,
+  ) {
+    this.route.params.subscribe(params => this.sid = params.sid)
+  }
 
   ngOnInit() {
     this.buildForm();
     this.site$ = this.siteService.getSitesList();
+    this.getSite();
     this.generatePassword()
+  }
+
+  getSite() {
+    if (this.sid) {
+      this.siteService.getSiteById(this.sid).subscribe(data => {
+        this.siteBy = data as Site
+        this.userForm.patchValue({
+          site: this.siteBy.initials
+        })
+        this.getSiteId(this.siteBy.initials)
+      })
+    }
   }
 
   buildForm(): void {
@@ -80,7 +98,11 @@ export class RegisterCustomerComponent implements OnInit {
   }
 
   register(): void {
-    this.auth.registerUser(this.userForm.value)
+    if (this.sid) {
+      this.auth.registerUser(this.userForm.value, this.sid)
+    } else {
+      this.auth.registerUser(this.userForm.value)
+    }
   }
 
   generatePassword() {
@@ -100,7 +122,11 @@ export class RegisterCustomerComponent implements OnInit {
       confirmButtonText: 'Yes, I do'
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
-        this.router.navigate([`/site-customer`]);
+        if (this.sid) {
+          this.router.navigate([`/site-mng/${this.sid}`]);
+        } else {
+          this.router.navigate([`/site-customer`]);
+        }
       }
     })
   }

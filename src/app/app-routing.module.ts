@@ -131,6 +131,10 @@ const router: Routes = [
         component: RegisterCustomerComponent
       },
       {
+        path: 'register-customer/:sid',
+        component: RegisterCustomerComponent
+      },
+      {
         path: 'edit-customer',
         component: EditCustomerComponent
       },
