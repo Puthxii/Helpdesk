@@ -4,8 +4,8 @@
       aria-selected="true">General</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="sever-tab" data-toggle="tab" href="#sever" role="tab" aria-controls="sever"
-      aria-selected="false">Sever</a>
+    <a class="nav-link" id="server-tab" data-toggle="tab" href="#server" role="tab" aria-controls="server"
+      aria-selected="false">Server</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
@@ -21,6 +21,8 @@
       </div>
     </div>
   </div>
-  <div class="tab-pane fade" id="sever" role="tabpanel" aria-labelledby="sever-tab">Sever</div>
+  <div class="tab-pane fade" id="server" role="tabpanel" aria-labelledby="server-tab">
+    <app-site-serve [id]="id"></app-site-serve>
+  </div>
   <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Contact</div>
 </div>

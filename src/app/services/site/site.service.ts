@@ -1,5 +1,5 @@
 import { Product } from '../../models/product.model';
-import { Site } from '../../models/site.model';
+import { Server, Site } from '../../models/site.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs/operators';
@@ -168,6 +168,26 @@ export class SiteService {
     });
   }
 
+  successSeverDelete(path: string, data?: any | null) {
+    Swal.fire({
+      icon: 'success',
+      title: 'deleted',
+      text: 'Your server has been deleted',
+    }).then((result: any) => {
+      this.router.navigate([`/${path}/${data}`]);
+    });
+  }
+
+  errorServerDelete(path: string, data?: any | null) {
+    Swal.fire({
+      icon: 'error',
+      title: 'error',
+      text: 'Your server hasn\'t  been deleted',
+    }).then((result: any) => {
+      this.router.navigate([`/${path}/${data}`]);
+    });
+  }
+
   private async generateKeyword(siteEN: string, siteTH, initials) {
     function creatKeywords(str: string) {
       const arrName = []
@@ -215,5 +235,53 @@ export class SiteService {
     ]
   }
 
+  getServer(id: string) {
+    return this.afs.collection('site').doc(id).collection('server')
+  }
+
+  async addServer(id: string, server: Server) {
+    try {
+      (await this.afs.collection('site').doc(id).collection('server')
+        .add({
+          serverIp: server.serverIp,
+          serverName: server.serverName,
+          serverType: server.serverType
+        }).then(() => {
+          this.successNotification('site-mng', id)
+        }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateServer(id: string, server: Server) {
+    try {
+      (await this.afs.collection('site').doc(id)
+        .collection('server', ref => ref
+          .doc(server.id)
+          .update({
+            serverIp: server.serverIp,
+            serverName: server.serverName,
+            serverType: server.serverType
+          }).then(() => {
+            this.successNotification('site-mng', id)
+          })
+        ))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async removeServer(id: any, server: Server) {
+    try {
+      (await this.afs.collection('site').doc(id)
+        .collection('server').doc(server.id).delete()
+        .then(() => {
+          this.successSeverDelete('site-mng', id)
+        }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 }

@@ -1,0 +1,125 @@
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content">
+          <h5>
+            Server
+          </h5>
+        </div>
+        <div *ngIf="!isAdd" style=" text-align:right;">
+          <a (click)="showAdd(!isAdd)">
+            <i class="fas fa-plus fa-lg primary-color"></i>
+          </a>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="pricing-header mx-auto">
+          <div class="table-responsive">
+            <table class="table table-striped table-responsive-sm table-responsive-md table-responsive-lg bg-white">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Server IP</th>
+                  <th scope="col">Server name</th>
+                  <th scope="col">Server type</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let serv of Server ; let i = index;">
+                  <td>{{i+1}}</td>
+                  <td>{{serv.serverIp}}</td>
+                  <td>{{serv.serverName}}</td>
+                  <td>{{serv.serverType}}</td>
+                  <td>
+                    <a (click)="editServer(serv)">
+                      <i class="fas fa-pen fa-lg warning-color" style="padding: 0.5em 0.6em;"></i>
+                    </a>
+                    <a (click)="alertDeleteServer(serv)">
+                      <i class="fas fa-trash fa-lg danger-color"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="Server?.length === 0">
+          <div class="alert alert-warning" role="alert">
+            <strong>Server could not be found.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content" *ngIf="isAdd">
+          <h5>
+            Add Server
+          </h5>
+        </div>
+        <div class="header content" *ngIf="isEdit">
+          <h5>
+            Edit Server
+          </h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="serverForm" (ngSubmit)="addServer()">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label class="control-label">Server IP</label>
+              <div class="input-group">
+                <input type="text" formControlName="serverIp" class="form-control" id="serverIp"
+                  placeholder="Server IP">
+              </div>
+              <div *ngIf="serverIp.invalid && (serverIp.dirty || serverIp.touched)" class="danger-color">
+                <div *ngIf="serverIp.errors.required">
+                  Server IP is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="control-label">Server Name</label>
+              <div class="input-group">
+                <input type="text" formControlName="serverName" class="form-control" id="serverName"
+                  placeholder="Server Name" required>
+              </div>
+              <div *ngIf="serverName.invalid && (serverName.dirty || serverName.touched)"
+                class="col-sm-12 danger-color">
+                <div *ngIf="serverName.errors.required">
+                  Server name is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="control-label">Server Type</label>
+              <select name="serverType" formControlName="serverType" class="form-control" id="serverType">
+                <option value="">choose server type ...</option>
+                <option *ngFor=" let type of ServerType" [ngValue]="type">
+                  {{type}}
+                </option>
+              </select>
+              <div *ngIf="serverType.invalid && (serverType.dirty || serverType.touched)" class="danger-color">
+                <div *ngIf="serverType.errors.required">
+                  Server type name is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" style="float: right;">
+            <div class="form-group mr-2">
+              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelAddServer()">Cancel</button>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn saveBtn" [disabled]="!serverForm.valid">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

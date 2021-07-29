@@ -52,6 +52,7 @@ import { HistoryComponent } from './pages/history/history.component';
 import { AddSiteComponent } from './pages/add-site/add-site.component';
 import { SiteMngComponent } from './pages/site-mng/site-mng.component';
 import { SiteGeneralComponent } from './components/site-general/site-general.component';
+import { SiteServeComponent } from './components/site-serve/site-serve.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { SiteGeneralComponent } from './components/site-general/site-general.com
     HistoryComponent,
     AddSiteComponent,
     SiteMngComponent,
-    SiteGeneralComponent
+    SiteGeneralComponent,
+    SiteServeComponent
   ],
   imports: [
     FormsModule,

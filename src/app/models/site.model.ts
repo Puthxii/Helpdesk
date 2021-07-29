@@ -1,6 +1,5 @@
 import { Product } from './product.model';
 
-
 export interface Site {
   $key: string;
   initials: string;
@@ -27,4 +26,11 @@ export interface Addresses {
   city: string;
   province: string;
   zipCode: string;
+}
+
+export interface Server {
+  id?: string;
+  serverIp: string;
+  serverName: string;
+  serverType: string;
 }
