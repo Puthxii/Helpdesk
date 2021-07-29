@@ -13,6 +13,7 @@ export interface Site {
   maEndDate: any;
   module: any
   addresses: Addresses[]
+  keyword: any;
 }
 
 export interface MaLevel {

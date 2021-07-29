@@ -13,7 +13,7 @@
           </a>
         </div>
         <div *ngIf="isEdit" style=" text-align:right;">
-          <a (click)="showEdit(!isEdit)">
+          <a (click)="alertCancelEditSite()">
             <i class="fas fa-eye fa-lg primary-color "></i>
           </a>
         </div>
@@ -57,7 +57,7 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
               <h6>Address</h6>
               <div *ngFor="let address of site.addresses; let i = index">
                 <p class="secondary-color">
@@ -256,7 +256,7 @@
           </div>
           <div class="form-row" style="float: right;">
             <div class="form-group mr-2">
-              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelAddCustomer()">Cancel</button>
+              <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelEditSite()">Cancel</button>
             </div>
             <div class="form-group">
               <button type="submit" class="btn saveBtn" [disabled]="!siteForm.valid">Update</button>

@@ -1,17 +1,17 @@
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import {Roles, User} from "../../models/user.model";
-import {Router} from "@angular/router";
+import { Roles, User } from "../../models/user.model";
+import { Router } from "@angular/router";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import {AuthService} from "../auth/auth.service";
-import {firestore} from "firebase";
+import { AuthService } from "../auth/auth.service";
+import { firestore } from "firebase";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor (
+  constructor(
     private afs: AngularFirestore,
     private router: Router,
     private authService: AuthService
@@ -23,7 +23,7 @@ export class UserService {
       text: 'Your user has been saved',
       icon: 'success',
     }).then((result: any) => {
-      if (roles.customer === true){
+      if (roles.customer === true) {
         this.router.navigate([`/site-customer`]);
       } else {
         this.router.navigate([`/staff`]);
@@ -37,7 +37,7 @@ export class UserService {
       title: 'error',
       text: 'Your user hasn\'t been saved',
     }).then((result: any) => {
-      if (roles.customer === true){
+      if (roles.customer === true) {
         this.router.navigate([`/edit-customer`]);
       } else {
         this.router.navigate([`/edit-staff`]);
@@ -111,40 +111,40 @@ export class UserService {
       await this.afs.collection('users').doc(user.uid).delete();
       await this.authService.deleteEmail(user)
       this.successDelete()
-    } catch (err){
+    } catch (err) {
       this.errorDelete()
     }
   }
 
   async updateUser(user: User) {
     try {
-      const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`)
+      const keyword = await this.generateKeyword(`${user.firstName}` + ' ' + `${user.lastName}`)
       await this.afs.collection('users').doc(user.uid).update({
         uid: user.uid,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        fullName: `${user.firstName}`+' '+`${user.lastName}`,
+        fullName: `${user.firstName}` + ' ' + `${user.lastName}`,
         mobileNumber: user.mobileNumber,
         roles: user.roles,
         keyword
       })
       this.successNotification(user.roles)
-    } catch (err){
+    } catch (err) {
       this.errorNotification(user.roles)
     }
   }
 
   async updateCustomer(user: User) {
     try {
-      const keyword = await this.generateKeyword(`${user.firstName}`+' '+`${user.lastName}`+' '+`${user.site}`)
+      const keyword = await this.generateKeyword(`${user.firstName}` + ' ' + `${user.lastName}` + ' ' + `${user.site}`)
       await this.updateSiteCustomer(user)
       await this.afs.collection('users').doc(user.uid).update({
         uid: user.uid,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        fullName: `${user.firstName}`+' '+`${user.lastName}`,
+        fullName: `${user.firstName}` + ' ' + `${user.lastName}`,
         mobileNumber: user.mobileNumber,
         roles: user.roles,
         site: user.site,
@@ -153,7 +153,7 @@ export class UserService {
         keyword
       })
       this.successNotification(user.roles)
-    } catch (err){
+    } catch (err) {
       console.log(err)
       this.errorNotification(user.roles)
     }
@@ -211,10 +211,10 @@ export class UserService {
   private async updateSiteCustomer(user: User) {
     try {
       await this.afs.collection('site').doc(user.siteId).update({
-        users: firestore.FieldValue.arrayUnion(`${user.firstName}`+' '+`${user.lastName}`),
+        users: firestore.FieldValue.arrayUnion(`${user.firstName}` + ' ' + `${user.lastName}`),
         userId: firestore.FieldValue.arrayUnion(user.uid)
       })
-    } catch (err){
+    } catch (err) {
       console.log(err)
     }
   }
@@ -222,10 +222,10 @@ export class UserService {
   private async deleteSiteCustomer(user: User) {
     try {
       await this.afs.collection('site').doc(user.siteId).update({
-        users: firestore.FieldValue.arrayRemove(`${user.firstName}`+' '+`${user.lastName}`),
+        users: firestore.FieldValue.arrayRemove(`${user.firstName}` + ' ' + `${user.lastName}`),
         userId: firestore.FieldValue.arrayRemove(user.uid)
       })
-    } catch (err){
+    } catch (err) {
       console.log(err)
     }
   }

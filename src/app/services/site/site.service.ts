@@ -58,11 +58,10 @@ export class SiteService {
       .orderBy('nameEN', 'asc'));
   }
 
-  getSitesByNameSort(name) {
+  getSitesByNameSort(keyword) {
     return this.afs.collection('site', (ref) => ref
-      .orderBy('nameEN')
-      .startAt(name)
-      .endAt(name + '\uf8ff'));
+      .where('keyword', 'array-contains', keyword)
+    )
   }
 
   getSitesByName(site: string) {
@@ -79,6 +78,7 @@ export class SiteService {
 
   async addSite(site: Site) {
     try {
+      const keyword = await this.generateKeyword(site.nameEN, site.nameTH, site.initials);
       (await this.afs.collection('site').add({
         initials: site.initials,
         nameEN: site.nameEN,
@@ -88,9 +88,10 @@ export class SiteService {
         maStartDate: site.maStartDate,
         maEndDate: site.maEndDate,
         module: site.module,
-        addresses: site.addresses
+        addresses: site.addresses,
+        keyword
       }).then((docRef) => {
-        this.successNotification('site-mng', docRef.id)
+        this.successNotification('site-mng', docRef.id);
       }))
     } catch (error) {
       console.log(error);
@@ -99,6 +100,7 @@ export class SiteService {
 
   async updateSite(site: Site, id: string) {
     try {
+      const keyword = await this.generateKeyword(site.nameEN, site.nameTH, site.initials);
       (await this.afs.collection('site').doc(id).update({
         initials: site.initials,
         nameEN: site.nameEN,
@@ -108,12 +110,22 @@ export class SiteService {
         maStartDate: site.maStartDate,
         maEndDate: site.maEndDate,
         module: site.module,
-        addresses: site.addresses
+        addresses: site.addresses,
+        keyword
       }).then(() => {
         this.successNotification('site-mng', id)
       }))
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async deleteSiteById(id: any) {
+    try {
+      await this.afs.collection('site').doc(id).delete();
+      this.successDelete()
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -135,4 +147,73 @@ export class SiteService {
       this.router.navigate([`/${path}`]);
     });
   }
+
+  successDelete() {
+    Swal.fire({
+      icon: 'success',
+      title: 'deleted',
+      text: 'Your site has been deleted',
+    }).then((result: any) => {
+      this.router.navigate([`site`]);
+    });
+  }
+
+  errorDelete() {
+    Swal.fire({
+      icon: 'error',
+      title: 'error',
+      text: 'Your site hasn\'t  been deleted',
+    }).then((result: any) => {
+      this.router.navigate([`site`]);
+    });
+  }
+
+  private async generateKeyword(siteEN: string, siteTH, initials) {
+    function creatKeywords(str: string) {
+      const arrName = []
+      let curOrder = ''
+      let curName2 = ''
+      let curName3 = ''
+      let curName4 = ''
+      const chars = str.split('');
+      for (let i = 0; i < chars.length; i++) {
+        curOrder += chars[i]
+        if (chars[i + 1] != undefined) {
+          curName2 += chars[i]
+          curName2 += chars[i + 1]
+        }
+        if (chars[i + 1] && chars[i + 2] != undefined) {
+          curName3 += chars[i]
+          curName3 += chars[i + 1]
+          curName3 += chars[i + 2]
+        }
+        if (chars[i + 1] && chars[i + 2] && chars[i + 3] != undefined) {
+          curName4 += chars[i]
+          curName4 += chars[i + 1]
+          curName4 += chars[i + 2]
+          curName4 += chars[i + 3]
+        }
+        arrName.push(curOrder, chars[i], curName2, curName3, curName4)
+        curName2 = ''
+        curName3 = ''
+        curName4 = ''
+      }
+      return arrName
+    }
+    const keywordTH = await creatKeywords(siteTH)
+    const keywordENLowerCase = await creatKeywords(siteEN.toLowerCase())
+    const keywordENUpperCase = await creatKeywords(siteEN.toUpperCase())
+    const keywordInitialsLowerCase = await creatKeywords(initials.toLowerCase())
+    const keywordInitialsUpperCase = await creatKeywords(initials.toUpperCase())
+    return [
+      '',
+      ...keywordTH,
+      ...keywordENLowerCase,
+      ...keywordENUpperCase,
+      ...keywordInitialsLowerCase,
+      ...keywordInitialsUpperCase
+    ]
+  }
+
+
 }

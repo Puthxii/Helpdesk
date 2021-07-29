@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SiteService } from 'src/app/services/site/site.service';
 import { Site } from 'src/app/models/site.model';
 import * as moment from 'moment';
+import { DataService } from 'src/app/services/data/data.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'site',
@@ -17,12 +19,17 @@ export class SiteComponent implements OnInit {
   searchValue = '';
 
   constructor(
-    private site: SiteService
+    private siteService: SiteService,
+    public dataService: DataService
   ) { }
 
   ngOnInit() {
+    this.getSitesList()
     this.dataState();
-    this.site.getSites().snapshotChanges().subscribe(data => {
+  }
+
+  getSitesList() {
+    this.siteService.getSites().snapshotChanges().subscribe(data => {
       this.Site = [];
       data.map(items => {
         const item = items.payload.doc.data();
@@ -33,7 +40,7 @@ export class SiteComponent implements OnInit {
   }
 
   dataState() {
-    this.site.getSites().snapshotChanges().subscribe(data => {
+    this.siteService.getSites().snapshotChanges().subscribe(data => {
       this.preLoader = false;
       if (data.length <= 0) {
         this.hideWhenNoStaff = false;
@@ -46,14 +53,30 @@ export class SiteComponent implements OnInit {
   }
 
   search() {
-    const searchValue = this.searchValue
-    if (searchValue != null) {
-      this.getSitesByNameSort(searchValue)
+    if (this.searchValue !== undefined && this.searchValue !== null && this.searchValue !== '') {
+      this.getSitesByNameSort(this.searchValue)
+      this.dataStateSearch(this.searchValue)
+    } else {
+      this.getSitesList()
+      this.dataState()
     }
   }
 
+  dataStateSearch(searchValue: string) {
+    this.siteService.getSitesByNameSort(searchValue).snapshotChanges().subscribe(data => {
+      this.preLoader = false;
+      if (data.length <= 0) {
+        this.hideWhenNoStaff = false;
+        this.noData = true;
+      } else {
+        this.hideWhenNoStaff = true;
+        this.noData = false;
+      }
+    });
+  }
+
   getSitesByNameSort(searchValue: any) {
-    this.site.getSitesByNameSort(searchValue).snapshotChanges().subscribe(data => {
+    this.siteService.getSitesByNameSort(searchValue).snapshotChanges().subscribe(data => {
       this.Site = [];
       data.map(items => {
         const item = items.payload.doc.data();
@@ -86,6 +109,26 @@ export class SiteComponent implements OnInit {
       return color
     }
     return color = 'expirationDate'
+  }
+
+  newPath() {
+    this.dataService.changeRedirectSource('site')
+  }
+
+  alertDeleteSite(site) {
+    Swal.fire({
+      title: 'Do you want to delete site?',
+      text: site.nameEN,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2ED0B9',
+      cancelButtonColor: '#9C9FA6',
+      confirmButtonText: 'Yes, I do'
+    }).then((result: { isConfirmed: any; }) => {
+      if (result.isConfirmed) {
+        this.siteService.deleteSiteById(site.$key)
+      }
+    })
   }
 
 }

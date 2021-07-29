@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-site-mng',
@@ -8,14 +9,22 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SiteMngComponent implements OnInit {
   id: string;
+  redirectPath: any;
 
   constructor(
     public route: ActivatedRoute,
+    public router: Router,
+    private dataService: DataService,
   ) {
     this.route.params.subscribe(params => this.id = params.id)
+    this.dataService.currentRedirect.subscribe(redirectPath => this.redirectPath = redirectPath)
   }
 
   ngOnInit() {
+  }
+
+  back() {
+    this.router.navigate([`/${this.redirectPath}`]);
   }
 
 }

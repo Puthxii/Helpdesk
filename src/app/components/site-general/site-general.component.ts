@@ -8,6 +8,7 @@ import { Product } from 'src/app/models/product.model';
 import { MaLevel, Site } from 'src/app/models/site.model';
 import { ProductService } from 'src/app/services/product/product.service';
 import { SiteService } from 'src/app/services/site/site.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-site-general',
@@ -132,7 +133,6 @@ export class SiteGeneralComponent implements OnInit {
   deleteAddress(addressIndex: number) {
     this.addresses.removeAt(addressIndex);
   }
-
 
   private buildForm() {
     this.siteForm = this.fb.group({
@@ -281,7 +281,21 @@ export class SiteGeneralComponent implements OnInit {
       this.addresses.clear()
       this.isEdit = !this.isEdit
     })
+  }
 
+  alertCancelEditSite() {
+    Swal.fire({
+      title: 'Do you want to cancel edit site.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2ED0B9',
+      cancelButtonColor: '#9C9FA6',
+      confirmButtonText: 'Yes, I do'
+    }).then((result: { isConfirmed: any; }) => {
+      if (result.isConfirmed) {
+        this.showEdit(!this.isEdit)
+      }
+    })
   }
 
 }
