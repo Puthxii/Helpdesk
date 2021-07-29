@@ -17,8 +17,8 @@ export class SiteGeneralComponent implements OnInit {
 
   Site: Site
   site$: Observable<Site>;
-  product: Product;
-  maLevel: MaLevel;
+  product$: Observable<Product>;
+  maLevel$: Observable<MaLevel>;
   constructor(
     private siteService: SiteService,
     private productService: ProductService
@@ -30,22 +30,19 @@ export class SiteGeneralComponent implements OnInit {
 
   getSiteById() {
     this.site$ = this.siteService.getSiteById(this.id);
+    this.site$.subscribe(data => {
+      this.Site = data as Site;
+      this.getProduct(this.Site.productId)
+      this.getMaLevel(this.Site.maLevelId)
+    })
   }
 
-  getProduct(id: string): string {
-    // this.productService.getProductById(id).subscribe(data => {
-    //   this.product = data as Product
-    // });
-    // return this.product.name ? this.product.name : '-'
-    return '-'
+  getProduct(id: string) {
+    return this.product$ = this.productService.getProductById(id)
   }
 
-  getMaLevel(id: string): string {
-    // this.productService.getMaLevelById(id).subscribe(data => {
-    //   this.maLevel = data as MaLevel
-    // });
-    // return this.maLevel.name ? this.maLevel.name : '-'
-    return '-'
+  getMaLevel(id: string) {
+    return this.maLevel$ = this.productService.getMaLevelById(id)
   }
 
   getMaPackage(site: Site) {
