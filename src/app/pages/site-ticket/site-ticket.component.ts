@@ -10,7 +10,7 @@ import { Ticket } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
-import {DataService} from "../../services/data/data.service";
+import { DataService } from '../../services/data/data.service';
 
 @Component({
   selector: 'app-site-ticket',
@@ -59,7 +59,7 @@ export class SiteTicketComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm()
-    this.auth.user$.subscribe( user => {
+    this.auth.user$.subscribe(user => {
       this.user = user
       this.siteState = this.user.site
       this.User = this.auth.authState;
@@ -164,7 +164,7 @@ export class SiteTicketComponent implements OnInit {
   checkValue(event: boolean) {
     if (event === true) {
       this.setCheck(0)
-    } else  {
+    } else {
       this.setCheck(1)
     }
     this.isFilter()
@@ -178,7 +178,7 @@ export class SiteTicketComponent implements OnInit {
   setStatus(status: string) {
     this.setStatusState(status)
     this.status = status
-    if (this.searchValue){
+    if (this.searchValue) {
       this.search()
     } else if (this.dateRange) {
       this.onDateChanged(this.dateRange)
@@ -353,6 +353,11 @@ export class SiteTicketComponent implements OnInit {
 
   onSelectedDelete(id: string, subject: string) {
     this.ticketService.cancelTicket(id, subject)
+  }
+
+  clear() {
+    this.dateRange = null
+    this.search()
   }
 
   search() {
