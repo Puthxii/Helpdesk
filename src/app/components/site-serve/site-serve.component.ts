@@ -16,6 +16,51 @@ export class SiteServeComponent implements OnInit {
   isAdd = true;
   isEdit = false;
   Server: Server[];
+  detailConfig: AngularEditorConfig = {
+    editable: false,
+    spellcheck: false,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: false,
+    showToolbar: false,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: 'v1/image',
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      ['fontSize']
+    ],
+  };
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -60,9 +105,10 @@ export class SiteServeComponent implements OnInit {
       ['bold', 'italic'],
       ['fontSize']
     ],
-
   };
   ServerType = ['Database Server', 'Remote Server', 'Web Server']
+  isShow = false;
+  serverDetails: any;
   constructor(
     private fb: FormBuilder,
     private siteService: SiteService
@@ -142,6 +188,7 @@ export class SiteServeComponent implements OnInit {
     this.userLogin.clear()
     this.isAdd = value
     this.isEdit = !value
+    this.isShow = false;
     this.addUserLogin()
   }
 
@@ -159,11 +206,13 @@ export class SiteServeComponent implements OnInit {
         this.userLogin.clear()
         this.isAdd = true;
         this.isEdit = false;
+        this.isShow = false;
       }
     })
   }
 
   editServer(server: Server) {
+    this.isShow = false
     this.isAdd = false
     this.isEdit = true
     if (this.isEdit) {
@@ -201,6 +250,15 @@ export class SiteServeComponent implements OnInit {
         this.siteService.removeServer(this.id, server)
       }
     })
+  }
+
+  showServer(serv: any) {
+    this.serverForm.reset();
+    this.userLogin.clear()
+    this.isAdd = false;
+    this.isEdit = false;
+    this.isShow = true;
+    this.serverDetails = serv
   }
 
 
