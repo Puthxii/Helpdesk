@@ -1,13 +1,13 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {IAngularMyDpOptions, IMyDateModel} from "angular-mydatepicker";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth/auth.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { IAngularMyDpOptions, IMyDateModel } from "angular-mydatepicker";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AuthService } from "../../services/auth/auth.service";
 import { User } from 'src/app/models/user.model';
-import {map} from "rxjs/operators";
-import {Observable} from "rxjs/internal/Observable";
-import {Ticket} from "../../models/ticket.model";
-import {TicketService} from "../../services/ticket/ticket.service";
-import {DataService} from "../../services/data/data.service";
+import { map } from "rxjs/operators";
+import { Observable } from "rxjs/internal/Observable";
+import { Ticket } from "../../models/ticket.model";
+import { TicketService } from "../../services/ticket/ticket.service";
+import { DataService } from "../../services/data/data.service";
 
 @Component({
   selector: 'app-history',
@@ -47,10 +47,15 @@ export class HistoryComponent implements OnInit {
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
-    this.CurrentStatus.push({name: 'All', icon: '-'})
+    this.removeStatus('All')
+    this.CurrentStatus.push({ name: 'All', icon: '-' })
     this.buildForm()
     this.getCheck()
     this.isFilter()
+  }
+
+  removeStatus(name: string) {
+    this.CurrentStatus = this.CurrentStatus.filter(item => item.name !== name)
   }
 
   private isFilter() {
@@ -81,7 +86,7 @@ export class HistoryComponent implements OnInit {
   }
 
   buildForm() {
-    const model: IMyDateModel = {isRange: true, singleDate: {jsDate: new Date()}, dateRange: null};
+    const model: IMyDateModel = { isRange: true, singleDate: { jsDate: new Date() }, dateRange: null };
     this.filterTicketForm = this.fb.group({
       date: [model, [Validators.required]]
     })
@@ -124,7 +129,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -135,7 +140,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -146,7 +151,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -157,7 +162,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -193,7 +198,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -204,7 +209,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -215,7 +220,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -226,7 +231,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -237,7 +242,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -248,7 +253,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -259,7 +264,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -270,7 +275,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -287,7 +292,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -303,7 +308,7 @@ export class HistoryComponent implements OnInit {
           map(actions => actions.map(a => {
             const data = a.payload.doc.data() as Ticket;
             const id = a.payload.doc['id'];
-            return {id, ...data};
+            return { id, ...data };
           }))
         )
       } else {
@@ -311,7 +316,7 @@ export class HistoryComponent implements OnInit {
           map(actions => actions.map(a => {
             const data = a.payload.doc.data() as Ticket;
             const id = a.payload.doc['id'];
-            return {id, ...data};
+            return { id, ...data };
           }))
         )
       }
@@ -324,7 +329,7 @@ export class HistoryComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
