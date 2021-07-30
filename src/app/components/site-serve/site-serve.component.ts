@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Server } from 'src/app/models/site.model';
 import { SiteService } from 'src/app/services/site/site.service';
 import Swal from 'sweetalert2';
@@ -15,7 +16,52 @@ export class SiteServeComponent implements OnInit {
   isAdd = true;
   isEdit = false;
   Server: Server[];
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: 'v1/image',
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      ['fontSize']
+    ],
 
+  };
   ServerType = ['Database Server', 'Remote Server', 'Web Server']
   constructor(
     private fb: FormBuilder,
@@ -41,18 +87,18 @@ export class SiteServeComponent implements OnInit {
   buildForm() {
     this.serverForm = this.fb.group({
       id: [''],
-      serverIp: ['', [Validators.required]],
-      serverName: ['', [Validators.required]],
+      serverIpName: ['', [Validators.required]],
+      serverDescription: ['', [Validators.required]],
       serverType: ['', [Validators.required]],
     })
   }
 
-  get serverIp() {
-    return this.serverForm.get('serverIp');
+  get serverIpName() {
+    return this.serverForm.get('serverIpName');
   }
 
-  get serverName() {
-    return this.serverForm.get('serverName')
+  get serverDescription() {
+    return this.serverForm.get('serverDescription')
   }
 
   get serverType() {
@@ -99,8 +145,8 @@ export class SiteServeComponent implements OnInit {
     if (this.isEdit) {
       this.serverForm.patchValue({
         id: server.id,
-        serverIp: server.serverIp,
-        serverName: server.serverName,
+        serverIpName: server.serverIpName,
+        serverDescription: server.serverDescription,
         serverType: server.serverType,
       })
     }

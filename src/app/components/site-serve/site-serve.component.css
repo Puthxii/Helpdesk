@@ -1,3 +1,11 @@
 .card-header {
-    border: none;
+  border: none;
+}
+
+:host /deep/ angular-editor#myEditor .angular-editor-button[title="Insert Image"]{
+  display: none
+}
+
+:host /deep/ angular-editor#myEditor .angular-editor-button[title="Insert Video"]{
+  display: none
 }

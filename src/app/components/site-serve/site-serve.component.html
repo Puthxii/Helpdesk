@@ -20,8 +20,7 @@
               <thead>
                 <tr>
                   <th scope="col">No</th>
-                  <th scope="col">Server IP</th>
-                  <th scope="col">Server name</th>
+                  <th scope="col">Server IP/Name</th>
                   <th scope="col">Server type</th>
                   <th scope="col"></th>
                 </tr>
@@ -29,8 +28,7 @@
               <tbody>
                 <tr *ngFor="let serv of Server ; let i = index;">
                   <td>{{i+1}}</td>
-                  <td>{{serv.serverIp}}</td>
-                  <td>{{serv.serverName}}</td>
+                  <td>{{serv.serverIpName}}</td>
                   <td>{{serv.serverType}}</td>
                   <td>
                     <a (click)="editServer(serv)">
@@ -70,32 +68,19 @@
       <div class="card-body">
         <form [formGroup]="serverForm" (ngSubmit)="addServer()">
           <div class="form-row">
-            <div class="form-group col-md-4">
-              <label class="control-label">Server IP</label>
+            <div class="form-group col-md-6">
+              <label class="control-label">Server IP/Name</label>
               <div class="input-group">
-                <input type="text" formControlName="serverIp" class="form-control" id="serverIp"
+                <input type="text" formControlName="serverIpName" class="form-control" id="serverIpName"
                   placeholder="Server IP">
               </div>
-              <div *ngIf="serverIp.invalid && (serverIp.dirty || serverIp.touched)" class="danger-color">
-                <div *ngIf="serverIp.errors.required">
-                  Server IP is required.
+              <div *ngIf="serverIpName.invalid && (serverIpName.dirty || serverIpName.touched)" class="danger-color">
+                <div *ngIf="serverIpName.errors.required">
+                  Server IP/Name is required.
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-4">
-              <label class="control-label">Server Name</label>
-              <div class="input-group">
-                <input type="text" formControlName="serverName" class="form-control" id="serverName"
-                  placeholder="Server Name" required>
-              </div>
-              <div *ngIf="serverName.invalid && (serverName.dirty || serverName.touched)"
-                class="col-sm-12 danger-color">
-                <div *ngIf="serverName.errors.required">
-                  Server name is required.
-                </div>
-              </div>
-            </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label class="control-label">Server Type</label>
               <select name="serverType" formControlName="serverType" class="form-control" id="serverType">
                 <option value="">choose server type ...</option>
@@ -106,6 +91,19 @@
               <div *ngIf="serverType.invalid && (serverType.dirty || serverType.touched)" class="danger-color">
                 <div *ngIf="serverType.errors.required">
                   Server type name is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label class="control-label">Description</label>
+              <angular-editor id="myEditor" formControlName="serverDescription" [config]="editorConfig">
+              </angular-editor>
+              <div *ngIf="serverDescription.invalid && (serverDescription.dirty || serverDescription.touched)"
+                class="danger-color">
+                <div *ngIf="serverDescription.errors.required">
+                  Server description is required.
                 </div>
               </div>
             </div>

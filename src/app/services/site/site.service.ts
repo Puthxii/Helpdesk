@@ -243,8 +243,8 @@ export class SiteService {
     try {
       (await this.afs.collection('site').doc(id).collection('server')
         .add({
-          serverIp: server.serverIp,
-          serverName: server.serverName,
+          serverIpName: server.serverIpName,
+          serverDescription: server.serverDescription,
           serverType: server.serverType
         }).then(() => {
           this.successNotification('site-mng', id)
@@ -260,8 +260,8 @@ export class SiteService {
         .collection('server', ref => ref
           .doc(server.id)
           .update({
-            serverIp: server.serverIp,
-            serverName: server.serverName,
+            serverIpName: server.serverIpName,
+            serverDescription: server.serverDescription,
             serverType: server.serverType
           }).then(() => {
             this.successNotification('site-mng', id)

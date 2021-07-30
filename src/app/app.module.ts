@@ -56,6 +56,8 @@ import { SiteServeComponent } from './components/site-serve/site-serve.component
 import { SiteContactComponent } from './components/site-contact/site-contact.component';
 import { AddProductComponent } from './pages/add-product/add-product.component';
 import { EditProductComponent } from './pages/edit-product/edit-product.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -114,7 +116,9 @@ import { EditProductComponent } from './pages/edit-product/edit-product.componen
     NgMultiSelectDropDownModule.forRoot(),
     AngularMyDatePickerModule,
     AngularFireDatabaseModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    HttpClientModule,
+    AngularEditorModule
   ],
   providers: [
     AuthService,
