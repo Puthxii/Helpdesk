@@ -84,7 +84,10 @@ export class ProductService {
         name: product.name,
         active: product.active,
         keyword
-      }).then(() => {
+      }).then(async (res) => {
+        await this.afs.collection('product').doc(res.id).update({
+          id: res.id
+        })
         this.successNotification('product')
       }))
     } catch (error) {
