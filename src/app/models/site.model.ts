@@ -33,4 +33,9 @@ export interface Server {
   serverIpName: string;
   serverDescription: any;
   serverType: string;
+  userLogin: UserLogin[]
+}
+export interface UserLogin {
+  userName: string;
+  password: string;
 }

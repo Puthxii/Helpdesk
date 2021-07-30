@@ -108,6 +108,46 @@
               </div>
             </div>
           </div>
+          <div class="add-lessons-form">
+            <ng-container formArrayName="userLogin">
+              <ng-container *ngFor="let userLoginForm of userLogin.controls; let i = index">
+                <p>#{{i+1}}</p>
+                <div class="form-row" [formGroup]="userLoginForm">
+                  <div class="form-group col-md-5">
+                    <label for="userName" class="control-label">User name</label>
+                    <input formControlName="userName" type="text" class="form-control" placeholder="user name">
+                    <div
+                      *ngIf="userLoginForm.get('userName').invalid && (userLoginForm.get('userName').dirty || userLoginForm.get('userName').touched)"
+                      class="col-sm-12 danger-color">
+                      <div *ngIf="userLoginForm.get('userName').errors.required">
+                        User name is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-5">
+                    <label for="userName" class="control-label">Password</label>
+                    <input formControlName="password" type="text" class="form-control" placeholder="password">
+                    <div
+                      *ngIf="userLoginForm.get('password').invalid && (userLoginForm.get('password').dirty || userLoginForm.get('password').touched)"
+                      class="col-sm-12 danger-color">
+                      <div *ngIf="userLoginForm.get('password').errors.required">
+                        Password is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2 delete-block">
+                    <button class="btn dangerBtn" (click)="deleteUserLogin(i)">
+                      <i class="fas fa-trash fa-lg"></i>
+                    </button>
+                  </div>
+                </div>
+                <hr>
+              </ng-container>
+            </ng-container>
+            <button type="button" class="btn saveBtn" (click)="addUserLogin()">
+              <i class="fas fa-plus-circle"></i>
+            </button>
+          </div>
           <div class="form-row" style="float: right;">
             <div class="form-group mr-2">
               <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelAddServer()">Cancel</button>

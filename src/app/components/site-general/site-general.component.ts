@@ -101,13 +101,13 @@ export class SiteGeneralComponent implements OnInit {
         module: this.Site.module,
         addresses: this.Site.addresses,
       })
-      this.setAdress(this.Site.addresses)
+      this.setAddress(this.Site.addresses)
       this.setMinDate(this.Site.maStartDate)
       this.setMaxDate(this.Site.maEndDate)
     })
   }
 
-  setAdress(addresses: any[]) {
+  setAddress(addresses: any[]) {
     this.addresses.clear()
     addresses.forEach((address) => {
       const addressForm = this.fb.group({

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Server } from 'src/app/models/site.model';
 import { SiteService } from 'src/app/services/site/site.service';
@@ -71,6 +71,9 @@ export class SiteServeComponent implements OnInit {
   ngOnInit() {
     this.buildForm()
     this.getServer()
+    if (this.isAdd) {
+      this.addUserLogin()
+    }
   }
 
   getServer() {
@@ -90,7 +93,20 @@ export class SiteServeComponent implements OnInit {
       serverIpName: ['', [Validators.required]],
       serverDescription: ['', [Validators.required]],
       serverType: ['', [Validators.required]],
+      userLogin: this.fb.array([])
     })
+  }
+
+  addUserLogin() {
+    const userLoginForm = this.fb.group({
+      userName: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+    this.userLogin.push(userLoginForm);
+  }
+
+  deleteUserLogin(userLoginIndex: number) {
+    this.userLogin.removeAt(userLoginIndex);
   }
 
   get serverIpName() {
@@ -105,6 +121,10 @@ export class SiteServeComponent implements OnInit {
     return this.serverForm.get('serverType')
   }
 
+  get userLogin() {
+    return this.serverForm.controls.userLogin as FormArray;
+  }
+
   addServer() {
     if (this.serverForm.controls.id.value) {
       this.siteService.updateServer(this.id, this.serverForm.value)
@@ -112,14 +132,17 @@ export class SiteServeComponent implements OnInit {
       this.siteService.addServer(this.id, this.serverForm.value)
     }
     this.serverForm.reset();
+    this.userLogin.clear();
     this.isAdd = true;
     this.isEdit = false;
   }
 
   showAdd(value: boolean) {
     this.serverForm.reset();
+    this.userLogin.clear()
     this.isAdd = value
     this.isEdit = !value
+    this.addUserLogin()
   }
 
   alertCancelAddServer() {
@@ -133,6 +156,7 @@ export class SiteServeComponent implements OnInit {
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
         this.serverForm.reset();
+        this.userLogin.clear()
         this.isAdd = true;
         this.isEdit = false;
       }
@@ -149,7 +173,19 @@ export class SiteServeComponent implements OnInit {
         serverDescription: server.serverDescription,
         serverType: server.serverType,
       })
+      this.setUserLogin(server.userLogin)
     }
+  }
+
+  setUserLogin(userLogin: any[]) {
+    this.userLogin.clear()
+    userLogin.forEach((user) => {
+      const userLoginForm = this.fb.group({
+        userName: [user.userName, Validators.required],
+        password: [user.password, Validators.required]
+      });
+      this.userLogin.push(userLoginForm);
+    })
   }
 
   alertDeleteServer(server: Server) {

@@ -245,7 +245,8 @@ export class SiteService {
         .add({
           serverIpName: server.serverIpName,
           serverDescription: server.serverDescription,
-          serverType: server.serverType
+          serverType: server.serverType,
+          userLogin: server.userLogin
         }).then(() => {
           this.successNotification('site-mng', id)
         }))
@@ -262,7 +263,8 @@ export class SiteService {
           .update({
             serverIpName: server.serverIpName,
             serverDescription: server.serverDescription,
-            serverType: server.serverType
+            serverType: server.serverType,
+            userLogin: server.userLogin
           }).then(() => {
             this.successNotification('site-mng', id)
           })
