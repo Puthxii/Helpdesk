@@ -8,6 +8,8 @@ import { Observable } from "rxjs/internal/Observable";
 import { Ticket } from "../../models/ticket.model";
 import { TicketService } from "../../services/ticket/ticket.service";
 import { DataService } from "../../services/data/data.service";
+import { SiteService } from 'src/app/services/site/site.service';
+import { Site } from 'src/app/models/site.model';
 
 @Component({
   selector: 'app-history',
@@ -22,6 +24,7 @@ export class HistoryComponent implements OnInit {
   ticket$: Observable<Ticket[]>;
   isChecked = true
   status = 'All'
+  site = 'All'
   keyword: string;
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
@@ -31,6 +34,8 @@ export class HistoryComponent implements OnInit {
   History = ['Draft', 'Informed', 'More Info', 'In Progress', 'Accepted', 'Assigned', 'Resolved', 'Closed', 'Rejected', 'Pending']
   currentName: string;
   userId: string;
+  Site: Site[];
+  initialsSite = [];
 
   constructor(
     @Inject('STATUS') public CurrentStatus: any[],
@@ -41,17 +46,37 @@ export class HistoryComponent implements OnInit {
     public fb: FormBuilder,
     private ticketService: TicketService,
     public dataService: DataService,
+    private siteService: SiteService
   ) {
   }
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
+    this.getSitesList()
     this.removeStatus('All')
     this.CurrentStatus.push({ name: 'All', icon: '-' })
     this.buildForm()
     this.getCheck()
     this.isFilter()
+  }
+
+  getSitesList() {
+    this.siteService.getSites().snapshotChanges().subscribe(data => {
+      this.Site = [];
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['$key'] = items.payload.doc['id'];
+        this.Site.push(item as Site)
+      })
+      this.setSiteInitials()
+    });
+  }
+
+  setSiteInitials() {
+    this.Site.forEach(item => {
+      this.initialsSite.push(item.initials)
+    });
   }
 
   removeStatus(name: string) {
@@ -93,7 +118,7 @@ export class HistoryComponent implements OnInit {
   }
 
   displaySelectedStatus() {
-    return (this.status) ? this.status : 'Select status';
+    return (this.status != 'All') ? this.status : 'Select status';
   }
 
   onSelectedStatus(name) {
@@ -105,6 +130,26 @@ export class HistoryComponent implements OnInit {
     } else {
       this.isFilter()
     }
+  }
+
+  displaySelectedSite() {
+    return (this.site != 'All') ? this.site : 'Select site';
+  }
+
+  onSelectedSite(site) {
+    this.site = site
+    if (this.keyword) {
+      this.search()
+    } else if (this.dateRange) {
+      this.onDateChanged(this.dateRange)
+    } else {
+      this.isFilter()
+    }
+  }
+
+  clear() {
+    this.dateRange = null
+    this.search()
   }
 
   search() {
