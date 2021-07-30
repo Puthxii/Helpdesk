@@ -1,11 +1,11 @@
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { Ticket } from '../../models/ticket.model';
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import {DataService} from '../../services/data/data.service';
+import { DataService } from '../../services/data/data.service';
 
 @Component({
   selector: 'detail',
@@ -24,7 +24,7 @@ export class DetailComponent implements OnInit {
     public auth: AuthService,
     public router: Router,
     private dataService: DataService
-) {
+  ) {
     this.route.params.subscribe(params => this.id = params.id);
   }
 
@@ -56,8 +56,8 @@ export class DetailComponent implements OnInit {
   }
 
   getMaPackage(ticket) {
-    const maStartDate = moment(ticket.site.maStartDate.seconds * 1000).format('L');
-    const maEndDate = moment(ticket.site.maEndDate.seconds * 1000).format('L');
+    const maStartDate = moment(ticket.site.maStartDate.singleDate.jsDate.seconds * 1000).format('L');
+    const maEndDate = moment(ticket.site.maEndDate.singleDate.jsDate.seconds * 1000).format('L');
     return maStartDate + ' - ' + maEndDate;
   }
 
@@ -87,7 +87,7 @@ export class DetailComponent implements OnInit {
 
   setExpirationDate(ticket: Ticket) {
     let color: string
-    const endDate = new Date(ticket.site.maEndDate.seconds * 1000)
+    const endDate = new Date(ticket.site.maEndDate.singleDate.jsDate.seconds * 1000)
     const currentDate = new Date()
     if (endDate > currentDate) {
       color = 'currentDate'

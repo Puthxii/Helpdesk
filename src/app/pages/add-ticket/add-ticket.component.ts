@@ -447,8 +447,8 @@ export class AddTicketComponent implements OnInit {
   }
 
   getMaPackage() {
-    const startDate = moment(this.addTicketForm.controls.site.value.maStartDate.seconds * 1000).format('L');
-    const endDate = moment(this.addTicketForm.controls.site.value.maEndDate.seconds * 1000).format('L');
+    const startDate = moment(this.addTicketForm.controls.site.value.maStartDate.singleDate.jsDate.seconds * 1000).format('L');
+    const endDate = moment(this.addTicketForm.controls.site.value.maEndDate.singleDate.jsDate.seconds * 1000).format('L');
     return startDate + ' - ' + endDate;
   }
 
