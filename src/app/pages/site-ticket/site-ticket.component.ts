@@ -396,7 +396,7 @@ export class SiteTicketComponent implements OnInit {
   }
 
   getBySiteStatus(siteState: string, status: string, startDate: Date, endDate: Date) {
-    this.ticket$ = this.ticketService.getBySiteStatus(siteState, status, startDate, endDate)
+    this.ticket$ = this.ticketService.getBySiteStateStatus(siteState, status, startDate, endDate)
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;

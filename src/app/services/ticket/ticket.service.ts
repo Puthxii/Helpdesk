@@ -3,6 +3,7 @@ import { Actions, Tasks, Ticket } from '../../models/ticket.model';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
+import { IMyDateModel } from 'angular-mydatepicker';
 
 @Injectable({
   providedIn: 'root'
@@ -478,7 +479,7 @@ export class TicketService {
     )
   }
 
-  getBySiteStatus(siteState: string, status: string, startDate: Date, endDate: Date) {
+  getBySiteStateStatus(siteState: string, status: string, startDate: Date, endDate: Date) {
     return this.afs.collection<Ticket>('ticket', ref => ref
       .where('date.singleDate.jsDate', '>=', startDate)
       .where('date.singleDate.jsDate', '<=', endDate)
@@ -580,4 +581,148 @@ export class TicketService {
       }
     }, { merge: true })
   }
+
+  getBySiteDateRangeKeywordUserIdStatus(site: string, keyword: string, userId: string, status: string, dateRange: IMyDateModel) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', dateRange.dateRange.beginJsDate)
+      .where('date.singleDate.jsDate', '<=', dateRange.dateRange.endJsDate)
+      .where('status', '==', status)
+      .where('site.initials', '==', site)
+      .where('keyword', 'array-contains', keyword)
+    )
+  }
+
+  getBySiteDateRangeUserIdStatus(site: string, userId: string, status: string, dateRange: IMyDateModel) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', dateRange.dateRange.beginJsDate)
+      .where('date.singleDate.jsDate', '<=', dateRange.dateRange.endJsDate)
+      .where('status', '==', status)
+      .where('site.initials', '==', site)
+      .where(`participantIds.${userId}`, '==', true)
+    )
+  }
+
+  getBySiteDateRangeKeywordStatus(site: string, keyword: string, status: string, dateRange: IMyDateModel) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', dateRange.dateRange.beginJsDate)
+      .where('date.singleDate.jsDate', '<=', dateRange.dateRange.endJsDate)
+      .where('status', '==', status)
+      .where('site.initials', '==', site)
+      .where('keyword', 'array-contains', keyword)
+    )
+  }
+
+  getBySiteDateRangeStatus(site: string, status: string, dateRange: IMyDateModel) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', dateRange.dateRange.beginJsDate)
+      .where('date.singleDate.jsDate', '<=', dateRange.dateRange.endJsDate)
+      .where('status', '==', status)
+      .where('site.initials', '==', site)
+    )
+  }
+
+  getBySiteDateRangeKeywordUserIdRole(site: string, keyword: string, userId: string, History: string[], dateRange: IMyDateModel) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', dateRange.dateRange.beginJsDate)
+      .where('date.singleDate.jsDate', '<=', dateRange.dateRange.endJsDate)
+      .where('status', 'in', History)
+      .where('site.initials', '==', site)
+      .where('keyword', 'array-contains', keyword)
+      .where(`participantIds.${userId}`, '==', true)
+    )
+  }
+
+  getBySiteDateRangeUserIdRole(site: string, userId: string, History: string[], dateRange: IMyDateModel) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', dateRange.dateRange.beginJsDate)
+      .where('date.singleDate.jsDate', '<=', dateRange.dateRange.endJsDate)
+      .where('status', 'in', History)
+      .where('site.initials', '==', site)
+      .where(`participantIds.${userId}`, '==', true)
+    )
+  }
+
+  getBySiteDateRangeKeywordRole(site: string, keyword: string, History: string[], dateRange: IMyDateModel) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', dateRange.dateRange.beginJsDate)
+      .where('date.singleDate.jsDate', '<=', dateRange.dateRange.endJsDate)
+      .where('status', 'in', History)
+      .where('site.initials', '==', site)
+      .where('keyword', 'array-contains', keyword)
+    )
+  }
+
+  getBySiteDateRangeRole(site: string, History: string[], dateRange: IMyDateModel) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('date.singleDate.jsDate', '>=', dateRange.dateRange.beginJsDate)
+      .where('date.singleDate.jsDate', '<=', dateRange.dateRange.endJsDate)
+      .where('status', 'in', History)
+      .where('site.initials', '==', site)
+    )
+  }
+
+  getBySiteKeywordUserIdStatus(site: string, keyword: string, userId: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where('keyword', 'array-contains', keyword)
+      .where(`participantIds.${userId}`, '==', true)
+      .where('status', '==', status)
+    )
+  }
+
+  getBySiteUserIdStatus(site: string, userId: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where(`participantIds.${userId}`, '==', true)
+      .where('status', '==', status)
+    )
+  }
+
+  getBySiteKeywordStatus(site: string, keyword: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where('keyword', 'array-contains', keyword)
+      .where('status', '==', status)
+    )
+  }
+
+  getBySiteStatus(site: string, status: string) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where('status', '==', status)
+    )
+  }
+
+  getBySiteKeywordUserIdRole(site: string, keyword: string, userId: string, History: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where('keyword', 'array-contains', keyword)
+      .where(`participantIds.${userId}`, '==', true)
+      .where('status', 'in', History)
+    )
+  }
+
+  getBySiteUserIdRole(site: string, userId: string, History: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where(`participantIds.${userId}`, '==', true)
+      .where('status', 'in', History)
+    )
+  }
+
+  getBySiteKeywordRole(site: string, keyword: string, History: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where('keyword', 'array-contains', keyword)
+      .where('status', 'in', History)
+    )
+  }
+
+  getBySiteRole(site: string, History: string[]) {
+    return this.afs.collection<Ticket>('ticket', ref => ref
+      .where('site.initials', '==', site)
+      .where('status', 'in', History)
+    )
+  }
+
 }
