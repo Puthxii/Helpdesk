@@ -11,7 +11,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Inject } from '@angular/core';
-import {DataService} from "../../services/data/data.service";
+import { DataService } from "../../services/data/data.service";
 @Component({
   selector: 'ticket-ma',
   templateUrl: './ticket-ma.component.html',
@@ -79,7 +79,7 @@ export class TicketMaComponent implements OnInit {
 
   getCheck() {
     const data = Number(localStorage.getItem(String(this.storageCheck)))
-    this.isChecked = data ===  0;
+    this.isChecked = data === 0;
   }
 
   isFilter() {
@@ -157,7 +157,7 @@ export class TicketMaComponent implements OnInit {
   setStatus(status: string) {
     this.setStatusState(status)
     this.status = status
-    if (this.searchValue){
+    if (this.searchValue) {
       this.search()
     } else if (this.dateRange) {
       this.onDateChanged(this.dateRange)
@@ -169,7 +169,7 @@ export class TicketMaComponent implements OnInit {
   getAllTicket(status: string) {
     this.setStatusState(status)
     this.status = status
-    if (this.searchValue){
+    if (this.searchValue) {
       this.search()
     } else if (this.dateRange) {
       this.onDateChanged(this.dateRange)
@@ -205,7 +205,7 @@ export class TicketMaComponent implements OnInit {
   checkValue(event: boolean) {
     if (event === true) {
       this.setCheck(0)
-    } else  {
+    } else {
       this.setCheck(1)
     }
     this.isFilter()
@@ -295,6 +295,11 @@ export class TicketMaComponent implements OnInit {
     this.dataService.changeRedirectSource('ticket-ma')
   }
 
+  clear() {
+    this.dateRange = null
+    this.search()
+  }
+
   search() {
     this.keyword = this.searchValue
     if (this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
@@ -318,7 +323,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -329,7 +334,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -340,7 +345,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -351,7 +356,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       );
   }
@@ -387,7 +392,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -398,7 +403,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -409,7 +414,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -420,7 +425,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -431,7 +436,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -442,7 +447,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -453,7 +458,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }
@@ -464,7 +469,7 @@ export class TicketMaComponent implements OnInit {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as Ticket;
           const id = a.payload.doc['id'];
-          return {id, ...data};
+          return { id, ...data };
         }))
       )
   }

@@ -1,53 +1,69 @@
 <div class="container-fluid">
   <section id="minimal-statistics">
     <div class="row mt-3 mb-1 searchbar">
-      <div class="col-xl-2 col-md-12 col-sm-12 col-12">
+      <div class="col-xl-3 col-md-12 col-sm-12 col-6">
         <h5 class="primary-color">
           <i class="fas fa-history"></i>
-          Tickets History
+          History
         </h5>
       </div>
-      <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+      <div class="col-xl-3 col-md-4 col-sm-4 col-6">
         <div class="form-check">
           <label class="form-check-label my-ticket">
-            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked"
-                   (change)="checkValue(isChecked)">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="isChecked" (change)="checkValue(isChecked)">
             My Tickets<i class="input-helper"></i>
           </label>
         </div>
       </div>
-      <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+      <div class="col-xl-3 col-md-4 col-sm-4 col-6">
+        <div class="btn-group btn-save" style="float: right;">
+          <button type="button" class="btn warningBtn">
+            {{ displaySelectedSite()}}
+          </button>
+          <button type="button" class="btn warningBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <button *ngFor="let initial of initialsSite" type="button" class="dropdown-item"
+              (click)="onSelectedSite(initial)">
+              {{initial}}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-4 col-sm-4 col-6">
         <div class="btn-group btn-save" style="float: right;">
           <button type="button" class="btn saveBtn">
             {{ displaySelectedStatus()}}
           </button>
           <button type="button" class="btn saveBtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" >
+            aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
             <button *ngFor="let status of CurrentStatus" type="button" class="dropdown-item"
-                    (click)="onSelectedStatus(status.name)">
+              (click)="onSelectedStatus(status.name)">
               {{status.name}}
             </button>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-md-6 col-sm-6 col-12">
+      <div class="col-xl-6 col-md-6 col-sm-6 col-12">
         <div class="form-group has-search mb-2">
           <span class="fa fa-search form-control-feedback"></span>
           <input type="search" class="form-control" [(ngModel)]="keyword" [ngModelOptions]="{standalone: true}"
-                 (keyup)="search()" placeholder="Search Subject">
+            (keyup)="search()" placeholder="Search Subject">
         </div>
       </div>
-      <div class="col-xl-3 col-md-6 col-sm-6 col-12">
+      <div class="col-xl-6 col-md-6 col-sm-6 col-12">
         <form [formGroup]="filterTicketForm">
           <div class="input-group mb-2">
             <input class="form-control" placeholder="Select a date range" angular-mydatepicker name="date"
-                   formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
-                   (dateChanged)="onDateChanged($event)" readonly>
+              formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
+              (dateChanged)="onDateChanged($event)" readonly>
             <div class="input-group-append">
-              <button type="button" class="btn dangerBtn" (click)="dp.clearDate(); search()">
+              <button type="button" class="btn dangerBtn" (click)="dp.clearDate(); clear()">
                 <i class="fas fa-times"></i>
               </button>
             </div>
@@ -128,9 +144,9 @@
             <div class="col">
               <div class="row">
                 <div class="col-auto">
-                <span style="color: gray;">
-                  Created {{ ticket.date.singleDate?.formatted? ticket.date.singleDate.formatted : ''}}
-                </span>
+                  <span style="color: gray;">
+                    Created {{ ticket.date.singleDate?.formatted? ticket.date.singleDate.formatted : ''}}
+                  </span>
                 </div>
                 <div class="col-auto" *ngIf="checkDueDate(ticket.minDueDate)">
                   <div class="dueDate">
@@ -142,9 +158,10 @@
           </div>
           <div class="col-xl-3 col-sm-4 action">
             <i *ngIf="isDraft(ticket)" class="fas fa-trash mx-1 secondary-color icon"
-               (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
+              (click)="onSelectedDelete(ticket.id, ticket.subject)" title="Delete Ticket"></i>
             <a [routerLink]="['/edit-ticket', ticket.id]">
-              <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket" (click)="newPath(); updateMoreInfo(ticket.id)"></i>
+              <i class="fas fa-pen mx-1 secondary-color icon" title="Edit Ticket"
+                (click)="newPath(); updateMoreInfo(ticket.id)"></i>
             </a>
             <a [routerLink]="['/detail', ticket.id]" (click)="newPath()">
               <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket"></i>

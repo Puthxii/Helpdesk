@@ -1,3 +1,23 @@
 .card-header {
-    border: none;
+  border: none;
+}
+
+:host /deep/ angular-editor#myEditor .angular-editor-button[title="Insert Image"]{
+  display: none
+}
+
+:host /deep/ angular-editor#myEditor .angular-editor-button[title="Insert Video"]{
+  display: none
+}
+
+@media(min-width: 768px) {
+  .delete-block {
+    padding-top: 32px;
+  }
+}
+
+@media(max-width: 766px) {
+  .delete-block {
+    padding-top: none;
+  }
 }

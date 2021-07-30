@@ -276,6 +276,11 @@ export class TicketComponent implements OnInit {
       );
   }
 
+  clear() {
+    this.dateRange = null
+    this.search()
+  }
+
   search() {
     this.keyword = this.searchValue
     if (this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {

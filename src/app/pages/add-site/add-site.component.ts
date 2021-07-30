@@ -133,22 +133,10 @@ export class AddSiteComponent implements OnInit {
     return this.siteForm.get('maLevelId');
   }
 
-
   addSite() {
     this.site.addSite(this.siteForm.value)
   }
 
-  reformeteStartDate(maStartDate: { singleDate: { jsDate: any; }; }) {
-    this.siteForm.patchValue({
-      maStartDate: maStartDate.singleDate.jsDate
-    })
-  }
-
-  reformeteEndDate(maEndDate: { singleDate: { jsDate: any; }; }) {
-    this.siteForm.patchValue({
-      maEndDate: maEndDate.singleDate.jsDate
-    })
-  }
 
   alertCancelAddCustomer() {
     Swal.fire({

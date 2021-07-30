@@ -1,13 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { IAngularMyDpOptions, IMyDateModel } from "angular-mydatepicker";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AuthService } from "../../services/auth/auth.service";
+import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
 import { User } from 'src/app/models/user.model';
-import { map } from "rxjs/operators";
-import { Observable } from "rxjs/internal/Observable";
-import { Ticket } from "../../models/ticket.model";
-import { TicketService } from "../../services/ticket/ticket.service";
-import { DataService } from "../../services/data/data.service";
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs/internal/Observable';
+import { Ticket } from '../../models/ticket.model';
+import { TicketService } from '../../services/ticket/ticket.service';
+import { DataService } from '../../services/data/data.service';
+import { SiteService } from 'src/app/services/site/site.service';
+import { Site } from 'src/app/models/site.model';
 
 @Component({
   selector: 'app-history',
@@ -15,22 +17,25 @@ import { DataService } from "../../services/data/data.service";
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent implements OnInit {
-  private storageCheck: number = 0
+  private storageCheck = 0
   public filterTicketForm: FormGroup
   User: User
   user: User
   ticket$: Observable<Ticket[]>;
   isChecked = true
   status = 'All'
+  site = 'All'
   keyword: string;
   myOptions: IAngularMyDpOptions = {
     dateRange: true,
     dateFormat: 'dd/mm/yyyy'
   }
-  dateRange: IMyDateModel;
+  dateRange: IMyDateModel = null;
   History = ['Draft', 'Informed', 'More Info', 'In Progress', 'Accepted', 'Assigned', 'Resolved', 'Closed', 'Rejected', 'Pending']
   currentName: string;
   userId: string;
+  Site: Site[];
+  initialsSite = [];
 
   constructor(
     @Inject('STATUS') public CurrentStatus: any[],
@@ -41,17 +46,44 @@ export class HistoryComponent implements OnInit {
     public fb: FormBuilder,
     private ticketService: TicketService,
     public dataService: DataService,
+    private siteService: SiteService
   ) {
   }
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.user = user);
     this.User = this.auth.authState;
+    this.getSitesList()
     this.removeStatus('All')
     this.CurrentStatus.push({ name: 'All', icon: '-' })
     this.buildForm()
     this.getCheck()
     this.isFilter()
+  }
+
+  getSitesList() {
+    this.siteService.getSites().snapshotChanges().subscribe(data => {
+      this.Site = [];
+      data.map(items => {
+        const item = items.payload.doc.data();
+        item['$key'] = items.payload.doc['id'];
+        this.Site.push(item as Site)
+      })
+      this.setSiteInitials()
+    });
+  }
+
+  setSiteInitials() {
+    this.initialsSite = []
+    this.Site.forEach(item => {
+      this.initialsSite.push(item.initials)
+    });
+    this.removeSite('All')
+    this.initialsSite.push('All')
+  }
+
+  removeSite(name: string) {
+    this.initialsSite = this.initialsSite.filter(item => item !== name)
   }
 
   removeStatus(name: string) {
@@ -93,7 +125,7 @@ export class HistoryComponent implements OnInit {
   }
 
   displaySelectedStatus() {
-    return (this.status) ? this.status : 'Select status';
+    return (this.status != 'All') ? this.status : 'Select status';
   }
 
   onSelectedStatus(name) {
@@ -102,9 +134,65 @@ export class HistoryComponent implements OnInit {
       this.search()
     } else if (this.dateRange) {
       this.onDateChanged(this.dateRange)
+    } else if (this.site != 'All') {
+      this.onSelectedSite(this.site)
     } else {
       this.isFilter()
     }
+  }
+
+  displaySelectedSite() {
+    return (this.site != 'All') ? this.site : 'Select site';
+  }
+
+  onSelectedSite(site: string) {
+    this.site = site
+    if (this.site != 'All') {
+      if (this.dateRange != null) {
+        if (this.isChecked === true && this.status != null && this.status !== 'All' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+          this.getBySiteDateRangeKeywordUserIdStatus(this.site, this.keyword, this.userId, this.status, this.dateRange)
+        } else if (this.isChecked === true && this.status != null && this.status !== 'All' && (this.keyword === undefined || this.keyword === '')) {
+          this.getBySiteDateRangeUserIdStatus(this.site, this.userId, this.status, this.dateRange)
+        } else if (this.isChecked === false && this.status != null && this.status !== 'All' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+          this.getBySiteDateRangeKeywordStatus(this.site, this.keyword, this.status, this.dateRange)
+        } else if (this.isChecked === false && this.status != null && this.status !== 'All' && (this.keyword === undefined || this.keyword === '')) {
+          this.getBySiteDateRangeStatus(this.site, this.status, this.dateRange)
+        } else if (this.isChecked === true && this.status === 'All' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+          this.getBySiteDateRangeKeywordUserIdRole(this.site, this.keyword, this.userId, this.History, this.dateRange)
+        } else if (this.isChecked === true && this.status === 'All' && (this.keyword === undefined || this.keyword === '')) {
+          this.getBySiteDateRangeUserIdRole(this.site, this.userId, this.History, this.dateRange)
+        } else if (this.isChecked === false && this.status === 'All' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+          this.getBySiteDateRangeKeywordRole(this.site, this.keyword, this.History, this.dateRange)
+        } else if (this.isChecked === false && this.status === 'All' && (this.keyword === undefined || this.keyword === '')) {
+          this.getBySiteDateRangeRole(this.site, this.History, this.dateRange)
+        }
+      } else {
+        if (this.isChecked === true && this.status != null && this.status !== 'All' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+          this.getBySiteKeywordUserIdStatus(this.site, this.keyword, this.userId, this.status)
+        } else if (this.isChecked === true && this.status != null && this.status !== 'All' && (this.keyword === undefined || this.keyword === '')) {
+          this.getBySiteUserIdStatus(this.site, this.userId, this.status)
+        } else if (this.isChecked === false && this.status != null && this.status !== 'All' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+          this.getBySiteKeywordStatus(this.site, this.keyword, this.status)
+        } else if (this.isChecked === false && this.status != null && this.status !== 'All' && (this.keyword === undefined || this.keyword === '')) {
+          this.getBySiteStatus(this.site, this.status)
+        } else if (this.isChecked === true && this.status === 'All' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+          this.getBySiteKeywordUserIdRole(this.site, this.keyword, this.userId, this.History)
+        } else if (this.isChecked === true && this.status === 'All' && (this.keyword === undefined || this.keyword === '')) {
+          this.getBySiteUserIdRole(this.site, this.userId, this.History)
+        } else if (this.isChecked === false && this.status === 'All' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
+          this.getBySiteKeywordRole(this.site, this.keyword, this.History)
+        } else if (this.isChecked === false && this.status === 'All' && (this.keyword === undefined || this.keyword === '')) {
+          this.getBySiteRole(this.site, this.History)
+        }
+      }
+    } else {
+      this.search()
+    }
+  }
+
+  clear() {
+    this.dateRange = null
+    this.search()
   }
 
   search() {
@@ -118,6 +206,8 @@ export class HistoryComponent implements OnInit {
       } else if (this.isChecked === false && this.status === 'All') {
         this.getByKeywordRole(this.keyword, this.History)
       }
+    } else if (this.site != 'All') {
+      this.onSelectedSite(this.site)
     } else {
       this.isFilter()
     }
@@ -171,7 +261,9 @@ export class HistoryComponent implements OnInit {
     this.dateRange = event
     const startDate = event.dateRange.beginJsDate
     const endDate = event.dateRange.endJsDate
-    if (startDate != null && endDate != null) {
+    if (this.site != 'All') {
+      this.onSelectedSite(this.site)
+    } else if (startDate != null && endDate != null) {
       if (this.isChecked === true && this.status != null && this.status !== 'All' && this.keyword !== undefined && this.keyword !== null && this.keyword !== '') {
         this.getByDateRangeKeywordUserIdStatus(startDate, endDate, this.keyword, this.userId, this.status)
       } else if (this.isChecked === true && this.status != null && this.status !== 'All' && (this.keyword === undefined || this.keyword === '')) {
@@ -302,6 +394,8 @@ export class HistoryComponent implements OnInit {
       this.search()
     } else if (this.dateRange) {
       this.onDateChanged(this.dateRange)
+    } else if (this.site != 'All') {
+      this.onSelectedSite(this.site)
     } else {
       if (this.isChecked === true) {
         this.ticket$ = this.ticketService.getTicketsListByUserIdRole(this.userId, this.History).snapshotChanges().pipe(
@@ -416,6 +510,182 @@ export class HistoryComponent implements OnInit {
 
   updateMoreInfo(id: any) {
     this.ticketService.updateMoreInfo(id, false)
+  }
+
+  getBySiteRole(site: string, History: string[]) {
+    this.ticket$ = this.ticketService.getBySiteRole(site, History)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteKeywordRole(site: string, keyword: string, History: string[]) {
+    this.ticket$ = this.ticketService.getBySiteKeywordRole(site, keyword, History)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteUserIdRole(site: string, userId: string, History: string[]) {
+    this.ticket$ = this.ticketService.getBySiteUserIdRole(site, userId, History)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteKeywordUserIdRole(site: string, keyword: string, userId: string, History: string[]) {
+    this.ticket$ = this.ticketService.getBySiteKeywordUserIdRole(site, keyword, userId, History)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteStatus(site: string, status: string) {
+    this.ticket$ = this.ticketService.getBySiteStatus(site, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteKeywordStatus(site: string, keyword: string, status: string) {
+    this.ticket$ = this.ticketService.getBySiteKeywordStatus(site, keyword, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteUserIdStatus(site: string, userId: string, status: string) {
+    this.ticket$ = this.ticketService.getBySiteUserIdStatus(site, userId, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteKeywordUserIdStatus(site: string, keyword: string, userId: string, status: string) {
+    this.ticket$ = this.ticketService.getBySiteKeywordUserIdStatus(site, keyword, userId, status)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteDateRangeRole(site: string, History: string[], dateRange: IMyDateModel) {
+    this.ticket$ = this.ticketService.getBySiteDateRangeRole(site, History, dateRange)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteDateRangeKeywordRole(site: string, keyword: string, History: string[], dateRange: IMyDateModel) {
+    this.ticket$ = this.ticketService.getBySiteDateRangeKeywordRole(site, keyword, History, dateRange)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteDateRangeUserIdRole(site: string, userId: string, History: string[], dateRange: IMyDateModel) {
+    this.ticket$ = this.ticketService.getBySiteDateRangeUserIdRole(site, userId, History, dateRange)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteDateRangeKeywordUserIdRole(site: string, keyword: string, userId: string, History: string[], dateRange: IMyDateModel) {
+    this.ticket$ = this.ticketService.getBySiteDateRangeKeywordUserIdRole(site, keyword, userId, History, dateRange)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteDateRangeStatus(site: string, status: string, dateRange: IMyDateModel) {
+    this.ticket$ = this.ticketService.getBySiteDateRangeStatus(site, status, dateRange)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteDateRangeKeywordStatus(site: string, keyword: string, status: string, dateRange: IMyDateModel) {
+    this.ticket$ = this.ticketService.getBySiteDateRangeKeywordStatus(site, keyword, status, dateRange)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteDateRangeUserIdStatus(site: string, userId: string, status: string, dateRange: IMyDateModel) {
+    this.ticket$ = this.ticketService.getBySiteDateRangeUserIdStatus(site, userId, status, dateRange)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
+  }
+
+  getBySiteDateRangeKeywordUserIdStatus(site: string, keyword: string, userId: string, status: string, dateRange: IMyDateModel) {
+    this.ticket$ = this.ticketService.getBySiteDateRangeKeywordUserIdStatus(site, keyword, userId, status, dateRange)
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Ticket;
+          const id = a.payload.doc['id'];
+          return { id, ...data };
+        }))
+      );
   }
 
 }

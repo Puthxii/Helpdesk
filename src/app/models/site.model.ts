@@ -30,7 +30,12 @@ export interface Addresses {
 
 export interface Server {
   id?: string;
-  serverIp: string;
-  serverName: string;
+  serverIpName: string;
+  serverDescription: any;
   serverType: string;
+  userLogin: UserLogin[]
+}
+export interface UserLogin {
+  userName: string;
+  password: string;
 }

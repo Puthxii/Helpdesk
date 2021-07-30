@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Server } from 'src/app/models/site.model';
 import { SiteService } from 'src/app/services/site/site.service';
 import Swal from 'sweetalert2';
@@ -15,8 +16,99 @@ export class SiteServeComponent implements OnInit {
   isAdd = true;
   isEdit = false;
   Server: Server[];
-
+  detailConfig: AngularEditorConfig = {
+    editable: false,
+    spellcheck: false,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: false,
+    showToolbar: false,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: 'v1/image',
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      ['fontSize']
+    ],
+  };
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: 'v1/image',
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      ['fontSize']
+    ],
+  };
   ServerType = ['Database Server', 'Remote Server', 'Web Server']
+  isShow = false;
+  serverDetails: any;
   constructor(
     private fb: FormBuilder,
     private siteService: SiteService
@@ -25,6 +117,9 @@ export class SiteServeComponent implements OnInit {
   ngOnInit() {
     this.buildForm()
     this.getServer()
+    if (this.isAdd) {
+      this.addUserLogin()
+    }
   }
 
   getServer() {
@@ -41,22 +136,39 @@ export class SiteServeComponent implements OnInit {
   buildForm() {
     this.serverForm = this.fb.group({
       id: [''],
-      serverIp: ['', [Validators.required]],
-      serverName: ['', [Validators.required]],
+      serverIpName: ['', [Validators.required]],
+      serverDescription: ['', [Validators.required]],
       serverType: ['', [Validators.required]],
+      userLogin: this.fb.array([])
     })
   }
 
-  get serverIp() {
-    return this.serverForm.get('serverIp');
+  addUserLogin() {
+    const userLoginForm = this.fb.group({
+      userName: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+    this.userLogin.push(userLoginForm);
   }
 
-  get serverName() {
-    return this.serverForm.get('serverName')
+  deleteUserLogin(userLoginIndex: number) {
+    this.userLogin.removeAt(userLoginIndex);
+  }
+
+  get serverIpName() {
+    return this.serverForm.get('serverIpName');
+  }
+
+  get serverDescription() {
+    return this.serverForm.get('serverDescription')
   }
 
   get serverType() {
     return this.serverForm.get('serverType')
+  }
+
+  get userLogin() {
+    return this.serverForm.controls.userLogin as FormArray;
   }
 
   addServer() {
@@ -66,14 +178,18 @@ export class SiteServeComponent implements OnInit {
       this.siteService.addServer(this.id, this.serverForm.value)
     }
     this.serverForm.reset();
+    this.userLogin.clear();
     this.isAdd = true;
     this.isEdit = false;
   }
 
   showAdd(value: boolean) {
     this.serverForm.reset();
+    this.userLogin.clear()
     this.isAdd = value
     this.isEdit = !value
+    this.isShow = false;
+    this.addUserLogin()
   }
 
   alertCancelAddServer() {
@@ -87,23 +203,38 @@ export class SiteServeComponent implements OnInit {
     }).then((result: { isConfirmed: any; }) => {
       if (result.isConfirmed) {
         this.serverForm.reset();
+        this.userLogin.clear()
         this.isAdd = true;
         this.isEdit = false;
+        this.isShow = false;
       }
     })
   }
 
   editServer(server: Server) {
+    this.isShow = false
     this.isAdd = false
     this.isEdit = true
     if (this.isEdit) {
       this.serverForm.patchValue({
         id: server.id,
-        serverIp: server.serverIp,
-        serverName: server.serverName,
+        serverIpName: server.serverIpName,
+        serverDescription: server.serverDescription,
         serverType: server.serverType,
       })
+      this.setUserLogin(server.userLogin)
     }
+  }
+
+  setUserLogin(userLogin: any[]) {
+    this.userLogin.clear()
+    userLogin.forEach((user) => {
+      const userLoginForm = this.fb.group({
+        userName: [user.userName, Validators.required],
+        password: [user.password, Validators.required]
+      });
+      this.userLogin.push(userLoginForm);
+    })
   }
 
   alertDeleteServer(server: Server) {
@@ -119,6 +250,15 @@ export class SiteServeComponent implements OnInit {
         this.siteService.removeServer(this.id, server)
       }
     })
+  }
+
+  showServer(serv: any) {
+    this.serverForm.reset();
+    this.userLogin.clear()
+    this.isAdd = false;
+    this.isEdit = false;
+    this.isShow = true;
+    this.serverDetails = serv
   }
 
 

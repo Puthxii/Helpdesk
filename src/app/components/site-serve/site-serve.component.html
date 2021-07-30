@@ -20,8 +20,7 @@
               <thead>
                 <tr>
                   <th scope="col">No</th>
-                  <th scope="col">Server IP</th>
-                  <th scope="col">Server name</th>
+                  <th scope="col">Server IP/Name</th>
                   <th scope="col">Server type</th>
                   <th scope="col"></th>
                 </tr>
@@ -29,10 +28,12 @@
               <tbody>
                 <tr *ngFor="let serv of Server ; let i = index;">
                   <td>{{i+1}}</td>
-                  <td>{{serv.serverIp}}</td>
-                  <td>{{serv.serverName}}</td>
+                  <td>{{serv.serverIpName}}</td>
                   <td>{{serv.serverType}}</td>
                   <td>
+                    <a (click)="showServer(serv)">
+                      <i class="fas fa-eye fa-lg primary-color" style="padding: 0.5em -0.4em;"></i>
+                    </a>
                     <a (click)="editServer(serv)">
                       <i class="fas fa-pen fa-lg warning-color" style="padding: 0.5em 0.6em;"></i>
                     </a>
@@ -53,7 +54,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-6 col-md-12 col-sm-12">
+  <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="!isShow">
     <div class="card">
       <div class="card-header text-left primary-color bg-white">
         <div class="header content" *ngIf="isAdd">
@@ -70,32 +71,19 @@
       <div class="card-body">
         <form [formGroup]="serverForm" (ngSubmit)="addServer()">
           <div class="form-row">
-            <div class="form-group col-md-4">
-              <label class="control-label">Server IP</label>
+            <div class="form-group col-md-6">
+              <label class="control-label">Server IP/Name</label>
               <div class="input-group">
-                <input type="text" formControlName="serverIp" class="form-control" id="serverIp"
+                <input type="text" formControlName="serverIpName" class="form-control" id="serverIpName"
                   placeholder="Server IP">
               </div>
-              <div *ngIf="serverIp.invalid && (serverIp.dirty || serverIp.touched)" class="danger-color">
-                <div *ngIf="serverIp.errors.required">
-                  Server IP is required.
+              <div *ngIf="serverIpName.invalid && (serverIpName.dirty || serverIpName.touched)" class="danger-color">
+                <div *ngIf="serverIpName.errors.required">
+                  Server IP/Name is required.
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-4">
-              <label class="control-label">Server Name</label>
-              <div class="input-group">
-                <input type="text" formControlName="serverName" class="form-control" id="serverName"
-                  placeholder="Server Name" required>
-              </div>
-              <div *ngIf="serverName.invalid && (serverName.dirty || serverName.touched)"
-                class="col-sm-12 danger-color">
-                <div *ngIf="serverName.errors.required">
-                  Server name is required.
-                </div>
-              </div>
-            </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label class="control-label">Server Type</label>
               <select name="serverType" formControlName="serverType" class="form-control" id="serverType">
                 <option value="">choose server type ...</option>
@@ -110,12 +98,110 @@
               </div>
             </div>
           </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label class="control-label">Description</label>
+              <angular-editor id="myEditor" formControlName="serverDescription" [config]="editorConfig">
+              </angular-editor>
+              <div *ngIf="serverDescription.invalid && (serverDescription.dirty || serverDescription.touched)"
+                class="danger-color">
+                <div *ngIf="serverDescription.errors.required">
+                  Server description is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="add-lessons-form">
+            <ng-container formArrayName="userLogin">
+              <ng-container *ngFor="let userLoginForm of userLogin.controls; let i = index">
+                <p>#{{i+1}}</p>
+                <div class="form-row" [formGroup]="userLoginForm">
+                  <div class="form-group col-md-5">
+                    <label for="userName" class="control-label">User name</label>
+                    <input formControlName="userName" type="text" class="form-control" placeholder="user name">
+                    <div
+                      *ngIf="userLoginForm.get('userName').invalid && (userLoginForm.get('userName').dirty || userLoginForm.get('userName').touched)"
+                      class="col-sm-12 danger-color">
+                      <div *ngIf="userLoginForm.get('userName').errors.required">
+                        User name is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-5">
+                    <label for="userName" class="control-label">Password</label>
+                    <input formControlName="password" type="text" class="form-control" placeholder="password">
+                    <div
+                      *ngIf="userLoginForm.get('password').invalid && (userLoginForm.get('password').dirty || userLoginForm.get('password').touched)"
+                      class="col-sm-12 danger-color">
+                      <div *ngIf="userLoginForm.get('password').errors.required">
+                        Password is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2 delete-block">
+                    <button class="btn dangerBtn" (click)="deleteUserLogin(i)">
+                      <i class="fas fa-trash fa-lg"></i>
+                    </button>
+                  </div>
+                </div>
+                <hr>
+              </ng-container>
+            </ng-container>
+            <button type="button" class="btn saveBtn" (click)="addUserLogin()">
+              <i class="fas fa-plus-circle"></i>
+            </button>
+          </div>
           <div class="form-row" style="float: right;">
             <div class="form-group mr-2">
               <button type="button" class="btn cancelBtn btn-cancel" (click)="alertCancelAddServer()">Cancel</button>
             </div>
             <div class="form-group">
               <button type="submit" class="btn saveBtn" [disabled]="!serverForm.valid">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="isShow">
+    <div class="card">
+      <div class="card-header text-left primary-color bg-white">
+        <div class="header content">
+          <h5>
+            Detail Server
+          </h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <form *ngIf="serverDetails">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <h6>Server IP/Name</h6>
+              <p class="secondary-color">{{ serverDetails.serverIpName ? serverDetails.serverIpName : '-' }}</p>
+            </div>
+            <div class="form-group col-md-6">
+              <h6>Server type</h6>
+              <p class="secondary-color">{{ serverDetails.serverType ? serverDetails.serverType : '-' }}</p>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <h6>Server description</h6>
+              <angular-editor id="myEditor" [config]="detailConfig" [(ngModel)]="serverDetails.serverDescription"
+                [ngModelOptions]="{standalone: true}">
+              </angular-editor>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <h6>User</h6>
+              <div *ngFor="let user of serverDetails.userLogin; let i = index">
+                <p class="secondary-color">
+                  #{{i+1}}
+                  user name: {{ user.userName }},
+                  password: {{ user.password }}
+                </p>
+              </div>
             </div>
           </div>
         </form>
