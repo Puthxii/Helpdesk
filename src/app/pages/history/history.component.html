@@ -164,7 +164,7 @@
                 (click)="newPath(); updateMoreInfo(ticket.id)"></i>
             </a>
             <a [routerLink]="['/detail', ticket.id]" (click)="newPath()">
-              <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket"></i>
+              <i class="fas fa-eye mx-1 secondary-color icon" title="View Ticket" (click)="newPath();"></i>
             </a>
           </div>
         </div>
