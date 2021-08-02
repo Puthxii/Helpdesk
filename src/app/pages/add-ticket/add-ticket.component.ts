@@ -181,7 +181,7 @@ export class AddTicketComponent implements OnInit {
         this.setPriority();
         this.setStatusCustomer();
         this.getSiteCustomer();
-        this.getCustomerContact(this.user$.name);
+        this.getCustomerContact(this.user$.fullName);
         this.setActionSentenceCus();
         this.setParticipantCustomer()
         this.setParticipantIdCustomer()

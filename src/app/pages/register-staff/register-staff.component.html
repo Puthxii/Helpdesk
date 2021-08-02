@@ -36,7 +36,7 @@
               <label class="control-label">Password</label>
               <div class="input-group">
                 <input type="{{inputType}}" formControlName="password" class="form-control" id="password"
-                  placeholder="Password" required>
+                  placeholder="Password" autocomplete="new-password" required>
                 <div class="input-group-append">
                   <button type="button" class="btn btn-outline-secondary" (click)="hideShowPassword()">
                     <i *ngIf="inputType === 'password'" class="fas fa-eye"></i>

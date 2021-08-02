@@ -15,11 +15,10 @@
             <div class="col-lg-6 col-md-12 col-sm-12">
               <div class="form-row" *ngIf="auth.isStaff(user)">
                 <div class="form-group col-md-6">
-                  <label class="control-label" >Date Inform</label>
+                  <label class="control-label">Date Inform</label>
                   <div class="input-group">
                     <input class="form-control" placeholder="Select a date" angular-mydatepicker name="date"
-                      formControlName="date" [options]="myOptions" #dp="angular-mydatepicker"
-                     readonly>
+                      formControlName="date" [options]="myOptions" #dp="angular-mydatepicker" readonly>
                     <div class="input-group-append">
                       <button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()"
                         [attr.disabled]="!auth.isSupporter(user)">
@@ -75,7 +74,7 @@
                     [ngClass]="setExpirationDate()" value="{{ getMaPackage() }}" readonly>
                 </div>
                 <div class="form-group col-md-6">
-                  <label >Product</label>
+                  <label>Product</label>
                   <input type=text class="form-control" formControlName="product" placeholder="Product" readonly>
                 </div>
               </div>
@@ -163,7 +162,7 @@
               <div *ngIf="isSelectedType()">
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label >Response Description</label>
+                    <label>Response Description</label>
                     <textarea formControlName="responseDescription" class="form-control" id="responseDescription"
                       rows="7" (ngModelChange)="isResponseDescription($event)"
                       [readonly]="!auth.isSupporter(user)"></textarea>
@@ -228,12 +227,13 @@
                     (fileRemove)="onDepositSuggestDescriptionFileRemove($event)"></app-upload-detail-list>
                 </div>
               </div>
-              <div *ngIf="isAssignedResolved()&&(auth.isDeveloper(user) || auth.isSupporter(user))">
+              <div *ngIf="isAssignedResolved()">
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Resolve Description</label>
                     <textarea formControlName="resolveDescription" class="form-control" id="resolveDescription" rows="7"
-                      (ngModelChange)="isResolveDescription($event); changeChecked()" [readonly]="!auth.isDeveloper(user)">
+                      (ngModelChange)="isResolveDescription($event); changeChecked()"
+                      [readonly]="!auth.isDeveloper(user)">
                     </textarea>
                     <div class="danger-color">
                       Please fill out a Resolve description for resolve
@@ -262,8 +262,8 @@
                   <div class="form-row">
                     <div class="form-group col-md-12">
                       <div *ngIf="progress!=0&&progress!=null" class="progress mb-2">
-                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                          [ngStyle]="{ width: progress  + '%' }">
+                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" aria-valuemin="0"
+                          aria-valuemax="100" [ngStyle]="{ width: progress  + '%' }">
                           {{ progress }}%
                         </div>
                       </div>
@@ -329,8 +329,7 @@
                               <div class="form-row">
                                 <div class="form-group col-md-6">
                                   <label for="point" class="control-label">Point</label>
-                                  <input formControlName="point" type="number" class="form-control"
-                                    placeholder="Point">
+                                  <input formControlName="point" type="number" class="form-control" placeholder="Point">
                                   <div
                                     *ngIf="editTicket.get('tasks').get('point').invalid && (editTicket.get('tasks').get('point').dirty || editTicket.get('tasks').get('point').touched)"
                                     class="danger-color">
