@@ -257,7 +257,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   setDefaultMaDescription() {
-    const endDate = new Date(this.editTicket.controls.site.value.maEndDate.seconds * 1000)
+    const endDate = new Date(this.editTicket.controls.site.value.maEndDate.singleDate.jsDate.seconds * 1000)
     const currentDate = new Date()
     let maDescription: string
     if (this.editTicket.controls.maDescription.value === undefined) {
