@@ -181,7 +181,7 @@ export class AddTicketComponent implements OnInit {
         this.setPriority();
         this.setStatusCustomer();
         this.getSiteCustomer();
-        this.getCustomerContact(this.user$.name);
+        this.getCustomerContact(this.user$.fullName);
         this.setActionSentenceCus();
         this.setParticipantCustomer()
         this.setParticipantIdCustomer()
@@ -413,7 +413,8 @@ export class AddTicketComponent implements OnInit {
   }
 
   addTicketData() {
-    this.ticketService.addTicket(this.addTicketForm.value, this.redirectPath);
+    console.log(this.addTicketForm.value, this.redirectPath);
+    // this.ticketService.addTicket(this.addTicketForm.value, this.redirectPath);
   }
 
   displaySelectedStatus(): any {
