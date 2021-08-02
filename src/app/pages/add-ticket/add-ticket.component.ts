@@ -413,8 +413,7 @@ export class AddTicketComponent implements OnInit {
   }
 
   addTicketData() {
-    console.log(this.addTicketForm.value, this.redirectPath);
-    // this.ticketService.addTicket(this.addTicketForm.value, this.redirectPath);
+    this.ticketService.addTicket(this.addTicketForm.value, this.redirectPath);
   }
 
   displaySelectedStatus(): any {
