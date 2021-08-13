@@ -186,6 +186,7 @@ export class EditTicketComponent implements OnInit {
       this.setDefaultResolveDescription()
       this.setDefaultResolveDescriptionFile()
       this.getModule();
+      this.changeChecked()
     })
     this.dropdownSettings = {
       singleSelection: false,
