@@ -111,7 +111,7 @@ export class EditTicketComponent implements OnInit {
   minDueDate: any;
   depositDev: any;
   statusSpecial = ['In Progress', 'Accepted', 'Assigned', 'Resolved']
-  isChecked: boolean;
+  isChecked = true;
   redirectPath: string
   constructor(
     public ticketService: TicketService,
@@ -186,7 +186,6 @@ export class EditTicketComponent implements OnInit {
       this.setDefaultResolveDescription()
       this.setDefaultResolveDescriptionFile()
       this.getModule();
-      this.changeChecked()
     })
     this.dropdownSettings = {
       singleSelection: false,
@@ -586,6 +585,15 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Rejected');
       this.removeStatus('Resolved');
+      this.removeStatus('Closed');
+    } else if (currentStatus === 'Rejected') {
+      this.removeStatus('Informed');
+      this.removeStatus('More Info');
+      this.removeStatus('In Progress');
+      this.removeStatus('Accepted');
+      this.removeStatus('Assigned');
+      this.removeStatus('Resolved');
+      this.removeStatus('Pending');
       this.removeStatus('Closed');
     }
   }
