@@ -12,7 +12,9 @@
       </div>
       <div class="row mt-5">
         <div class="col-12 text-center mt-xl-2">
-          <a class="text-white font-weight-medium" routerLink="/">Back to home</a>
+          <a class="text-white font-weight-medium" *ngIf="auth.isStaff(user)" routerLink="/">Back to home</a>
+          <a class="text-white font-weight-medium" *ngIf="auth.isCustomer(user)" routerLink="/site-ticket">Back to
+            home</a>
         </div>
       </div>
     </div>

@@ -58,6 +58,8 @@ import { AddProductComponent } from './pages/add-product/add-product.component';
 import { EditProductComponent } from './pages/edit-product/edit-product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +104,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     SiteServeComponent,
     SiteContactComponent,
     AddProductComponent,
-    EditProductComponent
+    EditProductComponent,
+    DashboardComponent
   ],
   imports: [
     FormsModule,
@@ -118,7 +121,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     HttpClientModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NgApexchartsModule
   ],
   providers: [
     AuthService,

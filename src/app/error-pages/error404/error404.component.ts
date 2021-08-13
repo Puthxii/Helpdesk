@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-error404',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./error404.component.scss']
 })
 export class Error404Component implements OnInit {
-
-  constructor() { }
+  user
+  constructor(
+    public auth: AuthService,
+  ) { }
 
   ngOnInit() {
+    this.auth.user$.subscribe(user => this.user = user)
   }
 
 }
