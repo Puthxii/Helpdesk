@@ -1097,6 +1097,7 @@ export class EditTicketComponent implements OnInit {
         }
         this.depositDev = this.tasksToSave[i].developer
       }
+      this.ticketService.editSuggestDescription(this.editTicket.value, this.id)
     }
   }
 
@@ -1111,6 +1112,7 @@ export class EditTicketComponent implements OnInit {
           this.ticketService.upDateParticipantIds(this.id, this.tasksToUpdate[i].developer[j].$uid, true)
         }
       }
+      this.ticketService.editSuggestDescription(this.editTicket.value, this.id)
     }
   }
 
@@ -1125,6 +1127,7 @@ export class EditTicketComponent implements OnInit {
           this.ticketService.upDateParticipantIds(this.id, this.tasksToDelete[i].developer[j].$uid, false)
         }
       }
+      this.ticketService.editSuggestDescription(this.editTicket.value, this.id)
     }
   }
 
