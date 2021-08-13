@@ -221,6 +221,16 @@ export class TicketService {
     }
   }
 
+  async editSuggestDescription(ticket: Ticket, id: any) {
+    try {
+      await this.afs.collection('ticket').doc(id).update({
+        suggestDescription: ticket.suggestDescription,
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   setActionById(id: any, actions: Actions) {
     this.afs.collection('ticket').doc(id)
       .collection('action')

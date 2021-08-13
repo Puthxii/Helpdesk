@@ -472,7 +472,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   displaySelectedStatus(): any {
-    return (this.status.value) ? this.matchStatus(this.status.value) : 'Save as draft';
+    return (this.editTicket.controls.currentStatus.value) ? this.matchStatus(this.editTicket.controls.currentStatus.value) : 'Save as';
   }
 
   matchStatus(status: string): string {
@@ -507,7 +507,6 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('Assigned');
       this.removeStatus('Resolved');
       this.removeStatus('Draft');
-      this.removeStatus('Assigned');
       this.removeStatus('Pending');
       this.isCloseInProgress()
     } else if (currentStatus === 'More Info') {
@@ -1097,6 +1096,7 @@ export class EditTicketComponent implements OnInit {
         }
         this.depositDev = this.tasksToSave[i].developer
       }
+      this.ticketService.editSuggestDescription(this.editTicket.value, this.id)
     }
   }
 
@@ -1111,6 +1111,7 @@ export class EditTicketComponent implements OnInit {
           this.ticketService.upDateParticipantIds(this.id, this.tasksToUpdate[i].developer[j].$uid, true)
         }
       }
+      this.ticketService.editSuggestDescription(this.editTicket.value, this.id)
     }
   }
 
@@ -1125,6 +1126,7 @@ export class EditTicketComponent implements OnInit {
           this.ticketService.upDateParticipantIds(this.id, this.tasksToDelete[i].developer[j].$uid, false)
         }
       }
+      this.ticketService.editSuggestDescription(this.editTicket.value, this.id)
     }
   }
 
@@ -1139,6 +1141,8 @@ export class EditTicketComponent implements OnInit {
       this.title = `Supervisor's Edit Ticket`
     } else if (this.redirectPath === 'ticket-dev') {
       this.title = `Developer's Edit Ticket`
+    } else if (this.redirectPath === 'history') {
+      this.title = `History's Edit Ticket`
     }
     return this.title
   }

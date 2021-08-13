@@ -24,7 +24,7 @@ exports.sendEmailNotification = functions.firestore.document("ticket/{docId}")
             to: `${data.email}`,
             subject: "Helpdesk - Ticket",
             text: `${id}`,
-            html: `Your ticket reported was successful. You can tracking your ticket by this link http://localhost:4200/detail/${id}`,
+            html: `Your ticket reported was successful. You can tracking your ticket by this link https://walaihelpdesk-25638.web.app/detail/${id}`,
         }).then((res) => console.log("successfully sent that mail"))
             .catch((err) => console.log(err));
     });
