@@ -7,8 +7,8 @@
       </h3>
     </a>
     <div class="list-group list-group-flush">
-      <a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white dashboard"
-        (click)="setMenu('')" [class.active]="'' === activeState">
+      <a [routerLink]="['/']" class="list-group-item list-group-item-action bg-white dashboard" (click)="setMenu('')"
+        [class.active]="'' === activeState" *ngIf="auth.isStaff(user)">
         <i class="fas fa-chart-pie"></i>
         <span class="menu-title"> Dashboard</span>
       </a>
@@ -57,9 +57,9 @@
         <span class="menu-title"> Product</span>
       </a>
       <a [routerLink]=" ['/history']" class=" list-group-item list-group-item-action bg-white history"
-              (click)="setMenu('history')" [class.active]="'history' === activeState" *ngIf="auth.isStaff(user)">
+        (click)="setMenu('history')" [class.active]="'history' === activeState" *ngIf="auth.isStaff(user)">
         <i class="fas fa-history"></i>
-      <span class="menu-title"> History</span>
+        <span class="menu-title"> History</span>
       </a>
     </div>
   </div>

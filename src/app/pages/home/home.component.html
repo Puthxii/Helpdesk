@@ -1,3 +1,21 @@
-<h4>
-  Dashboard in coming in project2 
-</h4>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card">
+        <div class="card-header text-left primary-color bg-white">
+          <div class="header content">
+            <h5>
+              <i class="fas fa-chart-pie"></i>
+              Dashboard
+            </h5>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="seriesValue">
+          <div class="col-lg-6 col-md-12 col-sm-12">
+            <app-dashboard [seriesValue]="seriesValue"></app-dashboard>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
-import {DataService} from "../../services/data/data.service";
+import { DataService } from '../../services/data/data.service';
 
 @Component({
   selector: 'app-home-layout',
@@ -12,7 +12,7 @@ import {DataService} from "../../services/data/data.service";
 })
 export class HomeLayoutComponent implements OnInit {
   User: User;
-  user;
+  user
   user$: any
   AuthService: any;
   activeState: any;
@@ -55,7 +55,7 @@ export class HomeLayoutComponent implements OnInit {
   newPath() {
     if (this.user.roles.customer === true) {
       this.dataService.changeRedirectSource('site-ticket')
-    }else if (this.user.roles.supporter === true){
+    } else if (this.user.roles.supporter === true) {
       this.dataService.changeRedirectSource('ticket')
     }
   }

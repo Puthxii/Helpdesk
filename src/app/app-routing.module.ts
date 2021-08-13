@@ -45,7 +45,8 @@ const router: Routes = [
     children: [
       {
         path: '',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [StaffGuard]
       },
       {
         path: 'staff',

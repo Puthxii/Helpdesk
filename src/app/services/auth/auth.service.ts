@@ -20,13 +20,14 @@ export class AuthService {
   options: Options;
   authState: any = null;
   user$: Observable<User>;
+  user: any;
   private secondaryApp = firebase.initializeApp(environment.firebaseConfig, "secondaryApp")
   constructor(
     protected alertService: AlertService,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private router: Router,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
   ) {
     this.afAuth.authState.subscribe((auth) => {
       this.authState = auth;
@@ -130,7 +131,14 @@ export class AuthService {
   async emailLogin(email: string, password: string) {
     try {
       this.authState = await this.afAuth.signInWithEmailAndPassword(email, password);
-      this.router.navigate(['/']);
+      this.afs.collection('users').doc(this.authState.user.uid).snapshotChanges().subscribe(data => {
+        this.user = data.payload.data() as User;
+        if (this.user.roles.customer === true) {
+          this.router.navigate(['site-ticket']);
+        } else {
+          this.router.navigate(['/']);
+        }
+      })
       this.alertService.success('Login success', this.options = {
         autoClose: true,
         keepAfterRouteChange: false
