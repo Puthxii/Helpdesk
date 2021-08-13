@@ -472,7 +472,7 @@ export class EditTicketComponent implements OnInit {
   }
 
   displaySelectedStatus(): any {
-    return (this.editTicket.controls.currentStatus.value) ? this.matchStatus(this.editTicket.controls.currentStatus.value) : 'Save as';
+    return (this.status.value) ? this.matchStatus(this.status.value) : 'Save as';
   }
 
   matchStatus(status: string): string {
@@ -563,6 +563,7 @@ export class EditTicketComponent implements OnInit {
       this.removeStatus('In Progress');
       this.removeStatus('Accepted');
       this.removeStatus('Assigned');
+      this.removeStatus('Rejected');
       this.removeStatus('Pending');
       if (this.user.roles.supporter) {
         this.addStatus('Closed');
@@ -610,7 +611,11 @@ export class EditTicketComponent implements OnInit {
 
   isAssignDev() {
     this.addStatus('Assigned');
-    (this.depositTasks.length != 0 && this.isEditSuggest) ? this.onSelectedStatus('Assigned') : this.onSelectedStatus('Accepted')
+    if (this.depositTasks.length != 0 && this.isEditSuggest) {
+      this.addStatus('Assigned');
+    } else {
+      this.addStatus('Accepted')
+    }
   }
 
   checkAction() {
