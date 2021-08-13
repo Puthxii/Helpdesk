@@ -1142,6 +1142,8 @@ export class EditTicketComponent implements OnInit {
       this.title = `Supervisor's Edit Ticket`
     } else if (this.redirectPath === 'ticket-dev') {
       this.title = `Developer's Edit Ticket`
+    } else if (this.redirectPath === 'history') {
+      this.title = `History's Edit Ticket`
     }
     return this.title
   }
