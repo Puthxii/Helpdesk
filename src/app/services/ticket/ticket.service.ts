@@ -119,7 +119,13 @@ export class TicketService {
   async addTicket(ticket: Ticket, path: string) {
     try {
       const countIncrement = await this.getCount()
-      const keyword = await this.generateKeyword(ticket.subject, countIncrement)
+      const keyword = await this.generateKeyword(
+        ticket.subject,
+        countIncrement,
+        ticket.creatorName,
+        ticket.site.initials,
+        ticket.site.nameEN,
+        ticket.site.nameTH)
       await (await this.afs.collection('ticket').add({
         date: ticket.date,
         source: ticket.source,
@@ -180,7 +186,13 @@ export class TicketService {
 
   async editTicket(ticket: Ticket, id: any, path: string) {
     try {
-      const keyword = await this.generateKeyword(ticket.subject, ticket.countIncrement)
+      const keyword = await this.generateKeyword(
+        ticket.subject,
+        ticket.countIncrement,
+        ticket.creatorName,
+        ticket.site.initials,
+        ticket.site.nameEN,
+        ticket.site.nameTH)
       await this.afs.collection('ticket').doc(id).update({
         date: ticket.date,
         source: ticket.source,
@@ -311,7 +323,7 @@ export class TicketService {
       .where(`participantIds.${userId}`, '==', true))
   }
 
-  getByKeywordRole(keyword: string, role) {
+  getByKeywordRole(keyword: string, role: string[]) {
     return this.afs.collection<Ticket>('ticket', (ref) => ref
       .where('status', 'in', role)
       .where('keyword', 'array-contains', keyword));
@@ -509,7 +521,7 @@ export class TicketService {
       .collection('tasks')
   }
 
-  private async generateKeyword(subject: string, countIncrement: number) {
+  private async generateKeyword(subject: string, countIncrement: number, creator: string, initials: string, EN: string, TH: string) {
     function creatKeywords(str: string) {
       const arrName = []
       let curOrder = ''
@@ -575,12 +587,32 @@ export class TicketService {
     const keywordCountIncrement = await creatKeywords(`${countIncrement}`)
     const keywordLowerCase = await creatKeywords(`${subject.toLowerCase()}`)
     const keywordUpperCase = await creatKeywords(`${subject.toUpperCase()}`)
+    const keywordCreator = await creatKeywords(`${creator}`)
+    const keywordCreatorLowerCase = await creatKeywords(`${creator.toLowerCase()}`)
+    const keywordCreatorUpperCase = await creatKeywords(`${creator.toUpperCase()}`)
+    const keywordInitials = await creatKeywords(`${initials}`)
+    const keywordInitialsLowerCase = await creatKeywords(`${initials.toLowerCase()}`)
+    const keywordInitialsUpperCase = await creatKeywords(`${initials.toUpperCase()}`)
+    const keywordEN = await creatKeywords(`${EN}`)
+    const keywordENLowerCase = await creatKeywords(`${EN.toLowerCase()}`)
+    const keywordENUpperCase = await creatKeywords(`${EN.toUpperCase()}`)
+    const keywordTH = await creatKeywords(`${TH}`)
     return [
       '',
       ...keywordSubject,
       ...keywordCountIncrement,
       ...keywordLowerCase,
-      ...keywordUpperCase
+      ...keywordUpperCase,
+      ...keywordCreator,
+      ...keywordCreatorLowerCase,
+      ...keywordCreatorUpperCase,
+      ...keywordInitials,
+      ...keywordInitialsLowerCase,
+      ...keywordInitialsUpperCase,
+      ...keywordEN,
+      ...keywordENLowerCase,
+      ...keywordENUpperCase,
+      ...keywordTH
     ]
   }
 
