@@ -11,8 +11,30 @@
           </div>
         </div>
         <div class="card-body" *ngIf="seriesValue">
-          <div class="col-lg-6 col-md-12 col-sm-12">
-            <app-dashboard [seriesValue]="seriesValue"></app-dashboard>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <app-dashboard [seriesValue]="seriesValue"></app-dashboard>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 list">
+              <ul>
+                <li class="incomplete"><span>Incomplete </span><span
+                    style="float: right;padding-top: 12px">{{incomplete}}
+                    ({{percentage(incomplete)}}%)</span>
+                </li>
+                <li class="informed">
+                  <span>Informed</span><span style="float: right;padding-top: 12px">{{informed}}
+                    ({{percentage(informed)}}%)</span>
+                </li>
+                <li class="in-progress">
+                  <span>Progress</span><span style="float: right;padding-top: 12px">{{inProgress}}
+                    ({{percentage(inProgress)}}%)</span>
+                </li>
+                <li class="resolved">
+                  <span>Resolved</span><span style="float: right;padding-top: 12px">{{resolved}}
+                    ({{percentage(resolved)}}%)</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

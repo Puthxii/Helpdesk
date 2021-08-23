@@ -12,4 +12,6 @@ export interface ChartOptions {
     labels: any;
     colors: Array<string>;
     plotOptions: ApexPlotOptions
+    legend?: ApexLegend;
+    dataLabels?: ApexDataLabels;
 }

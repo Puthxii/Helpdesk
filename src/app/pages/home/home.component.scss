@@ -5,3 +5,47 @@
 .card-body{
   padding-top: none;
 }
+
+ul li::before {
+  font-weight: bold;
+  display: inline-block; 
+  width: -1em;
+  margin-left: -1em;
+}
+
+ul {
+   list-style: none;
+}
+
+ul li:before {
+   content: "•";
+   font-size: 170%;
+}
+
+.incomplete {
+  color:#708090
+}
+
+.informed {
+  color:#FFCA67
+}
+
+.in-progress {
+  color:#3399CC
+}
+
+.resolved {
+  color:#40E0D0
+}
+
+ul li span {
+  color:black
+}
+
+span {
+  display: inline-block;
+}
+
+.list {
+  margin-top: 45px
+}

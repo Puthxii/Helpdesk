@@ -29,6 +29,12 @@ export class DashboardComponent implements OnInit {
         type: 'donut',
         fontFamily: 'Nunito',
       },
+      legend: {
+        show: false
+      },
+      dataLabels: {
+        enabled: false
+      },
       plotOptions: {
         pie: {
           donut: {
@@ -47,7 +53,7 @@ export class DashboardComponent implements OnInit {
               },
               total: {
                 show: true,
-                label: 'Total',
+                label: 'Tickets',
                 color: 'black',
                 formatter: () => `${total}`
               }
@@ -65,7 +71,7 @@ export class DashboardComponent implements OnInit {
             },
             legend: {
               position: 'bottom'
-            }
+            },
           }
         }
       ]
